@@ -26,8 +26,11 @@ func start_drag(card):
 	card_being_dragged = card
 	card.scale = Vector2(1,1)
 	var card_slot_found = raycast_check_for_card_slot()
+	print("trying to drag off")
 	if card_slot_found and card_slot_found.card_in_slot:
 		card_slot_found.card_in_slot = false
+		print("dragging off")
+		
 
 func finish_drag():
 	card_being_dragged.scale = Vector2(1.05,1.05)
@@ -49,13 +52,11 @@ func connect_card_signals(card):
 func on_left_click_released():
 	if card_being_dragged:
 		finish_drag()
-		
 
 func on_hovered_over_card(card):
 	if !is_hovering_on_card:
 		is_hovering_on_card = true
 		highlight_card(card, true)
-	
 
 func on_hovered_off_card(card):
 	if !card_being_dragged:
