@@ -3,6 +3,9 @@ extends Node2D
 const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_CARD_SLOT = 2
 const DEFAULT_CARD_MOVE_SPEED = 0.1
+const DEFAULT_CARD_SCALE = 1.2
+const BIGGER_CARD_SCALE = 1.4
+const SMALLER_CARD_SCALE = 1.05
 
 var screen_size
 var card_being_dragged
@@ -24,7 +27,7 @@ func _process(delta: float) -> void:
 func start_drag(card):
 	card.get_parent().move_child(card,-1) # taken from comment, may be buggy, makes sure cards fall on top of other cards
 	card_being_dragged = card
-	card.scale = Vector2(1,1)
+	card.scale = Vector2(DEFAULT_CARD_SCALE,DEFAULT_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot()
 	print("trying to drag off")
 	if card_slot_found and card_slot_found.card_in_slot:
@@ -33,12 +36,15 @@ func start_drag(card):
 		
 
 func finish_drag():
-	card_being_dragged.scale = Vector2(1.05,1.05)
+	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
+		card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
+		card_being_dragged.cards_current_slot = card_slot_found
 		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		#Card dropped in empty card slot
 		card_being_dragged.position = card_slot_found.position
+
 		card_slot_found.card_in_slot = true
 	else:
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
@@ -59,7 +65,7 @@ func on_hovered_over_card(card):
 		highlight_card(card, true)
 
 func on_hovered_off_card(card):
-	if !card_being_dragged:
+	if !card.cards_current_slot && !card_being_dragged:
 		highlight_card(card, false)
 			# Check if hobered off card straight onto another card
 		var new_card_hovered = raycast_check_for_card()
@@ -70,11 +76,11 @@ func on_hovered_off_card(card):
 
 func highlight_card(card, hovered):
 	if hovered:
-		card.scale = Vector2(1.05,1.05)
-		card.z_index = 2
+		card.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
+		card.z_index = 3
 	else:
-		card.scale = Vector2(1,1)
-		card.z_index = 1
+		card.scale = Vector2(DEFAULT_CARD_SCALE,DEFAULT_CARD_SCALE)
+		card.z_index = 2
 
 func raycast_check_for_card():
 	var space_state = get_world_2d().direct_space_state

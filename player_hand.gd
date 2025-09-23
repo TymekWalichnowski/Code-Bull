@@ -1,6 +1,6 @@
 extends Node2D
 
-const CARD_WIDTH = 150
+const CARD_WIDTH = 175
 const HAND_Y_POSITION = 900
 const DEFAULT_CARD_MOVE_SPEED = 0.1
 
@@ -14,6 +14,7 @@ func add_card_to_hand(card, speed):
 	if card not in player_hand:
 		player_hand.insert(0, card)
 		update_hand_positions(speed)
+		card.scale = Vector2(1.2,1.2)
 	else:
 		animate_card_to_position(card, card.hand_position, speed)
 

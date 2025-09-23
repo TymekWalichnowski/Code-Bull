@@ -4,6 +4,7 @@ signal hovered
 signal hovered_off
 
 var hand_position
+var cards_current_slot
 
 func _ready() -> void:
 	get_parent().connect_card_signals(self) 	# All cards must be child of CardManager or error will occur

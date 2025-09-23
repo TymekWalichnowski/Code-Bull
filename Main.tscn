@@ -15,11 +15,25 @@ size = Vector2(128, 176)
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("1_glv2v")
 
-[node name="CardSlot" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(312, 229)
+[node name="CardSlots" type="Node2D" parent="."]
 
-[node name="CardSlot2" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(483, 228)
+[node name="CardSlot" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(802, 660)
+
+[node name="CardSlot2" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(972, 659)
+
+[node name="CardSlot3" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(1138, 659)
+
+[node name="CardSlot4" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(802, 374)
+
+[node name="CardSlot5" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(972, 373)
+
+[node name="CardSlot6" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(1138, 373)
 
 [node name="PlayerHand" type="Node2D" parent="."]
 script = ExtResource("3_cm0pq")
@@ -49,5 +63,30 @@ offset_bottom = -99.0
 scale = Vector2(2, 2)
 text = "0"
 
+[node name="OpponentDeck" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="OpponentDeck"]
+texture_filter = 1
+position = Vector2(1756, 132)
+scale = Vector2(2, 2)
+texture = ExtResource("4_cm0pq")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="OpponentDeck"]
+z_index = -2
+offset_left = -65.0
+offset_top = -131.0
+offset_right = 64.0
+offset_bottom = -99.0
+scale = Vector2(2, 2)
+text = "0"
+
 [node name="InputManager" type="Node2D" parent="."]
 script = ExtResource("6_3dxm6")
+
+[node name="EndTurnButton" type="Button" parent="."]
+offset_left = 1419.0
+offset_top = 459.0
+offset_right = 1509.0
+offset_bottom = 490.0
+scale = Vector2(2.5, 2.5)
+text = "END TURN"
