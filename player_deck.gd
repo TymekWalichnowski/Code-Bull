@@ -3,7 +3,7 @@ extends Node2D
 const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const CARD_DRAW_SPEED = 0.2
 
-var player_deck = ["Basic", "Sword", "Shield"]
+var player_deck = ["Basic", "Sword", "Shield", "Shield"]
 var card_database_reference 
 
 func _ready() -> void:

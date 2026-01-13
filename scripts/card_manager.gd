@@ -2,6 +2,7 @@ extends Node2D
 
 const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_CARD_SLOT = 2
+
 const DEFAULT_CARD_MOVE_SPEED = 0.1
 const DEFAULT_CARD_SCALE = 1.2
 const BIGGER_CARD_SCALE = 1.4
@@ -14,8 +15,8 @@ var player_hand_reference
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
-	player_hand_reference = $"../PlayerHand"
-	$"../InputManager".connect("left_mouse_button_released", on_left_click_released)
+	player_hand_reference = %PlayerHand
+	%InputManager.connect("left_mouse_button_released", on_left_click_released)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -28,20 +29,21 @@ func start_drag(card):
 	card.get_parent().move_child(card,-1) # taken from comment, may be buggy, makes sure cards fall on top of other cards
 	card_being_dragged = card
 	card.scale = Vector2(DEFAULT_CARD_SCALE,DEFAULT_CARD_SCALE)
-	var card_slot_found = raycast_check_for_card_slot()
-	print("trying to drag off")
-	if card_slot_found and card_slot_found.card_in_slot:
+	player_hand_reference.remove_card_from_hand(card_being_dragged) # remove from player hand
+	
+	var card_slot_found = raycast_check_for_card_slot(card)
+	if card_slot_found:
 		card_slot_found.card_in_slot = false
-		print("dragging off")
+		card.cards_current_slot = null
+		print("dragged off card slot")
 		
 
 func finish_drag():
 	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
-	var card_slot_found = raycast_check_for_card_slot()
+	var card_slot_found = raycast_check_for_card_slot(card_being_dragged)
 	if card_slot_found and not card_slot_found.card_in_slot:
 		card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 		card_being_dragged.cards_current_slot = card_slot_found
-		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		#Card dropped in empty card slot
 		card_being_dragged.position = card_slot_found.position
 
@@ -54,33 +56,52 @@ func connect_card_signals(card):
 	card.connect("hovered", on_hovered_over_card)
 	card.connect("hovered_off", on_hovered_off_card)
 
-
 func on_left_click_released():
 	if card_being_dragged:
 		finish_drag()
 
 func on_hovered_over_card(card):
-	if !is_hovering_on_card:
-		is_hovering_on_card = true
-		highlight_card(card, true)
+	print("hovered over card")
+	
+
+	if card.cards_current_slot:
+		return
+
+	if is_hovering_on_card:
+		return
+
+	is_hovering_on_card = true
+	highlight_card(card, true)
 
 func on_hovered_off_card(card):
-	if !card.cards_current_slot && !card_being_dragged:
-		highlight_card(card, false)
-			# Check if hobered off card straight onto another card
-		var new_card_hovered = raycast_check_for_card()
-		if new_card_hovered:
-			highlight_card(new_card_hovered, true)
-		else:
-			is_hovering_on_card = false
+	print("hovered off card")
+	
+	# Always unhighlight the card being exited
+	highlight_card(card, false)
+	is_hovering_on_card = false
+
+	# If dragging, do nothing else
+	if card_being_dragged:
+		return
+
+	# Try to highlight a NEW valid card
+	var new_card_hovered = raycast_check_for_card()
+	if new_card_hovered and !new_card_hovered.cards_current_slot:
+		is_hovering_on_card = true
+		highlight_card(new_card_hovered, true)
 
 func highlight_card(card, hovered):
+	
 	if hovered:
 		card.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
+		print(card.cards_current_slot)
 		card.z_index = 3
 	else:
-		card.scale = Vector2(DEFAULT_CARD_SCALE,DEFAULT_CARD_SCALE)
-		card.z_index = 2
+		if card.cards_current_slot:
+			card.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
+		else:
+			card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
+	card.z_index = 2
 
 func raycast_check_for_card():
 	var space_state = get_world_2d().direct_space_state
@@ -94,10 +115,10 @@ func raycast_check_for_card():
 		return get_card_with_highest_z_index(result)
 	return null # Returns Nothing
 
-func raycast_check_for_card_slot():
+func raycast_check_for_card_slot(card):
 	var space_state = get_world_2d().direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()
-	parameters.position = get_global_mouse_position()
+	parameters.position = card.global_position
 	parameters.collide_with_areas = true
 	parameters.collision_mask = COLLISION_MASK_CARD_SLOT
 	var result = space_state.intersect_point(parameters)

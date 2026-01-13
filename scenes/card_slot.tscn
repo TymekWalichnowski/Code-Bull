@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/Textures/Cards/card_Slot.png" id="1_mxh2e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cypty"]
-size = Vector2(128, 176)
+size = Vector2(158, 206)
 
 [node name="CardSlot" type="Node2D"]
 z_index = 1
