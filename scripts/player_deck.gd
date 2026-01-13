@@ -2,15 +2,25 @@ extends Node2D
 
 const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const CARD_DRAW_SPEED = 0.2
+const STARTING_HAND_SIZE = 5
 
-var player_deck = ["Basic", "Sword", "Shield", "Shield"]
+var player_deck = ["Basic", "Sword", "Shield", "Shield", "Basic", "Sword", "Sword"]
 var card_database_reference 
+var drawn_card_this_turn = false
 
 func _ready() -> void:
 	$RichTextLabel.text = str(player_deck.size())
 	card_database_reference = preload("res://scripts/card_database.gd")
+	for i in range(STARTING_HAND_SIZE):
+		draw_card()
+		drawn_card_this_turn = false
+	drawn_card_this_turn = true
 
 func draw_card():
+	if drawn_card_this_turn:
+		return
+	
+	drawn_card_this_turn = true
 	player_deck.shuffle()
 	var card_drawn_name = player_deck[0]
 	player_deck.erase(card_drawn_name)

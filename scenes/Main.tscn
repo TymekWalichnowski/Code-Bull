@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://nl86bj6ee0c6" path="res://scripts/card_manager.gd" id="1_glv2v"]
-[ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://player_hand.gd" id="3_cm0pq"]
+[ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="4_cm0pq"]
-[ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://player_deck.gd" id="4_fos0i"]
-[ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://input_manager.gd" id="6_3dxm6"]
+[ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
+[ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
@@ -18,21 +18,27 @@ script = ExtResource("1_glv2v")
 [node name="CardSlots" type="Node2D" parent="."]
 
 [node name="CardSlot" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = 0
 position = Vector2(802, 660)
 
 [node name="CardSlot2" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = 0
 position = Vector2(972, 659)
 
 [node name="CardSlot3" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = 0
 position = Vector2(1138, 659)
 
 [node name="CardSlot4" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = 0
 position = Vector2(802, 374)
 
 [node name="CardSlot5" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = 0
 position = Vector2(972, 373)
 
 [node name="CardSlot6" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = 0
 position = Vector2(1138, 373)
 
 [node name="PlayerHand" type="Node2D" parent="."]
