@@ -1,7 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsuuljgrc5evc"]
+[gd_scene load_steps=10 format=3 uid="uid://bsuuljgrc5evc"]
 
 [ext_resource type="Script" uid="uid://cfuut4xpf3eg5" path="res://scripts/card_slot.gd" id="1_cypty"]
 [ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/Textures/Cards/card_slot.png" id="1_mxh2e"]
+
+[sub_resource type="Shader" id="Shader_cypty"]
+code = "shader_type canvas_item;
+render_mode blend_add, unshaded;
+
+uniform sampler2D noise_texture: repeat_enable;
+uniform float flame_speed: hint_range(0.1, 5.0) = 1.0;       // speed of flame flicker
+uniform float flame_intensity: hint_range(0.1, 5.0) = 2.0;   // brightness
+uniform float flame_thickness: hint_range(0.01, 0.2) = 0.05; // thickness of flames
+uniform float flame_height: hint_range(0.05, 0.5) = 0.2;     // how far flames extend outward
+
+void fragment() {
+    vec2 uv_centered = UV - vec2(0.5);
+
+    // distance from edge
+    float dist_x = 0.5 - abs(uv_centered.x);
+    float dist_y = 0.5 - abs(uv_centered.y);
+    float dist_to_edge = min(dist_x, dist_y);
+
+    // only near edge
+    float edge_mask = smoothstep(0.0, flame_thickness, dist_to_edge);
+
+    // add noise flicker
+    vec2 noise_uv = UV * vec2(5.0, 5.0) + vec2(0.0, TIME * flame_speed);
+    float n = texture(noise_texture, noise_uv).r;
+
+    // flames extend outward from edges
+    float flame_mask = edge_mask * pow(n, 1.5) * flame_intensity;
+    flame_mask *= smoothstep(flame_height, 0.0, dist_to_edge);
+
+    // fire gradient color
+    vec3 fire_color = vec3(1.0, 0.8, 0.2) * flame_mask; // yellow/orange base
+    fire_color = mix(fire_color, vec3(1.0, 0.2, 0.0), flame_mask); // fade to red at tips
+
+    COLOR = vec4(fire_color, flame_mask);
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cypty"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hrxt0"]
+noise = SubResource("FastNoiseLite_cypty")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dwl65"]
+shader = SubResource("Shader_cypty")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_hrxt0")
+shader_parameter/flame_speed = 0.21100000676261998
+shader_parameter/flame_intensity = 3.97100018536262
+shader_parameter/flame_thickness = 0.11300000466898
+shader_parameter/flame_height = 0.2
+
+[sub_resource type="Gradient" id="Gradient_cypty"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hrxt0"]
+gradient = SubResource("Gradient_cypty")
+width = 89
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cypty"]
 size = Vector2(158, 206)
@@ -9,6 +67,15 @@ size = Vector2(158, 206)
 [node name="CardSlot" type="Node2D"]
 z_index = 1
 script = ExtResource("1_cypty")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_dwl65")
+offset_left = -77.0
+offset_top = -105.0
+offset_right = 77.0
+offset_bottom = 105.0
+texture = SubResource("GradientTexture1D_hrxt0")
 
 [node name="CardSlotImage" type="Sprite2D" parent="."]
 texture_filter = 1

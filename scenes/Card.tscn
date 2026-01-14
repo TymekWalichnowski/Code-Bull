@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwla2fy4oxib6"]
+[gd_scene load_steps=12 format=3 uid="uid://bwla2fy4oxib6"]
 
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_tgmmg"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="2_ktuci"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/Audio/card-place-2.ogg" id="5_40ytf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kg30u"]
 shader = ExtResource("3_kg30u")
@@ -195,6 +196,10 @@ text = "0"
 libraries = {
 &"": SubResource("AnimationLibrary_ktuci")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_40ytf")
+volume_db = -3.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

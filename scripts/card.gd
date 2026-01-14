@@ -18,6 +18,11 @@ var original_z_index := 0
 var card_image: Sprite2D
 var card_back_image: Sprite2D
 
+var sounds = {
+	"place": preload("res://Assets/Audio/card-place-2.ogg"),
+	"pickup": preload("res://Assets/Audio/card-place-1.ogg")
+}
+
 func _ready() -> void:
 	get_parent().connect_card_signals(self)
 
@@ -106,3 +111,10 @@ func _on_area_2d_mouse_entered() -> void:
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
 	emit_signal("hovered_off", self)
+
+func play_audio(name: String) -> void:
+	if sounds.has(name):
+		$AudioStreamPlayer.stream = sounds[name]
+		$AudioStreamPlayer.play()
+	else:
+		push_warning("Sound not found: " + name)
