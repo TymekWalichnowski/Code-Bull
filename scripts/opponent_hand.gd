@@ -10,7 +10,7 @@ var opponent_hand = []
 var center_screen_x
 
 func _ready() -> void:
-	center_screen_x = get_viewport().size.x / 2
+	center_screen_x = get_viewport_rect().size.x / 2
 
 func add_card_to_hand(card, speed):
 	if card not in opponent_hand:

@@ -23,17 +23,27 @@ func draw_card():
 		$RichTextLabel.visible = false
 
 	print("draw card")
-	$RichTextLabel.text = str(opponent_deck.size())
+	var card_data = card_database_reference.CARDS[card_drawn_name]
+	var card_id = card_data[0]
+
+	# Instantiate the card scene
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
-	var card_image_path = str("res://Assets/Textures/Cards/card_" + card_drawn_name + ".png")
-	new_card.get_node("CardImage").texture = load(card_image_path)
 
-	# Set card_id FIRST
-	new_card.card_id = card_database_reference.CARDS[card_drawn_name][0]  # store as int property
-	new_card.get_node("CardLabel").text = str(new_card.card_id)
+	# Assign properties directly
+	new_card.card_id = card_id        # For battle logic
+	new_card.card_name = card_drawn_name  # Optional, human-readable
 
+	# Cache nodes
+	var card_image = new_card.get_node("CardImage")
+	var card_label = new_card.get_node("CardLabel")
+	var anim_player = new_card.get_node("AnimationPlayer")
+
+	# Set up visuals
+	card_image.texture = load("res://Assets/Textures/Cards/card_" + card_drawn_name + ".png")
+	card_label.text = str(card_id)
+
+	# Add to scene tree and hand
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
 	$"../OpponentHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
-	print(new_card.card_id)

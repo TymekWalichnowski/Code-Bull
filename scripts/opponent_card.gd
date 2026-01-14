@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var card_name: String = "Basic"  # Default card type
+
 var card_type
 var hand_position
 var card_id: int = 0

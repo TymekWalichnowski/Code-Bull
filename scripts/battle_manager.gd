@@ -1,5 +1,17 @@
 extends Node
 
+@onready var player_slots = [
+	$"../CardSlots/CardSlot",
+	$"../CardSlots/CardSlot2",
+	$"../CardSlots/CardSlot3"
+]
+
+@onready var opponent_slots = [
+	$"../CardSlots/OpponentCardSlot",
+	$"../CardSlots/OpponentCardSlot2",
+	$"../CardSlots/OpponentCardSlot3"
+]
+
 @onready var battle_timer = %BattleTimer
 var empty_opponent_card_slots = []
 
@@ -64,6 +76,7 @@ func play_opponent_cards():
 		# Assign card to slot
 		card_to_play.cards_current_slot = slot
 		slot.card_in_slot = true
+		slot.card = card_to_play
 
 		# Remove from the real hand and update free slots
 		%OpponentHand.remove_card_from_hand(card_to_play)
@@ -89,22 +102,94 @@ func end_opponent_turn():
 	
 func start_clash():
 	#attack()
+	await run_action_phase()
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
 	
+func run_action_phase():
+	var slot_count = max(player_slots.size(), opponent_slots.size())
 
-func attack(attacking_card, attacker):
+	for slot_index in range(slot_count):
+		var player_card = null
+		var opponent_card = null
+
+		if slot_index < player_slots.size():
+			player_card = player_slots[slot_index].card
+
+		if slot_index < opponent_slots.size():
+			opponent_card = opponent_slots[slot_index].card
+
+		# ---- ACTION 1 (SIMULTANEOUS) ----
+		print(" ")
+		print("action 1")
+		await resolve_action_step(player_card, opponent_card, 1, 2)
+		await wait(3.3)
+
+		# ---- ACTION 2 (SIMULTANEOUS) ----
+		print("action 2")
+		await resolve_action_step(player_card, opponent_card, 3, 4)
+		await wait(5.3)
+
+func resolve_action_step(card_a, card_b, action_index, value_index):
+	var tweens = []
+
+	if card_a != null:
+		var t = activate_card_action(card_a, action_index, value_index)
+		if t:
+			tweens.append(t)
+
+	if card_b != null:
+		var t = activate_card_action(card_b, action_index, value_index)
+		if t:
+			tweens.append(t)
+
+	# Wait until BOTH finish
+	for tween in tweens:
+		await tween.finished
+
+func activate_card_action(card, action_index, value_index):
+	var card_data = CardDatabase.CARDS[card.card_name]
+
+	var action = card_data[action_index]
+	var value = card_data[value_index]
+
+	if action == null:
+		return null
+
+	print("card name:", card.card_name, " uses:", action," value:", value)
+
+	# Example visual motion
+	var new_y = 0 if card.cards_current_slot in opponent_slots else 1080
+	var tween = get_tree().create_tween()
+	tween.tween_property(card, "position:y", new_y, CARD_MOVE_SPEED)
+
+	# Apply gameplay effect
+	apply_action(card, action, value)
+
+	return tween
+
+func apply_action(card, action, value):
+	match action:
+		"Attack":
+			print("Deal: ", value, "damage")
+		"Shield":
+			print("Gain shield", value)
+
+func perform_action(acting_card, actor):
 	var new_pos_y
-	if attacker == "Opponent":
+	if actor == "Opponent":
 		new_pos_y = 1080
 	else:
 		new_pos_y = 0
 	
-	var new_pos = Vector2(attacking_card.position.x, new_pos_y)
+	var new_pos = Vector2(acting_card.position.x, new_pos_y)
 	var tween = get_tree().create_tween()
-	tween.tween_property(attacking_card, "position", new_pos, CARD_MOVE_SPEED)
+	tween.tween_property(acting_card, "position", new_pos, CARD_MOVE_SPEED)
 
 	print("activate card")
+	
+	await tween.finished
+	await wait(15.0) # small pause between attacks, doesnt activate when tween is finished, figure that out
 
 func wait(wait_time):
 	battle_timer.wait_time = wait_time

@@ -3,6 +3,9 @@ extends Node2D
 signal hovered
 signal hovered_off
 
+@export var card_name: String = "Basic"  # Default card type
+@export var card_id: int = 0
+
 @export var max_rotation := 30.0
 @export var follow_speed := 10.0
 @export var return_speed := 7.0

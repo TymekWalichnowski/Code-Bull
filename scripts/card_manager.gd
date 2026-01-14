@@ -36,12 +36,10 @@ func start_drag(card):
 	if card_slot_found:
 		card_slot_found.card_in_slot = false
 		card.cards_current_slot = null
+		card_slot_found.card = null
 		print("dragged off card slot")
-		
 
 func finish_drag():
-	
-
 	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot(card_being_dragged)
 	if card_slot_found and not card_slot_found.card_in_slot:
@@ -49,8 +47,8 @@ func finish_drag():
 		card_being_dragged.cards_current_slot = card_slot_found
 		#Card dropped in empty card slot
 		card_being_dragged.position = card_slot_found.position
-
 		card_slot_found.card_in_slot = true
+		card_slot_found.card = card_being_dragged #add card being dragged to the slot
 	else:
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
