@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwla2fy4oxib6"]
+[gd_scene load_steps=12 format=3 uid="uid://bwla2fy4oxib6"]
 
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_tgmmg"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
+[ext_resource type="Script" uid="uid://cqx1fyrjco07t" path="res://scripts/card_image.gd" id="5_sy11y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kg30u"]
 shader = ExtResource("3_kg30u")
@@ -176,6 +177,7 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_6ligt")
 scale = Vector2(2, 2)
 texture = ExtResource("1_dd2wi")
+script = ExtResource("5_sy11y")
 
 [node name="Area2D" type="Area2D" parent="."]
 
