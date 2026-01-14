@@ -42,3 +42,6 @@ func draw_card():
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
 	$"../PlayerHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
+
+func reset_draw():
+	drawn_card_this_turn = false
