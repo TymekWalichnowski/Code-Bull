@@ -1,13 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=12 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://nl86bj6ee0c6" path="res://scripts/card_manager.gd" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
-[ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/enemy_card_slot.tscn" id="3_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
+[ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://cx76sr656x5on" path="res://scripts/battle_manager.gd" id="8_jlsqs"]
+[ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
@@ -32,20 +34,25 @@ position = Vector2(972, 659)
 z_index = 0
 position = Vector2(1138, 659)
 
-[node name="EnemyCardSlot" parent="CardSlots" instance=ExtResource("3_nxtc6")]
+[node name="OpponentCardSlot" parent="CardSlots" instance=ExtResource("3_nxtc6")]
 position = Vector2(802, 300)
 
-[node name="EnemyCardSlot2" parent="CardSlots" instance=ExtResource("3_nxtc6")]
+[node name="OpponentCardSlot2" parent="CardSlots" instance=ExtResource("3_nxtc6")]
 position = Vector2(972, 300)
 
-[node name="EnemyCardSlot3" parent="CardSlots" instance=ExtResource("3_nxtc6")]
+[node name="OpponentCardSlot3" parent="CardSlots" instance=ExtResource("3_nxtc6")]
 position = Vector2(1138, 300)
 
 [node name="PlayerHand" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_cm0pq")
 
+[node name="OpponentHand" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_q8u5g")
+
 [node name="PlayerDeck" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(150, 900)
 script = ExtResource("4_fos0i")
 
@@ -71,10 +78,12 @@ scale = Vector2(2, 2)
 text = "0"
 
 [node name="OpponentDeck" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1756, 132)
+script = ExtResource("8_lhr70")
 
 [node name="Sprite2D" type="Sprite2D" parent="OpponentDeck"]
 texture_filter = 1
-position = Vector2(1756, 132)
 scale = Vector2(2, 2)
 texture = ExtResource("4_cm0pq")
 
@@ -101,5 +110,8 @@ text = "END TURN"
 
 [node name="BattleManager" type="Node" parent="."]
 script = ExtResource("8_jlsqs")
+
+[node name="BattleTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]

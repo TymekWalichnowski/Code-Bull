@@ -1,10 +1,10 @@
+@icon("res://Assets/icons/32x32/character.png")
 extends Node2D
 
 const CARD_WIDTH = 175
 const HAND_Y_POSITION = 900
 const DEFAULT_CARD_MOVE_SPEED = 0.1
 const DEFAULT_CARD_SCALE = 1.2 ## make this const global later
-
 
 var player_hand = []
 var center_screen_x
