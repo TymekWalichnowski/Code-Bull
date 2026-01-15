@@ -7,6 +7,7 @@ var hand_position
 var card_id: int = 0
 var cards_current_slot: Node2D
 
+const OWNER = "Opponent"
 
 func _on_area_2d_mouse_entered() -> void:
 	emit_signal("hovered", self)

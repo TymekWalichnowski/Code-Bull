@@ -1,5 +1,8 @@
 extends Node
 
+var player_graveyard = []
+var opponent_graveyard = []
+
 @onready var player_slots = [
 	$"../CardSlots/CardSlot",
 	$"../CardSlots/CardSlot2",
@@ -13,10 +16,16 @@ extends Node
 ]
 
 @onready var battle_timer = %BattleTimer
-var empty_opponent_card_slots = []
+
+const STARTING_HEALTH = 10
 
 const SMALLER_CARD_SCALE = 1.05
 const CARD_MOVE_SPEED = 0.2
+
+var player_health
+var opponent_health
+
+var empty_opponent_card_slots = []
 
 func _ready() -> void:
 	battle_timer.one_shot = true
@@ -25,13 +34,17 @@ func _ready() -> void:
 	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot")
 	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot2")
 	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot3")
-
+	
+	# A bit awkward, clean this up
+	%Player.health = STARTING_HEALTH
+	%Opponent.health = STARTING_HEALTH
+	$"../PlayerHealth".text = str(%Player.health)
+	$"../OpponentHealth".text = str(%Opponent.health)
 
 func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".disabled = true
 	$"../EndTurnButton".visible = false
 	opponent_turn()
-
 
 func opponent_turn():
 	# wait a bit
@@ -42,6 +55,7 @@ func opponent_turn():
 		%OpponentDeck.draw_card()
 		await wait(1)
 	
+	# Add proper AI here
 	if empty_opponent_card_slots.size() != 0:
 		await play_opponent_cards() # just picks highest id for now
 	
@@ -51,7 +65,7 @@ func play_opponent_cards():
 	# Make a safe copy of the hand to iterate
 	var hand = %OpponentHand.opponent_hand.duplicate()
 
-	# Play cards while there are cards in hand and free slots
+	# Play cards while there are cards in hand and empty slots
 	while hand.size() > 0 and empty_opponent_card_slots.size() > 0:
 		# Pick the card with the highest ID
 		var card_to_play = hand[0]
@@ -85,32 +99,20 @@ func play_opponent_cards():
 		# Remove from local copy to avoid picking again
 		hand.erase(card_to_play)
 
-
-# Helper function for sort_custom
-func _sort_card_descending(a, b):
-	# Return -1 if a should come before b, 1 if after
-	if a.card_id == b.card_id:
-		return 0
-	elif a.card_id > b.card_id:
-		return -1
-	else:
-		return 1
-
 func end_opponent_turn():
 	%PlayerDeck.reset_draw()
-	start_clash()
-	
-func start_clash():
-	#attack()
 	await run_action_phase()
+	
+	
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
-	
+
 func run_action_phase():
-	var slot_count = max(player_slots.size(), opponent_slots.size())
+	var slot_count = max(player_slots.size(), opponent_slots.size()) # chooses the larger of the two slot counts
 
 	for slot_index in range(slot_count):
-		var player_card = null
+		print("\n ---- CARD SLOT " , slot_index + 1, " ----" )
+		var player_card = null # initialize cards as null before assigning them, to be safe
 		var opponent_card = null
 
 		if slot_index < player_slots.size():
@@ -118,78 +120,126 @@ func run_action_phase():
 
 		if slot_index < opponent_slots.size():
 			opponent_card = opponent_slots[slot_index].card
-
-		# ---- ACTION 1 (SIMULTANEOUS) ----
-		print(" ")
-		print("action 1")
+		
+		
+		# ---- ACTION 1 ---- don't need to skip this as card always has 1 action
+		print("\n -- action 1 --")
 		await resolve_action_step(player_card, opponent_card, 1, 2)
-		await wait(3.3)
+		await wait(2.0)
 
-		# ---- ACTION 2 (SIMULTANEOUS) ----
-		print("action 2")
-		await resolve_action_step(player_card, opponent_card, 3, 4)
-		await wait(5.3)
+		# ---- ACTION 2 ---- checks if card actions are null, if they are, skips the action
+		if has_action(player_card, 3) or has_action(opponent_card, 3):
+			print("\n -- action 2 --")
+			await resolve_action_step(player_card, opponent_card, 3, 4)
+			await wait(2.0)
+		else:
+			print("\n action 2 skipped (both null)")
 
-func resolve_action_step(card_a, card_b, action_index, value_index):
+		# ---- ACTION 3 ---- checks if card actions are null, if they are, skips the action
+		if has_action(player_card, 5) or has_action(opponent_card, 5):
+			print("\n -- action 3 --")
+			await resolve_action_step(player_card, opponent_card, 5, 6)
+			await wait(2.0)
+		else:
+			print("\n action 3 skipped (both null)")
+		
+		# Move used cards to graveyards
+		collect_used_card(player_card)
+		collect_used_card(opponent_card)
+		reset_opponent_slots()
+		
+
+func resolve_action_step(player_card, opponent_card, action_index, value_index):
 	var tweens = []
-
-	if card_a != null:
-		var t = activate_card_action(card_a, action_index, value_index)
+	
+	if player_card != null: # checking that there's a player card
+		var t = activate_card_action(player_card, action_index, value_index) 
 		if t:
 			tweens.append(t)
 
-	if card_b != null:
-		var t = activate_card_action(card_b, action_index, value_index)
+	if opponent_card != null: # checking that there's an opponent card
+		var t = activate_card_action(opponent_card, action_index, value_index)
 		if t:
 			tweens.append(t)
 
-	# Wait until BOTH finish
+	# Use until BOTH finish
 	for tween in tweens:
 		await tween.finished
 
-func activate_card_action(card, action_index, value_index):
-	var card_data = CardDatabase.CARDS[card.card_name]
+func activate_card_action(card, action_index, value_index): # Activate that card's action, tells it what action to use and the value associated with it 
+	var card_data = CardDatabase.CARDS[card.card_name] # Gets the card from the database by checking its name
 
 	var action = card_data[action_index]
 	var value = card_data[value_index]
 
-	if action == null:
+	if action == null: # Returns if no action
+		print("USER:", card.OWNER, " had no action.")
 		return null
 
-	print("card name:", card.card_name, " uses:", action," value:", value)
-
-	# Example visual motion
+	# Displaying what the card action is
+	print("USER:", card.OWNER, " CARD_NAME:", card.card_name, " USED_ACTION:", action," VALUE:", value)
+	
+	# Example animation - replace later
 	var new_y = 0 if card.cards_current_slot in opponent_slots else 1080
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "position:y", new_y, CARD_MOVE_SPEED)
 
-	# Apply gameplay effect
-	apply_action(card, action, value)
-
-	return tween
+	apply_action(card, action, value) # Apply the card's gameplay effect
+	
+	return tween # Returns the tween, lets us know if it's finished or not
 
 func apply_action(card, action, value):
+	var target
+	var self_target
+	
+	if card.OWNER == "Player":
+		target = %Opponent
+		self_target = %Player
+	else:
+		target = %Player
+		self_target = %Opponent
+		
 	match action:
 		"Attack":
-			print("Deal: ", value, "damage")
+			print(card.OWNER, " deals ", value, " damage.")
+			target.health -= value
 		"Shield":
-			print("Gain shield", value)
+			print(card.OWNER, " gains ", value, " shield.")
+			self_target.health += value
+			
+	$"../PlayerHealth".text = str(%Player.health)
+	$"../OpponentHealth".text = str(%Opponent.health) 
+	# Add a proper way of differentiating the card owner and their enemies later, clean this up
 
-func perform_action(acting_card, actor):
-	var new_pos_y
-	if actor == "Opponent":
-		new_pos_y = 1080
+func has_action(card, action_index) -> bool: # checking if a card has an action
+	if card == null:
+		return false
+	return CardDatabase.CARDS[card.card_name][action_index] != null
+
+func collect_used_card(card):
+	if card == null:
+		return
+	
+	if card.OWNER == "Player":
+		player_graveyard.append(card.card_name)
 	else:
-		new_pos_y = 0
+		opponent_graveyard.append(card.card_name)
 	
-	var new_pos = Vector2(acting_card.position.x, new_pos_y)
-	var tween = get_tree().create_tween()
-	tween.tween_property(acting_card, "position", new_pos, CARD_MOVE_SPEED)
-
-	print("activate card")
+	# Free the node from scene
+	if is_instance_valid(card):
+		card.queue_free()
 	
-	await tween.finished
-	await wait(15.0) # small pause between attacks, doesnt activate when tween is finished, figure that out
+	# Clear its slot
+	if card.cards_current_slot:
+		card.cards_current_slot.card = null
+		card.cards_current_slot.card_in_slot = false
+		card.cards_current_slot = null
+		
+func reset_opponent_slots():
+	empty_opponent_card_slots.clear()
+	for slot in opponent_slots:
+		if not slot.card_in_slot:
+			empty_opponent_card_slots.append(slot)
 
 func wait(wait_time):
 	battle_timer.wait_time = wait_time

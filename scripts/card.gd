@@ -10,6 +10,8 @@ signal hovered_off
 @export var follow_speed := 10.0
 @export var return_speed := 7.0
 
+const OWNER = "Player"
+
 var hand_position
 var cards_current_slot
 var hovering := false
