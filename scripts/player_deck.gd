@@ -17,12 +17,12 @@ func _ready() -> void:
 	drawn_card_this_turn = true
 
 func draw_card():
-	if drawn_card_this_turn:
-		return
+	#if drawn_card_this_turn: # dont need this logic currently
+		#return
 	
-	drawn_card_this_turn = true
-	player_deck.shuffle()
-	var card_drawn_name = player_deck[0]
+	#drawn_card_this_turn = true
+	#player_deck.shuffle()
+	var card_drawn_name = player_deck[0] # add error proofing here later
 	player_deck.erase(card_drawn_name)
 	
 	if player_deck.size() == 0:
@@ -30,7 +30,7 @@ func draw_card():
 		$Sprite2D.visible = false
 		$RichTextLabel. visible = false
 
-	print("draw card")
+	print("draw player card")
 	$RichTextLabel.text = str(player_deck.size())
 
 	var card_data = card_database_reference.CARDS[card_drawn_name]

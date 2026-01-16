@@ -3,17 +3,17 @@ shader_type canvas_item;
 // Camera FOV
 uniform float fov : hint_range(1, 179) = 90;
 uniform bool cull_back = true;
-uniform float y_rot : hint_range(-30, 30) = 0.0; // Limitado a ±30 grados
-uniform float x_rot : hint_range(-30, 30) = 0.0; // Limitado a ±30 grados
+uniform float y_rot : hint_range(-90, 90) = 0.0; // Limit to ±60 degrees
+uniform float x_rot : hint_range(-90, 90) = 0.0; // Limit to ±60 degrees
 uniform float inset : hint_range(0, 1) = 0.0;
 
 varying flat vec2 o;
 varying vec3 p;
 
 void vertex() {
-    // Limitar los valores dentro del shader por seguridad
-    float limited_y_rot = clamp(y_rot, -30.0, 30.0);
-    float limited_x_rot = clamp(x_rot, -30.0, 30.0);
+    // Limit the values in the shader for security
+    float limited_y_rot = clamp(y_rot, -90.0, 90.0);
+    float limited_x_rot = clamp(x_rot, -90.0, 90.0);
 
     float sin_b = sin(limited_y_rot / 180.0 * PI);
     float cos_b = cos(limited_y_rot / 180.0 * PI);

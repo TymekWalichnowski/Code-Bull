@@ -41,8 +41,10 @@ func raycast_at_cursor():
 				card_manager_reference.start_drag(card_found)
 			return  # Stop after finding the card
 
-	for result in results:
-		var collider = result.collider
-		if collider.collision_mask == COLLISION_MASK_DECK:
-			deck_reference.draw_card()
-			return
+	# disabled clicking deck from tutorial
+
+	#for result in results: 
+		#var collider = result.collider
+		#if collider.collision_mask == COLLISION_MASK_DECK:
+			#deck_reference.draw_card()
+			#return

@@ -40,11 +40,15 @@ func _ready() -> void:
 	%Opponent.health = STARTING_HEALTH
 	$"../PlayerHealth".text = str(%Player.health)
 	$"../OpponentHealth".text = str(%Opponent.health)
+	opponent_turn()
 
 func _on_end_turn_button_pressed() -> void:
+	await run_action_phase()
+	opponent_turn()
+	%PlayerDeck.draw_card()
+	
 	$"../EndTurnButton".disabled = true
 	$"../EndTurnButton".visible = false
-	opponent_turn()
 
 func opponent_turn():
 	# wait a bit
@@ -100,10 +104,6 @@ func play_opponent_cards():
 		hand.erase(card_to_play)
 
 func end_opponent_turn():
-	%PlayerDeck.reset_draw()
-	await run_action_phase()
-	
-	
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
 
@@ -180,11 +180,14 @@ func activate_card_action(card, action_index, value_index): # Activate that card
 	print("USER:", card.OWNER, " CARD_NAME:", card.card_name, " USED_ACTION:", action," VALUE:", value)
 	
 	# Example animation - replace later
-	var new_y = 0 if card.cards_current_slot in opponent_slots else 1080
+	var new_pos = $"../OpponentCardPoint".global_position if card.cards_current_slot in opponent_slots else $"../PlayerCardPoint".global_position
 	var tween = get_tree().create_tween()
-	tween.tween_property(card, "position:y", new_y, CARD_MOVE_SPEED)
+	tween.tween_property(card, "position", new_pos, CARD_MOVE_SPEED)
+	tween.finished.connect(func():
+		await get_tree().create_timer(0.2).timeout # just using a temporary timer, add functionality for a pause + left click.
+		apply_action(card, action, value)
+	)
 
-	apply_action(card, action, value) # Apply the card's gameplay effect
 	
 	return tween # Returns the tween, lets us know if it's finished or not
 
@@ -206,7 +209,10 @@ func apply_action(card, action, value):
 		"Shield":
 			print(card.OWNER, " gains ", value, " shield.")
 			self_target.health += value
-			
+	
+	# Change animation functionality elsewher
+	card.get_node("AnimationPlayer").play("card_basic_use")
+	
 	$"../PlayerHealth".text = str(%Player.health)
 	$"../OpponentHealth".text = str(%Opponent.health) 
 	# Add a proper way of differentiating the card owner and their enemies later, clean this up
