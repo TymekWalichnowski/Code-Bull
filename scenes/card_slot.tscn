@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bsuuljgrc5evc"]
 
 [ext_resource type="Script" uid="uid://cfuut4xpf3eg5" path="res://scripts/card_slot.gd" id="1_cypty"]
-[ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/Textures/Cards/card_Slot.png" id="1_mxh2e"]
+[ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/Textures/Cards/card_slot.png" id="1_mxh2e"]
 
 [sub_resource type="Shader" id="Shader_cypty"]
 code = "shader_type canvas_item;

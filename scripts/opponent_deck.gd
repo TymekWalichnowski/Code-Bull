@@ -4,7 +4,7 @@ const CARD_SCENE_PATH = "res://scenes/opponent_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
-var opponent_deck = ["Double Hit", "Double Hit", "Basic", "Sword", "Sword", "Basic", "Basic"]
+var opponent_deck = ["Divide", "Divide", "Double Hit", "Sword", "Sword", "Basic", "Basic"]
 var card_database_reference 
 
 func _ready() -> void:
