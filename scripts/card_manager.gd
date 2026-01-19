@@ -64,8 +64,8 @@ func on_left_click_released():
 		finish_drag()
 
 func on_hovered_over_card(card):
-	print("hovered over card")
-	
+	#print("hovered over card")
+	#
 
 	if card.cards_current_slot:
 		return
@@ -77,7 +77,7 @@ func on_hovered_over_card(card):
 	highlight_card(card, true)
 
 func on_hovered_off_card(card):
-	print("hovered off card")
+	#print("hovered off card")
 	
 	# Always unhighlight the card being exited
 	highlight_card(card, false)
