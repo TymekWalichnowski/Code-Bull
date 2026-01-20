@@ -2,10 +2,12 @@ extends Node2D
 
 const CARD_SCENE_PATH = "res://scenes/opponent_card.tscn"
 const CARD_DRAW_SPEED = 0.2
-const STARTING_HAND_SIZE = 5
+const STARTING_HAND_SIZE = 4 # starts with 1 hand less than player since automatically draws but probably want to fix this later
 
-var opponent_deck = ["Divide", "Divide", "Double Hit", "Sword", "Sword", "Basic", "Basic"]
+var opponent_deck = ["Draw 2", "Multiply", "Block", "Block", "Basic", "Sword", "Sword"]
 var card_database_reference 
+
+var graveyard = []
 
 func _ready() -> void:
 	$RichTextLabel.text = str(opponent_deck.size())
@@ -13,16 +15,18 @@ func _ready() -> void:
 	for i in range(STARTING_HAND_SIZE):
 		draw_card()
 
-
 func draw_card():
-	var card_drawn_name = opponent_deck[0]
-	opponent_deck.erase(card_drawn_name)
-	
-	if opponent_deck.size() == 0:
-		$Sprite2D.visible = false
-		$RichTextLabel.visible = false
+	if opponent_deck.size() == 0 and graveyard.size() > 0:
+		# Refill deck from graveyard
+		for card_node in graveyard:
+			opponent_deck.append(card_node.card_name)
+			card_node.visible = true  # make sure it’s usable again
+		graveyard.clear()
+		opponent_deck.shuffle()  # optional shuffle
 
 	print("draw opponent card")
+	var card_drawn_name = opponent_deck[0]
+	opponent_deck.erase(card_drawn_name)
 	
 	$RichTextLabel.text = str(opponent_deck.size())
 	var card_data = card_database_reference.CARDS[card_drawn_name]

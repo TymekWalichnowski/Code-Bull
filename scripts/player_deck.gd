@@ -4,9 +4,11 @@ const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
-var player_deck = ["Nullify", "Divide", "Block", "Block", "Basic", "Sword", "Sword"]
+var player_deck = ["2 Of Spades", "Multiply", "Block", "Block", "Draw 2", "Sword", "Sword"]
 var card_database_reference 
 var drawn_card_this_turn = false
+
+var graveyard = []
 
 func _ready() -> void:
 	$RichTextLabel.text = str(player_deck.size())
@@ -17,19 +19,18 @@ func _ready() -> void:
 	drawn_card_this_turn = true
 
 func draw_card():
-	#if drawn_card_this_turn: # dont need this logic currently
-		#return
-	
-	#drawn_card_this_turn = true
-	#player_deck.shuffle()
-	var card_drawn_name = player_deck[0] # add error proofing here later
-	player_deck.erase(card_drawn_name)
-	
-	if player_deck.size() == 0:
+	if player_deck.size() == 0 and graveyard.size() > 0:
+		# Refill deck from graveyard
+		for card_node in graveyard:
+			player_deck.append(card_node.card_name)
+			card_node.visible = true  # make sure it’s usable again
+		graveyard.clear()
+		player_deck.shuffle()  # optional shuffle
 		$Area2D/CollisionShape2D.disabled = true
-		$Sprite2D.visible = false
-		$RichTextLabel. visible = false
 
+	
+	var card_drawn_name = player_deck[0] # add error proofing here later for when draw cards but dont have enough in graveyard
+	player_deck.erase(card_drawn_name)
 	print("draw player card")
 	$RichTextLabel.text = str(player_deck.size())
 

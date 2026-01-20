@@ -94,7 +94,6 @@ func on_hovered_off_card(card):
 		highlight_card(new_card_hovered, true)
 
 func highlight_card(card, hovered):
-	
 	if hovered:
 		card.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
 		print(card.cards_current_slot)
