@@ -120,98 +120,87 @@ func wait(wait_time):
 	await battle_timer.timeout
 
 func run_check_phase():
-	var slot_count = max(player_slots.size(), opponent_slots.size()) # chooses the larger of the two slot counts
+	var slot_count = max(player_slots.size(), opponent_slots.size())
 
 	for slot_index in range(slot_count):
-		print("\n ---- CARD SLOT " , slot_index + 1, " ----" ) # printing the current slot
-		var player_card = null # initialize cards as null before assigning them, to be safe
-		var opponent_card = null
-		
-		# resetting nullifications
-		if %Player.nullified == true:
-			%Player.nullified = false
-		if %Opponent.nullified == true:
-			%Opponent.nullified = false
+		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
 
-		if slot_index < player_slots.size():
-			player_card = player_slots[slot_index].card
-		if slot_index < opponent_slots.size():
-			opponent_card = opponent_slots[slot_index].card
-		
-		
-		# ---- ACTION 1 ---- don't need to skip this as card always has 1 action
-		print("\n -- action 1 --")
-		await resolve_action_step(player_card, opponent_card, 1, 2, 3, 4)
-		await wait(1.0)
+		# Reset nullifications each slot
+		%Player.nullified = false
+		%Opponent.nullified = false
 
-		# ---- ACTION 2 ---- checks if card actions are null, if they are, skips the action
-		if has_action(player_card, 5) or has_action(opponent_card, 5, ):
-			print("\n -- action 2 --")
-			await resolve_action_step(player_card, opponent_card, 5, 6, 7, 8)
-			await wait(1.0)
-		else:
-			print("\n action 2 skipped (both null)")
+		# Get cards in slot
+		var player_card = player_slots[slot_index].card if slot_index < player_slots.size() else null
+		var opponent_card = opponent_slots[slot_index].card if slot_index < opponent_slots.size() else null
 
-		# ---- ACTION 3 ---- checks if card actions are null, if they are, skips the action
-		if has_action(player_card, 9) or has_action(opponent_card, 9, ):
-			print("\n -- action 3 --")
-			await resolve_action_step(player_card, opponent_card, 9, 10, 11, 12)
-			await wait(1.0)
-		else:
-			print("\n action 3 skipped (both null)")
-		
-		# Move used cards to graveyards
+		# Action indices to check
+		var action_indices = [1, 5, 9]
+
+	# Loop over each action index
+		for action_index in action_indices:
+		# PLAYER ACTION
+			if player_card and has_action(player_card, action_index):
+				print("\n[PLAYER CARD ACTION] Index:", action_index)
+				var action_data = check_card_action(player_card, action_index, action_index + 1, action_index + 2)
+				var tween = activate_card_action(player_card, action_data)
+				if tween != null:
+					await tween.finished  # Wait for the animation to finish before continuing
+
+			# OPPONENT ACTION
+			if opponent_card and has_action(opponent_card, action_index):
+				print("\n[OPPONENT CARD ACTION] Index:", action_index)
+				var action_data = check_card_action(opponent_card, action_index, action_index + 1, action_index + 2)
+				var tween = activate_card_action(opponent_card, action_data)
+				if tween != null:
+					await tween.finished  # Wait for the animation to finish before continuing
+
+		# Small pause after both player and opponent actions
+		await wait(1.5)
+
 		# Move used cards to graveyards
 		collect_used_card(player_card)
 		collect_used_card(opponent_card)
-		reset_opponent_slots()
 
-func resolve_action_step(player_card, opponent_card, action_index, value_index, priority_index, tags_index):
-	# PHASE 1, checking actions
-	var pending_player_action_data = []
-	var pending_opponent_action_data = []
+	reset_opponent_slots()
 
-	if player_card != null:
-		pending_player_action_data = check_card_action(player_card, action_index, value_index, priority_index)
-	if opponent_card != null:
-		pending_opponent_action_data = check_card_action(opponent_card, action_index, value_index, priority_index)
 
-	# PHASE 2, activating actions
-	var action_queue = []
+func resolve_action_step(card, action_index):
+	if card == null:
+		return
 
-	if player_card != null and pending_player_action_data[0] != null:
-		action_queue.append({
-			"card": player_card,
-			"owner": "Player",
-			"action_data": pending_player_action_data,
-			"priority": pending_player_action_data[2]
-		})
-	if opponent_card != null and pending_opponent_action_data[0] != null:
-		action_queue.append({
-			"card": opponent_card,
-			"owner": "Opponent",
-			"action_data": pending_opponent_action_data,
-			"priority": pending_opponent_action_data[2]
-		})
+	# --- Check the card action ---
+	var action_data = check_card_action(card, action_index, action_index + 1, action_index + 2)  # [action, value, priority]
+	if action_data[0] == null:
+		return  # No action to perform
 
-	# Sort by priority
+	# --- Build action queue ---
+	var action_entry = {
+		"card": card,
+		"owner": card.OWNER,
+		"action_data": action_data,
+		"priority": action_data[2]
+	}
+
+	var action_queue = [action_entry]
+
+	# --- Sort by priority (though here queue has 1 item, ready for future multi-card handling) ---
 	action_queue.sort_custom(func(a, b):
 		return a["priority"] < b["priority"]
 	)
 
-	# Start all animations and collect tweens
+	# --- Execute actions and collect tweens ---
 	var tweens = []
 	for entry in action_queue:
 		var tween = activate_card_action(entry["card"], entry["action_data"])
 		if tween:
 			tweens.append(tween)
 
-	# Wait for all tweens to finish simultaneously
+	# --- Await all tweens simultaneously ---
 	for tween in tweens:
 		if tween:
 			await tween.finished
 
-	# Small delay after all
+	# Small pause after actions
 	await get_tree().create_timer(0.25).timeout
 	
 func has_action(card, action_index) -> bool: # checking if a card has an action
@@ -219,59 +208,46 @@ func has_action(card, action_index) -> bool: # checking if a card has an action
 		return false
 	return CardDatabase.CARDS[card.card_name][action_index] != null
 
-func check_card_action(card, action_index, value_index, priority_index): # Activate that card's action, tells it what action to use and the value associated with it 
-	var card_data = CardDatabase.CARDS[card.card_name] # Gets the card from the database by checking its name
-
+func check_card_action(card, action_index, value_index, priority_index):
+	var card_data = CardDatabase.CARDS[card.card_name]
 	var action = card_data[action_index]
+	if action == null:
+		return [null, null, INF]
+
 	var value = card_data[value_index]
 	var priority = card_data[priority_index]
-	
-	if action == null: # Returns if no action
-		print("USER:", card.OWNER, " has no action.")
-		return [null, null, INF]
-	
-	# sets up mult if we know the card has an action, so same-turn divides are not an issue kinda unclean,
-	var target
-	var self_target
-	if card.OWNER == "Player":
-		target = %Opponent
-		self_target = %Player
-	else:
-		target = %Player
-		self_target = %Opponent
 
-	# Displaying what the card action is
-	print("USER:", card.OWNER, " CARD NAME:", card.card_name, " ACTION:", action," VALUE:", value, " PRIORITY:", priority)
 	return [action, value, priority]
 
-func activate_card_action(card, action_data):
+
+# Activates a card action, returns the Tween for awaiting
+func activate_card_action(card, action_data) -> Tween:
+	if action_data[0] == null:
+		return null
+
 	var action = action_data[0]
 	var value = action_data[1]
 
-	if action == null:
-		print("USER:", card.OWNER, " had no action.")
-		return null
-
-	print("USER:", card.OWNER, " CARD NAME:", card.card_name, " ACTIVATING ACTION:", action, " VALUE:", value)
-
-	# Target position
+	# Determine target position
 	var new_pos = $"../OpponentCardPoint".global_position if card.cards_current_slot in opponent_slots else $"../PlayerCardPoint".global_position
 
-	# Create a tween that moves AND scales the card
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "position", new_pos, CARD_MOVE_SPEED)
 	tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
 
-	# When tween finishes, play the card animation AND apply the action
 	tween.finished.connect(func():
-		if card.has_node("AnimationPlayer"):
-			card.get_node("AnimationPlayer").play("card_basic_use")
-		apply_action(card, action_data)
+		await _play_animation_and_apply(card, action_data)
 	)
 
 	return tween
 
-	
+# Await this to guarantee animation plays before applying effect
+func _play_animation_and_apply(card, action_data) -> void:
+	if card.has_node("AnimationPlayer"):
+		var anim = card.get_node("AnimationPlayer")
+		anim.play("card_basic_use")
+		await anim.animation_finished
+	apply_action(card, action_data)
 
 func apply_action(card, action_data):
 	var target
@@ -324,8 +300,6 @@ func apply_action(card, action_data):
 	self_target.current_mult = self_target.next_mult
 	self_target.next_mult = 1.0
 	
-	# Change animation functionality elsewher
-	card.get_node("AnimationPlayer").play("card_basic_use")
 	
 	#%PlayerLabel.text = str(%Player.health) Not needed right now since we're updating every frame for debug purposes
 	#%OpponentLabel.text = str(%Opponent.health)
