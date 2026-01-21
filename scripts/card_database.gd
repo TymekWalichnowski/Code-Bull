@@ -26,7 +26,7 @@ const CARDS = {      # ID, #Action1, Action1Value, Action1Priority, Action1 Tags
 	"Draw 2"		: [7, "Draw_Card", 2, 0, [],
 						  null, null, null,[],
 						  null, null, null, [],],
-	"2 Of Spades"	: [8, "Attack", 2, 0, [],
+	"2 Of Spades"	: [8, "Retrigger_Next_Slot", 1, 0, [],
 						  null, null, null,[],
 						  null, null, null, [],],
 }

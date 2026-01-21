@@ -4,7 +4,7 @@ const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
-var player_deck = ["Double Hit", "Multiply", "Nullify", "Block", "Draw 2", "Sword", "Sword"]
+var player_deck = ["Double Hit", "2 Of Spades", "Nullify", "Block", "Draw 2", "Sword", "Sword"]
 var card_database_reference 
 var drawn_card_this_turn = false
 
