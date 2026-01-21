@@ -36,8 +36,8 @@ func draw_card():
 	var new_card = card_scene.instantiate()
 	
 	# Assign properties directly
-	new_card.card_id = card_id        # For battle logic
-	new_card.card_name = card_drawn_name  # Optional, human-readable
+	new_card.card_id = card_id        # For battle logic, not really using this at the moment
+	new_card.card_name = card_drawn_name  # Optional, human readable
 	
 	var card_image_path = str("res://Assets/Textures/Cards/card_" + card_drawn_name + ".png")
 	new_card.get_node("CardImage").texture = load(card_image_path)

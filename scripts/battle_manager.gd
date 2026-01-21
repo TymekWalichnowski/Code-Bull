@@ -239,9 +239,7 @@ func check_card_action(card, action_index, value_index, priority_index): # Activ
 	else:
 		target = %Player
 		self_target = %Opponent
-	self_target.current_mult = self_target.next_mult
-	self_target.next_mult = 1.0
-	
+
 	# Displaying what the card action is
 	print("USER:", card.OWNER, " CARD NAME:", card.card_name, " ACTION:", action," VALUE:", value, " PRIORITY:", priority)
 	return [action, value, priority]
@@ -282,8 +280,6 @@ func apply_action(card, action_data):
 	var action = action_data[0]
 	var value = action_data[1]
 	
-
-	
 	if card.OWNER == "Player":
 		target = %Opponent
 		self_target = %Player
@@ -294,8 +290,6 @@ func apply_action(card, action_data):
 	# applying mult to be whatever the next mult is
 	value = value * self_target.current_mult
 	# After applying current mult, apply next mult, this is to prevent issues such as same-turn divides
-	self_target.current_mult = self_target.next_mult
-	self_target.next_mult = 1.0
 	
 	if self_target.nullified == true:
 		print("returning ", card.OWNER, " action as it was nullified")
@@ -305,15 +299,15 @@ func apply_action(card, action_data):
 		"Attack":
 			print(card.OWNER, " deals ", value, " damage.")
 			target.health -= value
-			self_target.current_mult = 1
+			self_target.current_mult = 1.0
 		"Shield":
 			print(card.OWNER, " gains ", value, " shield.")
 			self_target.health += value
-			self_target.current_mult = 1
-		"Multiply_Next_Value":
+			self_target.current_mult = 1.0
+		"Multiply_Next_Card":
 			print(card.OWNER, " gains ", value, " mult.") 
-			self_target.next_mult = self_target.next_mult * 2
-		"Divide_Next_Value":
+			self_target.next_mult = self_target.next_mult * value
+		"Divide_Next_Card":
 			print(card.OWNER, " applies ", value, " divide to ", target) # need to change how mult works because currently 1 mult becomes 3 mult when you add 2
 			target.next_mult = target.next_mult / value
 		"Nullify":
@@ -326,7 +320,9 @@ func apply_action(card, action_data):
 			else:
 				for i in value:
 					%OpponentDeck.draw_card()
-			
+					
+	self_target.current_mult = self_target.next_mult
+	self_target.next_mult = 1.0
 	
 	# Change animation functionality elsewher
 	card.get_node("AnimationPlayer").play("card_basic_use")
