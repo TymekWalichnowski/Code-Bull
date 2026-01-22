@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_back.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
@@ -16,39 +16,40 @@
 size = Vector2(128, 176)
 
 [node name="Main" type="Node2D"]
-z_index = -3
 
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("1_glv2v")
 
 [node name="CardSlots" type="Node2D" parent="."]
+z_index = -1
 
 [node name="CardSlot" parent="CardSlots" instance=ExtResource("3_r0du0")]
-z_index = 0
+z_index = -2
 position = Vector2(790, 660)
 
 [node name="CardSlot2" parent="CardSlots" instance=ExtResource("3_r0du0")]
-z_index = 0
+z_index = -2
 position = Vector2(960, 660)
 
 [node name="CardSlot3" parent="CardSlots" instance=ExtResource("3_r0du0")]
-z_index = 0
+z_index = -2
 position = Vector2(1126, 660)
 
 [node name="OpponentCardSlot" parent="CardSlots" instance=ExtResource("3_nxtc6")]
-z_index = -100
+z_index = 0
 position = Vector2(790, 300)
 
 [node name="OpponentCardSlot2" parent="CardSlots" instance=ExtResource("3_nxtc6")]
-z_index = -100
+z_index = 0
 position = Vector2(960, 300)
 
 [node name="OpponentCardSlot3" parent="CardSlots" instance=ExtResource("3_nxtc6")]
-z_index = -100
+z_index = 0
 position = Vector2(1126, 300)
 
 [node name="PlayerHand" type="Node2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
 script = ExtResource("3_cm0pq")
 
 [node name="OpponentHand" type="Node2D" parent="."]
@@ -83,6 +84,7 @@ script = ExtResource("6_wp0k4")
 
 [node name="PlayerDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
 position = Vector2(150, 900)
 script = ExtResource("4_fos0i")
 

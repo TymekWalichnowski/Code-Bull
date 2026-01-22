@@ -1,5 +1,7 @@
 extends Node
 
+signal battle_click_received
+
 var player_retrigger_counts = [0, 0, 0]
 var opponent_retrigger_counts = [0, 0, 0]
 
@@ -123,114 +125,87 @@ func wait(wait_time):
 	await battle_timer.timeout
 
 var slot_retriggers = [0, 0, 0] # Track extra runs for Slot 1, 2, and 3
-
-func run_check_phase():
-	var slot_count = max(player_slots.size(), opponent_slots.size())
 	
-	# Reset counts at start of phase
-	player_retrigger_counts = [0, 0, 0]
-	opponent_retrigger_counts = [0, 0, 0]
-
-	# --- EXAMPLE: Manual retrigger for Player Slot 2 ---
+	# EXAMPLE: Manual retrigger for Player Slot 2, put above slot index
 	# We check if there is actually a card there before scheduling a retrigger
 	#if player_slots[1].card != null:
 		#player_retrigger_counts[1] += 1 
 		#print("DEBUG: Player Slot 2 scheduled for 1 extra run.")
+func run_check_phase():
+	var slot_count = max(player_slots.size(), opponent_slots.size())
+	player_retrigger_counts = [0, 0, 0]
+	opponent_retrigger_counts = [0, 0, 0]
 
 	for slot_index in range(slot_count):
-		# Reset global per-slot status
 		%Player.nullified = false
 		%Opponent.nullified = false
 
 		var player_card = player_slots[slot_index].card
 		var opponent_card = opponent_slots[slot_index].card
+		
+		if player_card:
+			%Player.current_mult = %Player.next_mult
+			%Player.next_mult = 1.0
+		if opponent_card:
+			%Opponent.current_mult = %Opponent.next_mult
+			%Opponent.next_mult = 1.0
 
-		# Determine how many times each card acts (0 if no card exists)
+		# --- NEW: MOVEMENT PHASE ---
+		var p_move = move_card_to_battle_point(player_card)
+		var o_move = move_card_to_battle_point(opponent_card)
+		
+		# Wait for movement to finish
+		if p_move: await p_move.finished
+		if o_move: await o_move.finished
+
+		# --- NEW: WAIT FOR CLICK PHASE ---
+		# Only wait if there is at least one card to act
+		if player_card or opponent_card:
+			print("Cards moved. Waiting for click...")
+			await battle_click_received 
+
+		# --- ACTION PHASE ---
 		var p_total_runs = 1 + player_retrigger_counts[slot_index] if player_card else 0
 		var o_total_runs = 1 + opponent_retrigger_counts[slot_index] if opponent_card else 0
-		
-		# Iterate until the card with the most scheduled runs is done
 		var max_runs_for_this_slot = max(p_total_runs, o_total_runs)
 
 		for run_idx in range(max_runs_for_this_slot):
-			# Process actions 1, 5, and 9 sequentially
 			for action_index in [1, 5, 9]:
-				# IMPORTANT: Reset tweens to null for EVERY action step
 				var p_tween: Tween = null
 				var o_tween: Tween = null
 
-				# Player side acts only if they have runs remaining
 				if player_card and run_idx < p_total_runs:
 					if has_action(player_card, action_index):
-						var p_data = check_card_action(player_card, action_index, action_index+1, action_index+2)
-						p_tween = activate_card_action(player_card, p_data)
+						var p_data = check_card_action(player_card, action_index, action_index+1, action_index+2, action_index+3)
+						# Use the new execution function
+						p_tween = execute_card_action(player_card, p_data)
 
-				# Opponent side acts only if they have runs remaining
 				if opponent_card and run_idx < o_total_runs:
 					if has_action(opponent_card, action_index):
-						var o_data = check_card_action(opponent_card, action_index, action_index+1, action_index+2)
-						o_tween = activate_card_action(opponent_card, o_data)
+						var o_data = check_card_action(opponent_card, action_index, action_index+1, action_index+2, action_index+3)
+						# Use the new execution function
+						o_tween = execute_card_action(opponent_card, o_data)
 
-				# Wait for animations to finish before moving to next action index
 				if p_tween: await p_tween.finished
 				if o_tween: await o_tween.finished
 				
-				# If anyone did something, pause for readability
 				if p_tween != null or o_tween != null:
 					await wait(0.4)
 
-		# 2. CLEANUP (Using your original logic)
-		# Only teleport cards away after ALL runs (and retriggers) are done
+		# CLEANUP
+		%Player.current_mult = 1.0
+		%Opponent.current_mult = 1.0
 		if player_card: collect_used_card(player_card)
 		if opponent_card: collect_used_card(opponent_card)
 
 	reset_opponent_slots()
 
-func resolve_action_step(card, action_index):
-	if card == null:
-		return
-
-	# --- Check the card action ---
-	var action_data = check_card_action(card, action_index, action_index + 1, action_index + 2)  # [action, value, priority]
-	if action_data[0] == null:
-		return  # No action to perform
-
-	# --- Build action queue ---
-	var action_entry = {
-		"card": card,
-		"owner": card.OWNER,
-		"action_data": action_data,
-		"priority": action_data[2]
-	}
-
-	var action_queue = [action_entry]
-
-	# --- Sort by priority (though here queue has 1 item, ready for future multi-card handling) ---
-	action_queue.sort_custom(func(a, b):
-		return a["priority"] < b["priority"]
-	)
-
-	# --- Execute actions and collect tweens ---
-	var tweens = []
-	for entry in action_queue:
-		var tween = activate_card_action(entry["card"], entry["action_data"])
-		if tween:
-			tweens.append(tween)
-
-	# --- Await all tweens simultaneously ---
-	for tween in tweens:
-		if tween:
-			await tween.finished
-
-	# Small pause after actions
-	await get_tree().create_timer(0.25).timeout
-	
 func has_action(card, action_index) -> bool: # checking if a card has an action
 	if card == null:
 		return false
 	return CardDatabase.CARDS[card.card_name][action_index] != null
 
-func check_card_action(card, action_index, value_index, priority_index):
+func check_card_action(card, action_index, value_index, priority_index, tags_index):
 	var card_data = CardDatabase.CARDS[card.card_name]
 	var action = card_data[action_index]
 	if action == null:
@@ -238,41 +213,52 @@ func check_card_action(card, action_index, value_index, priority_index):
 
 	var value = card_data[value_index]
 	var priority = card_data[priority_index]
+	var tags = card_data[tags_index]
 
-	return [action, value, priority]
+	return [action, value, priority, tags_index]
 
 
 # Activates a card action, returns the Tween for awaiting
 # Now returns void but is awaitable
-func activate_card_action(card, action_data) -> Tween:
+# Step 1: Just move the card to the center point
+func move_card_to_battle_point(card) -> Tween:
+	if card == null: return null
+	
+	var target_pos = %OpponentCardPoint.global_position if card.OWNER == "Opponent" else %PlayerCardPoint.global_position
+	var move_tween = get_tree().create_tween()
+	
+	if card.global_position.distance_to(target_pos) > 10:
+		move_tween.set_parallel(true)
+		move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
+		move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
+		card.z_index = 10
+	else:
+		# If already there, return a finished tween or null
+		return null
+		
+	return move_tween
+
+# Step 2: Play the animation and apply the specific action
+func execute_card_action(card, action_data) -> Tween:
 	if action_data[0] == null: return null
 
-	var target_pos = %OpponentCardPoint.global_position if card.OWNER == "Opponent" else %PlayerCardPoint.global_position
-	var main_tween = get_tree().create_tween()
-	
-	# Only tween position if we aren't already at the center point
-	if card.global_position.distance_to(target_pos) > 10:
-		main_tween.set_parallel(true)
-		main_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
-		main_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
-		card.z_index = 10 
-		main_tween.set_parallel(false) # Subsequent steps happen after move
+	var action_tween = get_tree().create_tween()
 	
 	# Play Animation
-	main_tween.tween_callback(func():
+	action_tween.tween_callback(func():
 		if card.has_node("AnimationPlayer"):
 			card.get_node("AnimationPlayer").play("card_basic_use")
 	)
 	
-	# Wait for animation duration (defaulting to 0.5s if no player found)
+	# Wait for animation duration
 	var duration = 0.5
 	if card.has_node("AnimationPlayer") and card.get_node("AnimationPlayer").has_animation("card_basic_use"):
 		duration = card.get_node("AnimationPlayer").get_animation("card_basic_use").length
 	
-	main_tween.tween_interval(duration)
-	main_tween.tween_callback(apply_action.bind(card, action_data))
+	action_tween.tween_interval(duration)
+	action_tween.tween_callback(apply_action.bind(card, action_data))
 	
-	return main_tween
+	return action_tween
 
 func apply_action(card, action_data):
 	var target
@@ -288,7 +274,10 @@ func apply_action(card, action_data):
 		target = %Player
 		self_target = %Opponent
 	
-	# applying mult to be whatever the next mult is
+	# CURRENTLY WE JUST APPLY THE MULT TO THE VALUE, BUT LATER ADD A SYSTEM TO CHECK THE TAGS AND THEN APPLY THE MULT TO THE VALUE DEPENDING ON TAGS 
+	#if action ["Attack", "Shield"]:
+		#value = value * self_target.current_mult
+	
 	value = value * self_target.current_mult
 	# After applying current mult, apply next mult, this is to prevent issues such as same-turn divides
 	
@@ -300,11 +289,9 @@ func apply_action(card, action_data):
 		"Attack":
 			print(card.OWNER, " deals ", value, " damage.")
 			target.health -= value
-			self_target.current_mult = 1.0
 		"Shield":
 			print(card.OWNER, " gains ", value, " shield.")
 			self_target.health += value
-			self_target.current_mult = 1.0
 		"Multiply_Next_Card":
 			print(card.OWNER, " gains ", value, " mult.") 
 			self_target.next_mult = self_target.next_mult * value
@@ -336,10 +323,6 @@ func apply_action(card, action_data):
 				else:
 					opponent_retrigger_counts[current_idx + 1] += int(value)
 
-	self_target.current_mult = self_target.next_mult
-	self_target.next_mult = 1.0
-	
-	
 	#%PlayerLabel.text = str(%Player.health) Not needed right now since we're updating every frame for debug purposes
 	#%OpponentLabel.text = str(%Opponent.health)
 
@@ -360,3 +343,8 @@ func collect_used_card(card):
 		
 	card.visible = false # doesnt always hide it for some reason, fix this later
 	card.position = Vector2(-100.0, 0.0)
+
+func _input(event: InputEvent) -> void:
+	# Detect any left mouse click that isn't on a UI button
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		battle_click_received.emit()

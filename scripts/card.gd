@@ -10,12 +10,16 @@ signal hovered_off
 @export var follow_speed := 10.0
 @export var return_speed := 7.0
 
+@onready var desc_label = %ActionDescriptionLabel
+@onready var tag_container = %TagContainer
+@onready var tag_label = %TagLabel
+
 const OWNER = "Player"
 
 var hand_position
 var cards_current_slot
 var hovering := false
-var original_z_index := 0
+var original_z_index := 1
 
 var card_image: Sprite2D
 var card_back_image: Sprite2D
@@ -48,6 +52,8 @@ func _process(delta: float) -> void:
 
 
 	if hovering:
+		
+		update_hover_ui()
 		var local_mouse = card_image.to_local(get_global_mouse_position())
 		var half = card_image.texture.get_size() * 0.5
 
@@ -79,7 +85,10 @@ func _process(delta: float) -> void:
 
 		# Hover always draws on top
 		z_index = 100
+		
+		
 	else:
+		%CardUi.visible = false
 		# Smoothly return rotation to 0
 		if card_image.material:
 			card_image.material.set_shader_parameter(
@@ -108,10 +117,13 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_mouse_entered() -> void:
 	hovering = true
+	update_hover_ui()
 	emit_signal("hovered", self)
 
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
+	desc_label.text = "" # clear text when not hovering
+	tag_container.visible = false
 	emit_signal("hovered_off", self)
 
 func play_audio(name: String) -> void:
@@ -120,3 +132,84 @@ func play_audio(name: String) -> void:
 		$AudioStreamPlayer.play()
 	else:
 		push_warning("Sound not found: " + name)
+
+func update_hover_ui():
+	%CardUi.visible = true
+	var card_data = CardDatabase.CARDS[card_name]
+	var full_description = ""
+	var tag_list = []
+	
+	var player = get_node("/root/Main/%Player")
+	var battle_manager = get_node("/root/Main/BattleManager") # Adjust path to your BattleManager
+	
+	# Determine the active multiplier for this hover
+	var current_mult = player.current_mult
+	if current_mult == 1.0: 
+		current_mult = player.next_mult
+		
+	var is_multiplied = current_mult != 1.0
+
+	# 1. TEMPLATES: Define how each action should read
+	var action_templates = {
+		"Attack": "Deal %s damage.",
+		"Shield": "Gain %s shield.",
+		"Multiply_Next_Card": "Multiply next played card by %s.",
+		"Divide_Next_Card": "Divide opponent's next card by %s.",
+		"Nullify": "Negate the opponent's next action.",
+		"Draw_Card": "Draw %s card(s).",
+		"Retrigger_Next_Slot": "Trigger next card slot %s extra time(s).",
+		"Nothing": "Do nothing."
+	}
+
+	for i in [1, 5, 9]:
+		var action_name = card_data[i]
+		if action_name == null: continue
+		
+		var base_value = card_data[i+1]
+		var tags = card_data[i+3]
+		var display_value = str(base_value)
+		
+		# 2. FORMAT VALUE (with BBCode color)
+		if typeof(base_value) == TYPE_FLOAT or typeof(base_value) == TYPE_INT:
+			if is_multiplied:
+				var new_val = base_value * current_mult
+				var color = "#00ff00" if current_mult > 1.0 else "#ff4444"
+				display_value = "[color=%s]%s[/color]" % [color, str(new_val)]
+
+		# 3. BUILD NATURAL STRING
+		var template = action_templates.get(action_name, action_name + ": %s")
+		
+		# If the action doesn't use a value (like Nullify), don't pass one
+		if action_name == "Nullify" or action_name == "Nothing":
+			full_description += template + "\n"
+		else:
+			full_description += (template % display_value) + "\n"
+		
+		# 4. TAGS & RETRIGGERS
+		for tag_id in tags:
+			var tag_name = CardDatabase.tags.keys()[tag_id]
+			if not tag_list.has(tag_name):
+				tag_list.append(tag_name)
+
+	# 5. SPECIAL: Add "REPLAY" tag if card is going to retrigger
+	# We check which slot this card is in to see if it has a scheduled retrigger
+	var slot_idx = _get_current_slot_index()
+	if slot_idx != -1:
+		var extra_runs = battle_manager.player_retrigger_counts[slot_idx]
+		if extra_runs > 0:
+			tag_list.append("REPLAY x" + str(extra_runs))
+
+	# Update UI elements
+	desc_label.text = "[center]" + full_description + "[/center]"
+	
+	if tag_list.size() > 0:
+		tag_label.text = "TAGS:\n" + "\n".join(tag_list)
+		tag_container.visible = true
+	else:
+		tag_container.visible = false
+
+# Helper to find which slot index this card is currently sitting in
+func _get_current_slot_index() -> int:
+	if not cards_current_slot: return -1
+	var slots = get_node("/root/Main/BattleManager").player_slots
+	return slots.find(cards_current_slot)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vl76mnodwtfv"
-path="res://.godot/imported/card_Back.png-b58ebdee167fd6ff7e173f0d979005d6.ctex"
+uid="uid://cy2bnvdeiy5pg"
+path="res://.godot/imported/Token_Flame.png-08c5246d473f0a0e804df4950655ea51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Cards/card_Back.png"
-dest_files=["res://.godot/imported/card_Back.png-b58ebdee167fd6ff7e173f0d979005d6.ctex"]
+source_file="res://Assets/Textures/Tokens/Token_Flame.png"
+dest_files=["res://.godot/imported/Token_Flame.png-08c5246d473f0a0e804df4950655ea51.ctex"]
 
 [params]
 

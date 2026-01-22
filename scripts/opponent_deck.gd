@@ -4,7 +4,7 @@ const CARD_SCENE_PATH = "res://scenes/opponent_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 4 # starts with 1 hand less than player since automatically draws but probably want to fix this later
 
-var opponent_deck = ["Draw 2", "Multiply", "Block", "Block", "Basic", "Sword", "Sword"]
+var opponent_deck = ["Draw 2", "Divide", "Block", "Block", "Basic", "Sword", "Sword"]
 var card_database_reference 
 
 var graveyard = []
