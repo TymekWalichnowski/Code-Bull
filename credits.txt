@@ -1,1 +1,3 @@
 card shader - https://godotshaders.com/shader/3d-perspective-texturerect-with-touch/
+progress bar - https://catshaped.itch.io/pixel-progress-bar-asset-pack?download
+forgot where the icons came from

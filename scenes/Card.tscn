@@ -255,7 +255,7 @@ libraries = {
 stream = ExtResource("5_40ytf")
 volume_db = -3.0
 
-[node name="CardUi" type="Control" parent="."]
+[node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
@@ -263,7 +263,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="CardUi"]
+[node name="Panel" type="Panel" parent="UIOverlay"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.771
@@ -275,7 +275,7 @@ offset_top = -0.5999985
 offset_right = 0.23999023
 offset_bottom = 0.7599945
 
-[node name="ActionDescriptionLabel" type="RichTextLabel" parent="CardUi/Panel"]
+[node name="ActionDescriptionLabel" type="RichTextLabel" parent="UIOverlay/Panel"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1.0
@@ -288,7 +288,15 @@ theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
 text = "Default Text"
 
-[node name="TagContainer" type="VBoxContainer" parent="CardUi"]
+[node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 171.0
+offset_top = -85.0
+offset_right = 364.0
+offset_bottom = 40.0
+
+[node name="TagContainer" type="VBoxContainer" parent="UIOverlay"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 171.0
@@ -296,10 +304,6 @@ offset_top = -85.0
 offset_right = 273.0
 offset_bottom = 88.0
 mouse_filter = 2
-
-[node name="TagLabel" type="RichTextLabel" parent="CardUi/TagContainer"]
-unique_name_in_owner = true
-layout_mode = 2
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

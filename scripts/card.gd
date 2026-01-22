@@ -88,7 +88,7 @@ func _process(delta: float) -> void:
 		
 		
 	else:
-		%CardUi.visible = false
+		%UIOverlay.visible = false
 		# Smoothly return rotation to 0
 		if card_image.material:
 			card_image.material.set_shader_parameter(
@@ -134,7 +134,7 @@ func play_audio(name: String) -> void:
 		push_warning("Sound not found: " + name)
 
 func update_hover_ui():
-	%CardUi.visible = true
+	%UIOverlay.visible = true
 	var card_data = CardDatabase.CARDS[card_name]
 	var full_description = ""
 	var tag_list = []

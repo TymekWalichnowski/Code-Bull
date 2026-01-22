@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckars6soro3o5"
-path="res://.godot/imported/Token_Blank.png-c818a69f493b8fd45504d929eeda4fae.ctex"
+uid="uid://c715ksvllhr2d"
+path="res://.godot/imported/progress bar medium rounded progress dark grey.png-5705a540ef3fc743e9e5234572ca2b67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Token_Blank.png"
-dest_files=["res://.godot/imported/Token_Blank.png-c818a69f493b8fd45504d929eeda4fae.ctex"]
+source_file="res://Assets/Textures/UI/medium rounded/progress bar medium rounded progress dark grey.png"
+dest_files=["res://.godot/imported/progress bar medium rounded progress dark grey.png-5705a540ef3fc743e9e5234572ca2b67.ctex"]
 
 [params]
 
