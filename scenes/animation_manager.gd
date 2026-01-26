@@ -6,12 +6,11 @@ const OPPONENT_POSITION = Vector2(960, 140)
 var self_position
 var target_position
 
-#func _on_player_action_anim_animation_finished() -> void:
-	#%PlayerActionAnim.visible = false
-#
-#
-#func _on_opponent_action_anim_animation_finished() -> void:
-	#%OpponentActionAnim.visible = false
+func _on_player_action_anim_animation_finished() -> void:
+	%PlayerActionAnim.visible = false
+
+func _on_opponent_action_anim_animation_finished() -> void:
+	%OpponentActionAnim.visible = false
 
 func play_anim(action_name, anim_node, card_owner):
 	

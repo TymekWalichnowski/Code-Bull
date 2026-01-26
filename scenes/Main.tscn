@@ -327,5 +327,5 @@ sprite_frames = SubResource("SpriteFrames_xa025")
 animation = &"shield_bubble"
 
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
-[connection signal="animation_finished" from="PlayerActionAnim" to="BattleManager" method="_on_player_action_anim_animation_finished"]
-[connection signal="animation_finished" from="OpponentActionAnim" to="BattleManager" method="_on_opponent_action_anim_animation_finished"]
+[connection signal="animation_finished" from="PlayerActionAnim" to="BattleManager/AnimationManager" method="_on_player_action_anim_animation_finished"]
+[connection signal="animation_finished" from="OpponentActionAnim" to="BattleManager/AnimationManager" method="_on_opponent_action_anim_animation_finished"]

@@ -178,13 +178,13 @@ func run_check_phase():
 					if has_action(player_card, action_index):
 						var p_data = check_card_action(player_card, action_index, action_index+1, action_index+2, action_index+3)
 						# Use the new execution function
-						p_tween = execute_card_action(player_card, p_data)
+						p_tween = await execute_card_action(player_card, p_data)
 
 				if opponent_card and run_idx < o_total_runs:
 					if has_action(opponent_card, action_index):
 						var o_data = check_card_action(opponent_card, action_index, action_index+1, action_index+2, action_index+3)
 						# Use the new execution function
-						o_tween = execute_card_action(opponent_card, o_data)
+						o_tween = await execute_card_action(opponent_card, o_data)
 
 				if p_tween: await p_tween.finished
 				if o_tween: await o_tween.finished
@@ -262,7 +262,7 @@ func execute_card_action(card, action_data) -> Tween:
 	
 	action_tween.tween_interval(duration)
 	action_tween.tween_callback(apply_action.bind(card, action_data))
-	$AnimationManager.play_anim(action_name, anim_node, card.OWNER)
+	await $AnimationManager.play_anim(action_name, anim_node, card.OWNER)
 	
 	return action_tween
 
