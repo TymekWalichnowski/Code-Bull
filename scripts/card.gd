@@ -43,6 +43,8 @@ func _ready() -> void:
 	original_z_index = z_index
 
 func _process(delta: float) -> void:
+	
+	%UIOverlay.rotation = -rotation
 	if not card_image or not card_image.texture:
 		return
 

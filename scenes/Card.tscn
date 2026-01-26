@@ -305,5 +305,7 @@ offset_right = 273.0
 offset_bottom = 88.0
 mouse_filter = 2
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

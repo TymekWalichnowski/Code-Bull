@@ -195,6 +195,8 @@ func run_check_phase():
 		# CLEANUP
 		%Player.current_mult = 1.0
 		%Opponent.current_mult = 1.0
+		%Player.next_mult = 1.0
+		%Opponent.next_mult = 1.0
 		if player_card: collect_used_card(player_card)
 		if opponent_card: collect_used_card(opponent_card)
 
@@ -241,9 +243,11 @@ func move_card_to_battle_point(card) -> Tween:
 # Step 2: Play the animation and apply the specific action
 func execute_card_action(card, action_data) -> Tween:
 	if action_data[0] == null: return null
-
-	var action_tween = get_tree().create_tween()
+	var action_name = action_data[0]
 	
+	
+	var action_tween = get_tree().create_tween()
+	var anim_node = %PlayerActionAnim if card.OWNER == "Player" else %OpponentActionAnim
 	# Play Animation
 	action_tween.tween_callback(func():
 		if card.has_node("AnimationPlayer"):
@@ -251,12 +255,14 @@ func execute_card_action(card, action_data) -> Tween:
 	)
 	
 	# Wait for animation duration
+	
 	var duration = 0.5
 	if card.has_node("AnimationPlayer") and card.get_node("AnimationPlayer").has_animation("card_basic_use"):
 		duration = card.get_node("AnimationPlayer").get_animation("card_basic_use").length
 	
 	action_tween.tween_interval(duration)
 	action_tween.tween_callback(apply_action.bind(card, action_data))
+	$AnimationManager.play_anim(action_name, anim_node, card.OWNER)
 	
 	return action_tween
 

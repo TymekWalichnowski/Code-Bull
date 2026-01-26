@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=38 format=3 uid="uid://x0lreijkwmjp"]
 
+[ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scenes/animation_manager.gd" id="1_1nqs0"]
 [ext_resource type="Script" uid="uid://nl86bj6ee0c6" path="res://scripts/card_manager.gd" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
@@ -13,9 +14,145 @@
 [ext_resource type="Script" uid="uid://cx76sr656x5on" path="res://scripts/battle_manager.gd" id="8_jlsqs"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
 [ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/Textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
+[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
+[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
+[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxlcp"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebg2g"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ofn6"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa025"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36rkl"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs0b5"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma7h6"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(512, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2s0e"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(768, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsxep"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(0, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0vrg"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg70y"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(512, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnhog"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(768, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2c4at"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(0, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6wdg"]
+atlas = ExtResource("21_1iba3")
+region = Rect2(256, 768, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xa025"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_nfivy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_1nqs0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_1iba3")
+}, {
+"duration": 2.0,
+"texture": ExtResource("17_yxlcp")
+}, {
+"duration": 2.0,
+"texture": ExtResource("18_ebg2g")
+}, {
+"duration": 2.0,
+"texture": ExtResource("19_2ofn6")
+}],
+"loop": false,
+"name": &"attack_slash",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxlcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebg2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ofn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa025")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36rkl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs0b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ma7h6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2s0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsxep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0vrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg70y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnhog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2c4at")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6wdg")
+}],
+"loop": false,
+"name": &"shield_bubble",
+"speed": 12.0
+}]
 
 [node name="Main" type="Node2D"]
 
@@ -167,7 +304,28 @@ text = "END TURN"
 [node name="BattleManager" type="Node" parent="."]
 script = ExtResource("8_jlsqs")
 
+[node name="AnimationManager" type="Node" parent="BattleManager"]
+script = ExtResource("1_1nqs0")
+
 [node name="BattleTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 
+[node name="PlayerActionAnim" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+position = Vector2(959, 138)
+sprite_frames = SubResource("SpriteFrames_xa025")
+animation = &"shield_bubble"
+
+[node name="OpponentActionAnim" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+position = Vector2(972, 851)
+sprite_frames = SubResource("SpriteFrames_xa025")
+animation = &"shield_bubble"
+
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
+[connection signal="animation_finished" from="PlayerActionAnim" to="BattleManager" method="_on_player_action_anim_animation_finished"]
+[connection signal="animation_finished" from="OpponentActionAnim" to="BattleManager" method="_on_opponent_action_anim_animation_finished"]
