@@ -2,10 +2,10 @@ enum tags { PHYSICAL }
 const CARDS = {      # ID, #Action1, Action1Value, Action1Priority, Action1 Tags
 						   #Action2, Action2Value, Action2Priority, Action2 Tags
 						   #Action3, Action3Value, Action3Priority, Action3 Tags
-	"Basic"			: [0, "Nothing", 1.0, 0, [tags.PHYSICAL],
+	"Basic"			: [0, "Nothing", 1.0, 1, [tags.PHYSICAL],
 						  null, null, null, [],
 						  null, null, null, []],
-	"Sword"			: [1, "Attack", 1.0, 1 , [],
+	"Sword"			: [1, "Attack", 1.0, 2 , [],
 						  null, null, null, [],
 						  null, null, null, []],
 	"Block" 		: [2, "Shield", 2.0, 1, [],
@@ -23,10 +23,13 @@ const CARDS = {      # ID, #Action1, Action1Value, Action1Priority, Action1 Tags
 	"Double Hit"	: [6, "Attack", 2.0, 1, [tags.PHYSICAL],
 						  "Attack", 2.0, null,[tags.PHYSICAL],
 						  null, null, null, [],],
-	"Draw 2"		: [7, "Draw_Card", 2, 0, [],
+	"Draw 2"		: [7, "Draw_Card", 2, 1, [],
 						  null, null, null,[],
 						  null, null, null, [],],
-	"2 Of Spades"	: [8, "Retrigger_Next_Slot", 2, 0, [],
+	"2 Of Spades"	: [8, "Retrigger_Next_Slot", 2, 1, [],
+						  null, null, null,[],
+						  null, null, null, [],],
+	"Fifty Fifty"	: [9, "Multiply_Or_Divide", 2, 1, [],
 						  null, null, null,[],
 						  null, null, null, [],],
 }

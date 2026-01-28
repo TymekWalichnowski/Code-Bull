@@ -1,0 +1,12 @@
+Card moves to position
+Grab action data off card
+priority 0 animations
+Apply priority 0 effect [e.g nullification]
+
+priority 1 animations
+Apply priority 1 effect [e.g shield, multiply]
+
+priority 2 animations
+Apply priority 2 effect [e.g attack]
+
+priority
