@@ -52,10 +52,9 @@ func _process(float) -> void:
 	pass
 
 func _on_end_turn_button_pressed() -> void:
-	await run_check_phase()
+	await run_activation_phase()
 	opponent_turn()
 	%PlayerDeck.draw_card()
-	
 	$"../EndTurnButton".disabled = true
 	$"../EndTurnButton".visible = false
 
@@ -124,9 +123,53 @@ func wait(wait_time):
 	battle_timer.start()
 	await battle_timer.timeout
 
-func run_check_phase():
+func run_activation_phase():
+	
+	var slot_count = max(player_slots.size(), opponent_slots.size()) # chooses the larger of the two slot counts
+	
+	for slot_index in range(slot_count):
+		print("\n ---- CARD SLOT " , slot_index + 1, " ----" )
+		
+		var player_card = player_slots[slot_index].card
+		var opponent_card = opponent_slots[slot_index].card
+		var player_action_manager = player_slots.get_node("CardActionManager")
+		
+		if slot_index < player_slots.size():
+			player_card = player_slots[slot_index].card
+
+		if slot_index < opponent_slots.size():
+			opponent_card = opponent_slots[slot_index].card
+		
+		## Cards moves to position
+		move_card_to_battle_point(player_card)
+		move_card_to_battle_point(opponent_card)
+		
+	## slot 1
+	
+	#priority 0 animations
+	#Apply priority 0 effect [e.g nullification]
+	#
+	#priority 1 animations
+	#Apply priority 1 effect [e.g shield, multiply]
+	#
+	#priority 2 animations
+	#Apply priority 2 effect [e.g attack]
+	#
+	
+#priority
+
 	pass
 
+func move_card_to_battle_point(card):
+	var target_pos
+	if card.card_owner == "Player":
+		target_pos = %PlayerCardPoint.global_position 
+	else:
+		target_pos = %OpponentCardPoint.global_position 
+	var move_tween = get_tree().create_tween()
+	move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
+	move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
+	card.z_index = 10
 
 func collect_used_card(card):
 	if card == null:

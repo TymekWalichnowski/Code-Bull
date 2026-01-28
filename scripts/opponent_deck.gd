@@ -34,13 +34,14 @@ func draw_card():
 		return
 
 	var card_data = CardDatabase.CARDS[card_drawn_name]
+	var card_owner = "Opponent"
 
 	# Instantiate the opponent card scene
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
 
 	# Use the setup function
-	new_card.setup(card_drawn_name, card_data)
+	new_card.setup(card_drawn_name, card_data, card_owner)
 
 	# Add to the world
 	$"../CardManager".add_child(new_card)

@@ -37,13 +37,13 @@ func draw_card():
 		return
 
 	var card_data = CardDatabase.CARDS[card_drawn_name]
-
+	var card_owner = "Player"
 	# Instantiate
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate() as Card
 
 	# Logic: Pass the data to the card itself to handle setup
-	new_card.setup(card_drawn_name, card_data)
+	new_card.setup(card_drawn_name, card_data, card_owner)
 
 	# Visuals: Add to hand
 	%CardManager.add_child(new_card)

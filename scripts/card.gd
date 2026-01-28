@@ -30,8 +30,6 @@ signal hovered_off
 @onready var tag_container = %TagContainer
 @onready var tag_label = %TagLabel
 
-
-
 var hand_position
 var cards_current_slot
 var hovering := false
@@ -58,9 +56,10 @@ func _ready() -> void:
 
 	original_z_index = z_index
 
-func setup(c_name: String, data: Array) -> void:
+func setup(c_name: String, data: Array, c_owner: String) -> void:
 	card_name = c_name
 	card_id = data[0]
+	card_owner = c_owner
 	
 	# Action 1 (Indices 1, 2, 3, 4)
 	card_action_1 = str(data[1]) if data[1] != null else ""
@@ -86,7 +85,6 @@ func setup(c_name: String, data: Array) -> void:
 		$CardImage.texture = load(texture_path)
 
 func _process(delta: float) -> void:
-	
 	%UIOverlay.rotation = -rotation
 	if not card_image or not card_image.texture:
 		return
@@ -253,7 +251,7 @@ func update_hover_ui():
 	else:
 		tag_container.visible = false
 
-# Helper to find which slot index this card is currently sitting in
+# Helper to find which slot index this card is currently sitting in, may be useless rn?
 func _get_current_slot_index() -> int:
 	if not cards_current_slot: return -1
 	var slots = get_node("/root/Main/BattleManager").player_slots
