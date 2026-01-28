@@ -1,6 +1,6 @@
 extends Node2D
 
-const CARD_SCENE_PATH = "res://scenes/card.tscn"
+const CARD_SCENE_PATH = "res://scenes/player_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
@@ -28,40 +28,31 @@ func draw_card():
 		player_deck.shuffle()  # optional shuffle
 		$Area2D/CollisionShape2D.disabled = true
 
-	
-	var card_drawn_name = player_deck[0] # add error proofing here later for when draw cards but dont have enough in graveyard
-	player_deck.erase(card_drawn_name)
-	print("draw player card")
+	var card_drawn_name = player_deck.pop_front() # pop_front is cleaner than erase
 	$RichTextLabel.text = str(player_deck.size())
 
-	var card_data = card_database_reference.CARDS[card_drawn_name]
-	var card_id = card_data[0]
+	# Check if card exists in database
+	if not CardDatabase.CARDS.has(card_drawn_name):
+		push_error("Card name not found in database: " + card_drawn_name)
+		return
 
-	# Instantiate the card scene
+	var card_data = CardDatabase.CARDS[card_drawn_name]
+
+	# Instantiate
 	var card_scene = preload(CARD_SCENE_PATH)
-	var new_card = card_scene.instantiate()
+	var new_card = card_scene.instantiate() as Card
 
-	# Assign properties directly
-	new_card.card_id = card_id        # For battle logic
-	new_card.card_name = card_drawn_name  # Optional, human-readable
+	# Logic: Pass the data to the card itself to handle setup
+	new_card.setup(card_drawn_name, card_data)
 
-	# Cache nodes
-	var card_image = new_card.get_node("CardImage")
-	var card_label = new_card.get_node("CardLabel")
-	var anim_player = new_card.get_node("AnimationPlayer")
-
-	# Set up visuals
-	card_image.texture = load("res://Assets/Textures/Cards/card_" + card_drawn_name + ".png")
-	card_label.text = str(card_id)
-
-	# Play flip animation
-	if anim_player:
-		anim_player.play("card_flip")
-
-	# Add to scene tree and hand
-	$"../CardManager".add_child(new_card)
-	new_card.name = "Card"
-	$"../PlayerHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
+	# Visuals: Add to hand
+	%CardManager.add_child(new_card)
+	new_card.name = "Card_" + card_drawn_name # Avoid duplicate node names
+	
+	if new_card.has_node("AnimationPlayer"):
+		new_card.get_node("AnimationPlayer").play("card_flip")
+		
+	%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 
 func reset_draw():
 	drawn_card_this_turn = false

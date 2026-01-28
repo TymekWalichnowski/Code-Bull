@@ -24,29 +24,27 @@ func draw_card():
 		graveyard.clear()
 		opponent_deck.shuffle()  # optional shuffle
 
-	print("draw opponent card")
-	var card_drawn_name = opponent_deck[0]
-	opponent_deck.erase(card_drawn_name)
-	
+	# Get and remove the top card
+	var card_drawn_name = opponent_deck.pop_front()
 	$RichTextLabel.text = str(opponent_deck.size())
-	var card_data = card_database_reference.CARDS[card_drawn_name]
-	var card_id = card_data[0]
-	
+
+	# Safety check for database entry
+	if not CardDatabase.CARDS.has(card_drawn_name):
+		push_error("Opponent tried to draw non-existent card: " + card_drawn_name)
+		return
+
+	var card_data = CardDatabase.CARDS[card_drawn_name]
+
+	# Instantiate the opponent card scene
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
-	
-	# Assign properties directly
-	new_card.card_id = card_id        # For battle logic, not really using this at the moment
-	new_card.card_name = card_drawn_name  # Optional, human readable
-	
-	var card_image_path = str("res://Assets/Textures/Cards/card_" + card_drawn_name + ".png")
-	new_card.get_node("CardImage").texture = load(card_image_path)
 
-	# Set card_id FIRST
-	new_card.card_id = card_database_reference.CARDS[card_drawn_name][0]  # store as int property
-	new_card.get_node("CardLabel").text = str(new_card.card_id)
+	# Use the setup function
+	new_card.setup(card_drawn_name, card_data)
 
+	# Add to the world
 	$"../CardManager".add_child(new_card)
-	new_card.name = "Card"
+	new_card.name = "Opponent_Card_" + card_drawn_name # Specific naming for debugging
+	
+	# Send to opponent hand
 	$"../OpponentHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
-	print(new_card.card_id)

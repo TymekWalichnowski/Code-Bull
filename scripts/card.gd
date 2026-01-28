@@ -1,10 +1,26 @@
 extends Node2D
+class_name Card
 
 signal hovered
 signal hovered_off
 
 @export var card_name: String = "Basic"  # Default card type
 @export var card_id: int = 0
+
+@export var card_action_1: String 
+@export var card_action_1_value: int 
+@export var card_action_1_priority: int
+@export var card_action_1_tags: Array
+@export var card_action_2: String 
+@export var card_action_2_value: int 
+@export var card_action_2_priority: int
+@export var card_action_2_tags: Array
+@export var card_action_3: String 
+@export var card_action_3_value: int 
+@export var card_action_3_priority: int
+@export var card_action_3_tags: Array
+
+@export var card_owner: String
 
 @export var max_rotation := 30.0
 @export var follow_speed := 10.0
@@ -14,7 +30,7 @@ signal hovered_off
 @onready var tag_container = %TagContainer
 @onready var tag_label = %TagLabel
 
-const OWNER = "Player"
+
 
 var hand_position
 var cards_current_slot
@@ -41,6 +57,33 @@ func _ready() -> void:
 		card_back_image.material = card_back_image.material.duplicate()
 
 	original_z_index = z_index
+
+func setup(c_name: String, data: Array) -> void:
+	card_name = c_name
+	card_id = data[0]
+	
+	# Action 1 (Indices 1, 2, 3, 4)
+	card_action_1 = str(data[1]) if data[1] != null else ""
+	card_action_1_value = data[2] if data[2] != null else 0.0
+	card_action_1_priority = data[3] if data[3] != null else 0
+	card_action_1_tags = data[4] if data[4] != null else []
+	
+	# Action 2 (Indices 5, 6, 7, 8)
+	card_action_2 = str(data[5]) if data[5] != null else ""
+	card_action_2_value = data[6] if data[6] != null else 0.0
+	card_action_2_priority = data[7] if data[7] != null else 0
+	card_action_2_tags = data[8] if data[8] != null else []
+	
+	# Action 3 (Indices 9, 10, 11, 12)
+	card_action_3 = str(data[9]) if data[9] != null else ""
+	card_action_3_value = data[10] if data[10] != null else 0.0
+	card_action_3_priority = data[11] if data[11] != null else 0
+	card_action_3_tags = data[12] if data[12] != null else []
+	
+	# Update Visuals
+	var texture_path = "res://Assets/Textures/Cards/card_" + c_name + ".png"
+	if FileAccess.file_exists(texture_path):
+		$CardImage.texture = load(texture_path)
 
 func _process(delta: float) -> void:
 	

@@ -1,25 +1,29 @@
-[gd_scene load_steps=11 format=3 uid="uid://dtj04ha0iu31f"]
+[gd_scene load_steps=13 format=3 uid="uid://fp6e8iro60d7"]
 
-[ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_80w62"]
-[ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="2_32nxw"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="3_td6vg"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="4_hy522"]
+[ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_psvab"]
+[ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="2_foft5"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_Back.png" id="3_jh8c6"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="4_ll6wp"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/Audio/card-place-2.ogg" id="5_8j33a"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kg30u"]
-shader = ExtResource("2_32nxw")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
+shader = ExtResource("2_foft5")
 shader_parameter/fov = 90.0
 shader_parameter/cull_back = true
 shader_parameter/y_rot = 0.0
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ligt"]
-shader = ExtResource("2_32nxw")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c30e1"]
+shader = ExtResource("2_foft5")
 shader_parameter/fov = 90.0
 shader_parameter/cull_back = true
 shader_parameter/y_rot = 0.0
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jj44u"]
+size = Vector2(128, 176)
 
 [sub_resource type="Animation" id="Animation_80w62"]
 length = 0.001
@@ -208,24 +212,29 @@ _data = {
 &"card_flip": SubResource("Animation_32nxw")
 }
 
-[node name="OpponentCard" type="Node2D"]
-script = ExtResource("1_80w62")
+[node name="PlayerCard" type="Node2D"]
+script = ExtResource("1_psvab")
 metadata/_custom_type_script = "uid://vw5rk4xmtwrq"
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
-material = SubResource("ShaderMaterial_kg30u")
+material = SubResource("ShaderMaterial_ijgdg")
 scale = Vector2(2, 2)
-texture = ExtResource("3_td6vg")
+texture = ExtResource("3_jh8c6")
 
 [node name="CardImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 z_index = -1
 texture_filter = 1
-material = SubResource("ShaderMaterial_6ligt")
+material = SubResource("ShaderMaterial_c30e1")
 scale = Vector2(2, 2)
-texture = ExtResource("4_hy522")
+texture = ExtResource("4_ll6wp")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_jj44u")
 
 [node name="CardLabel" type="RichTextLabel" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -240,6 +249,10 @@ text = "0"
 libraries = {
 &"": SubResource("AnimationLibrary_td6vg")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8j33a")
+volume_db = -3.0
 
 [node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
@@ -290,3 +303,8 @@ offset_top = -85.0
 offset_right = 273.0
 offset_bottom = 88.0
 mouse_filter = 2
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
