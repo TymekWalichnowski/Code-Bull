@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://v2y7mde1tof"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action.gd" id="1_24aaf"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data.gd" id="2_lpbhx"]
+
+[sub_resource type="Resource" id="Resource_24aaf"]
+script = ExtResource("1_24aaf")
+action_name = "Attack"
+value = 1.0
+priority = 2
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_24aaf"]
+load_path = "res://.godot/imported/card_sword.png-028b5ad5ae78fa8c1bf057aeee2eed4f.ctex"
+
+[resource]
+script = ExtResource("2_lpbhx")
+display_name = "Sword"
+image_texture = SubResource("CompressedTexture2D_24aaf")
+actions = Array[ExtResource("1_24aaf")]([SubResource("Resource_24aaf"), null, null])
+metadata/_custom_type_script = "uid://cfssthidojyly"

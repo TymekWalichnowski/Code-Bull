@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cy2bnvdeiy5pg"
-path="res://.godot/imported/Token_Flame.png-08c5246d473f0a0e804df4950655ea51.ctex"
+path="res://.godot/imported/Token_Flame.png-b82936562455ea0520422f892da17e12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Tokens/Token_Flame.png"
-dest_files=["res://.godot/imported/Token_Flame.png-08c5246d473f0a0e804df4950655ea51.ctex"]
+source_file="res://assets/textures/tokens/Token_Flame.png"
+dest_files=["res://.godot/imported/Token_Flame.png-b82936562455ea0520422f892da17e12.ctex"]
 
 [params]
 

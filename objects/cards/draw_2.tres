@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cd88dyupufuki"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action.gd" id="1_2wpmc"]
+[ext_resource type="Texture2D" uid="uid://crdrk5nn4yss2" path="res://assets/textures/cards/card_Draw 2.png" id="2_2wpmc"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data.gd" id="3_eof5a"]
+
+[sub_resource type="Resource" id="Resource_24aaf"]
+script = ExtResource("1_2wpmc")
+action_name = "Draw_Card"
+value = 2.0
+priority = 1
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[resource]
+script = ExtResource("3_eof5a")
+display_name = "Draw 2"
+image_texture = ExtResource("2_2wpmc")
+actions = Array[ExtResource("1_2wpmc")]([SubResource("Resource_24aaf"), null, null])
+metadata/_custom_type_script = "uid://cfssthidojyly"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://j61jj7tm3m6g"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action.gd" id="1_rd3gr"]
+[ext_resource type="Texture2D" uid="uid://cl21at1o7rlq0" path="res://assets/textures/cards/card_2 Of Spades.png" id="2_rd3gr"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data.gd" id="3_w03kf"]
+
+[sub_resource type="Resource" id="Resource_24aaf"]
+script = ExtResource("1_rd3gr")
+action_name = "Retrigger_Next_Slot"
+value = 2.0
+priority = 1
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[resource]
+script = ExtResource("3_w03kf")
+display_name = "2 Of Spades"
+image_texture = ExtResource("2_rd3gr")
+actions = Array[ExtResource("1_rd3gr")]([SubResource("Resource_24aaf"), null, null])
+metadata/_custom_type_script = "uid://cfssthidojyly"

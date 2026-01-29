@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cjd6fixpm2dsw"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action.gd" id="1_22rqm"]
+[ext_resource type="Texture2D" uid="uid://cccim80tdu0l1" path="res://assets/textures/cards/card_Block.png" id="2_22rqm"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data.gd" id="3_uso0o"]
+
+[sub_resource type="Resource" id="Resource_24aaf"]
+script = ExtResource("1_22rqm")
+action_name = "Shield"
+value = 2.0
+priority = 1
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[resource]
+script = ExtResource("3_uso0o")
+display_name = "Block"
+image_texture = ExtResource("2_22rqm")
+actions = Array[ExtResource("1_22rqm")]([SubResource("Resource_24aaf"), null, null])
+metadata/_custom_type_script = "uid://cfssthidojyly"

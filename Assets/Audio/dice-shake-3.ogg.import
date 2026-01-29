@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dya61fy3dlvdu"
-path="res://.godot/imported/dice-shake-3.ogg-f7d4c00eba926ddb2ab0d6d46800db10.oggvorbisstr"
+path="res://.godot/imported/dice-shake-3.ogg-97e9e0ede221131b3c43ffc8cb7f3cfe.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/Audio/dice-shake-3.ogg"
-dest_files=["res://.godot/imported/dice-shake-3.ogg-f7d4c00eba926ddb2ab0d6d46800db10.oggvorbisstr"]
+source_file="res://assets/audio/dice-shake-3.ogg"
+dest_files=["res://.godot/imported/dice-shake-3.ogg-97e9e0ede221131b3c43ffc8cb7f3cfe.oggvorbisstr"]
 
 [params]
 

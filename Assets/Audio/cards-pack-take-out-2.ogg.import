@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://blpo4rh80wvl6"
-path="res://.godot/imported/cards-pack-take-out-2.ogg-0fadddb7a1e978f395d71e2c6cc24471.oggvorbisstr"
+path="res://.godot/imported/cards-pack-take-out-2.ogg-c35ad29c0cfac0c2174b34e97f06c320.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/Audio/cards-pack-take-out-2.ogg"
-dest_files=["res://.godot/imported/cards-pack-take-out-2.ogg-0fadddb7a1e978f395d71e2c6cc24471.oggvorbisstr"]
+source_file="res://assets/audio/cards-pack-take-out-2.ogg"
+dest_files=["res://.godot/imported/cards-pack-take-out-2.ogg-c35ad29c0cfac0c2174b34e97f06c320.oggvorbisstr"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwroqfk6jn1wn"
-path="res://.godot/imported/light_range.png-90ef1f388f985d21431e05a68d5be74b.ctex"
+path="res://.godot/imported/light_range.png-0d4406d73c1b102efd24e0ca52a1d4b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/light_range.png"
-dest_files=["res://.godot/imported/light_range.png-90ef1f388f985d21431e05a68d5be74b.ctex"]
+source_file="res://assets/icons/32x32/light_range.png"
+dest_files=["res://.godot/imported/light_range.png-0d4406d73c1b102efd24e0ca52a1d4b1.ctex"]
 
 [params]
 

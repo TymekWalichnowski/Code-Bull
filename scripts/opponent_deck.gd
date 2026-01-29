@@ -2,16 +2,25 @@ extends Node2D
 
 const CARD_SCENE_PATH = "res://scenes/opponent_card.tscn"
 const CARD_DRAW_SPEED = 0.2
-const STARTING_HAND_SIZE = 4 # starts with 1 hand less than player since automatically draws but probably want to fix this later
+const STARTING_HAND_SIZE = 4
 
-var opponent_deck = ["Draw 2", "Divide", "Block", "Block", "Basic", "Sword", "Sword"]
-var card_database_reference 
+@export var card_database: CardDatabase2
+
+var opponent_deck = [
+	"Draw 2",
+	"Divide",
+	"Block",
+	"Block",
+	"Basic",
+	"Sword",
+	"Sword"
+]
 
 var graveyard = []
 
 func _ready() -> void:
 	$RichTextLabel.text = str(opponent_deck.size())
-	card_database_reference = preload("res://scripts/card_database.gd")
+
 	for i in range(STARTING_HAND_SIZE):
 		draw_card()
 
@@ -25,27 +34,18 @@ func draw_card():
 		opponent_deck.shuffle()  # optional shuffle
 
 	# Get and remove the top card
-	var card_drawn_name = opponent_deck.pop_front()
+	var card_name = opponent_deck.pop_front()
 	$RichTextLabel.text = str(opponent_deck.size())
 
-	# Safety check for database entry
-	if not CardDatabase.CARDS.has(card_drawn_name):
-		push_error("Opponent tried to draw non-existent card: " + card_drawn_name)
+	var card_data := card_database.get_by_name(card_name)
+	if not card_data:
+		push_error("Opponent tried to draw missing card: " + card_name)
 		return
 
-	var card_data = CardDatabase.CARDS[card_drawn_name]
-	var card_owner = "Opponent"
+	var new_card := preload(CARD_SCENE_PATH).instantiate() as Card
+	new_card.setup(card_data, "Opponent")
 
-	# Instantiate the opponent card scene
-	var card_scene = preload(CARD_SCENE_PATH)
-	var new_card = card_scene.instantiate()
-
-	# Use the setup function
-	new_card.setup(card_drawn_name, card_data, card_owner)
-
-	# Add to the world
 	$"../CardManager".add_child(new_card)
-	new_card.name = "Opponent_Card_" + card_drawn_name # Specific naming for debugging
-	
-	# Send to opponent hand
+	new_card.name = "Opponent_Card_" + card_name
+
 	$"../OpponentHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)

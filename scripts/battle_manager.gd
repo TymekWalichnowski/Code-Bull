@@ -132,7 +132,8 @@ func run_activation_phase():
 		
 		var player_card = player_slots[slot_index].card
 		var opponent_card = opponent_slots[slot_index].card
-		var player_action_manager = player_slots.get_node("CardActionManager")
+		var player_action_manager = player_card.get_node("CardActionManager")
+		var opponent_action_manager = opponent_card.get_node("CardActionManager")
 		
 		if slot_index < player_slots.size():
 			player_card = player_slots[slot_index].card

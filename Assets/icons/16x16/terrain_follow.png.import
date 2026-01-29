@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqwu31lnegjkm"
-path="res://.godot/imported/terrain_follow.png-9735a53bf9d8052c179ed169e19e1b9e.ctex"
+path="res://.godot/imported/terrain_follow.png-055d1db78c71060eb744c43fb11449da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/terrain_follow.png"
-dest_files=["res://.godot/imported/terrain_follow.png-9735a53bf9d8052c179ed169e19e1b9e.ctex"]
+source_file="res://assets/icons/16x16/terrain_follow.png"
+dest_files=["res://.godot/imported/terrain_follow.png-055d1db78c71060eb744c43fb11449da.ctex"]
 
 [params]
 

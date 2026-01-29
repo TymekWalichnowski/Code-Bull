@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b6gdesjqtkqho"
-path="res://.godot/imported/shield.png-7c1a79b3a08b5f26285b55cffdfa39cf.ctex"
+path="res://.godot/imported/shield.png-a07b4729a91b9d4c22ec15e77d4f2415.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/shield.png"
-dest_files=["res://.godot/imported/shield.png-7c1a79b3a08b5f26285b55cffdfa39cf.ctex"]
+source_file="res://assets/icons/32x32/shield.png"
+dest_files=["res://.godot/imported/shield.png-a07b4729a91b9d4c22ec15e77d4f2415.ctex"]
 
 [params]
 

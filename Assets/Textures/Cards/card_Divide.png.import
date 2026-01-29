@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://85hap4dscrlb"
-path="res://.godot/imported/card_Divide.png-59b114c696649e9c7790869140830666.ctex"
+path="res://.godot/imported/card_Divide.png-af567c2e45e1b76074fc4ce2c4587d6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Cards/card_Divide.png"
-dest_files=["res://.godot/imported/card_Divide.png-59b114c696649e9c7790869140830666.ctex"]
+source_file="res://assets/textures/cards/card_Divide.png"
+dest_files=["res://.godot/imported/card_Divide.png-af567c2e45e1b76074fc4ce2c4587d6e.ctex"]
 
 [params]
 

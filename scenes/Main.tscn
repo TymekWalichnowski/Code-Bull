@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=39 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" path="res://scenes/animation_manager.gd" id="1_1nqs0"]
@@ -6,21 +6,22 @@
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_back.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
-[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/Textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
-[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/Textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
-[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
-[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
-[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
-[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
-[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
-[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
-[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
+[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="12_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
+[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
+[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
+[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
@@ -247,6 +248,7 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(150, 900)
 script = ExtResource("4_fos0i")
+card_database = ExtResource("12_yxlcp")
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerDeck"]
 texture_filter = 1
@@ -273,6 +275,7 @@ text = "0"
 unique_name_in_owner = true
 position = Vector2(1756, 132)
 script = ExtResource("8_lhr70")
+card_database = ExtResource("12_yxlcp")
 
 [node name="Sprite2D" type="Sprite2D" parent="OpponentDeck"]
 texture_filter = 1

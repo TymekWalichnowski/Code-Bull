@@ -1,13 +1,13 @@
 [gd_scene load_steps=23 format=4 uid="uid://dk02ef51d0wll"]
 
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="1_dd2wi"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_tgmmg"]
-[ext_resource type="Script" uid="uid://m2rv228snxqs" path="res://scenes/card_action_manager.gd" id="2_dqwud"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_back.png" id="2_ktuci"]
+[ext_resource type="Script" uid="uid://m2rv228snxqs" path="res://scripts/card_action_manager.gd" id="2_dqwud"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/Audio/card-place-2.ogg" id="5_40ytf"]
-[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/Fonts/twstd-roots.ttf" id="6_5273u"]
-[ext_resource type="Theme" uid="uid://4twn8n1dll3t" path="res://Assets/Themes/Default_Theme.tres" id="6_qbjcq"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="5_40ytf"]
+[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://assets/fonts/twstd-roots.ttf" id="6_5273u"]
+[ext_resource type="Theme" uid="uid://4twn8n1dll3t" path="res://assets/themes/Default_Theme.tres" id="6_qbjcq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kg30u"]
 shader = ExtResource("3_kg30u")
