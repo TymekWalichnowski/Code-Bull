@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cq87gy5uvcmo"
-path="res://.godot/imported/ambient_occlusion.png-b5d024e90dcd14c837bbc074b454eb66.ctex"
+path="res://.godot/imported/ambient_occlusion.png-072e5126dd637478d8f2b940c3d438ef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/ambient_occlusion.png"
-dest_files=["res://.godot/imported/ambient_occlusion.png-b5d024e90dcd14c837bbc074b454eb66.ctex"]
+source_file="res://Assets/icons/32x32/ambient_occlusion.png"
+dest_files=["res://.godot/imported/ambient_occlusion.png-072e5126dd637478d8f2b940c3d438ef.ctex"]
 
 [params]
 

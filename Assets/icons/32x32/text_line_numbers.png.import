@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6gi4vt6isu0l"
-path="res://.godot/imported/text_line_numbers.png-34e6658baebf21735168852d56700569.ctex"
+path="res://.godot/imported/text_line_numbers.png-d41c9478e6e26d830c6bb0f5d160f92d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/text_line_numbers.png"
-dest_files=["res://.godot/imported/text_line_numbers.png-34e6658baebf21735168852d56700569.ctex"]
+source_file="res://Assets/icons/32x32/text_line_numbers.png"
+dest_files=["res://.godot/imported/text_line_numbers.png-d41c9478e6e26d830c6bb0f5d160f92d.ctex"]
 
 [params]
 

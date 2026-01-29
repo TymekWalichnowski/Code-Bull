@@ -20,7 +20,6 @@ var original_z_index := 1
 var cards_current_slot
 var hand_position: Vector2 = Vector2.ZERO
 
-
 var card_image: Sprite2D
 var card_back_image: Sprite2D
 

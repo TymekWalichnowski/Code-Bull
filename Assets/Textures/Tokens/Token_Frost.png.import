@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbagfseklfhso"
-path="res://.godot/imported/Token_Frost.png-9b60e553a3d7a4949fd5a6cee571082a.ctex"
+path="res://.godot/imported/Token_Frost.png-a82ec90c037cb66ce2ffe3a16b7af080.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/tokens/Token_Frost.png"
-dest_files=["res://.godot/imported/Token_Frost.png-9b60e553a3d7a4949fd5a6cee571082a.ctex"]
+source_file="res://Assets/textures/tokens/Token_Frost.png"
+dest_files=["res://.godot/imported/Token_Frost.png-a82ec90c037cb66ce2ffe3a16b7af080.ctex"]
 
 [params]
 

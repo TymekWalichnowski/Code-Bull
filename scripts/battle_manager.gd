@@ -29,6 +29,8 @@ var opponent_health
 
 var empty_opponent_card_slots = []
 var current_slot
+var finished_count = 0
+var total_needed = 2
 
 func _ready() -> void:
 	battle_timer.one_shot = true
@@ -126,27 +128,71 @@ func wait(wait_time):
 func run_activation_phase():
 	
 	var slot_count = max(player_slots.size(), opponent_slots.size()) # chooses the larger of the two slot counts
-	
+
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT " , slot_index + 1, " ----" )
 		
-		var player_card = player_slots[slot_index].card
-		var opponent_card = opponent_slots[slot_index].card
-		var player_action_manager = player_card.get_node("CardActionManager")
-		var opponent_action_manager = opponent_card.get_node("CardActionManager")
+		finished_count = 0
+		
+		var p_card = player_slots[slot_index].card
+		var o_card = opponent_slots[slot_index].card
+		var player_action_manager = p_card.get_node("CardActionManager")
+		var opponent_action_manager = o_card.get_node("CardActionManager")
 		
 		if slot_index < player_slots.size():
-			player_card = player_slots[slot_index].card
+			p_card = player_slots[slot_index].card
 
 		if slot_index < opponent_slots.size():
-			opponent_card = opponent_slots[slot_index].card
+			o_card = opponent_slots[slot_index].card
 		
 		## Cards moves to position
-		move_card_to_battle_point(player_card)
-		move_card_to_battle_point(opponent_card)
+		move_card_to_battle_point(p_card)
+		move_card_to_battle_point(o_card)
 		
-	## slot 1
+		while finished_count < total_needed: # pause, wait until
+			await get_tree().process_frame
+		
+		finished_count = 0
+		#action 1 priority here
+		var first_actor = null
+		var second_actor = null
+		
+		if p_card and o_card:
+			# Get priority from the first action (index 0)
+			print("bloo")
+			var p_priority = p_card.card_data.actions[0].priority
+			var o_priority = o_card.card_data.actions[0].priority
+			
+			if p_priority <= o_priority: # Player wins ties, or lower number goes first
+				first_actor = p_card
+				second_actor = o_card
+			else:
+				first_actor = o_card
+				second_actor = p_card
+		else:
+			# If only one card exists, it's the only actor
+			first_actor = p_card if p_card else o_card
+
+		## 3. Execute Actions
+		if first_actor:
+			await execute_card_action(first_actor, 0)
+		
+		if second_actor:
+			await wait(0.5) # Small pause between card actions for juice
+			await execute_card_action(second_actor, 0)
+			
+		await wait(0.8) # Pause before moving to next slot
+
+func execute_card_action(card: Card, action_index: int):
+	var action_manager = card.get_node("CardActionManager")
+	var action_data = card.card_data.actions[action_index]
 	
+	print("Executing: ", card.card_name, " uses ", action_data.action_name)
+	
+	# Assuming your ActionManager has a trigger function
+	# We 'await' it so the battle doesn't proceed until the VFX/Damage is done
+	await action_manager.execute_action(action_data)
+
 	#priority 0 animations
 	#Apply priority 0 effect [e.g nullification]
 	#
@@ -161,6 +207,10 @@ func run_activation_phase():
 
 	pass
 
+func check_done(): #making sure both actions are done before
+	finished_count += 1
+	print(finished_count)
+
 func move_card_to_battle_point(card):
 	var target_pos
 	if card.card_owner == "Player":
@@ -170,6 +220,7 @@ func move_card_to_battle_point(card):
 	var move_tween = get_tree().create_tween()
 	move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
 	move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
+	move_tween.finished.connect(check_done)
 	card.z_index = 10
 
 func collect_used_card(card):
