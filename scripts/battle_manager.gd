@@ -187,11 +187,11 @@ func execute_card_action(card: Card, action_index: int):
 	var action_manager = card.get_node("CardActionManager")
 	var action_data = card.card_data.actions[action_index]
 	
-	print("Executing: ", card.card_name, " uses ", action_data.action_name)
+	print(card.card_owner, " Executing: ", card.card_name, " uses ", action_data.action_name, " value ", action_data.value)
 	
 	# Assuming your ActionManager has a trigger function
 	# We 'await' it so the battle doesn't proceed until the VFX/Damage is done
-	await action_manager.execute_action(action_data)
+	
 
 	#priority 0 animations
 	#Apply priority 0 effect [e.g nullification]
