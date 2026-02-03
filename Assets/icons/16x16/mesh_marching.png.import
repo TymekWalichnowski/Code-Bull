@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4msykl5didod"
-path="res://.godot/imported/mesh_marching.png-16e350bcc98813a4b026a26cd72de3fa.ctex"
+path="res://.godot/imported/mesh_marching.png-f29df338b353aa611f306360cdea908d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/mesh_marching.png"
-dest_files=["res://.godot/imported/mesh_marching.png-16e350bcc98813a4b026a26cd72de3fa.ctex"]
+source_file="res://assets/icons/16x16/mesh_marching.png"
+dest_files=["res://.godot/imported/mesh_marching.png-f29df338b353aa611f306360cdea908d.ctex"]
 
 [params]
 

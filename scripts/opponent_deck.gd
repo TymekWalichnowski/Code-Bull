@@ -8,10 +8,11 @@ const STARTING_HAND_SIZE = 4
 
 var opponent_deck = [
 	"Draw 2",
-	"Divide",
+	"Sword",
 	"Block",
 	"Block",
 	"Basic",
+	"Sword",
 	"Sword",
 	"Sword"
 ]
@@ -37,12 +38,12 @@ func draw_card():
 	var card_name = opponent_deck.pop_front()
 	$RichTextLabel.text = str(opponent_deck.size())
 
-	var card_data := card_database.get_by_name(card_name)
+	var card_data = card_database.get_by_name(card_name)
 	if not card_data:
 		push_error("Opponent tried to draw missing card: " + card_name)
 		return
 
-	var new_card := preload(CARD_SCENE_PATH).instantiate() as Card
+	var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
 	new_card.setup(card_data, "Opponent")
 
 	$"../CardManager".add_child(new_card)

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://64ke4wq1g77u"
-path="res://.godot/imported/lock_vertical.png-59625804ba484cfba9986a6726a39a35.ctex"
+path="res://.godot/imported/lock_vertical.png-33503e7067669fdcabbc7909890a5963.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/lock_vertical.png"
-dest_files=["res://.godot/imported/lock_vertical.png-59625804ba484cfba9986a6726a39a35.ctex"]
+source_file="res://assets/icons/32x32/lock_vertical.png"
+dest_files=["res://.godot/imported/lock_vertical.png-33503e7067669fdcabbc7909890a5963.ctex"]
 
 [params]
 
