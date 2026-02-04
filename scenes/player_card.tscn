@@ -214,6 +214,7 @@ _data = {
 }
 
 [node name="PlayerCard" type="Node2D"]
+position = Vector2(150, 900)
 script = ExtResource("1_psvab")
 metadata/_custom_type_script = "uid://vw5rk4xmtwrq"
 

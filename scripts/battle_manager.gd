@@ -125,18 +125,43 @@ func wait(wait_time):
 	battle_timer.start()
 	await battle_timer.timeout
 
+
+var slot_retriggers = [0, 0, 0] # Track extra runs for Slot 1, 2, and 3, move this outta the way
+	
+	# EXAMPLE: Manual retrigger for Player Slot 2, put above slot index
+	# We check if there is actually a card there before scheduling a retrigger
+	#if player_slots[1].card != null:
+		#player_retrigger_counts[1] += 1 
+		#print("DEBUG: Player Slot 2 scheduled for 1 extra run.")
+
 func run_activation_phase():
 	var slot_count = max(player_slots.size(), opponent_slots.size())
-
+	player_retrigger_counts = [0, 0, 0]
+	opponent_retrigger_counts = [0, 0, 0]
+	
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
 		
 		var p_card = player_slots[slot_index].card
 		var o_card = opponent_slots[slot_index].card
+		
+		# retrigger logic
+		var p_runs = 1
+		var o_runs = 1
+		if p_card:
+			p_runs += player_retrigger_counts[slot_index]
+		if o_card:
+			o_runs += opponent_retrigger_counts[slot_index]
+		var total_runs = max(p_runs, o_runs)
+		
+		# resetting stuff
 		%Player.current_mult = %Player.next_mult
 		%Player.next_mult = 1.0
 		%Opponent.current_mult = %Opponent.next_mult
 		%Opponent.next_mult = 1.0
+		
+		%Player.nullified = false
+		%Opponent.nullified = false
 
 		# 1. Update total_needed based on how many cards are actually present
 		total_needed = 0
@@ -160,54 +185,69 @@ func run_activation_phase():
 		var o_action_count = o_card.card_data.actions.size() if o_card else 0
 		var max_actions = max(p_action_count, o_action_count)
 
-		# 4. Action Loop
-		for action_idx in range(max_actions):
-			var first_actor = null
-			var second_actor = null
-			var is_simultaneous = false
+		# 4. Action Loop (with retriggers)
+		for run_idx in range(total_runs):
+			print("Slot", slot_index + 1, "Run", run_idx + 1, "/", total_runs)
 
-			var p_has_act = p_card != null and action_idx < p_card.card_data.actions.size()
-			var o_has_act = o_card != null and action_idx < o_card.card_data.actions.size()
+			for action_idx in range(max_actions):
+				var first_actor = null
+				var second_actor = null
+				var is_simultaneous = false
 
-			if p_has_act and p_card.card_data.actions[action_idx] == null: p_has_act = false
-			if o_has_act and o_card.card_data.actions[action_idx] == null: o_has_act = false
+				var p_has_act = (
+					p_card != null
+					and run_idx < p_runs
+					and action_idx < p_card.card_data.actions.size()
+					and p_card.card_data.actions[action_idx] != null
+				)
 
-			if p_has_act and o_has_act:
-				var p_priority = p_card.card_data.actions[action_idx].priority
-				var o_priority = o_card.card_data.actions[action_idx].priority
-				
-				if p_priority < o_priority:
+				var o_has_act = (
+					o_card != null
+					and run_idx < o_runs
+					and action_idx < o_card.card_data.actions.size()
+					and o_card.card_data.actions[action_idx] != null
+				)
+
+				if p_has_act and o_has_act:
+					var p_priority = p_card.card_data.actions[action_idx].priority
+					var o_priority = o_card.card_data.actions[action_idx].priority
+					
+					if p_priority < o_priority:
+						first_actor = p_card
+						second_actor = o_card
+					elif o_priority < p_priority:
+						first_actor = o_card
+						second_actor = p_card
+					else:
+						is_simultaneous = true
+						first_actor = p_card
+						second_actor = o_card
+				elif p_has_act:
 					first_actor = p_card
-					second_actor = o_card
-				elif o_priority < p_priority:
+				elif o_has_act:
 					first_actor = o_card
-					second_actor = p_card
-				else:
-					is_simultaneous = true
-					first_actor = p_card
-					second_actor = o_card
-			elif p_has_act:
-				first_actor = p_card
-			elif o_has_act:
-				first_actor = o_card
 
-			if is_simultaneous:
-				var act1 = execute_card_action(first_actor, action_idx)
-				var act2 = execute_card_action(second_actor, action_idx)
-				await act1
-				await act2
-				await wait(1.0) #just using wait for now but make it so that it relies on actions finished first
-			else:
-				if first_actor:
-					await execute_card_action(first_actor, action_idx)
+				if is_simultaneous:
+					execute_card_action(first_actor, action_idx)
+					execute_card_action(second_actor, action_idx)
+					#dont use awaits, use the counter instead because it needs to be simultaneous
+					while finished_count < total_needed:
+						await get_tree().process_frame
 					await wait(1.0)
-				if second_actor:
-					await execute_card_action(second_actor, action_idx)
-					await wait(1.0)
+				else:
+					if first_actor:
+						await execute_card_action(first_actor, action_idx)
+						await wait(1.0)
+					if second_actor:
+						await execute_card_action(second_actor, action_idx)
+						await wait(1.0)
 		
 		# 5. End of Slot Cleanup
 		%Player.current_mult = 1.0
 		%Opponent.current_mult = 1.0
+		
+		player_retrigger_counts[slot_index] = 0
+		opponent_retrigger_counts[slot_index] = 0
 		
 		if p_card: collect_used_card(p_card)
 		if o_card: collect_used_card(o_card)
@@ -221,29 +261,47 @@ func execute_card_action(card: Card, action_index: int):
 	var value = action_data.value
 	
 	print(card.card_owner, " Executing: ", card.card_name, " uses ", action_data.action_name, " value ", action_data.value)
-	finished_count += 1
 	
 	var target
 	var self_target
+	var anim_node
 	
 	if card.card_owner == "Player":
 		target = %Opponent
 		self_target = %Player
+		anim_node = %PlayerActionAnim
+
 	else:
 		target = %Player
 		self_target = %Opponent
+		anim_node = %OpponentActionAnim
 	
-	# CURRENTLY WE JUST APPLY THE MULT TO THE VALUE, BUT LATER ADD A SYSTEM TO CHECK THE TAGS AND THEN APPLY THE MULT TO THE VALUE DEPENDING ON TAGS 
-	#if action ["Attack", "Shield"]:
-		#value = value * self_target.current_mult
+	#
 	
+	# CURRENTLY WE JUST APPLY THE MULT TO THE VALUE, 
+	# BUT LATER ADD A SYSTEM TO CHECK THE TAGS AND THEN
+	# APPLY THE MULT TO THE VALUE DEPENDING ON TAGS 
+
 	value = value * self_target.current_mult
-	# After applying current mult, apply next mult, this is to prevent issues such as same-turn divides
 	
 	if self_target.nullified == true:
-		print("returning ", card.OWNER, " action as it was nullified")
+		print("returning ", card.card_owner, " action as it was nullified")
+		finished_count += 1
 		return
 	
+	# PRE-APPLICATION, Certain cards like the 50/50 need to do their logic before the action application
+	match action:
+		"Multiply_Or_Divide":
+			if randf() < 0.5:
+				action = "Multiply_Next_Card"
+			else:
+				action = "Divide_Next_Card"
+			print(card.card_owner, " Used multiply or divide, action is now: ", action)
+		
+	card.get_node("AnimationPlayer").play("card_basic_use") #card animation
+	await $AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
+	
+	# APPLICATION, Applying the effect like damage or shield
 	match action:
 		"Attack":
 			print(card.card_owner, " deals ", value, " damage.")
@@ -281,7 +339,10 @@ func execute_card_action(card: Card, action_index: int):
 					player_retrigger_counts[current_idx + 1] += int(value)
 				else:
 					opponent_retrigger_counts[current_idx + 1] += int(value)
-	card.get_node("AnimationPlayer").play("card_basic_use")
+		"Multiply_Or_Divide":
+			pass
+	
+	finished_count += 1
 
 func check_done(): #making sure both actions are done before
 	finished_count += 1

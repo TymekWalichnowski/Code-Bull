@@ -6,9 +6,17 @@ const CARD_SCENE_PATH = "res://scenes/player_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
-var player_deck = ["Double Hit", "2 Of Spades", "Fifty Fifty", "Multiply", "Divide", "Draw 2", "Sword", "Sword"]
-var drawn_card_this_turn = false
+var player_deck = [
+	"Double Hit",
+	"2 Of Spades",
+	"Fifty Fifty",
+	"Nullify",
+	"Divide",
+	"Draw 2",
+	"Sword",
+	"Sword"]
 
+var drawn_card_this_turn = false
 var graveyard = []
 
 func _ready() -> void:
@@ -25,10 +33,10 @@ func _ready() -> void:
 	drawn_card_this_turn = true
 
 func draw_card():
-	print("im in draw_card")
-	if player_deck.size() == 0 and graveyard.size() > 0:
+	print("player draw_card starting")
+	if player_deck.is_empty() and graveyard.size() > 0:
 		# Refill deck from graveyard
-		print("graveyard trolololo")
+		print("refilling from graveyard")
 		for card_node in graveyard:
 			player_deck.append(card_node.card_name)
 			card_node.visible = true  # make sure it’s usable again
@@ -36,31 +44,34 @@ func draw_card():
 		player_deck.shuffle()  # optional shuffle
 		$Area2D/CollisionShape2D.disabled = true
 	
-	print("gonna do card stuff now")
-	var card_name = player_deck.pop_front()
-	$RichTextLabel.text = str(player_deck.size())
-	print("Trying to get card:", card_name)
-	var card_data = card_database.get_by_name(card_name)
-	if not card_data:
-		print("uhh error happened")
-		push_error("Missing card data: " + card_name)
-		return
+	if !player_deck.is_empty():
+		print("gonna do card stuff now")
+		var card_name = player_deck.pop_front()
+		$RichTextLabel.text = str(player_deck.size())
+		print("Trying to get card:", card_name)
+		var card_data = card_database.get_by_name(card_name)
+		if not card_data:
+			print("uhh error happened")
+			push_error("Missing card data: " + card_name)
+			return
 
-	var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
-	new_card.setup(card_data, "Player")
+		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
+		new_card.setup(card_data, "Player")
 	
-	print("setup da card loool")
-	%CardManager.add_child(new_card)
-	print("%CardManager:", %CardManager)
-	print("%PlayerHand:", %PlayerHand)
-	print("hello")
-	new_card.name = "Card_" + card_name
+		print("setup da card loool")
+		%CardManager.add_child(new_card)
+		print("%CardManager:", %CardManager)
+		print("%PlayerHand:", %PlayerHand)
+		print("hello")
+		new_card.name = "Card_" + card_name
 
-	if new_card.has_node("AnimationPlayer"):
-		new_card.get_node("AnimationPlayer").play("card_flip")
-		
-	%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
-	print("Drawing card: ", card_name, " | Card data: ", card_data)
+		if new_card.has_node("AnimationPlayer"):
+			new_card.get_node("AnimationPlayer").play("card_flip")
+			
+		%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
+		print("Drawing card: ", card_name, " | Card data: ", card_data)
+	else:
+		print("player deck empty! nothing to draw!")
 
 
 func reset_draw():

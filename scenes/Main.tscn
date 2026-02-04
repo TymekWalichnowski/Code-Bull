@@ -1,7 +1,7 @@
-[gd_scene load_steps=39 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=44 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
-[ext_resource type="Script" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
+[ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
 [ext_resource type="Script" uid="uid://nl86bj6ee0c6" path="res://scripts/card_manager.gd" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
@@ -22,9 +22,26 @@
 [ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
 [ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
 [ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
+[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://assets/textures/effects/multiply_divide_sheet.png" id="22_ebg2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq6as"]
+atlas = ExtResource("22_ebg2g")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxyth"]
+atlas = ExtResource("22_ebg2g")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
+atlas = ExtResource("22_ebg2g")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmqll"]
+atlas = ExtResource("22_ebg2g")
+region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yxlcp"]
 atlas = ExtResource("21_1iba3")
@@ -105,6 +122,29 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_slash",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_cobve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmqll")
+}],
+"loop": false,
+"name": &"multiply_or_divide",
 "speed": 12.0
 }, {
 "frames": [{
@@ -320,7 +360,7 @@ visible = false
 z_index = 5
 position = Vector2(959, 138)
 sprite_frames = SubResource("SpriteFrames_xa025")
-animation = &"shield_bubble"
+animation = &"multiply_or_divide"
 
 [node name="OpponentActionAnim" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -328,7 +368,7 @@ visible = false
 z_index = 5
 position = Vector2(972, 851)
 sprite_frames = SubResource("SpriteFrames_xa025")
-animation = &"shield_bubble"
+animation = &"attack_slash"
 
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
 [connection signal="animation_finished" from="PlayerActionAnim" to="BattleManager/AnimationManager" method="_on_player_action_anim_animation_finished"]

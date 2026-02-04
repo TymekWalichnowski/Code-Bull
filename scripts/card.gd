@@ -15,7 +15,7 @@ signal hovered_off
 @onready var tag_container = %TagContainer
 @onready var tag_label = %TagLabel
 
-var hovering := false
+var hovering = false
 var original_z_index := 1
 var cards_current_slot
 var hand_position: Vector2 = Vector2.ZERO
@@ -175,14 +175,15 @@ func update_hover_ui():
 	var is_multiplied = current_mult != 1.0
 
 	var action_templates = {
-		"Attack": "Deal %s damage.",
-		"Shield": "Gain %s shield.",
-		"Multiply_Next_Card": "Multiply next played card by %s.",
-		"Divide_Next_Card": "Divide opponent's next card by %s.",
-		"Nullify": "Negate the opponent's next action.",
-		"Draw_Card": "Draw %s card(s).",
-		"Retrigger_Next_Slot": "Trigger next card slot %s extra time(s).",
-		"Nothing": "Do nothing."
+		"Attack": "- Deal %s damage.",
+		"Shield": "- Gain %s shield.",
+		"Multiply_Next_Card": "- Multiply all values of next card slot by %s.",
+		"Divide_Next_Card": "- Divide all values of opponent's next card slot by %s.",
+		"Nullify": "- Negate the opponent's current card.",
+		"Draw_Card": "- Draw %s card(s).",
+		"Retrigger_Next_Slot": "- Trigger next card slot %s extra time(s).",
+		"Multiply_Or_Divide": "- 50% chance to multiply or divide opponent's card by %s.",
+		"Nothing": "- Do nothing."
 	}
 
 	for action in card_data.actions:
@@ -198,8 +199,21 @@ func update_hover_ui():
 
 		var template = action_templates.get(action.action_name, "%s")
 
-		if action.action_name in ["Nullify", "Nothing"]:
+		if action.action_name == "Multiply_Or_Divide":
+			# Grey out the probability text
+			var chance_text = "[color=#888888]50%[/color]"
+			full_description += "- %s to multiply or divide opponent's card slot by %s.\n" % [
+				chance_text,
+				display_value
+			]
+
+			# Ethereal tag (see below)
+			if not tag_list.has("Ethereal"):
+				tag_list.append("Ethereal")
+
+		elif action.action_name in ["Nullify", "Nothing"]:
 			full_description += template + "\n"
+
 		else:
 			full_description += (template % display_value) + "\n"
 
@@ -207,13 +221,26 @@ func update_hover_ui():
 			if not tag_list.has(tag):
 				tag_list.append(tag)
 
-	desc_label.text = "[center]%s[/center]" % full_description
+	desc_label.text = full_description
 
 	if tag_list.size() > 0:
-		tag_label.text = "TAGS:\n" + "\n".join(tag_list)
+		var tag_descriptions = {
+			"Ethereal": "Cannot be modified by external effects.",
+			"Retrigger": "Test description"
+		}
+
+		var lines = []
+		for tag in tag_list:
+			if tag_descriptions.has(tag):
+				lines.append("%s: %s" % [tag, tag_descriptions[tag]])
+			else:
+				lines.append(tag)
+
+		tag_label.text = "TAGS:\n" + "\n".join(lines)
 		tag_container.visible = true
 	else:
 		tag_container.visible = false
+
 
 # Helper to find which slot index this card is currently sitting in, may be useless rn?
 func _get_current_slot_index() -> int:

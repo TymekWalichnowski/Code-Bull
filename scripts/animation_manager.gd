@@ -13,7 +13,6 @@ func _on_opponent_action_anim_animation_finished() -> void:
 	%OpponentActionAnim.visible = false
 
 func play_anim(action_name, anim_node, card_owner):
-	
 	if card_owner == "Player":
 		self_position = PLAYER_POSITION
 		target_position = OPPONENT_POSITION
@@ -26,7 +25,11 @@ func play_anim(action_name, anim_node, card_owner):
 			anim_node.position = target_position
 			anim_node.visible = true
 			anim_node.play("attack_slash")
+			await anim_node.animation_finished
 		"Shield":
 			anim_node.position = self_position
 			anim_node.visible = true
 			anim_node.play("shield_bubble")
+			await anim_node.animation_finished
+		"Multiply_Or_Divide":
+			action_name = "Nullify"
