@@ -19,7 +19,7 @@ var opponent_retrigger_counts = [0, 0, 0]
 
 @onready var battle_timer = %BattleTimer
 
-const STARTING_HEALTH = 10
+const STARTING_HEALTH = 10.0
 
 const SMALLER_CARD_SCALE = 1.05
 const CARD_MOVE_SPEED = 0.2
@@ -41,16 +41,18 @@ func _ready() -> void:
 	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot3")
 	
 	# A bit awkward, clean this up
-	%Player.health = STARTING_HEALTH
-	%Opponent.health = STARTING_HEALTH
+	%Player.current_health = STARTING_HEALTH
+	%Opponent.current_health = STARTING_HEALTH
 	#$"../PlayerHealth".text = str(%Player.health) # replace this later, we're just updating it every frame at the moment
 	#$"../OpponentHealth".text = str(%Opponent.health)
 	opponent_turn()
 
 func _process(float) -> void:
 	#temporary debug
-	%PlayerLabel.text = "HP: %.1f  |  Mult: x%.2f | Next Mult x%.2f" % [%Player.health, %Player.current_mult, %Player.next_mult]
-	%OpponentLabel.text = "HP: %.1f  |  Mult: x%.2f | Next Mult x%.2f" % [%Opponent.health, %Opponent.current_mult, %Opponent.next_mult]
+	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f |\n Mult: x%.2f |\n Next Mult x%.2f" % [
+		%Player.current_health, %Player.current_shield, %Player.current_mult, %Player.next_mult]
+	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f |\nMult: x%.2f |\n Next Mult x%.2f" % [
+		%Opponent.current_health, %Opponent.current_shield, %Opponent.current_mult, %Opponent.next_mult]
 	pass
 
 func _on_end_turn_button_pressed() -> void:
@@ -293,22 +295,26 @@ func execute_card_action(card: Card, action_index: int):
 	match action:
 		"Multiply_Or_Divide":
 			if randf() < 0.5:
+				action = "Multiply_Or_Divide1"
+				await %AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
 				action = "Multiply_Next_Card"
 			else:
+				action = "Multiply_Or_Divide2"
+				await %AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
 				action = "Divide_Next_Card"
 			print(card.card_owner, " Used multiply or divide, action is now: ", action)
 		
 	card.get_node("AnimationPlayer").play("card_basic_use") #card animation
-	await $AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
+	await %AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
 	
 	# APPLICATION, Applying the effect like damage or shield
 	match action:
 		"Attack":
 			print(card.card_owner, " deals ", value, " damage.")
-			target.health -= value
+			target.take_damage(value)
 		"Shield":
 			print(card.card_owner, " gains ", value, " shield.")
-			self_target.health += value
+			self_target.gain_shield(value)
 		"Multiply_Next_Card":
 			print(card.card_owner, " gains ", value, " mult.") 
 			self_target.next_mult = self_target.next_mult * value
@@ -332,7 +338,6 @@ func execute_card_action(card: Card, action_index: int):
 				if player_slots[i].card == card:
 					current_idx = i
 					break
-			
 			# Only increment the retrigger count for the OWNER of the card
 			if current_idx != -1 and current_idx + 1 < 3:
 				if card.card_owner == "Player":
@@ -341,7 +346,6 @@ func execute_card_action(card: Card, action_index: int):
 					opponent_retrigger_counts[current_idx + 1] += int(value)
 		"Multiply_Or_Divide":
 			pass
-	
 	finished_count += 1
 
 func check_done(): #making sure both actions are done before
@@ -357,7 +361,7 @@ func move_card_to_battle_point(card):
 	var move_tween = get_tree().create_tween()
 	move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
 	move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
-	move_tween.finished.connect(check_done)
+	move_tween.finished.connect(check_done) # adds to finished count
 	card.z_index = 10
 
 func collect_used_card(card):

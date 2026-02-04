@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cymo1u7cqax7q"
-path="res://.godot/imported/flip_horizontal.png-b9362ff6af46704835162f3763711712.ctex"
+path="res://.godot/imported/flip_horizontal.png-168de3adf15293f2c43392af01e8a6b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/flip_horizontal.png"
-dest_files=["res://.godot/imported/flip_horizontal.png-b9362ff6af46704835162f3763711712.ctex"]
+source_file="res://Assets/icons/16x16/flip_horizontal.png"
+dest_files=["res://.godot/imported/flip_horizontal.png-168de3adf15293f2c43392af01e8a6b7.ctex"]
 
 [params]
 

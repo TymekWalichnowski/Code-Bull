@@ -1,39 +1,33 @@
-[gd_scene load_steps=44 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=46 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
 [ext_resource type="Script" uid="uid://nl86bj6ee0c6" path="res://scripts/card_manager.gd" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://cjexhbgk2ejnc" path="res://scripts/action_manager.gd" id="2_xa025"]
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
-[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
-[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
 [ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="12_yxlcp"]
-[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
-[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
-[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
-[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
-[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
-[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
-[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
-[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://assets/textures/effects/multiply_divide_sheet.png" id="22_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
+[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
+[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
+[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
+[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://Assets/textures/effects/multiply_divide_sheet.png" id="22_ebg2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hq6as"]
-atlas = ExtResource("22_ebg2g")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kxyth"]
-atlas = ExtResource("22_ebg2g")
-region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("22_ebg2g")
@@ -42,6 +36,14 @@ region = Rect2(384, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_cmqll"]
 atlas = ExtResource("22_ebg2g")
 region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq6as"]
+atlas = ExtResource("22_ebg2g")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxyth"]
+atlas = ExtResource("22_ebg2g")
+region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yxlcp"]
 atlas = ExtResource("21_1iba3")
@@ -125,26 +127,59 @@ animations = [{
 "speed": 12.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hq6as")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kxyth")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hq6as")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kxyth")
-}, {
-"duration": 3.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_cobve")
+}],
+"loop": false,
+"name": &"divide",
+"speed": 12.0
 }, {
-"duration": 1.0,
+"frames": [{
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_cmqll")
 }],
 "loop": false,
-"name": &"multiply_or_divide",
+"name": &"multiply",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_cmqll")
+}],
+"loop": false,
+"name": &"multiply_or_divide1",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_cobve")
+}],
+"loop": false,
+"name": &"multiply_or_divide2",
 "speed": 12.0
 }, {
 "frames": [{
@@ -200,7 +235,12 @@ animations = [{
 [node name="BattleManager" type="Node" parent="."]
 script = ExtResource("1_1iba3")
 
+[node name="ActionManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
+script = ExtResource("2_xa025")
+
 [node name="AnimationManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
 script = ExtResource("1_1nqs0")
 
 [node name="CardManager" type="Node2D" parent="."]
@@ -249,7 +289,7 @@ offset_left = 81.0
 offset_top = 570.0
 offset_right = 522.0
 offset_bottom = 749.0
-theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/normal_font_size = 16
 text = "0"
 
 [node name="OpponentLabel" type="RichTextLabel" parent="."]
@@ -258,14 +298,46 @@ offset_left = 91.0
 offset_top = 189.0
 offset_right = 552.0
 offset_bottom = 374.0
-theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/normal_font_size = 16
 text = "0"
 
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_wp0k4")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Player"]
+[node name="HealthBar" type="TextureProgressBar" parent="Player"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 760.0
+offset_top = 1039.0
+offset_right = 1160.0
+offset_bottom = 1079.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_qmy6f")
+texture_progress = ExtResource("8_mwfav")
+
+[node name="ShieldBar" type="TextureProgressBar" parent="Player"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 763.0
+offset_top = 981.0
+offset_right = 1163.0
+offset_bottom = 1021.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_qmy6f")
+texture_progress = ExtResource("11_2ofn6")
+
+[node name="Opponent" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_wp0k4")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Opponent"]
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
 offset_left = 760.0
@@ -279,9 +351,18 @@ nine_patch_stretch = true
 texture_under = ExtResource("7_qmy6f")
 texture_progress = ExtResource("8_mwfav")
 
-[node name="Opponent" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("6_wp0k4")
+[node name="ShieldBar" type="TextureProgressBar" parent="Opponent"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 758.0
+offset_top = 14.0
+offset_right = 1158.0
+offset_bottom = 54.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_progress = ExtResource("11_2ofn6")
 
 [node name="PlayerDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -360,7 +441,7 @@ visible = false
 z_index = 5
 position = Vector2(959, 138)
 sprite_frames = SubResource("SpriteFrames_xa025")
-animation = &"multiply_or_divide"
+animation = &"multiply_or_divide1"
 
 [node name="OpponentActionAnim" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

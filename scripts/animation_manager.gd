@@ -31,5 +31,13 @@ func play_anim(action_name, anim_node, card_owner):
 			anim_node.visible = true
 			anim_node.play("shield_bubble")
 			await anim_node.animation_finished
-		"Multiply_Or_Divide":
-			action_name = "Nullify"
+		"Multiply_Or_Divide1":
+			anim_node.position = self_position
+			anim_node.visible = true
+			anim_node.play("multiply_or_divide1")
+			await anim_node.animation_finished
+		"Multiply_Or_Divide2":
+			anim_node.position = self_position
+			anim_node.visible = true
+			anim_node.play("multiply_or_divide2")
+			await anim_node.animation_finished

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://do6i3va8gj07t"
-path="res://.godot/imported/arrow_switch.png-ac9c541d4bb1c29472ff67626d9113e7.ctex"
+path="res://.godot/imported/arrow_switch.png-49dfccdce7f6147a778e264413be957d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/arrow_switch.png"
-dest_files=["res://.godot/imported/arrow_switch.png-ac9c541d4bb1c29472ff67626d9113e7.ctex"]
+source_file="res://Assets/icons/16x16/arrow_switch.png"
+dest_files=["res://.godot/imported/arrow_switch.png-49dfccdce7f6147a778e264413be957d.ctex"]
 
 [params]
 

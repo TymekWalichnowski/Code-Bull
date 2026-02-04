@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://cfhwfuv1with2"
-path="res://.godot/imported/dice-grab-1.ogg-646d8e419e2944fc7d6fd0605efeef26.oggvorbisstr"
+path="res://.godot/imported/dice-grab-1.ogg-c200e3de3de2ff1f3ccb774925fceceb.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/dice-grab-1.ogg"
-dest_files=["res://.godot/imported/dice-grab-1.ogg-646d8e419e2944fc7d6fd0605efeef26.oggvorbisstr"]
+source_file="res://Assets/audio/dice-grab-1.ogg"
+dest_files=["res://.godot/imported/dice-grab-1.ogg-c200e3de3de2ff1f3ccb774925fceceb.oggvorbisstr"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://okeev8ogt1h0"
-path="res://.godot/imported/terrain_precise.png-43ac2b2c65ae1186c04f0c50c570e3f9.ctex"
+path="res://.godot/imported/terrain_precise.png-f7c2f1f311fef5d983643ddb7875d68d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/terrain_precise.png"
-dest_files=["res://.godot/imported/terrain_precise.png-43ac2b2c65ae1186c04f0c50c570e3f9.ctex"]
+source_file="res://Assets/icons/32x32/terrain_precise.png"
+dest_files=["res://.godot/imported/terrain_precise.png-f7c2f1f311fef5d983643ddb7875d68d.ctex"]
 
 [params]
 

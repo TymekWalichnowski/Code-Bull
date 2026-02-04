@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bk3b0q2cjv5v4"
-path="res://.godot/imported/surface_edges.png-e299e7b12103e2be0722c58efdad323f.ctex"
+path="res://.godot/imported/surface_edges.png-122eba0726a91e0dcc1776f61d722b75.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/surface_edges.png"
-dest_files=["res://.godot/imported/surface_edges.png-e299e7b12103e2be0722c58efdad323f.ctex"]
+source_file="res://Assets/icons/32x32/surface_edges.png"
+dest_files=["res://.godot/imported/surface_edges.png-122eba0726a91e0dcc1776f61d722b75.ctex"]
 
 [params]
 

@@ -8,8 +8,8 @@ const STARTING_HAND_SIZE = 4
 
 var opponent_deck = [
 	"Divide",
-	"Multiply",
-	"Double Hit",
+	"Fifty Fifty",
+	"Sword",
 	"Block",
 	"Basic",
 	"Sword",

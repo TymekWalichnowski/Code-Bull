@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnxcjjhniwy6v"
-path="res://.godot/imported/tile_impassable.png-3e06692de73cee8ec3719abcacb2e838.ctex"
+path="res://.godot/imported/tile_impassable.png-f7443ac0ef65e075ba1ec08e7ba7b8e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/tile_impassable.png"
-dest_files=["res://.godot/imported/tile_impassable.png-3e06692de73cee8ec3719abcacb2e838.ctex"]
+source_file="res://Assets/icons/32x32/tile_impassable.png"
+dest_files=["res://.godot/imported/tile_impassable.png-f7443ac0ef65e075ba1ec08e7ba7b8e4.ctex"]
 
 [params]
 

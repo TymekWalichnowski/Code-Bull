@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://v85x4wsu0yfu"
-path="res://.godot/imported/steam_logo.png-4746695d2f61daa9ccbfd00118a66d1e.ctex"
+path="res://.godot/imported/steam_logo.png-f4554bef21dca855c5b0fb0ce145248b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/steam_logo.png"
-dest_files=["res://.godot/imported/steam_logo.png-4746695d2f61daa9ccbfd00118a66d1e.ctex"]
+source_file="res://Assets/icons/16x16/steam_logo.png"
+dest_files=["res://.godot/imported/steam_logo.png-f4554bef21dca855c5b0fb0ce145248b.ctex"]
 
 [params]
 
