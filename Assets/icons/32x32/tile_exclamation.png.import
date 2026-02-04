@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://diskf02pbbjc"
-path="res://.godot/imported/tile_exclamation.png-c6edc0917935dde1e07014e7da651d76.ctex"
+path="res://.godot/imported/tile_exclamation.png-38464fcaa8080c34aaa2b667ffe41aa6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/tile_exclamation.png"
-dest_files=["res://.godot/imported/tile_exclamation.png-c6edc0917935dde1e07014e7da651d76.ctex"]
+source_file="res://assets/icons/32x32/tile_exclamation.png"
+dest_files=["res://.godot/imported/tile_exclamation.png-38464fcaa8080c34aaa2b667ffe41aa6.ctex"]
 
 [params]
 

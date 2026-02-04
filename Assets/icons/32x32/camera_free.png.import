@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5knqc65wsp61"
-path="res://.godot/imported/camera_free.png-7396fc8ec23e7339c46334640e2f6f94.ctex"
+path="res://.godot/imported/camera_free.png-fbce54afa37a512c6aa9fe3d3dd7479b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/camera_free.png"
-dest_files=["res://.godot/imported/camera_free.png-7396fc8ec23e7339c46334640e2f6f94.ctex"]
+source_file="res://assets/icons/32x32/camera_free.png"
+dest_files=["res://.godot/imported/camera_free.png-fbce54afa37a512c6aa9fe3d3dd7479b.ctex"]
 
 [params]
 

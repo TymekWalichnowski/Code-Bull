@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtc58ng64ty4a"
-path="res://.godot/imported/unlock.png-6c70f17043780dc13d38fdab9f4aa5a7.ctex"
+path="res://.godot/imported/unlock.png-1d6177349295be09227b2869758d899d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/unlock.png"
-dest_files=["res://.godot/imported/unlock.png-6c70f17043780dc13d38fdab9f4aa5a7.ctex"]
+source_file="res://assets/icons/32x32/unlock.png"
+dest_files=["res://.godot/imported/unlock.png-1d6177349295be09227b2869758d899d.ctex"]
 
 [params]
 

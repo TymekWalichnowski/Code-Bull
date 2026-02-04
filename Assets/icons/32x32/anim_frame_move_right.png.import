@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bf264kveb2fcm"
-path="res://.godot/imported/anim_frame_move_right.png-30d15cc7b4f33259e250449d0d616649.ctex"
+path="res://.godot/imported/anim_frame_move_right.png-4c6f3ba01614b3b83934cb364291c1fc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/anim_frame_move_right.png"
-dest_files=["res://.godot/imported/anim_frame_move_right.png-30d15cc7b4f33259e250449d0d616649.ctex"]
+source_file="res://assets/icons/32x32/anim_frame_move_right.png"
+dest_files=["res://.godot/imported/anim_frame_move_right.png-4c6f3ba01614b3b83934cb364291c1fc.ctex"]
 
 [params]
 

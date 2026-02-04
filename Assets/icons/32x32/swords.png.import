@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://lw4q2pg0kb2v"
-path="res://.godot/imported/swords.png-14f028404dcabec7ec9493ae3e227cdc.ctex"
+path="res://.godot/imported/swords.png-6afaeff699db37338a400eb214858516.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/swords.png"
-dest_files=["res://.godot/imported/swords.png-14f028404dcabec7ec9493ae3e227cdc.ctex"]
+source_file="res://assets/icons/32x32/swords.png"
+dest_files=["res://.godot/imported/swords.png-6afaeff699db37338a400eb214858516.ctex"]
 
 [params]
 

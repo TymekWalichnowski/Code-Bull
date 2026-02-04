@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bhy47pkj4gleb"
-path="res://.godot/imported/multiply_divide_sheet.png-c7f555afc23fc2849b22e814ab8bbed0.ctex"
+path="res://.godot/imported/multiply_divide_sheet.png-fd421fc1eb00e494bfdb9270e6a05b8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/effects/multiply_divide_sheet.png"
-dest_files=["res://.godot/imported/multiply_divide_sheet.png-c7f555afc23fc2849b22e814ab8bbed0.ctex"]
+source_file="res://assets/textures/effects/multiply_divide_sheet.png"
+dest_files=["res://.godot/imported/multiply_divide_sheet.png-fd421fc1eb00e494bfdb9270e6a05b8f.ctex"]
 
 [params]
 

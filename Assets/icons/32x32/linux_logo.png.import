@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ct3ncr8xmecmu"
-path="res://.godot/imported/linux_logo.png-b77039e3f6f32e4571cbcff507b3ec13.ctex"
+path="res://.godot/imported/linux_logo.png-488a9826999f71184fbb84642dd9d71e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/linux_logo.png"
-dest_files=["res://.godot/imported/linux_logo.png-b77039e3f6f32e4571cbcff507b3ec13.ctex"]
+source_file="res://assets/icons/32x32/linux_logo.png"
+dest_files=["res://.godot/imported/linux_logo.png-488a9826999f71184fbb84642dd9d71e.ctex"]
 
 [params]
 
