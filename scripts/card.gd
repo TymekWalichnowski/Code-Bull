@@ -7,9 +7,9 @@ signal hovered_off
 @export var card_data: CardData
 @export var card_owner: String
 
-@export var max_rotation := 30.0
-@export var follow_speed := 10.0
-@export var return_speed := 7.0
+@export var max_rotation = 30.0
+@export var follow_speed = 10.0
+@export var return_speed = 7.0
 
 @onready var desc_label = %ActionDescriptionLabel
 @onready var tag_container = %TagContainer
@@ -175,15 +175,15 @@ func update_hover_ui():
 	var is_multiplied = current_mult != 1.0
 
 	var action_templates = {
-		"Attack": "- Deal %s damage.",
-		"Shield": "- Gain %s shield.",
-		"Multiply_Next_Card": "- Multiply all values of next card slot by %s.",
-		"Divide_Next_Card": "- Divide all values of opponent's next card slot by %s.",
-		"Nullify": "- Negate the opponent's current card.",
-		"Draw_Card": "- Draw %s card(s).",
-		"Retrigger_Next_Slot": "- Trigger next card slot %s extra time(s).",
+		"Attack": "Deal %s damage.",
+		"Shield": "Gain %s shield.",
+		"Multiply_Next_Card": "Multiply next played card by %s.",
+		"Divide_Next_Card": "Divide opponent's next card by %s.",
+		"Nullify": "Negate the opponent's next action.",
+		"Draw_Card": "Draw %s card(s).",
+		"Retrigger_Next_Slot": "Trigger next card slot %s extra time(s).",
 		"Multiply_Or_Divide": "- 50% chance to multiply or divide opponent's card by %s.",
-		"Nothing": "- Do nothing."
+		"Nothing": "Do nothing."
 	}
 
 	for action in card_data.actions:
@@ -213,7 +213,7 @@ func update_hover_ui():
 
 		elif action.action_name in ["Nullify", "Nothing"]:
 			full_description += template + "\n"
-
+		
 		else:
 			full_description += (template % display_value) + "\n"
 
@@ -240,7 +240,6 @@ func update_hover_ui():
 		tag_container.visible = true
 	else:
 		tag_container.visible = false
-
 
 # Helper to find which slot index this card is currently sitting in, may be useless rn?
 func _get_current_slot_index() -> int:

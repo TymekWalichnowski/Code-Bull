@@ -32,6 +32,13 @@ var current_slot
 var finished_count = 0
 var total_needed = 2
 
+@onready var passive_map: Dictionary = {
+	"Retrigger_Slot": _passive_retrigger,
+	"Add_Shield_Start": _passive_shield_start,
+}
+@onready var player_passive_container = %PlayerPassives
+@onready var opponent_passive_container = %OpponentPassives
+
 func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
@@ -141,8 +148,11 @@ func run_activation_phase():
 	player_retrigger_counts = [0, 0, 0]
 	opponent_retrigger_counts = [0, 0, 0]
 	
+	trigger_passives("On_Phase_Start")
+	
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
+		trigger_passives("On_Slot_Start", slot_index)
 		
 		var p_card = player_slots[slot_index].card
 		var o_card = opponent_slots[slot_index].card
@@ -261,9 +271,10 @@ func execute_card_action(card: Card, action_index: int):
 	var action_data = card.card_data.actions[action_index]
 	var action = action_data.action_name
 	var value = action_data.value
+	var tags = action_data.tags
 	
 	print(card.card_owner, " Executing: ", card.card_name, " uses ", action_data.action_name, " value ", action_data.value)
-	
+	print("Tags: ", tags)
 	var target
 	var self_target
 	var anim_node
@@ -280,10 +291,12 @@ func execute_card_action(card: Card, action_index: int):
 	
 	#
 	
+	# Check tags
+	
+
 	# CURRENTLY WE JUST APPLY THE MULT TO THE VALUE, 
 	# BUT LATER ADD A SYSTEM TO CHECK THE TAGS AND THEN
 	# APPLY THE MULT TO THE VALUE DEPENDING ON TAGS 
-
 	value = value * self_target.current_mult
 	
 	if self_target.nullified == true:
@@ -386,3 +399,42 @@ func _input(event: InputEvent) -> void:
 	# Detect any left mouse click that isn't on a UI button
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		battle_click_received.emit()
+
+func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
+	# Check Player Passives
+	for card in player_passive_container.get_children():
+		if card.trigger_condition == trigger_type:
+			_execute_passive(card, "Player", current_slot_idx)
+			
+	# Check Opponent Passives
+	for card in opponent_passive_container.get_children():
+		if card.trigger_condition == trigger_type:
+			_execute_passive(card, "Opponent", current_slot_idx)
+
+func _execute_passive(card, owner_name, current_slot_idx):
+	var effect = card.passive_effect_name # e.g. "Retrigger_Slot"
+	var val = card.value
+	var target_slot = card.target_slot # e.g. 2
+	
+	if passive_map.has(effect):
+		# If it's a slot-specific passive, only run it if we are on that slot
+		if target_slot != -1 and target_slot != (current_slot_idx + 1):
+			return
+			
+		# Visual feedback: card shakes or glows
+		card.get_node("AnimationPlayer").play("passive_glow") 
+		passive_map[effect].call(owner_name, val, target_slot)
+
+func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
+	# value could be 'how many extra runs'
+	# slot_to_hit comes from the card data (e.g., 2 for slot 2)
+	var index = slot_to_hit - 1
+	if owner_name == "Player":
+		player_retrigger_counts[index] += int(value)
+	else:
+		opponent_retrigger_counts[index] += int(value)
+	print("Passive: ", owner_name, " scheduled retrigger for slot ", slot_to_hit)
+
+func _passive_shield_start(owner_name: String, value: float, _slot: int):
+	var target = %Player if owner_name == "Player" else %Opponent
+	target.gain_shield(value)

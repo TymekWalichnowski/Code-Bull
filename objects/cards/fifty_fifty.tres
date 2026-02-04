@@ -9,6 +9,7 @@ script = ExtResource("1_7ys8i")
 action_name = "Multiply_Or_Divide"
 value = 2.0
 priority = 1
+tags = Array[String](["test", ""])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]
