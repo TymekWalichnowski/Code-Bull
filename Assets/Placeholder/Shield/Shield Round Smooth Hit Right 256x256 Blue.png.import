@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d12dta8tqg6j3"
-path="res://.godot/imported/Shield Round Smooth Hit Right 256x256 Blue.png-c08da35cdd3247e165e0076b78caec20.ctex"
+path="res://.godot/imported/Shield Round Smooth Hit Right 256x256 Blue.png-aa020fb302bd15de7ca17a4fb21773ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Placeholder/Shield/Shield Round Smooth Hit Right 256x256 Blue.png"
-dest_files=["res://.godot/imported/Shield Round Smooth Hit Right 256x256 Blue.png-c08da35cdd3247e165e0076b78caec20.ctex"]
+source_file="res://Assets/Placeholder/Shield/Shield Round Smooth Hit Right 256x256 Blue.png"
+dest_files=["res://.godot/imported/Shield Round Smooth Hit Right 256x256 Blue.png-aa020fb302bd15de7ca17a4fb21773ed.ctex"]
 
 [params]
 

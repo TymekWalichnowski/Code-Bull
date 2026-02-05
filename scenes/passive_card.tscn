@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bxw2uuoffygpq" path="res://scripts/passive_card.gd" id="1_p1kcn"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_aaosi"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="4_08nfd"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="4_u6wo3"]
-[ext_resource type="Texture2D" uid="uid://dtvkxhfu1p13r" path="res://Assets/textures/cards/card_Heart.png" id="5_p1kcn"]
 [ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="6_enwn4"]
 [ext_resource type="Theme" uid="uid://4twn8n1dll3t" path="res://Assets/themes/Default_Theme.tres" id="7_8qrir"]
 [ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="8_fgd3q"]
@@ -27,21 +27,6 @@ shader_parameter/inset = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7gnvv"]
 size = Vector2(128, 176)
 
-[sub_resource type="Animation" id="Animation_08nfd"]
-resource_name = "passive_trigger"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CardImage:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.37, 0.7, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.15707964, -0.31415927, 0.0]
-}
-
 [sub_resource type="Animation" id="Animation_p1kcn"]
 length = 0.001
 tracks/0/type = "value"
@@ -55,6 +40,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_08nfd"]
+resource_name = "passive_trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardImage:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.37, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.15707964, -0.31415927, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0fsog"]
@@ -117,6 +117,7 @@ font_name = "TWSTD ROOTS"
 style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
+msdf_size = 128
 cache/0/16/0/ascent = 20.0
 cache/0/16/0/descent = 4.0
 cache/0/16/0/underline_position = -1.203125
@@ -515,7 +516,7 @@ z_index = -1
 texture_filter = 1
 material = SubResource("ShaderMaterial_5st36")
 scale = Vector2(2, 2)
-texture = ExtResource("5_p1kcn")
+texture = ExtResource("4_08nfd")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -543,6 +544,7 @@ volume_db = -3.0
 
 [node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

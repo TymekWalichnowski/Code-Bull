@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bp0orlsding5p"
-path="res://.godot/imported/camera_reset.png-95ee88a8abcb6864fe4dfcc6e7150818.ctex"
+path="res://.godot/imported/camera_reset.png-069278fce3e1e830e9cb27b5b0bc9c50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/camera_reset.png"
-dest_files=["res://.godot/imported/camera_reset.png-95ee88a8abcb6864fe4dfcc6e7150818.ctex"]
+source_file="res://Assets/icons/32x32/camera_reset.png"
+dest_files=["res://.godot/imported/camera_reset.png-069278fce3e1e830e9cb27b5b0bc9c50.ctex"]
 
 [params]
 

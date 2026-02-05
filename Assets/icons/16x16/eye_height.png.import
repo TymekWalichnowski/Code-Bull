@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqr1dc7eldwqc"
-path="res://.godot/imported/eye_height.png-20824c742e326c40edf98b693c135638.ctex"
+path="res://.godot/imported/eye_height.png-f4e6bcd1b2387250bbd512d2354cc321.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/eye_height.png"
-dest_files=["res://.godot/imported/eye_height.png-20824c742e326c40edf98b693c135638.ctex"]
+source_file="res://Assets/icons/16x16/eye_height.png"
+dest_files=["res://.godot/imported/eye_height.png-f4e6bcd1b2387250bbd512d2354cc321.ctex"]
 
 [params]
 

@@ -14,8 +14,17 @@ func _ready():
 	# Update the label text when the card enters the scene
 	if has_node("Label"):
 		$Label.text = card_name
+	# Use a small call_deferred to ensure the deck has finished 
+	# setting variables before we update the text
+	update_labels.call_deferred()
 
-func play_trigger_anim():
+func play_trigger_anim(): #this code isnt getting activated, I believe. It's handled in the battlemanager currently
 	if $AnimationPlayer.has_animation("passive_trigger"):
 		$AnimationPlayer.play("passive_trigger")
-		await $AnimationPlayer.animation_finished
+
+func update_labels():
+	if has_node("Label"):
+		$Label.text = card_name
+	# Maybe add a sub-label for the value?
+	if has_node("ValueLabel"):
+		$ValueLabel.text = str(value)

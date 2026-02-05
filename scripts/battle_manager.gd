@@ -153,18 +153,10 @@ func run_activation_phase():
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
 		
-		
+
 		var p_card = player_slots[slot_index].card
 		var o_card = opponent_slots[slot_index].card
 		
-		# retrigger logic
-		var p_runs = 1
-		var o_runs = 1
-		if p_card:
-			p_runs += player_retrigger_counts[slot_index]
-		if o_card:
-			o_runs += opponent_retrigger_counts[slot_index]
-		var total_runs = max(p_runs, o_runs)
 		
 		# resetting stuff
 		%Player.current_mult = %Player.next_mult
@@ -192,8 +184,17 @@ func run_activation_phase():
 		while finished_count < total_needed:
 			await get_tree().process_frame
 		
-		# 2.5 Trigger slot passives
-		trigger_passives("On_Slot_Start", slot_index)
+		# Trigger slot passives
+		await trigger_passives("On_Slot_Start", slot_index)
+		
+		# retrigger logic
+		var p_runs = 1
+		var o_runs = 1
+		if p_card:
+			p_runs += player_retrigger_counts[slot_index]
+		if o_card:
+			o_runs += opponent_retrigger_counts[slot_index]
+		var total_runs = max(p_runs, o_runs)
 		
 		# 3. Determine max actions
 		var p_action_count = p_card.card_data.actions.size() if p_card else 0
@@ -407,12 +408,12 @@ func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
 	# Check Player Passives
 	for card in player_passive_container.get_children():
 		if card.trigger_condition == trigger_type:
-			_execute_passive(card, "Player", current_slot_idx)
+			await _execute_passive(card, "Player", current_slot_idx)
 			
 	# Check Opponent Passives
 	for card in opponent_passive_container.get_children():
 		if card.trigger_condition == trigger_type:
-			_execute_passive(card, "Opponent", current_slot_idx)
+			await _execute_passive(card, "Opponent", current_slot_idx)
 
 func _execute_passive(card, owner_name, current_slot_idx):
 	var effect = card.passive_effect_name # e.g. "Retrigger_Slot"
@@ -424,9 +425,13 @@ func _execute_passive(card, owner_name, current_slot_idx):
 		if target_slot != -1 and target_slot != (current_slot_idx + 1):
 			return
 			
-		# Visual feedback: card shakes or glows
-		card.get_node("AnimationPlayer").play("passive_trigger") 
+		# Visual feedback
+		var anim = card.get_node("AnimationPlayer")
+		anim.play("passive_trigger") 
+		await anim.animation_finished
+		await wait(0.4)
 		passive_map[effect].call(owner_name, val, target_slot)
+
 
 func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
 	# value could be 'how many extra runs'

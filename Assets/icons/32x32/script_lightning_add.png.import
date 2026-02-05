@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4s1j6xa30ax1"
-path="res://.godot/imported/script_lightning_add.png-c6706e5b4183d15c63ea2819e307068d.ctex"
+path="res://.godot/imported/script_lightning_add.png-5986b9b1e61d2dd877a535f391a62a59.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/script_lightning_add.png"
-dest_files=["res://.godot/imported/script_lightning_add.png-c6706e5b4183d15c63ea2819e307068d.ctex"]
+source_file="res://Assets/icons/32x32/script_lightning_add.png"
+dest_files=["res://.godot/imported/script_lightning_add.png-5986b9b1e61d2dd877a535f391a62a59.ctex"]
 
 [params]
 

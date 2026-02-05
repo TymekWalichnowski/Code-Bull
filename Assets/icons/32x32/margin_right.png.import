@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgi384piqoqxx"
-path="res://.godot/imported/margin_right.png-7ae7ba4a82a5ab708f57495578ee57bc.ctex"
+path="res://.godot/imported/margin_right.png-8ca29be6e2428780170dc3e43429a448.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/margin_right.png"
-dest_files=["res://.godot/imported/margin_right.png-7ae7ba4a82a5ab708f57495578ee57bc.ctex"]
+source_file="res://Assets/icons/32x32/margin_right.png"
+dest_files=["res://.godot/imported/margin_right.png-8ca29be6e2428780170dc3e43429a448.ctex"]
 
 [params]
 

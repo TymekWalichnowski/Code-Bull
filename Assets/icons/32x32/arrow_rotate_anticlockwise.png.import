@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b0uuf0v57siuf"
-path="res://.godot/imported/arrow_rotate_anticlockwise.png-1448e951834d4582037183eae693b1bc.ctex"
+path="res://.godot/imported/arrow_rotate_anticlockwise.png-246f3a9d0424531ba11657b67765f953.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/arrow_rotate_anticlockwise.png"
-dest_files=["res://.godot/imported/arrow_rotate_anticlockwise.png-1448e951834d4582037183eae693b1bc.ctex"]
+source_file="res://Assets/icons/32x32/arrow_rotate_anticlockwise.png"
+dest_files=["res://.godot/imported/arrow_rotate_anticlockwise.png-246f3a9d0424531ba11657b67765f953.ctex"]
 
 [params]
 

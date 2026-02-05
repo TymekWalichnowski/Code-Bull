@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dssof2ndiaemj"
-path="res://.godot/imported/skull_delete.png-80211f0e42f598323be36aa78b1424f3.ctex"
+path="res://.godot/imported/skull_delete.png-f62313a621161f10be86d268843afae6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/skull_delete.png"
-dest_files=["res://.godot/imported/skull_delete.png-80211f0e42f598323be36aa78b1424f3.ctex"]
+source_file="res://Assets/icons/32x32/skull_delete.png"
+dest_files=["res://.godot/imported/skull_delete.png-f62313a621161f10be86d268843afae6.ctex"]
 
 [params]
 

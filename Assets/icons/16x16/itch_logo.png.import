@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0kg1vrgsbncd"
-path="res://.godot/imported/itch_logo.png-da5854e2d43efb81916effb9e188dbbb.ctex"
+path="res://.godot/imported/itch_logo.png-c2041980eff53f4b5eba4d25b4c6db42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/itch_logo.png"
-dest_files=["res://.godot/imported/itch_logo.png-da5854e2d43efb81916effb9e188dbbb.ctex"]
+source_file="res://Assets/icons/16x16/itch_logo.png"
+dest_files=["res://.godot/imported/itch_logo.png-c2041980eff53f4b5eba4d25b4c6db42.ctex"]
 
 [params]
 

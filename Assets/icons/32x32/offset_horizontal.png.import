@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crk71hx7w2g5t"
-path="res://.godot/imported/offset_horizontal.png-7a512db128b63dc331d27429675d73e1.ctex"
+path="res://.godot/imported/offset_horizontal.png-f784deae1ae611d5f7c49fe889cedc72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/32x32/offset_horizontal.png"
-dest_files=["res://.godot/imported/offset_horizontal.png-7a512db128b63dc331d27429675d73e1.ctex"]
+source_file="res://Assets/icons/32x32/offset_horizontal.png"
+dest_files=["res://.godot/imported/offset_horizontal.png-f784deae1ae611d5f7c49fe889cedc72.ctex"]
 
 [params]
 
