@@ -152,7 +152,7 @@ func run_activation_phase():
 	
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
-		trigger_passives("On_Slot_Start", slot_index)
+		
 		
 		var p_card = player_slots[slot_index].card
 		var o_card = opponent_slots[slot_index].card
@@ -191,6 +191,9 @@ func run_activation_phase():
 		# Wait for the cards that exist to finish moving
 		while finished_count < total_needed:
 			await get_tree().process_frame
+		
+		# 2.5 Trigger slot passives
+		trigger_passives("On_Slot_Start", slot_index)
 		
 		# 3. Determine max actions
 		var p_action_count = p_card.card_data.actions.size() if p_card else 0
@@ -422,7 +425,7 @@ func _execute_passive(card, owner_name, current_slot_idx):
 			return
 			
 		# Visual feedback: card shakes or glows
-		card.get_node("AnimationPlayer").play("passive_glow") 
+		card.get_node("AnimationPlayer").play("passive_trigger") 
 		passive_map[effect].call(owner_name, val, target_slot)
 
 func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):

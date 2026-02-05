@@ -18,3 +18,4 @@ func _ready():
 func play_trigger_anim():
 	if $AnimationPlayer.has_animation("passive_trigger"):
 		$AnimationPlayer.play("passive_trigger")
+		await $AnimationPlayer.animation_finished
