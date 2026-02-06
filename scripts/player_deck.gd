@@ -125,6 +125,6 @@ func spawn_starting_passives():
 		# Position it: "Slightly off to the right of the deck"
 		# We use global_position to match the Deck's world spot, 
 		# then offset it by X (width) and Y (slight stagger)
-		var offset_x = 120 + (i * 90) # Adjust 120 for distance from deck
-		var offset_y = 10 * i         # Slight downward stagger
+		var offset_x = 140 + (i * 140) # Adjust distance from deck
+		var offset_y = 0
 		p_card.global_position = self.global_position + Vector2(offset_x, offset_y)

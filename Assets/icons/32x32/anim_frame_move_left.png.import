@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wlxboj7wdnmq"
-path="res://.godot/imported/anim_frame_move_left.png-8f13e80d414b9c0dbae2dd835338c677.ctex"
+path="res://.godot/imported/anim_frame_move_left.png-15b54f6d0e2b46d4f53aa9a246d4f545.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/anim_frame_move_left.png"
-dest_files=["res://.godot/imported/anim_frame_move_left.png-8f13e80d414b9c0dbae2dd835338c677.ctex"]
+source_file="res://assets/icons/32x32/anim_frame_move_left.png"
+dest_files=["res://.godot/imported/anim_frame_move_left.png-15b54f6d0e2b46d4f53aa9a246d4f545.ctex"]
 
 [params]
 

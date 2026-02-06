@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckchw67pbas0s"
-path="res://.godot/imported/weather_fog.png-d0ea1b9b3ba0295c2c57e6e3c6b551b1.ctex"
+path="res://.godot/imported/weather_fog.png-08ab0a11373a565cc442c904b80032dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/weather_fog.png"
-dest_files=["res://.godot/imported/weather_fog.png-d0ea1b9b3ba0295c2c57e6e3c6b551b1.ctex"]
+source_file="res://assets/icons/32x32/weather_fog.png"
+dest_files=["res://.godot/imported/weather_fog.png-08ab0a11373a565cc442c904b80032dc.ctex"]
 
 [params]
 

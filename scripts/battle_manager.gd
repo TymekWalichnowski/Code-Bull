@@ -148,7 +148,8 @@ func run_activation_phase():
 	player_retrigger_counts = [0, 0, 0]
 	opponent_retrigger_counts = [0, 0, 0]
 	
-	trigger_passives("On_Phase_Start")
+	await trigger_passives("On_Phase_Start")
+	await wait(0.4)
 	
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT ", slot_index + 1, " ----")

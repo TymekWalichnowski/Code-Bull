@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvi8gq6pyqoxq"
-path="res://.godot/imported/scissors.png-f8a21ee97adb9a026ed6e5b4c0d30ee3.ctex"
+path="res://.godot/imported/scissors.png-0c0c3d113129f7a238ea4391bbb86761.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/32x32/scissors.png"
-dest_files=["res://.godot/imported/scissors.png-f8a21ee97adb9a026ed6e5b4c0d30ee3.ctex"]
+source_file="res://assets/icons/32x32/scissors.png"
+dest_files=["res://.godot/imported/scissors.png-0c0c3d113129f7a238ea4391bbb86761.ctex"]
 
 [params]
 

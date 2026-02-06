@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://j0n2nnvtq1ro"
-path="res://.godot/imported/card-shove-4.ogg-516a9b78997ef2135d998fc7f2aaa473.oggvorbisstr"
+path="res://.godot/imported/card-shove-4.ogg-f657c3417a98f500eef746b0a5a4e2fe.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/audio/card-shove-4.ogg"
-dest_files=["res://.godot/imported/card-shove-4.ogg-516a9b78997ef2135d998fc7f2aaa473.oggvorbisstr"]
+source_file="res://assets/audio/card-shove-4.ogg"
+dest_files=["res://.godot/imported/card-shove-4.ogg-f657c3417a98f500eef746b0a5a4e2fe.oggvorbisstr"]
 
 [params]
 
