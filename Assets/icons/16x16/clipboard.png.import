@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://duneldexk0bj"
-path="res://.godot/imported/clipboard.png-779dac94ed3f4d83480da4a2b0e4fdb7.ctex"
+path="res://.godot/imported/clipboard.png-826aef46a44f9f5ce0cdf80183d6a7c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/clipboard.png"
-dest_files=["res://.godot/imported/clipboard.png-779dac94ed3f4d83480da4a2b0e4fdb7.ctex"]
+source_file="res://Assets/icons/16x16/clipboard.png"
+dest_files=["res://.godot/imported/clipboard.png-826aef46a44f9f5ce0cdf80183d6a7c2.ctex"]
 
 [params]
 

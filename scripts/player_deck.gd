@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var card_database: CardDatabase2
+@export var starting_passives: Array[PassiveCardResource]
 
 const CARD_SCENE_PATH = "res://scenes/player_card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
@@ -79,52 +80,15 @@ func reset_draw():
 	drawn_card_this_turn = false
 	
 func spawn_starting_passives():
-	# 1. Define our two example cards
-	var starting_passives = [
-		{
-			"name": "Retrigger Slot 2",
-			"image": "res://Assets/textures/cards_passive/passive_Retrigger_Slot_2.png",
-			"effect": "Retrigger_Slot",
-			"condition": "On_Slot_Start",
-			"val": 1.0,
-			"slot": 2
-		},
-		{
-			"name": "Early Guard",
-			"image": "res://Assets/textures/cards_passive/passive_Initial_Shield.png",
-			"effect": "Add_Shield_Start",
-			"condition": "On_Phase_Start",
-			"val": 5.0,
-			"slot": -1 #-1 doesnt tie it to any slot
-		}
-	]
-
-	# 2. Spawn them
 	for i in range(starting_passives.size()):
-		var data = starting_passives[i]
-		var p_card = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
+		var res = starting_passives[i]
+		var passive_node = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
 
-		# Add to the container so BattleManager sees it
-		%PlayerPassives.add_child(p_card)
+		%PlayerPassives.add_child(passive_node)
 		
-		#image logic
-		if p_card.has_node("CardImage"):
-			var tex = load(data.image)
-			if tex:
-				p_card.get_node("CardImage").texture = tex
-			else:
-				print("Could not find image at: " + data.image)
-		
-		# Set the logic data
-		p_card.card_name = data.name
-		p_card.passive_effect_name = data.effect
-		p_card.trigger_condition = data.condition
-		p_card.value = data.val
-		p_card.target_slot = data.slot
+		# Pass the whole resource to the card
+		passive_node.setup(res)
 
-		# Position it: "Slightly off to the right of the deck"
-		# We use global_position to match the Deck's world spot, 
-		# then offset it by X (width) and Y (slight stagger)
-		var offset_x = 140 + (i * 140) # Adjust distance from deck
-		var offset_y = 0
-		p_card.global_position = self.global_position + Vector2(offset_x, offset_y)
+		# Position logic remains the same
+		var offset_x = 140 + (i * 140)
+		passive_node.global_position = self.global_position + Vector2(offset_x, 0)

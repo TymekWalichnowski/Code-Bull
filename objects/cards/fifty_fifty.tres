@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cjhn5eqmh2m3x"]
 
-[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action.gd" id="1_7ys8i"]
-[ext_resource type="Texture2D" uid="uid://c4v5rfysyr58k" path="res://assets/textures/cards/card_Fifty Fifty.png" id="2_7ys8i"]
-[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data.gd" id="3_6v4la"]
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_7ys8i"]
+[ext_resource type="Texture2D" uid="uid://c4v5rfysyr58k" path="res://Assets/textures/cards/card_Fifty Fifty.png" id="2_7ys8i"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_6v4la"]
 
 [sub_resource type="Resource" id="Resource_24aaf"]
 script = ExtResource("1_7ys8i")
 action_name = "Multiply_Or_Divide"
 value = 2.0
-priority = 1
+priority = 3
 tags = Array[String](["test", ""])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 

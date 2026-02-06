@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PassiveCardResource" load_steps=3 format=3 uid="uid://b42uqjkasts7o"]
+
+[ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="1_dmi73"]
+[ext_resource type="Texture2D" uid="uid://cjw0rvhg4jn0r" path="res://Assets/textures/cards_passive/passive_Retrigger_Slot_2.png" id="1_vmrmt"]
+
+[resource]
+script = ExtResource("1_dmi73")
+card_image = ExtResource("1_vmrmt")
+trigger_condition = "On_Slot_Start"
+effect_name = "Retrigger_Slot"
+target_slot = 2
+metadata/_custom_type_script = "uid://boekostu7upwt"

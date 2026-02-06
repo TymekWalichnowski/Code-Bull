@@ -35,11 +35,13 @@ var total_needed = 2
 @onready var passive_map: Dictionary = {
 	"Retrigger_Slot": _passive_retrigger,
 	"Add_Shield_Start": _passive_shield_start,
+	"Spike_Armour": _passive_spike_armour
 }
 @onready var player_passive_container = %PlayerPassives
 @onready var opponent_passive_container = %OpponentPassives
 
 func _ready() -> void:
+	
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
 	
@@ -229,16 +231,20 @@ func run_activation_phase():
 					var p_priority = p_card.card_data.actions[action_idx].priority
 					var o_priority = o_card.card_data.actions[action_idx].priority
 					
-					if p_priority < o_priority:
+					if p_priority <= o_priority:
 						first_actor = p_card
 						second_actor = o_card
 					elif o_priority < p_priority:
 						first_actor = o_card
 						second_actor = p_card
 					else:
-						is_simultaneous = true
-						first_actor = p_card
-						second_actor = o_card
+						pass
+#						# used to allow the same priority to be simultaneous
+						# but this just made the order of operations too confusing
+						# each action should be clear and readable
+						#is_simultaneous = true
+						#first_actor = p_card
+						#second_actor = o_card
 				elif p_has_act:
 					first_actor = p_card
 				elif o_has_act:
@@ -330,6 +336,7 @@ func execute_card_action(card: Card, action_index: int):
 		"Attack":
 			print(card.card_owner, " deals ", value, " damage.")
 			target.take_damage(value)
+			await trigger_passives("On_Damage_Taken")
 		"Shield":
 			print(card.card_owner, " gains ", value, " shield.")
 			self_target.gain_shield(value)
@@ -408,18 +415,20 @@ func _input(event: InputEvent) -> void:
 func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
 	# Check Player Passives
 	for card in player_passive_container.get_children():
-		if card.trigger_condition == trigger_type:
+		# Use card.data.trigger_condition instead of card.trigger_condition
+		if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
 			await _execute_passive(card, "Player", current_slot_idx)
 			
 	# Check Opponent Passives
 	for card in opponent_passive_container.get_children():
-		if card.trigger_condition == trigger_type:
+		if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
 			await _execute_passive(card, "Opponent", current_slot_idx)
 
-func _execute_passive(card, owner_name, current_slot_idx):
-	var effect = card.passive_effect_name # e.g. "Retrigger_Slot"
-	var val = card.value
-	var target_slot = card.target_slot # e.g. 2
+func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: int):
+	# Access variables through the 'data' resource
+	var effect = card.data.effect_name 
+	var val = card.data.value
+	var target_slot = card.data.target_slot 
 	
 	if passive_map.has(effect):
 		# If it's a slot-specific passive, only run it if we are on that slot
@@ -427,9 +436,11 @@ func _execute_passive(card, owner_name, current_slot_idx):
 			return
 			
 		# Visual feedback
-		var anim = card.get_node("AnimationPlayer")
-		anim.play("passive_trigger") 
-		await anim.animation_finished
+		if card.has_node("AnimationPlayer"):
+			var anim = card.get_node("AnimationPlayer")
+			anim.play("passive_trigger") 
+			await anim.animation_finished
+		
 		await wait(0.4)
 		passive_map[effect].call(owner_name, val, target_slot)
 
@@ -447,3 +458,9 @@ func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
 func _passive_shield_start(owner_name: String, value: float, _slot: int):
 	var target = %Player if owner_name == "Player" else %Opponent
 	target.gain_shield(value)
+
+func _passive_spike_armour(owner_name: String, value: float, _slot: int):
+	pass
+	# fix this, it damages the player even when it's the opponent hitting the player
+	#var target = %Opponent if owner_name == "Opponent" else %Player
+	#target.take_damage(value)

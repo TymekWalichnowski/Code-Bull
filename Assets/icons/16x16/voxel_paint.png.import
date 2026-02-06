@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bon7tkpr07ef2"
-path="res://.godot/imported/voxel_paint.png-2bbe2b348ae80e5df6ef6338c0f950c2.ctex"
+path="res://.godot/imported/voxel_paint.png-f8fc7f35b98a29d8583e6c469fd3a1c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/voxel_paint.png"
-dest_files=["res://.godot/imported/voxel_paint.png-2bbe2b348ae80e5df6ef6338c0f950c2.ctex"]
+source_file="res://Assets/icons/16x16/voxel_paint.png"
+dest_files=["res://.godot/imported/voxel_paint.png-f8fc7f35b98a29d8583e6c469fd3a1c3.ctex"]
 
 [params]
 

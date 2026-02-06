@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://burh5rt0s0ad2"
-path="res://.godot/imported/trello_logo.png-c5eba48f17230afdddc678db5a5993fd.ctex"
+path="res://.godot/imported/trello_logo.png-871c8ffb3d09c6b11be18d28540cd287.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/trello_logo.png"
-dest_files=["res://.godot/imported/trello_logo.png-c5eba48f17230afdddc678db5a5993fd.ctex"]
+source_file="res://Assets/icons/16x16/trello_logo.png"
+dest_files=["res://.godot/imported/trello_logo.png-871c8ffb3d09c6b11be18d28540cd287.ctex"]
 
 [params]
 

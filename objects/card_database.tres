@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="CardDatabase2" load_steps=13 format=3 uid="uid://cbql4artnyyew"]
 
-[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data.gd" id="1_plgwb"]
-[ext_resource type="Script" uid="uid://bdwf2ywt214wa" path="res://resources/card_database.gd" id="2_4esrt"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="1_bvxsq"]
 [ext_resource type="Resource" uid="uid://j61jj7tm3m6g" path="res://objects/cards/2_of_spades.tres" id="2_bvxsq"]
 [ext_resource type="Resource" uid="uid://bw3thnfp6s76h" path="res://objects/cards/basic.tres" id="3_ljyba"]
 [ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="4_nke6a"]
@@ -12,8 +11,9 @@
 [ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="9_tiuod"]
 [ext_resource type="Resource" uid="uid://df1br38oqmwog" path="res://objects/cards/nullify.tres" id="10_ga8dg"]
 [ext_resource type="Resource" uid="uid://v2y7mde1tof" path="res://objects/cards/sword.tres" id="11_e44ww"]
+[ext_resource type="Script" uid="uid://bdwf2ywt214wa" path="res://resources/card_database_resource.gd" id="12_ljyba"]
 
 [resource]
-script = ExtResource("2_4esrt")
-cards = Array[ExtResource("1_plgwb")]([ExtResource("2_bvxsq"), ExtResource("3_ljyba"), ExtResource("4_nke6a"), ExtResource("5_wbiqp"), ExtResource("6_k5qd1"), ExtResource("7_pkdck"), ExtResource("8_rk4tv"), ExtResource("9_tiuod"), ExtResource("10_ga8dg"), ExtResource("11_e44ww")])
+script = ExtResource("12_ljyba")
+cards = Array[ExtResource("1_bvxsq")]([ExtResource("2_bvxsq"), ExtResource("3_ljyba"), ExtResource("4_nke6a"), ExtResource("5_wbiqp"), ExtResource("6_k5qd1"), ExtResource("7_pkdck"), ExtResource("8_rk4tv"), ExtResource("9_tiuod"), ExtResource("10_ga8dg"), ExtResource("11_e44ww")])
 metadata/_custom_type_script = "uid://bdwf2ywt214wa"

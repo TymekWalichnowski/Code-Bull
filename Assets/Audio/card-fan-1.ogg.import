@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dp1tx4jl7b584"
-path="res://.godot/imported/card-fan-1.ogg-81698aa77aac8d471e28494b179bf0fe.oggvorbisstr"
+path="res://.godot/imported/card-fan-1.ogg-82462c17a5819d190a07740ecae87ad9.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/card-fan-1.ogg"
-dest_files=["res://.godot/imported/card-fan-1.ogg-81698aa77aac8d471e28494b179bf0fe.oggvorbisstr"]
+source_file="res://Assets/audio/card-fan-1.ogg"
+dest_files=["res://.godot/imported/card-fan-1.ogg-82462c17a5819d190a07740ecae87ad9.oggvorbisstr"]
 
 [params]
 
