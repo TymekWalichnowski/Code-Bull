@@ -35,7 +35,8 @@ var total_needed = 2
 @onready var passive_map: Dictionary = {
 	"Retrigger_Slot": _passive_retrigger,
 	"Add_Shield_Start": _passive_shield_start,
-	"Spike_Armour": _passive_spike_armour
+	"Spike_Armour_Player": _passive_spike_armour_player,
+	"Spike_Armour_Opponent": _passive_spike_armour_opponent
 }
 @onready var player_passive_container = %PlayerPassives
 @onready var opponent_passive_container = %OpponentPassives
@@ -336,7 +337,11 @@ func execute_card_action(card: Card, action_index: int):
 		"Attack":
 			print(card.card_owner, " deals ", value, " damage.")
 			target.take_damage(value)
-			await trigger_passives("On_Damage_Taken")
+			if target == %Player:
+				await trigger_passives("On_Damage_Taken_Player")
+			else:
+				await trigger_passives("On_Damage_Taken_Opponent")
+			
 		"Shield":
 			print(card.card_owner, " gains ", value, " shield.")
 			self_target.gain_shield(value)
@@ -412,7 +417,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		battle_click_received.emit()
 
-func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
+func trigger_passives(trigger_type: String, user = null, current_slot_idx: int = -1):
 	# Check Player Passives
 	for card in player_passive_container.get_children():
 		# Use card.data.trigger_condition instead of card.trigger_condition
@@ -459,8 +464,10 @@ func _passive_shield_start(owner_name: String, value: float, _slot: int):
 	var target = %Player if owner_name == "Player" else %Opponent
 	target.gain_shield(value)
 
-func _passive_spike_armour(owner_name: String, value: float, _slot: int):
-	pass
+func _passive_spike_armour_player(owner_name: String, value: float, _slot: int):
 	# fix this, it damages the player even when it's the opponent hitting the player
-	#var target = %Opponent if owner_name == "Opponent" else %Player
-	#target.take_damage(value)
+	%Opponent.take_damage(value)
+	
+func _passive_spike_armour_opponent(owner_name: String, value: float, _slot: int):
+	# fix this, it damages the player even when it's the opponent hitting the player
+	%Player.take_damage(value)

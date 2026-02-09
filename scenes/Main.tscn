@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=52 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -27,8 +27,9 @@
 [ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
 [ext_resource type="Script" uid="uid://bxw2uuoffygpq" path="res://scripts/passive_card.gd" id="18_fs0b5"]
 [ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
+[ext_resource type="Resource" uid="uid://g244txlh7fpf" path="res://objects/cards_passive/spike_armour_player.tres" id="19_v0vrg"]
 [ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
-[ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="21_pnhog"]
+[ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour_opponent.tres" id="21_pnhog"]
 [ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://Assets/textures/effects/multiply_divide_sheet.png" id="22_ebg2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
@@ -380,7 +381,7 @@ z_index = 1
 position = Vector2(150, 900)
 script = ExtResource("4_fos0i")
 card_database = ExtResource("12_yxlcp")
-starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("17_v0vrg"), ExtResource("18_dg70y")])
+starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("17_v0vrg"), ExtResource("18_dg70y"), ExtResource("19_v0vrg")])
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerDeck"]
 texture_filter = 1
@@ -432,11 +433,6 @@ text = "0"
 unique_name_in_owner = true
 position = Vector2(-1596, -66)
 script = ExtResource("18_fs0b5")
-trigger_condition = null
-passive_effect_name = null
-value = null
-target_slot = null
-card_name = null
 
 [node name="PlayerCardPoint" type="Marker2D" parent="."]
 unique_name_in_owner = true
