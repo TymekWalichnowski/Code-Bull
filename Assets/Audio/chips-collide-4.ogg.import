@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://5ueap73rjhej"
-path="res://.godot/imported/chips-collide-4.ogg-9f963b8d11ac5e3a42c9535971cec697.oggvorbisstr"
+path="res://.godot/imported/chips-collide-4.ogg-157623f99db84f48b7dfc53efc7c850c.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/audio/chips-collide-4.ogg"
-dest_files=["res://.godot/imported/chips-collide-4.ogg-9f963b8d11ac5e3a42c9535971cec697.oggvorbisstr"]
+source_file="res://assets/audio/chips-collide-4.ogg"
+dest_files=["res://.godot/imported/chips-collide-4.ogg-157623f99db84f48b7dfc53efc7c850c.oggvorbisstr"]
 
 [params]
 

@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0hexiwywlx72"]
+[gd_scene load_steps=17 format=3 uid="uid://b0hexiwywlx72"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_psvab"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="2_foft5"]
-[ext_resource type="Script" uid="uid://m2rv228snxqs" path="res://scripts/card_action_manager.gd" id="2_jh8c6"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="3_jh8c6"]
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="4_ll6wp"]
 [ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="5_8j33a"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_slot_glow.png" id="7_ll6wp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("2_foft5")
@@ -213,13 +213,47 @@ _data = {
 &"card_flip": SubResource("Animation_32nxw")
 }
 
+[sub_resource type="Animation" id="Animation_hrxt0"]
+resource_name = "retrigger_glow"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardBackImage/Glow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.21568628), Color(1, 1, 1, 0.827451), Color(1, 1, 1, 0.21568628)]
+}
+
+[sub_resource type="Animation" id="Animation_dwl65"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardBackImage/Glow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dt6cf"]
+_data = {
+&"RESET": SubResource("Animation_dwl65"),
+&"retrigger_glow": SubResource("Animation_hrxt0")
+}
+
 [node name="PlayerCard" type="Node2D"]
 position = Vector2(150, 900)
 script = ExtResource("1_psvab")
 metadata/_custom_type_script = "uid://vw5rk4xmtwrq"
-
-[node name="CardActionManager" type="Node" parent="."]
-script = ExtResource("2_jh8c6")
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -227,6 +261,12 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_ijgdg")
 scale = Vector2(2, 2)
 texture = ExtResource("3_jh8c6")
+
+[node name="Glow" type="Sprite2D" parent="CardBackImage"]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(0.9186046, 0.9363636)
+texture = ExtResource("7_ll6wp")
 
 [node name="CardImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -310,6 +350,13 @@ offset_bottom = 88.0
 mouse_filter = 2
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
+[node name="EffectPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_dt6cf")
+}
+autoplay = "retrigger_glow"
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

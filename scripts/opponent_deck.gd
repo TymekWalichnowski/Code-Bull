@@ -53,9 +53,9 @@ func draw_card():
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
 		new_card.setup(card_data, "Opponent")
 
-		$"../CardManager".add_child(new_card)
+		%CardManager.add_child(new_card)
 		new_card.name = "Opponent_Card_" + card_name
-		$"../OpponentHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
+		%OpponentHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 	else:
 		print("opponent deck empty! nothing to draw!")
 

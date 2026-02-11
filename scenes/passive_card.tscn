@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bxw2uuoffygpq" path="res://scripts/passive_card.gd" id="1_p1kcn"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_aaosi"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="4_08nfd"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="4_u6wo3"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="6_enwn4"]
-[ext_resource type="Theme" uid="uid://4twn8n1dll3t" path="res://Assets/themes/Default_Theme.tres" id="7_8qrir"]
-[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="8_fgd3q"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="4_08nfd"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_u6wo3"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="6_enwn4"]
+[ext_resource type="Theme" uid="uid://4twn8n1dll3t" path="res://assets/themes/Default_Theme.tres" id="7_8qrir"]
+[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://assets/fonts/twstd-roots.ttf" id="8_fgd3q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yywh3"]
 shader = ExtResource("3_aaosi")
@@ -501,11 +501,6 @@ cache/0/12/0/glyphs/89/texture_idx = 0
 
 [node name="PassiveCard" type="Node2D"]
 script = ExtResource("1_p1kcn")
-trigger_condition = null
-passive_effect_name = null
-value = null
-target_slot = null
-card_name = null
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true

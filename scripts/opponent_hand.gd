@@ -1,4 +1,3 @@
-@icon("res://Assets/icons/32x32/skull.png")
 extends Node2D
 
 const CARD_WIDTH = 175
@@ -7,7 +6,7 @@ const DEFAULT_CARD_MOVE_SPEED = 0.1
 const DEFAULT_CARD_SCALE = 1.2 ## make this const global later
 
 var opponent_hand = []
-var center_screen_x
+var center_screen_x = 0.0
 
 func _ready() -> void:
 	center_screen_x = get_viewport_rect().size.x / 2

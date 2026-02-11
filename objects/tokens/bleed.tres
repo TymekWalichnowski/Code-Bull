@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TokenResource" load_steps=3 format=3 uid="uid://cwgs4ningcbsc"]
+
+[ext_resource type="Script" uid="uid://car848yihi4xm" path="res://resources/token_resource.gd" id="1_jokbr"]
+[ext_resource type="Texture2D" uid="uid://bcqwqsrphib0o" path="res://assets/textures/tokens/token_Bleed.png" id="2_07w0w"]
+
+[resource]
+script = ExtResource("1_jokbr")
+token_name = "Bleed"
+token_image = ExtResource("2_07w0w")
+description = "Takes damage every action"
+trigger_condition = "After_Action"
+effect_name = "Bleed"
+metadata/_custom_type_script = "uid://car848yihi4xm"

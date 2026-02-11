@@ -15,6 +15,9 @@ signal hovered_off
 @onready var tag_container = %TagContainer
 @onready var tag_label = %TagLabel
 
+@onready var glow_sprite = %Glow
+@onready var effect_animation_player = %EffectPlayer
+
 var hovering = false
 var original_z_index := 1
 var cards_current_slot
@@ -246,3 +249,16 @@ func _get_current_slot_index() -> int:
 	if not cards_current_slot: return -1
 	var slots = get_node("/root/Main/BattleManager").player_slots
 	return slots.find(cards_current_slot)
+
+func set_retrigger_glow(is_active: bool):
+	if not glow_sprite or not effect_animation_player:
+		return
+		
+	glow_sprite.visible = is_active
+	
+	if is_active:
+		# Ensure the animation name matches exactly what you named it in the editor
+		if effect_animation_player.has_animation("retrigger_glow"):
+			effect_animation_player.play("retrigger_glow")
+	else:
+		effect_animation_player.stop()

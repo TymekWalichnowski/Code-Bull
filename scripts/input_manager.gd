@@ -12,8 +12,8 @@ var card_manager_reference
 var deck_reference
 
 func _ready() -> void:
-	card_manager_reference = $"../CardManager"
-	deck_reference = $"../PlayerDeck"
+	card_manager_reference = %CardManager
+	deck_reference = %PlayerDeck
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -36,6 +36,14 @@ func raycast_at_cursor():
 		var collider = result.collider
 		if collider.collision_mask == COLLISION_MASK_CARD:
 			var card_found = collider.get_parent()
+			# Check if it's a regular Card and NOT a PassiveCard
+			if card_found is Card:
+				print("card found")
+				card_manager_reference.start_drag(card_found)
+				return 
+			elif card_found is PassiveCard:
+				print("Clicked a passive card - ignoring drag logic")
+				return # Do nothing for passives
 			if card_found:
 				print("card found")
 				card_manager_reference.start_drag(card_found)

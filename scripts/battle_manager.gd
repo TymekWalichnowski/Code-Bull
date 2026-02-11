@@ -5,6 +5,11 @@ signal battle_click_received
 var player_retrigger_counts = [0, 0, 0]
 var opponent_retrigger_counts = [0, 0, 0]
 
+@onready var action_manager = %ActionManager
+@onready var passive_manager = %PassiveManager
+@onready var token_manager = %TokenManager 
+@export var bleed_token_res: TokenResource # For testing
+
 @onready var player_slots = [
 	$"../CardSlots/CardSlot",
 	$"../CardSlots/CardSlot2",
@@ -32,15 +37,6 @@ var current_slot
 var finished_count = 0
 var total_needed = 2
 
-@onready var passive_map: Dictionary = {
-	"Retrigger_Slot": _passive_retrigger,
-	"Add_Shield_Start": _passive_shield_start,
-	"Spike_Armour_Player": _passive_spike_armour_player,
-	"Spike_Armour_Opponent": _passive_spike_armour_opponent
-}
-@onready var player_passive_container = %PlayerPassives
-@onready var opponent_passive_container = %OpponentPassives
-
 func _ready() -> void:
 	
 	battle_timer.one_shot = true
@@ -53,8 +49,9 @@ func _ready() -> void:
 	# A bit awkward, clean this up
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
-	#$"../PlayerHealth".text = str(%Player.health) # replace this later, we're just updating it every frame at the moment
-	#$"../OpponentHealth".text = str(%Opponent.health)
+	
+	if bleed_token_res:
+		%OpponentTokenContainer.add_token(bleed_token_res, 5)
 	opponent_turn()
 
 func _process(float) -> void:
@@ -152,6 +149,7 @@ func run_activation_phase():
 	opponent_retrigger_counts = [0, 0, 0]
 	
 	await trigger_passives("On_Phase_Start")
+	await trigger_tokens("On_Phase_Start")
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
@@ -190,7 +188,7 @@ func run_activation_phase():
 		
 		# Trigger slot passives
 		await trigger_passives("On_Slot_Start", slot_index)
-		
+		await trigger_tokens("On_Slot_Start")
 		# retrigger logic
 		var p_runs = 1
 		var o_runs = 1
@@ -205,14 +203,13 @@ func run_activation_phase():
 		var o_action_count = o_card.card_data.actions.size() if o_card else 0
 		var max_actions = max(p_action_count, o_action_count)
 
-		# 4. Action Loop (with retriggers)
+		# 4. Action Loop 
 		for run_idx in range(total_runs):
 			print("Slot", slot_index + 1, "Run", run_idx + 1, "/", total_runs)
 
 			for action_idx in range(max_actions):
 				var first_actor = null
 				var second_actor = null
-				var is_simultaneous = false
 
 				var p_has_act = (
 					p_card != null
@@ -232,39 +229,23 @@ func run_activation_phase():
 					var p_priority = p_card.card_data.actions[action_idx].priority
 					var o_priority = o_card.card_data.actions[action_idx].priority
 					
-					if p_priority <= o_priority:
+					if p_priority <= o_priority: #player gets priority if tie
 						first_actor = p_card
 						second_actor = o_card
 					elif o_priority < p_priority:
 						first_actor = o_card
 						second_actor = p_card
-					else:
-						pass
-#						# used to allow the same priority to be simultaneous
-						# but this just made the order of operations too confusing
-						# each action should be clear and readable
-						#is_simultaneous = true
-						#first_actor = p_card
-						#second_actor = o_card
 				elif p_has_act:
 					first_actor = p_card
 				elif o_has_act:
 					first_actor = o_card
 
-				if is_simultaneous:
-					execute_card_action(first_actor, action_idx)
-					execute_card_action(second_actor, action_idx)
-					#dont use awaits, use the counter instead because it needs to be simultaneous
-					while finished_count < total_needed:
-						await get_tree().process_frame
+				if first_actor:
+					await action_manager.execute_card_action(first_actor, action_idx)
 					await wait(1.0)
-				else:
-					if first_actor:
-						await execute_card_action(first_actor, action_idx)
-						await wait(1.0)
-					if second_actor:
-						await execute_card_action(second_actor, action_idx)
-						await wait(1.0)
+				if second_actor:
+					await action_manager.execute_card_action(second_actor, action_idx)
+					await wait(1.0)
 		
 		# 5. End of Slot Cleanup
 		%Player.current_mult = 1.0
@@ -272,111 +253,13 @@ func run_activation_phase():
 		
 		player_retrigger_counts[slot_index] = 0
 		opponent_retrigger_counts[slot_index] = 0
+		update_card_effects()
 		
 		if p_card: collect_used_card(p_card)
 		if o_card: collect_used_card(o_card)
 
 		reset_opponent_slots()
 		await wait(0.8)
-
-func execute_card_action(card: Card, action_index: int):
-	var action_data = card.card_data.actions[action_index]
-	var action = action_data.action_name
-	var value = action_data.value
-	var tags = action_data.tags
-	
-	print(card.card_owner, " Executing: ", card.card_name, " uses ", action_data.action_name, " value ", action_data.value)
-	print("Tags: ", tags)
-	var target
-	var self_target
-	var anim_node
-	
-	if card.card_owner == "Player":
-		target = %Opponent
-		self_target = %Player
-		anim_node = %PlayerActionAnim
-
-	else:
-		target = %Player
-		self_target = %Opponent
-		anim_node = %OpponentActionAnim
-	
-	#
-	
-	# Check tags
-	
-
-	# CURRENTLY WE JUST APPLY THE MULT TO THE VALUE, 
-	# BUT LATER ADD A SYSTEM TO CHECK THE TAGS AND THEN
-	# APPLY THE MULT TO THE VALUE DEPENDING ON TAGS 
-	value = value * self_target.current_mult
-	
-	if self_target.nullified == true:
-		print("returning ", card.card_owner, " action as it was nullified")
-		finished_count += 1
-		return
-	
-	# PRE-APPLICATION, Certain cards like the 50/50 need to do their logic before the action application
-	match action:
-		"Multiply_Or_Divide":
-			if randf() < 0.5:
-				action = "Multiply_Or_Divide1"
-				await %AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
-				action = "Multiply_Next_Card"
-			else:
-				action = "Multiply_Or_Divide2"
-				await %AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
-				action = "Divide_Next_Card"
-			print(card.card_owner, " Used multiply or divide, action is now: ", action)
-		
-	card.get_node("AnimationPlayer").play("card_basic_use") #card animation
-	await %AnimationManager.play_anim(action, anim_node, card.card_owner) #action animation
-	
-	# APPLICATION, Applying the effect like damage or shield
-	match action:
-		"Attack":
-			print(card.card_owner, " deals ", value, " damage.")
-			target.take_damage(value)
-			if target == %Player:
-				await trigger_passives("On_Damage_Taken_Player")
-			else:
-				await trigger_passives("On_Damage_Taken_Opponent")
-			
-		"Shield":
-			print(card.card_owner, " gains ", value, " shield.")
-			self_target.gain_shield(value)
-		"Multiply_Next_Card":
-			print(card.card_owner, " gains ", value, " mult.") 
-			self_target.next_mult = self_target.next_mult * value
-		"Divide_Next_Card":
-			print(card.card_owner, " applies ", value, " divide to ", target) # need to change how mult works because currently 1 mult becomes 3 mult when you add 2
-			target.next_mult = target.next_mult / value
-		"Nullify":
-			print(card.card_owner, " nullifies ", target) # need to change how mult works because currently 1 mult becomes 3 mult when you add 2
-			target.nullified = true
-		"Draw_Card":
-			if self_target == %Player:
-				for i in value:
-					%PlayerDeck.draw_card()
-			else:
-				for i in value:
-					%OpponentDeck.draw_card()
-		"Retrigger_Next_Slot":
-			var current_idx = -1
-			# Find slot index
-			for i in range(player_slots.size()):
-				if player_slots[i].card == card:
-					current_idx = i
-					break
-			# Only increment the retrigger count for the OWNER of the card
-			if current_idx != -1 and current_idx + 1 < 3:
-				if card.card_owner == "Player":
-					player_retrigger_counts[current_idx + 1] += int(value)
-				else:
-					opponent_retrigger_counts[current_idx + 1] += int(value)
-		"Multiply_Or_Divide":
-			pass
-	finished_count += 1
 
 func check_done(): #making sure both actions are done before
 	finished_count += 1
@@ -397,7 +280,7 @@ func move_card_to_battle_point(card):
 func collect_used_card(card):
 	if card == null:
 		return
-	
+	card.set_retrigger_glow(false)
 	if card.card_owner == "Player":
 		%PlayerDeck.graveyard.append(card)
 	else:
@@ -417,57 +300,40 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		battle_click_received.emit()
 
-func trigger_passives(trigger_type: String, user = null, current_slot_idx: int = -1):
-	# Check Player Passives
-	for card in player_passive_container.get_children():
-		# Use card.data.trigger_condition instead of card.trigger_condition
-		if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
-			await _execute_passive(card, "Player", current_slot_idx)
-			
-	# Check Opponent Passives
-	for card in opponent_passive_container.get_children():
-		if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
-			await _execute_passive(card, "Opponent", current_slot_idx)
+func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
+	await passive_manager.trigger_passives(trigger_type, current_slot_idx)
 
-func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: int):
-	# Access variables through the 'data' resource
-	var effect = card.data.effect_name 
-	var val = card.data.value
-	var target_slot = card.data.target_slot 
-	
-	if passive_map.has(effect):
-		# If it's a slot-specific passive, only run it if we are on that slot
-		if target_slot != -1 and target_slot != (current_slot_idx + 1):
-			return
-			
-		# Visual feedback
-		if card.has_node("AnimationPlayer"):
-			var anim = card.get_node("AnimationPlayer")
-			anim.play("passive_trigger") 
-			await anim.animation_finished
+func trigger_tokens(trigger_type: String, side: String = "Both"):
+	await token_manager.trigger_tokens(trigger_type, side)
+
+func update_card_effects():
+	# Update Player Cards
+	for i in range(player_slots.size()):
+		var slot = player_slots[i]
+		var has_retrigger = player_retrigger_counts[i] > 0
 		
-		await wait(0.4)
-		passive_map[effect].call(owner_name, val, target_slot)
-
-
-func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
-	# value could be 'how many extra runs'
-	# slot_to_hit comes from the card data (e.g., 2 for slot 2)
-	var index = slot_to_hit - 1
-	if owner_name == "Player":
-		player_retrigger_counts[index] += int(value)
-	else:
-		opponent_retrigger_counts[index] += int(value)
-	print("Passive: ", owner_name, " scheduled retrigger for slot ", slot_to_hit)
-
-func _passive_shield_start(owner_name: String, value: float, _slot: int):
-	var target = %Player if owner_name == "Player" else %Opponent
-	target.gain_shield(value)
-
-func _passive_spike_armour_player(owner_name: String, value: float, _slot: int):
-	# fix this, it damages the player even when it's the opponent hitting the player
-	%Opponent.take_damage(value)
+		# If there is a card in this slot, update its glow
+		if slot.card:
+			slot.card.set_retrigger_glow(has_retrigger)
 	
-func _passive_spike_armour_opponent(owner_name: String, value: float, _slot: int):
-	# fix this, it damages the player even when it's the opponent hitting the player
-	%Player.take_damage(value)
+	# Update Opponent Cards
+	for i in range(opponent_slots.size()):
+		var slot = opponent_slots[i]
+		var has_retrigger = opponent_retrigger_counts[i] > 0
+		
+		if slot.card:
+			slot.card.set_retrigger_glow(has_retrigger)
+			
+func check_token_triggers(trigger_type: String, side: String):
+	var container = %PlayerTokenContainer if side == "Player" else %OpponentTokenContainer
+	
+	if trigger_type == "After_Action":
+		var burn_count = container.get_token_count("Burn")
+		if burn_count > 0:
+			apply_burn_damage(side, burn_count)
+			# Reduce burn by 1 each turn?
+			# container.add_token(burn_resource, -1)
+
+func apply_burn_damage(side, burn_count):
+	print("applied burn damage!")
+	pass

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="1_bvxsq"]
 [ext_resource type="Resource" uid="uid://j61jj7tm3m6g" path="res://objects/cards/2_of_spades.tres" id="2_bvxsq"]
+[ext_resource type="Resource" uid="uid://bbaqsl42y8og5" path="res://objects/cards/apply_burn.tres" id="3_bvxsq"]
 [ext_resource type="Resource" uid="uid://bw3thnfp6s76h" path="res://objects/cards/basic.tres" id="3_ljyba"]
-[ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="4_nke6a"]
 [ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="5_wbiqp"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="6_k5qd1"]
 [ext_resource type="Resource" uid="uid://cd88dyupufuki" path="res://objects/cards/draw_2.tres" id="7_pkdck"]
@@ -15,5 +15,5 @@
 
 [resource]
 script = ExtResource("12_ljyba")
-cards = Array[ExtResource("1_bvxsq")]([ExtResource("2_bvxsq"), ExtResource("3_ljyba"), ExtResource("4_nke6a"), ExtResource("5_wbiqp"), ExtResource("6_k5qd1"), ExtResource("7_pkdck"), ExtResource("8_rk4tv"), ExtResource("9_tiuod"), ExtResource("10_ga8dg"), ExtResource("11_e44ww")])
+cards = Array[ExtResource("1_bvxsq")]([ExtResource("2_bvxsq"), ExtResource("3_bvxsq"), ExtResource("3_ljyba"), ExtResource("5_wbiqp"), ExtResource("6_k5qd1"), ExtResource("7_pkdck"), ExtResource("8_rk4tv"), ExtResource("9_tiuod"), ExtResource("10_ga8dg"), ExtResource("11_e44ww")])
 metadata/_custom_type_script = "uid://bdwf2ywt214wa"

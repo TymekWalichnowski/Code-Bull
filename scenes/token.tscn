@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b72wdhj577ula"]
+
+[ext_resource type="Script" uid="uid://bkmt4yb48puec" path="res://scripts/token.gd" id="1_7438t"]
+[ext_resource type="Texture2D" uid="uid://ckars6soro3o5" path="res://assets/textures/tokens/token_Blank.png" id="2_20bui"]
+
+[node name="Token" type="Node2D"]
+script = ExtResource("1_7438t")
+
+[node name="Texture" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_20bui")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

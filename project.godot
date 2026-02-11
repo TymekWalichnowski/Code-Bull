@@ -28,6 +28,18 @@ window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
+[file_customization]
+
+folder_colors={
+"res://assets/textures/cards/": "gray",
+"res://objects/cards/": "yellow",
+"res://objects/cards_passive/": "teal",
+"res://objects/tokens/": "red",
+"res://resources/": "pink",
+"res://scenes/": "blue",
+"res://scripts/": "purple"
+}
+
 [input]
 
 left_click={
