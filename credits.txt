@@ -2,3 +2,4 @@ card shader - https://godotshaders.com/shader/3d-perspective-texturerect-with-to
 progress bar - https://catshaped.itch.io/pixel-progress-bar-asset-pack?download
 forgot where the icons came from
 weapon slash - https://opengameart.org/content/weapon-slash-effect
+damage numbers - https://minosdamagenumbers.carrd.co/#docs

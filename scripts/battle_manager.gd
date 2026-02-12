@@ -9,6 +9,7 @@ var opponent_retrigger_counts = [0, 0, 0]
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
 @export var bleed_token_res: TokenResource # For testing
+@export var flame_token_res: TokenResource # For testing
 
 @onready var player_slots = [
 	$"../CardSlots/CardSlot",
@@ -51,7 +52,8 @@ func _ready() -> void:
 	%Opponent.current_health = STARTING_HEALTH
 	
 	if bleed_token_res:
-		%OpponentTokenContainer.add_token(bleed_token_res, 5)
+		%OpponentTokens.add_token(bleed_token_res, 5)
+		%PlayerTokens.add_token(bleed_token_res, 20)
 	opponent_turn()
 
 func _process(float) -> void:
@@ -64,6 +66,7 @@ func _process(float) -> void:
 
 func _on_end_turn_button_pressed() -> void:
 	await run_activation_phase()
+	await trigger_tokens("On_Phase_End")
 	opponent_turn()
 	%PlayerDeck.draw_card()
 	$"../EndTurnButton".disabled = true
@@ -159,7 +162,6 @@ func run_activation_phase():
 		var p_card = player_slots[slot_index].card
 		var o_card = opponent_slots[slot_index].card
 		
-		
 		# resetting stuff
 		%Player.current_mult = %Player.next_mult
 		%Player.next_mult = 1.0
@@ -247,6 +249,7 @@ func run_activation_phase():
 					await action_manager.execute_card_action(second_actor, action_idx)
 					await wait(1.0)
 		
+		
 		# 5. End of Slot Cleanup
 		%Player.current_mult = 1.0
 		%Opponent.current_mult = 1.0
@@ -324,16 +327,3 @@ func update_card_effects():
 		if slot.card:
 			slot.card.set_retrigger_glow(has_retrigger)
 			
-func check_token_triggers(trigger_type: String, side: String):
-	var container = %PlayerTokenContainer if side == "Player" else %OpponentTokenContainer
-	
-	if trigger_type == "After_Action":
-		var burn_count = container.get_token_count("Burn")
-		if burn_count > 0:
-			apply_burn_damage(side, burn_count)
-			# Reduce burn by 1 each turn?
-			# container.add_token(burn_resource, -1)
-
-func apply_burn_damage(side, burn_count):
-	print("applied burn damage!")
-	pass

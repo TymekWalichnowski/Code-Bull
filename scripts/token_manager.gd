@@ -10,10 +10,10 @@ extends Node
 # side can be "Player", "Opponent", or "Both" (default for phase starts)
 func trigger_tokens(trigger_type: String, side: String = "Both"):
 	if side == "Player" or side == "Both":
-		await _process_container(%PlayerTokenContainer, "Player", trigger_type)
+		await _process_container(%PlayerTokens, "Player", trigger_type)
 	
 	if side == "Opponent" or side == "Both":
-		await _process_container(%OpponentTokenContainer, "Opponent", trigger_type)
+		await _process_container(%OpponentTokens, "Opponent", trigger_type)
 
 func _process_container(container: TokenContainer, side: String, trigger_type: String):
 	# We use a duplicate of keys because tokens might be removed during the loop
@@ -37,7 +37,7 @@ func _process_container(container: TokenContainer, side: String, trigger_type: S
 
 func _effect_bleed(side: String, stacks: int, resource: TokenResource):
 	var target = %Player if side == "Player" else %Opponent
-	var container = %PlayerTokenContainer if side == "Player" else %OpponentTokenContainer
+	var container = %PlayerTokens if side == "Player" else %OpponentTokens
 	
 	print("Bleed Triggered: ", side, " taking ", stacks, " damage.")
 	target.take_damage(float(stacks))
@@ -46,5 +46,5 @@ func _effect_bleed(side: String, stacks: int, resource: TokenResource):
 	container.add_token(resource, -1)
 	await get_tree().create_timer(0.3).timeout
 
-func _effect_flame():
-	pass
+func _effect_flame(side: String, stacks: int, resource: TokenResource):
+	print("flame effect!!!")

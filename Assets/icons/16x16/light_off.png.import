@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://44lex7clui8g"
-path="res://.godot/imported/light_off.png-2c065473ae851954087e9fbdb51f34a6.ctex"
+path="res://.godot/imported/light_off.png-faec4d16ace1503566283390dea49494.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/light_off.png"
-dest_files=["res://.godot/imported/light_off.png-2c065473ae851954087e9fbdb51f34a6.ctex"]
+source_file="res://Assets/icons/16x16/light_off.png"
+dest_files=["res://.godot/imported/light_off.png-faec4d16ace1503566283390dea49494.ctex"]
 
 [params]
 

@@ -10,7 +10,7 @@ const STARTING_HAND_SIZE = 5
 
 var player_deck = [
 	"Double Hit",
-	"2 Of Spades",
+	"Apply Burn",
 	"Fifty Fifty",
 	"Nullify",
 	"Divide",

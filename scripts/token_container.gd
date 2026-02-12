@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends Node2D
 class_name TokenContainer
 
 @export var token_scene: PackedScene = preload("res://scenes/token.tscn")

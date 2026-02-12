@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ggolb4sgy1gh"
-path="res://.godot/imported/stop_sign.png-d3dac891ed46c6fa29630e15d7d8aa94.ctex"
+path="res://.godot/imported/stop_sign.png-e9fef20c0e82be300ce334bce8102e4b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/stop_sign.png"
-dest_files=["res://.godot/imported/stop_sign.png-d3dac891ed46c6fa29630e15d7d8aa94.ctex"]
+source_file="res://Assets/icons/16x16/stop_sign.png"
+dest_files=["res://.godot/imported/stop_sign.png-e9fef20c0e82be300ce334bce8102e4b.ctex"]
 
 [params]
 

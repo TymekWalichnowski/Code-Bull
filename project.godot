@@ -15,10 +15,6 @@ run/main_scene="uid://x0lreijkwmjp"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
-[autoload]
-
-CardDatabase="*res://scripts/card_database.gd"
-
 [display]
 
 window/size/viewport_width=1920

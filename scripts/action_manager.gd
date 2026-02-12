@@ -8,8 +8,11 @@ extends Node # not using this at the moment
 @onready var player_deck = %PlayerDeck
 @onready var opponent_deck = %OpponentDeck
 
+
 # We need a reference back to BattleManager to update retrigger counts
 @onready var battle_manager = get_parent()
+
+@export var flame_token_res: TokenResource # For testing
 
 func execute_card_action(card: Card, action_index: int):
 	var action_data = card.card_data.actions[action_index]
@@ -77,8 +80,11 @@ func execute_card_action(card: Card, action_index: int):
 			_handle_retrigger(card, int(value))
 			battle_manager.update_card_effects()
 		
-		"Apply_Burn":
-			pass
+		"Apply_Flame":
+			if target == player:
+				%PlayerTokens.add_token(flame_token_res, value)
+			else:
+				%OpponentTokens.add_token(flame_token_res, value)
 	
 	# after effect
 	await battle_manager.token_manager.trigger_tokens("After_Action", card.card_owner)

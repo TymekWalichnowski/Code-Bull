@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="TokenResource" load_steps=3 format=3 uid="uid://bhfp8flf2320e"]
 
 [ext_resource type="Script" uid="uid://car848yihi4xm" path="res://resources/token_resource.gd" id="1_3tnhr"]
-[ext_resource type="Texture2D" uid="uid://cy2bnvdeiy5pg" path="res://assets/textures/tokens/token_Flame.png" id="1_taicr"]
+[ext_resource type="Texture2D" uid="uid://cy2bnvdeiy5pg" path="res://Assets/textures/tokens/Token_Flame.png" id="1_taicr"]
 
 [resource]
 script = ExtResource("1_3tnhr")
 token_name = "Flame"
 token_image = ExtResource("1_taicr")
 description = "Burns the Opponent"
+trigger_condition = "On_Phase_End"
 effect_name = "Flame"
 metadata/_custom_type_script = "uid://car848yihi4xm"
