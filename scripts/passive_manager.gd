@@ -40,7 +40,7 @@ func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: i
 			anim.play("passive_trigger") 
 			await anim.animation_finished
 		
-		# Small pause for readability
+		# Small pause
 		await get_tree().create_timer(0.4).timeout
 		
 		# Execute the specific logic

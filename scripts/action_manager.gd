@@ -13,6 +13,7 @@ extends Node # not using this at the moment
 @onready var battle_manager = get_parent()
 
 @export var flame_token_res: TokenResource # For testing
+@export var bleed_token_res: TokenResource # should probably od this more efficiently
 
 func execute_card_action(card: Card, action_index: int):
 	var action_data = card.card_data.actions[action_index]
@@ -85,6 +86,12 @@ func execute_card_action(card: Card, action_index: int):
 				%PlayerTokens.add_token(flame_token_res, value)
 			else:
 				%OpponentTokens.add_token(flame_token_res, value)
+		
+		"Apply_Bleed":
+			if target == player:
+				%PlayerTokens.add_token(bleed_token_res, value)
+			else:
+				%OpponentTokens.add_token(bleed_token_res, value)
 	
 	# after effect
 	await battle_manager.token_manager.trigger_tokens("After_Action", card.card_owner)

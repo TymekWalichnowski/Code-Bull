@@ -3,7 +3,7 @@ extends Node2D
 const CARD_SCENE_PATH = "res://scenes/opponent_card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
 const CARD_DRAW_SPEED = 0.2
-const STARTING_HAND_SIZE = 4
+const STARTING_HAND_SIZE = 6
 
 @export var card_database: CardDatabase2
 @export var starting_passives: Array[PassiveCardResource]

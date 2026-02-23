@@ -12,7 +12,7 @@ var player_deck = [
 	"Double Hit",
 	"Apply Burn",
 	"Fifty Fifty",
-	"Nullify",
+	"Apply Bleed",
 	"Divide",
 	"Draw 2",
 	"Sword",

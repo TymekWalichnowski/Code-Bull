@@ -248,6 +248,7 @@ flame_token_res = ExtResource("3_pnhog")
 unique_name_in_owner = true
 script = ExtResource("2_xa025")
 flame_token_res = ExtResource("3_pnhog")
+bleed_token_res = ExtResource("2_g6wdg")
 
 [node name="AnimationManager" type="Node" parent="BattleManager"]
 unique_name_in_owner = true
@@ -316,10 +317,10 @@ text = "0"
 
 [node name="OpponentLabel" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
-offset_left = 91.0
-offset_top = 189.0
-offset_right = 552.0
-offset_bottom = 374.0
+offset_left = 81.0
+offset_top = 388.0
+offset_right = 542.0
+offset_bottom = 573.0
 theme_override_font_sizes/normal_font_size = 16
 text = "0"
 
@@ -427,11 +428,11 @@ text = "0"
 
 [node name="PlayerPassives" type="Node2D" parent="PlayerDeck"]
 unique_name_in_owner = true
-position = Vector2(1505, 16)
+position = Vector2(173, 0)
 
 [node name="OpponentDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(1756, 132)
+position = Vector2(150, 123)
 script = ExtResource("8_lhr70")
 card_database = ExtResource("12_yxlcp")
 starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("21_pnhog")])
@@ -452,7 +453,7 @@ text = "0"
 
 [node name="OpponentPassives" type="Node2D" parent="OpponentDeck"]
 unique_name_in_owner = true
-position = Vector2(-1596, -66)
+position = Vector2(125, -29)
 
 [node name="PlayerCardPoint" type="Marker2D" parent="."]
 unique_name_in_owner = true

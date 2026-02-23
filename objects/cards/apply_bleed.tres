@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://kqiykl22ic2r"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_fcb1a"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_c0ewi"]
+[ext_resource type="Texture2D" uid="uid://4cnavypvrsbs" path="res://Assets/textures/cards/card_bleeder.png" id="2_me2ei"]
+
+[sub_resource type="Resource" id="Resource_34ur7"]
+script = ExtResource("1_fcb1a")
+action_name = "Apply_Bleed"
+value = 7.0
+priority = 1
+tags = Array[String](["Bleed"])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[resource]
+script = ExtResource("2_c0ewi")
+display_name = "Apply Bleed"
+image_texture = ExtResource("2_me2ei")
+actions = Array[ExtResource("1_fcb1a")]([SubResource("Resource_34ur7")])
+metadata/_custom_type_script = "uid://cfssthidojyly"

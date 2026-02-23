@@ -6,12 +6,15 @@
 [node name="Token" type="Node2D"]
 script = ExtResource("1_7438t")
 
+[node name="AnimationSlot" type="Node" parent="."]
+
 [node name="Texture" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(3, 3)
 texture = ExtResource("2_20bui")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 46.0
-offset_right = 90.0
-offset_bottom = 23.0
+offset_left = -74.0
+offset_top = 50.0
+offset_right = -30.0
+offset_bottom = 74.0
