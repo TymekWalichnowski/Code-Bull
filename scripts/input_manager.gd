@@ -8,6 +8,7 @@ const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_SLOT = 2
 const COLLISION_MASK_DECK = 4
 
+@export var card_database: CardDatabase
 var card_manager_reference
 var deck_reference
 
@@ -51,8 +52,9 @@ func raycast_at_cursor():
 
 	# disabled clicking deck from tutorial
 
-	#for result in results: 
-		#var collider = result.collider
-		#if collider.collision_mask == COLLISION_MASK_DECK:
-			#deck_reference.draw_card()
-			#return
+	for result in results: 
+		var collider = result.collider
+		if collider.collision_mask == COLLISION_MASK_DECK:
+			print("showing deck!")
+			if not deck_reference.player_deck.is_empty() and %DeckViewer:
+				%DeckViewer.display_deck(%DeckViewer, card_database)

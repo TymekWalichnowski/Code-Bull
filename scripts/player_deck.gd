@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var card_database: CardDatabase2
+@export var card_database: CardDatabase
 @export var starting_passives: Array[PassiveCardResource]
 
 const CARD_SCENE_PATH = "res://scenes/player_card.tscn"

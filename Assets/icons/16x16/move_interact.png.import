@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bitifmdsexuiw"
-path="res://.godot/imported/move_interact.png-93fae18514c21176d9620f7ef382a0a0.ctex"
+path="res://.godot/imported/move_interact.png-ee55e806eb9dd40dac967bbb78dd0be5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/move_interact.png"
-dest_files=["res://.godot/imported/move_interact.png-93fae18514c21176d9620f7ef382a0a0.ctex"]
+source_file="res://assets/icons/16x16/move_interact.png"
+dest_files=["res://.godot/imported/move_interact.png-ee55e806eb9dd40dac967bbb78dd0be5.ctex"]
 
 [params]
 

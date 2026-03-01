@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://y3u3a7s7601t"]
+
+[ext_resource type="Script" uid="uid://df58d2b3oj5u6" path="res://scripts/deck_viewer.gd" id="1_e8xft"]
+
+[node name="DeckViewer" type="CanvasLayer"]
+script = ExtResource("1_e8xft")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -799.0
+offset_top = -450.5
+offset_right = 799.0
+offset_bottom = 450.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.11764706)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_right = 372.0
+offset_bottom = 241.0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2

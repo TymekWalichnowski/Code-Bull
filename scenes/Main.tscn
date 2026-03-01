@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=55 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -9,29 +9,31 @@
 [ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
 [ext_resource type="Resource" uid="uid://bhfp8flf2320e" path="res://objects/tokens/flame.tres" id="3_pnhog"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://bej4mcopqs30m" path="res://scripts/passive_manager.gd" id="4_dg70y"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://ccry32ril1ham" path="res://scripts/token_manager.gd" id="5_g6wdg"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
-[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
-[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
-[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
 [ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="12_yxlcp"]
-[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
-[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
+[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://assets/Placeholder/Slash/Classic/2/Classic_07.png" id="14_nfivy"]
+[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://assets/Placeholder/Slash/Classic/2/Classic_08.png" id="15_1nqs0"]
 [ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="15_pnhog"]
-[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
+[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://assets/Placeholder/Slash/Classic/2/Classic_09.png" id="16_1iba3"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="16_gsxep"]
-[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
-[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
-[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
-[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
+[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://assets/Placeholder/Slash/Classic/2/Classic_10.png" id="17_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://assets/Placeholder/Slash/Classic/2/Classic_11.png" id="18_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://assets/Placeholder/Slash/Classic/2/Classic_12.png" id="19_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="21_1iba3"]
+[ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour_opponent.tres" id="21_pnhog"]
-[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://Assets/textures/effects/multiply_divide_sheet.png" id="22_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://assets/textures/effects/multiply_divide_sheet.png" id="22_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://033uq706uqwr" path="res://assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
@@ -269,6 +271,7 @@ script = ExtResource("1_glv2v")
 [node name="InputManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_3dxm6")
+card_database = ExtResource("12_yxlcp")
 
 [node name="CardSlots" type="Node2D" parent="."]
 z_index = -1
@@ -287,15 +290,15 @@ position = Vector2(1126, 660)
 
 [node name="OpponentCardSlot" parent="CardSlots" instance=ExtResource("3_nxtc6")]
 z_index = -2
-position = Vector2(790, 300)
+position = Vector2(790, 178)
 
 [node name="OpponentCardSlot2" parent="CardSlots" instance=ExtResource("3_nxtc6")]
 z_index = -2
-position = Vector2(960, 300)
+position = Vector2(960, 178)
 
 [node name="OpponentCardSlot3" parent="CardSlots" instance=ExtResource("3_nxtc6")]
 z_index = -2
-position = Vector2(1126, 300)
+position = Vector2(1126, 178)
 
 [node name="PlayerHand" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -405,6 +408,10 @@ position = Vector2(150, 900)
 script = ExtResource("4_fos0i")
 card_database = ExtResource("12_yxlcp")
 
+[node name="DeckViewer" parent="PlayerDeck" instance=ExtResource("21_2c4at")]
+unique_name_in_owner = true
+visible = false
+
 [node name="Sprite2D" type="Sprite2D" parent="PlayerDeck"]
 texture_filter = 1
 scale = Vector2(2, 2)
@@ -489,6 +496,13 @@ text = "END TURN"
 
 [node name="BattleTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+
+[node name="TestWizard" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+position = Vector2(960.00006, 537.00006)
+scale = Vector2(5.15625, 5.15625)
+texture = ExtResource("33_pnhog")
 
 [connection signal="animation_finished" from="PlayerActionAnim" to="BattleManager/AnimationManager" method="_on_player_action_anim_animation_finished"]
 [connection signal="animation_finished" from="OpponentActionAnim" to="BattleManager/AnimationManager" method="_on_opponent_action_anim_animation_finished"]

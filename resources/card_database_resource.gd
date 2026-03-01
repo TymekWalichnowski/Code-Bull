@@ -1,5 +1,5 @@
 extends Resource
-class_name CardDatabase2
+class_name CardDatabase
 
 @export var cards: Array[CardData] = []
 
