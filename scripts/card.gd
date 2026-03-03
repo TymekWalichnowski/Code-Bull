@@ -4,7 +4,7 @@ class_name Card
 signal hovered
 signal hovered_off
 
-@export var card_data: CardData
+@export var card_data: CardDataResource
 @export var card_owner: String
 
 @export var max_rotation = 30.0
@@ -35,7 +35,7 @@ var card_id: int = 0
 var card_name: String = ""
 
 
-func setup(data: CardData, owner: String) -> void:
+func setup(data: CardDataResource, owner: String) -> void:
 	card_data = data
 	card_owner = owner
 	card_id = card_data.id

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2j61b4foms5d"
-path="res://.godot/imported/transparency.png-44389b2633491a6767b4ae799487e7e3.ctex"
+path="res://.godot/imported/transparency.png-25044990fc7868f61d4889b7d8c4a2be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/transparency.png"
-dest_files=["res://.godot/imported/transparency.png-44389b2633491a6767b4ae799487e7e3.ctex"]
+source_file="res://Assets/icons/16x16/transparency.png"
+dest_files=["res://.godot/imported/transparency.png-25044990fc7868f61d4889b7d8c4a2be.ctex"]
 
 [params]
 

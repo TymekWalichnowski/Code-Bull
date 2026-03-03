@@ -1,0 +1,23 @@
+[gd_scene load_steps=13 format=3 uid="uid://dsavo0elx0x5f"]
+
+[ext_resource type="Script" path="res://scenes/globals/player_deck_global.gd" id="1_eibw5"]
+[ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="2_2xd36"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_rb10u"]
+[ext_resource type="Resource" uid="uid://j61jj7tm3m6g" path="res://objects/cards/2_of_spades.tres" id="3_2r0f0"]
+[ext_resource type="Resource" uid="uid://kqiykl22ic2r" path="res://objects/cards/apply_bleed.tres" id="4_mp35p"]
+[ext_resource type="Resource" uid="uid://bbaqsl42y8og5" path="res://objects/cards/apply_burn.tres" id="5_pk0xe"]
+[ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="6_vsrvu"]
+[ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="7_5lg0m"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="8_r6sng"]
+[ext_resource type="Script" uid="uid://bdwf2ywt214wa" path="res://resources/card_database_resource.gd" id="9_dgsgh"]
+[ext_resource type="Resource" uid="uid://c15m7x547auup" path="res://objects/cards_passive/early_guard.tres" id="11_2r0f0"]
+
+[sub_resource type="Resource" id="Resource_mqgaq"]
+script = ExtResource("9_dgsgh")
+cards = Array[ExtResource("2_rb10u")]([ExtResource("3_2r0f0"), ExtResource("4_mp35p"), ExtResource("5_pk0xe"), ExtResource("6_vsrvu"), ExtResource("7_5lg0m"), ExtResource("8_r6sng")])
+metadata/_custom_type_script = "uid://bdwf2ywt214wa"
+
+[node name="PlayerDeckGlobal" type="Node"]
+script = ExtResource("1_eibw5")
+starting_cards = SubResource("Resource_mqgaq")
+starting_passives = Array[ExtResource("2_2xd36")]([ExtResource("11_2r0f0")])

@@ -283,21 +283,22 @@ func move_card_to_battle_point(card):
 func collect_used_card(card):
 	if card == null:
 		return
-	card.set_retrigger_glow(false)
-	if card.card_owner == "Player":
-		%PlayerDeck.graveyard.append(card)
-	else:
-		%OpponentDeck.graveyard.append(card)
 	
-	# Clear its slot
+	card.set_retrigger_glow(false)
+	
+	# Store the DATA (resource) in the graveyard, not the Node
+	if card.card_owner == "Player":
+		%PlayerDeck.graveyard.append(card.card_data)
+	else:
+		%OpponentDeck.graveyard.append(card.card_data)
+	
+	# Clear slot logic...
 	if card.cards_current_slot:
 		card.cards_current_slot.card = null
 		card.cards_current_slot.card_in_slot = false
 		card.cards_current_slot = null
 		
-	card.visible = false # doesnt always hide it for some reason, fix this later
-	card.position = Vector2(-100.0, 0.0)
-
+	card.queue_free() # Delete the node since we saved its data to the graveyard
 func _input(event: InputEvent) -> void:
 	# Detect any left mouse click that isn't on a UI button
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

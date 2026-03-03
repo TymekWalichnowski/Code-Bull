@@ -1,6 +1,7 @@
 extends Node2D
 
-@export var card_database: CardDatabase
+@export var card_database: CardDatabase # Keep if other systems need it
+@export var starting_deck: Array[CardDataResource] # Drag and drop your cards here!
 @export var starting_passives: Array[PassiveCardResource]
 
 const CARD_SCENE_PATH = "res://scenes/player_card.tscn"
@@ -8,87 +9,64 @@ const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
 
-var player_deck = [
-	"Double Hit",
-	"Apply Burn",
-	"Fifty Fifty",
-	"Apply Bleed",
-	"Divide",
-	"Draw 2",
-	"Sword",
-	"Sword"]
-
+# This now stores the actual Resources, not strings
+var current_deck: Array[CardDataResource] = []
+var graveyard: Array[CardDataResource] = []
 var drawn_card_this_turn = false
-var graveyard = []
 
 func _ready() -> void:
-	if card_database:
-		card_database._initialize_database()  # <-- safe call
-	else:
-		push_warning("No card database assigned!")
+	# 1. Initialize the deck from the export
+	if starting_deck.is_empty():
+		push_warning("Starting deck is empty! Add cards in the Inspector.")
 	
-	print("im ready")
-	$RichTextLabel.text = str(player_deck.size())
+	# Duplicate the resources into our active deck so we don't modify the originals
+	current_deck = starting_deck.duplicate()
+	current_deck.shuffle()
+
+	if card_database:
+		card_database._initialize_database()
+	
+	$RichTextLabel.text = str(current_deck.size())
+	
 	for i in range(STARTING_HAND_SIZE):
 		draw_card()
 		drawn_card_this_turn = false
+	
 	drawn_card_this_turn = true
 	spawn_starting_passives()
 
 func draw_card():
-	print("player draw_card starting")
-	if player_deck.is_empty() and graveyard.size() > 0:
-		# Refill deck from graveyard
-		print("refilling from graveyard")
-		for card_node in graveyard:
-			player_deck.append(card_node.card_name)
-			card_node.visible = true  # make sure it’s usable again
+	if current_deck.is_empty() and graveyard.size() > 0:
+		print("Refilling deck from graveyard")
+		current_deck = graveyard.duplicate()
+		current_deck.shuffle()
 		graveyard.clear()
-		player_deck.shuffle()  # optional shuffle
-		$Area2D/CollisionShape2D.disabled = true
+		$Area2D/CollisionShape2D.disabled = true # Assuming this hides the deck visual
 	
-	if !player_deck.is_empty():
-		print("gonna do card stuff now")
-		var card_name = player_deck.pop_front()
-		$RichTextLabel.text = str(player_deck.size())
-		print("Trying to get card:", card_name)
-		var card_data = card_database.get_by_name(card_name)
-		if not card_data:
-			print("uhh error happened")
-			push_error("Missing card data: " + card_name)
-			return
+	if !current_deck.is_empty():
+		# Pop the Resource directly
+		var card_data = current_deck.pop_front()
+		$RichTextLabel.text = str(current_deck.size())
 
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
+		# No more database lookup needed; we already have card_data!
 		new_card.setup(card_data, "Player")
-	
-		print("setup da card loool")
+		
+		new_card.name = "Card_" + card_data.display_name
 		%CardManager.add_child(new_card)
-		print("%CardManager:", %CardManager)
-		print("%PlayerHand:", %PlayerHand)
-		print("hello")
-		new_card.name = "Card_" + card_name
 
 		if new_card.has_node("AnimationPlayer"):
 			new_card.get_node("AnimationPlayer").play("card_flip")
 			
 		%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
-		print("Drawing card: ", card_name, " | Card data: ", card_data)
 	else:
-		print("player deck empty! nothing to draw!")
+		print("Deck and Graveyard are empty!")
 
-func reset_draw():
-	drawn_card_this_turn = false
-	
 func spawn_starting_passives():
 	for i in range(starting_passives.size()):
 		var res = starting_passives[i]
 		var passive_node = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
-
 		%PlayerPassives.add_child(passive_node)
-		
-		# Pass the whole resource to the card
 		passive_node.setup(res)
-
-		# Position logic remains the same
 		var offset_x = 140 + (i * 140)
 		passive_node.global_position = self.global_position + Vector2(offset_x, 0)

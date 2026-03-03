@@ -1,5 +1,5 @@
 extends Resource
-class_name CardData
+class_name CardDataResource
 
 @export var id: int
 @export var display_name: String

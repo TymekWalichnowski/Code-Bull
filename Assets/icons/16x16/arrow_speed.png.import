@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ceqt3gda8wnw7"
-path="res://.godot/imported/arrow_speed.png-41da459561d0f696acbdaf9bc04e3cc6.ctex"
+path="res://.godot/imported/arrow_speed.png-6422dec488c8a0146b9ec7cf2138f65e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/arrow_speed.png"
-dest_files=["res://.godot/imported/arrow_speed.png-41da459561d0f696acbdaf9bc04e3cc6.ctex"]
+source_file="res://Assets/icons/16x16/arrow_speed.png"
+dest_files=["res://.godot/imported/arrow_speed.png-6422dec488c8a0146b9ec7cf2138f65e.ctex"]
 
 [params]
 
