@@ -19,11 +19,25 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-color = Color(0, 0, 0, 0.11764706)
+color = Color(0.27904913, 0.22885656, 0, 1)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_right = 372.0
-offset_bottom = 241.0
+offset_left = 161.0
+offset_top = 90.0
+offset_right = 1752.0
+offset_bottom = 989.0
 
-[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+[node name="CardGrid" type="GridContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+z_index = 1
 layout_mode = 2
+columns = 3
+
+[node name="CloseButton" type="Button" parent="."]
+offset_left = 1704.0
+offset_top = 61.0
+offset_right = 1802.0
+offset_bottom = 122.0
+text = "Close"
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

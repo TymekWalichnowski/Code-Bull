@@ -26,6 +26,8 @@ var hand_position: Vector2 = Vector2.ZERO
 var card_image: Sprite2D
 var card_back_image: Sprite2D
 
+var is_preview: bool = false
+
 var sounds = {
 	"place": preload("res://assets/audio/card-place-2.ogg"),
 	"pickup": preload("res://assets/audio/card-place-1.ogg")
@@ -45,7 +47,8 @@ func setup(data: CardDataResource, owner: String) -> void:
 	_apply_visuals()
 
 func _ready() -> void:
-	get_parent().connect_card_signals(self)
+	if get_parent().has_method("connect_card_signals"):
+		get_parent().connect_card_signals(self)
 
 	card_image = %CardImage
 	card_back_image = %CardBackImage
@@ -66,6 +69,14 @@ func _apply_visuals():
 		return
 	if card_data.image_texture:
 		card_image.texture = card_data.image_texture
+	
+	if is_preview:
+		card_image.visible = true
+		card_back_image.visible = false
+		# Reset shader rotations so they aren't slanted in the grid
+		if card_image.material:
+			card_image.material.set_shader_parameter("y_rot", 0.0)
+			card_image.material.set_shader_parameter("x_rot", 0.0)
 
 func _process(delta: float) -> void:
 	%UIOverlay.rotation = -rotation
@@ -108,7 +119,11 @@ func _process(delta: float) -> void:
 				"x_rot",
 				lerp(card_back_image.material.get_shader_parameter("x_rot"), target_x, effect_follow_speed * delta)
 			)
-
+		
+		if is_preview:
+			# If in DeckViewer, move the wrapper to the front of the grid
+			# so this card draws over its neighbors
+			get_parent().move_to_front()
 		# Hover always draws on top
 		z_index = 100
 		

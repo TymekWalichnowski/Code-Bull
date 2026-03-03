@@ -1,23 +1,45 @@
 [gd_scene load_steps=2 format=3 uid="uid://b85gmj83uys81"]
 
-[ext_resource type="Script" path="res://scripts/level_select.gd" id="1_3shnc"]
+[ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource("1_3shnc")
 
-[node name="EnterLevelButton" type="Button" parent="."]
-offset_left = 452.0
-offset_top = 255.0
-offset_right = 716.0
-offset_bottom = 305.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -94.0
+offset_right = -46.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+
+[node name="EnterLevelButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
 text = "Enter Level"
 
-[node name="EditDeckButton" type="Button" parent="."]
-offset_left = 457.0
-offset_top = 333.0
-offset_right = 721.0
-offset_bottom = 388.0
+[node name="EditDeckButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Edit Deck"
 
-[connection signal="pressed" from="EnterLevelButton" to="." method="_on_enter_level_button_pressed"]
-[connection signal="pressed" from="EditDeckButton" to="." method="_on_edit_deck_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EnterLevelButton" to="." method="_on_enter_level_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EditDeckButton" to="." method="_on_edit_deck_button_pressed"]

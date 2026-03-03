@@ -54,7 +54,9 @@ func raycast_at_cursor():
 
 	for result in results: 
 		var collider = result.collider
+		print(collider)
 		if collider.collision_mask == COLLISION_MASK_DECK:
 			print("showing deck!")
-			if not deck_reference.player_deck.is_empty() and %DeckViewer:
-				%DeckViewer.display_deck(%DeckViewer, card_database)
+			if %DeckViewer:
+				# Pass ONLY the array of resources
+				%DeckViewer.display_deck(deck_reference.current_deck)

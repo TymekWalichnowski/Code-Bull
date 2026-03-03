@@ -1,8 +1,11 @@
 extends Node2D
 
 @export var card_database: CardDatabase # Keep if other systems need it
-@export var starting_deck: Array[CardDataResource] # Drag and drop your cards here!
-@export var starting_passives: Array[PassiveCardResource]
+#@export var starting_deck: Array[CardDataResource]
+#@export var starting_passives: Array[PassiveCardResource]
+
+var starting_deck = PlayerDeckGlobal.global_player_cards
+var starting_passives = PlayerDeckGlobal.global_player_passives
 
 const CARD_SCENE_PATH = "res://scenes/player_card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
@@ -41,7 +44,6 @@ func draw_card():
 		current_deck = graveyard.duplicate()
 		current_deck.shuffle()
 		graveyard.clear()
-		$Area2D/CollisionShape2D.disabled = true # Assuming this hides the deck visual
 	
 	if !current_deck.is_empty():
 		# Pop the Resource directly

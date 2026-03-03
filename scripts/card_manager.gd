@@ -86,7 +86,7 @@ func on_hovered_off_card(card):
 
 	# Try to highlight a NEW valid card
 	var new_card_hovered = raycast_check_for_card()
-	if new_card_hovered is Card and !new_card_hovered.cards_current_slot:
+	if new_card_hovered is CardDataResource and !new_card_hovered.cards_current_slot:
 		is_hovering_on_card = true
 		highlight_card(new_card_hovered, true)
 
