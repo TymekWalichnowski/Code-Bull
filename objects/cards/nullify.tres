@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://df1br38oqmwog"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=5 format=3 uid="uid://df1br38oqmwog"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_qk6d5"]
 [ext_resource type="Texture2D" uid="uid://dib8yisnu5kuc" path="res://Assets/textures/cards/card_Nullify.png" id="2_qk6d5"]

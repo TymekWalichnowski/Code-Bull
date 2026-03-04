@@ -24,10 +24,24 @@ color = Color(0.27904913, 0.22885656, 0, 1)
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 offset_left = 161.0
 offset_top = 90.0
-offset_right = 1752.0
+offset_right = 961.0
 offset_bottom = 989.0
 
-[node name="CardGrid" type="GridContainer" parent="ScrollContainer"]
+[node name="DeckGrid" type="GridContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="."]
+offset_left = 945.0
+offset_top = 91.0
+offset_right = 1759.0
+offset_bottom = 990.0
+
+[node name="GraveyardGrid" type="GridContainer" parent="ScrollContainer2"]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 2

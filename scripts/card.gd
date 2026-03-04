@@ -19,7 +19,7 @@ signal hovered_off
 @onready var effect_animation_player = %EffectPlayer
 
 var hovering = false
-var original_z_index := 1
+var original_z_index := 10
 var cards_current_slot
 var hand_position: Vector2 = Vector2.ZERO
 
@@ -89,7 +89,6 @@ func _process(delta: float) -> void:
 
 
 	if hovering:
-		
 		update_hover_ui()
 		var local_mouse = card_image.to_local(get_global_mouse_position())
 		var half = card_image.texture.get_size() * 0.5
@@ -120,10 +119,7 @@ func _process(delta: float) -> void:
 				lerp(card_back_image.material.get_shader_parameter("x_rot"), target_x, effect_follow_speed * delta)
 			)
 		
-		if is_preview:
-			# If in DeckViewer, move the wrapper to the front of the grid
-			# so this card draws over its neighbors
-			get_parent().move_to_front()
+		
 		# Hover always draws on top
 		z_index = 100
 		

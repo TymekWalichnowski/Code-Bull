@@ -94,13 +94,11 @@ func highlight_card(card, hovered):
 	if hovered:
 		card.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
 		print(card.cards_current_slot)
-		card.z_index = 3
 	else:
 		if card.cards_current_slot:
 			card.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 		else:
 			card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
-	card.z_index = 2
 
 func raycast_check_for_card():
 	var space_state = get_world_2d().direct_space_state

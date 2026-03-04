@@ -59,4 +59,4 @@ func raycast_at_cursor():
 			print("showing deck!")
 			if %DeckViewer:
 				# Pass ONLY the array of resources
-				%DeckViewer.display_deck(deck_reference.current_deck)
+				%DeckViewer.display_deck(deck_reference.current_deck, deck_reference.graveyard)

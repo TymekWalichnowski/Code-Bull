@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cd88dyupufuki"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=5 format=3 uid="uid://cd88dyupufuki"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_2wpmc"]
 [ext_resource type="Texture2D" uid="uid://crdrk5nn4yss2" path="res://Assets/textures/cards/card_Draw 2.png" id="2_2wpmc"]
