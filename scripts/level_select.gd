@@ -1,5 +1,9 @@
 extends Node2D
 
+@onready var dialog_player : DialogPlayer = $DialogPlayer
+
+func _ready() -> void:
+	dialog_player.start()
 
 func _on_enter_level_button_pressed() -> void:
 	print("changing to main scene")

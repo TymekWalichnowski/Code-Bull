@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://4hhi4gs0eyu4"]
+
+[ext_resource type="Script" uid="uid://dslmkgoqffxrd" path="res://Assets/dialogue/portraits/Waah.gd" id="1_mh2dm"]
+
+[node name="Waah" type="Node2D"]
+script = ExtResource("1_mh2dm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="SproutyDialogsCharacterData" load_steps=4 format=3 uid="uid://bcplup5e0mn8v"]
+
+[ext_resource type="Script" uid="uid://ygs6blymsjbh" path="res://addons/sprouty_dialogs/resources/portrait_data.gd" id="1_8lm5t"]
+[ext_resource type="Script" uid="uid://kwoapf8il7ee" path="res://addons/sprouty_dialogs/resources/character_data.gd" id="1_71r86"]
+
+[sub_resource type="Resource" id="Resource_8lm5t"]
+script = ExtResource("1_8lm5t")
+portrait_scene_uid = 2050367948379374357
+portrait_scene_path = "res://Assets/dialogue/portraits/Waah.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://Assets/textures/characters/dialogue/npc_test_1.png"
+}
+}
+typing_sound = {}
+
+[resource]
+script = ExtResource("1_71r86")
+key_name = "testman"
+display_name = {
+"default": "testman",
+"en": ""
+}
+dialog_box_uid = 7075210436752359140
+dialog_box_path = "res://Assets/dialogue/dialogue_boxes/default_dialogue_box.tscn"
+main_transform_settings = {
+"mirror": false,
+"offset": Vector2(600, -100),
+"rotation": 0.0,
+"scale": Vector2(4, 4),
+"scale_lock_ratio": true
+}
+portraits = {
+"testman_talk": {
+"data": SubResource("Resource_8lm5t"),
+"index": 0
+}
+}

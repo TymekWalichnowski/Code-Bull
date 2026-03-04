@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="SproutyDialogsCharacterData" load_steps=6 format=3 uid="uid://rl4kssywismx"]
+
+[ext_resource type="Script" uid="uid://ygs6blymsjbh" path="res://addons/sprouty_dialogs/resources/portrait_data.gd" id="1_clqe0"]
+[ext_resource type="Script" uid="uid://kwoapf8il7ee" path="res://addons/sprouty_dialogs/resources/character_data.gd" id="1_mvtly"]
+
+[sub_resource type="Resource" id="Resource_clqe0"]
+script = ExtResource("1_clqe0")
+portrait_scene_uid = 2050367948379374357
+portrait_scene_path = "res://Assets/dialogue/portraits/Waah.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://Assets/textures/characters/dialogue/npc_test_1.png"
+}
+}
+typing_sound = {}
+
+[sub_resource type="Resource" id="Resource_d7gug"]
+script = ExtResource("1_clqe0")
+portrait_scene_uid = 4461002098669249851
+portrait_scene_path = "res://Assets/dialogue/portraits/new_portrait.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://Assets/textures/characters/dialogue/npc_test_2.png"
+}
+}
+typing_sound = {}
+
+[sub_resource type="Resource" id="Resource_d6bny"]
+script = ExtResource("1_clqe0")
+portrait_scene_uid = 1718874157106446254
+portrait_scene_path = "res://Assets/dialogue/portraits/protagonist_portrait.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://Assets/textures/characters/dialogue/protag_test_1.png"
+}
+}
+typing_sound = {}
+
+[resource]
+script = ExtResource("1_mvtly")
+key_name = "johnny"
+display_name = {
+"default": "Johnny",
+"en": ""
+}
+dialog_box_uid = 7075210436752359140
+dialog_box_path = "res://Assets/dialogue/dialogue_boxes/default_dialogue_box.tscn"
+default_portrait = "Newest Portrait"
+main_transform_settings = {
+"mirror": false,
+"offset": Vector2(-600, -100),
+"rotation": 0.0,
+"scale": Vector2(4, 4),
+"scale_lock_ratio": true
+}
+portraits = {
+"New Portrait wawawa": {
+"data": SubResource("Resource_d7gug"),
+"index": 1
+},
+"Newest Portrait": {
+"data": SubResource("Resource_d6bny"),
+"index": 2
+},
+"Waah": {
+"data": SubResource("Resource_clqe0"),
+"index": 0
+}
+}

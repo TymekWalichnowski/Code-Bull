@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://yqvuu2sf7res"]
+
+[ext_resource type="Script" uid="uid://d3ds8ghw0hx76" path="res://Assets/dialogue/portraits/protagonist_portrait.gd" id="1_435gd"]
+
+[node name="ProtagonistPortrait" type="Node2D"]
+script = ExtResource("1_435gd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
