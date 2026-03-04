@@ -26,7 +26,7 @@ extends DialogPortrait
 
 @export_group("Private")
 ## Animation time for default portrait animations
-@export var animation_time: float = 1.0
+@export var animation_time: float = 0.5
 
 ## Tween for animations 
 var _tween: Tween = null

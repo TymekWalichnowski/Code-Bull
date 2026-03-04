@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b85gmj83uys81"]
+[gd_scene load_steps=5 format=3 uid="uid://b85gmj83uys81"]
 
 [ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
 [ext_resource type="Script" uid="uid://1mxdpoyob13n" path="res://addons/sprouty_dialogs/nodes/dialog_player.gd" id="2_2epne"]
 [ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://Assets/dialogue/dialogues/test2.tres" id="3_2epne"]
+[ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="4_rif6e"]
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource("1_3shnc")
@@ -53,6 +54,9 @@ _play_on_ready = false
 _destroy_on_end = true
 _print_debug = false
 metadata/_custom_type_script = "uid://1mxdpoyob13n"
+
+[node name="DeckViewer" parent="." instance=ExtResource("4_rif6e")]
+visible = false
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EnterLevelButton" to="." method="_on_enter_level_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EditDeckButton" to="." method="_on_edit_deck_button_pressed"]

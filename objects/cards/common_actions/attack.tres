@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=2 format=3 uid="uid://befonwkx6jr3s"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_vehr5"]
+
+[resource]
+script = ExtResource("1_vehr5")
+action_name = "Attack"
+description = "Deal [Value] damage"
+value = 2.0
+priority = 2
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
