@@ -80,13 +80,11 @@ func on_hovered_off_card(card):
 	highlight_card(card, false)
 	is_hovering_on_card = false
 
-	# If dragging, do nothing else
-	if card_being_dragged:
-		return
+	if card_being_dragged: return
 
-	# Try to highlight a NEW valid card
 	var new_card_hovered = raycast_check_for_card()
-	if new_card_hovered is CardDataResource and !new_card_hovered.cards_current_slot:
+	# Change 'is CardDataResource' to 'is Card' (the class_name of your card.gd)
+	if new_card_hovered is Card and !new_card_hovered.cards_current_slot:
 		is_hovering_on_card = true
 		highlight_card(new_card_hovered, true)
 

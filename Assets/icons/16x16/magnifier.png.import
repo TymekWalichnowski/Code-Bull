@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://3v8uhdtlqcp2"
-path="res://.godot/imported/magnifier.png-0e6227b7a912b3243da4259e2191a458.ctex"
+path="res://.godot/imported/magnifier.png-a6483c8695ef8602714f2900330bbcff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/magnifier.png"
-dest_files=["res://.godot/imported/magnifier.png-0e6227b7a912b3243da4259e2191a458.ctex"]
+source_file="res://assets/icons/16x16/magnifier.png"
+dest_files=["res://.godot/imported/magnifier.png-a6483c8695ef8602714f2900330bbcff.ctex"]
 
 [params]
 

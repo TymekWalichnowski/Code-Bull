@@ -31,14 +31,14 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/sprouty_dialogs/plugin.cfg")
+enabled=PackedStringArray("res://addons/animation-key-helper_1.0/animation-key-helper/plugin.cfg", "res://addons/sprouty_dialogs/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
 "res://assets/textures/cards/": "gray",
 "res://objects/cards/": "yellow",
-"res://objects/cards/common_actions/": "orange",
+"res://objects/cards/actions/": "orange",
 "res://objects/cards_passive/": "teal",
 "res://objects/tokens/": "red",
 "res://resources/": "pink",

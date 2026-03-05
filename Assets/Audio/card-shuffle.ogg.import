@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://4xxlxyke1be6"
-path="res://.godot/imported/card-shuffle.ogg-b468b9311c24b70b3cd75ff11a6399de.oggvorbisstr"
+path="res://.godot/imported/card-shuffle.ogg-bd241bac2931a5f7feb76d5570e949a6.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/audio/card-shuffle.ogg"
-dest_files=["res://.godot/imported/card-shuffle.ogg-b468b9311c24b70b3cd75ff11a6399de.oggvorbisstr"]
+source_file="res://assets/audio/card-shuffle.ogg"
+dest_files=["res://.godot/imported/card-shuffle.ogg-bd241bac2931a5f7feb76d5570e949a6.oggvorbisstr"]
 
 [params]
 

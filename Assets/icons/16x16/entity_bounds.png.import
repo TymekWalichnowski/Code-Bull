@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://vstxdtabduit"
-path="res://.godot/imported/entity_bounds.png-59281a5b1dd95d99f9fc61abbd7e598f.ctex"
+path="res://.godot/imported/entity_bounds.png-6d44ce239b90f841b0852e11d87fafbd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/entity_bounds.png"
-dest_files=["res://.godot/imported/entity_bounds.png-59281a5b1dd95d99f9fc61abbd7e598f.ctex"]
+source_file="res://assets/icons/16x16/entity_bounds.png"
+dest_files=["res://.godot/imported/entity_bounds.png-6d44ce239b90f841b0852e11d87fafbd.ctex"]
 
 [params]
 

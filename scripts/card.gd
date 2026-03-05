@@ -179,81 +179,55 @@ func update_hover_ui():
 	var full_description := ""
 	var tag_list := []
 
-	var player = get_node("/root/Main/Player")
-	var battle_manager = get_node("/root/Main/BattleManager")
-
-	var current_mult = player.current_mult
-	if current_mult == 1.0:
-		current_mult = player.next_mult
-
-	var is_multiplied = current_mult != 1.0
-
-	var action_templates = {
-		"Attack": "Deal %s damage.",
-		"Shield": "Gain %s shield.",
-		"Multiply_Next_Card": "Multiply next played card by %s.",
-		"Divide_Next_Card": "Divide opponent's next card by %s.",
-		"Nullify": "Negate the opponent's next action.",
-		"Draw_Card": "Draw %s card(s).",
-		"Retrigger_Next_Slot": "Trigger next card slot %s extra time(s).",
-		"Multiply_Or_Divide": "- 50% chance to multiply or divide opponent's card by %s.",
-		"Nothing": "Do nothing."
-	}
+	# Get player/battle state
+	var player = get_node_or_null("/root/Main/Player")
+	var current_mult = 1.0
+	if player:
+		current_mult = player.current_mult if player.current_mult != 1.0 else player.next_mult
 
 	for action in card_data.actions:
-		if not action:
+		if not action or action.description == "":
 			continue
 
-		var display_value := str(action.value)
+		# 1. Calculate the actual number
+		var final_value = action.value * current_mult
+		var display_value_str := str(action.value)
 
-		if is_multiplied and action.value != 0:
-			var new_val = action.value * current_mult
+		# 2. Apply colors if multiplied (Green for buff, Red for debuff)
+		if current_mult != 1.0 and action.value != 0:
 			var color = "#00ff00" if current_mult > 1.0 else "#ff4444"
-			display_value = "[color=%s]%s[/color]" % [color, new_val]
-
-		var template = action_templates.get(action.action_name, "%s")
-
-		if action.action_name == "Multiply_Or_Divide":
-			# Grey out the probability text
-			var chance_text = "[color=#888888]50%[/color]"
-			full_description += "- %s to multiply or divide opponent's card slot by %s.\n" % [
-				chance_text,
-				display_value
-			]
-
-			# Ethereal tag (see below)
-			if not tag_list.has("Ethereal"):
-				tag_list.append("Ethereal")
-
-		elif action.action_name in ["Nullify", "Nothing"]:
-			full_description += template + "\n"
+			display_value_str = "[color=%s]%s[/color]" % [color, final_value]
 		
-		else:
-			full_description += (template % display_value) + "\n"
+		# 3. Dynamic Replacement
+		# This replaces "[value]" in your Resource text with the number
+		var action_text = action.description.replace("[value]", display_value_str)
+		
+		# 4. Handle the "50%" grey text specifically if desired, 
+		# or just put the BBCode directly in the Resource description!
+		full_description += "- " + action_text + "\n"
 
+		# Collect tags for the tag box
 		for tag in action.tags:
 			if not tag_list.has(tag):
 				tag_list.append(tag)
 
 	desc_label.text = full_description
 
+	# Tag Handling
 	if tag_list.size() > 0:
 		var tag_descriptions = {
 			"Ethereal": "Cannot be modified by external effects.",
 			"Retrigger": "Test description"
 		}
-
 		var lines = []
 		for tag in tag_list:
-			if tag_descriptions.has(tag):
-				lines.append("%s: %s" % [tag, tag_descriptions[tag]])
-			else:
-				lines.append(tag)
-
+			var d = tag_descriptions.get(tag, "")
+			lines.append("[b]%s[/b]: %s" % [tag, d] if d != "" else tag)
 		tag_label.text = "TAGS:\n" + "\n".join(lines)
 		tag_container.visible = true
 	else:
 		tag_container.visible = false
+
 
 # Helper to find which slot index this card is currently sitting in, may be useless rn?
 func _get_current_slot_index() -> int:

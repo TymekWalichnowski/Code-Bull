@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="CardDataResource" load_steps=5 format=3 uid="uid://v2y7mde1tof"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_24aaf"]
-[ext_resource type="Resource" uid="uid://befonwkx6jr3s" path="res://objects/cards/common_actions/attack.tres" id="2_66sl5"]
+[ext_resource type="Resource" uid="uid://befonwkx6jr3s" path="res://objects/cards/actions/attack.tres" id="2_66sl5"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_lpbhx"]
-[ext_resource type="Texture2D" uid="uid://1en3hfjx70lq" path="res://Assets/textures/cards/card_Sword.png" id="2_o166v"]
+[ext_resource type="Texture2D" uid="uid://1en3hfjx70lq" path="res://assets/textures/cards/card_sword.png" id="2_o166v"]
 
 [resource]
 script = ExtResource("2_lpbhx")

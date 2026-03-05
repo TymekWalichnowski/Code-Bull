@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=3 format=3 uid="uid://befonwkx6jr3s"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_kg058"]
+[ext_resource type="SpriteFrames" uid="uid://by4w75rxt3r8n" path="res://resources/action_animations.tres" id="1_t0tc3"]
+
+[resource]
+script = ExtResource("1_kg058")
+action_name = "Attack"
+description = "Deal [value] damage"
+value = 2.0
+priority = 2
+target = "self"
+action_animation = ExtResource("1_t0tc3")
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
