@@ -24,20 +24,28 @@ func display_deck(card_resources: Array[CardDataResource], graveyard_resources: 
 		if card_data:
 			var wrapper = Control.new()
 			wrapper.custom_minimum_size = PREVIEW_SIZE
-
-			# IMPORTANT: This allows your Raycasts/Clicks to pass through the wrapper
-			wrapper.mouse_filter = Control.MOUSE_FILTER_IGNORE 
+			# CHANGE THIS: We need the wrapper to catch the click
+			wrapper.mouse_filter = Control.MOUSE_FILTER_PASS 
 
 			%DeckGrid.add_child(wrapper)
 
-			# Instance the actual card and child it to the wrapper
 			var new_card = card_scene.instantiate() as Card
 			new_card.is_preview = true 
 			wrapper.add_child(new_card)
 
-			# Center the Node2D card inside the Control wrapper
+			# Center and setup
 			new_card.position = PREVIEW_SIZE / 2
 			new_card.setup(card_data, "Player")
+
+			# 1. MANUALLY connect the signals since the parent is a Control wrapper
+			var card_manager = get_node("%CardManagerInventory") # Make sure this path is correct
+			card_manager.connect_card_signals(new_card)
+
+			# 2. Connect the wrapper's click to the CardManager
+			wrapper.gui_input.connect(func(event):
+				if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+					card_manager.start_drag(new_card)
+			)
 	
 	# GRAVEYARD
 	# 1. Clear previous cards
@@ -56,20 +64,26 @@ func display_deck(card_resources: Array[CardDataResource], graveyard_resources: 
 			var wrapper = Control.new()
 			wrapper.custom_minimum_size = PREVIEW_SIZE
 
-			# IMPORTANT: This allows your Raycasts/Clicks to pass through the wrapper
-			wrapper.mouse_filter = Control.MOUSE_FILTER_IGNORE 
+			# FIX 1: Allow clicks on the inventory wrappers
+			wrapper.mouse_filter = Control.MOUSE_FILTER_PASS 
 
 			%InventoryGrid.add_child(wrapper)
 
-			# Instance the actual card and child it to the wrapper
 			var new_card = card_scene.instantiate() as Card
-			new_card.is_preview = true 
+			new_card.is_inventory = true 
 			wrapper.add_child(new_card)
 
-			# Center the Node2D card inside the Control wrapper
 			new_card.position = PREVIEW_SIZE / 2
 			new_card.setup(card_data, "Player")
-			new_card.visible = true
+
+			# FIX 2: Connect inventory cards to the manager
+			var card_manager = get_node("%CardManagerInventory")
+			card_manager.connect_card_signals(new_card)
+
+			wrapper.gui_input.connect(func(event):
+				if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+					card_manager.start_drag(new_card)
+			)
 	show()
 
 func _input(event):

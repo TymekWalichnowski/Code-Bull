@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckr6bnvp677wi"]
+[gd_scene load_steps=5 format=3 uid="uid://ckr6bnvp677wi"]
 
 [ext_resource type="Script" uid="uid://so0wlr30j7ig" path="res://scripts/deck_editor.gd" id="1_g0c65"]
-[ext_resource type="Script" uid="uid://qf8srb1fc1i5" path="res://scripts/deck_drop_zone.gd" id="2_h848c"]
-[ext_resource type="Script" uid="uid://ddubq4sraskdj" path="res://scripts/inventory_grid.gd" id="3_dk5sw"]
+[ext_resource type="Script" uid="uid://bory5iw1syd2o" path="res://scripts/card_manager_inventory.gd" id="2_dk5sw"]
+[ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="4_d7n1u"]
+[ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="5_vkq8h"]
 
 [node name="DeckEditor" type="CanvasLayer"]
 script = ExtResource("1_g0c65")
@@ -36,7 +37,6 @@ layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
 columns = 3
-script = ExtResource("2_h848c")
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="."]
 offset_left = 945.0
@@ -49,7 +49,6 @@ unique_name_in_owner = true
 z_index = 1
 layout_mode = 2
 columns = 3
-script = ExtResource("3_dk5sw")
 
 [node name="CloseButton" type="Button" parent="."]
 offset_left = 1704.0
@@ -57,5 +56,14 @@ offset_top = 61.0
 offset_right = 1802.0
 offset_bottom = 122.0
 text = "Close"
+
+[node name="CardManagerInventory" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_dk5sw")
+
+[node name="InputManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_vkq8h")
+card_database = ExtResource("4_d7n1u")
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

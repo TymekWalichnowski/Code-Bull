@@ -27,6 +27,7 @@ var card_image: Sprite2D
 var card_back_image: Sprite2D
 
 var is_preview: bool = false
+var is_inventory: bool = false
 
 var sounds = {
 	"place": preload("res://assets/audio/card-place-2.ogg"),
@@ -70,7 +71,7 @@ func _apply_visuals():
 	if card_data.image_texture:
 		card_image.texture = card_data.image_texture
 	
-	if is_preview:
+	if is_preview or is_inventory:
 		card_image.visible = true
 		card_back_image.visible = false
 		# Reset shader rotations so they aren't slanted in the grid
