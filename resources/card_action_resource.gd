@@ -5,6 +5,6 @@ class_name CardAction
 @export_multiline var description: String
 @export var value: float = 0.0
 @export var priority: int = 0
-@export var target: String
-@export var action_animation: SpriteFrames
+@export var target: String # mainly used for animations rather than logic
+@export var action_animation_name: String # might not be relevant enough to use
 @export var tags: Array[String] = []

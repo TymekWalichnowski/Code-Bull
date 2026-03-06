@@ -26,7 +26,6 @@ func _process(delta: float) -> void:
 											  clamp(mouse_pos.y, 0, screen_size.y))
 
 func start_drag(card):
-
 	card.get_parent().move_child(card,-1) # taken from comment, may be buggy, makes sure cards fall on top of other cards
 	card_being_dragged = card
 	card.scale = Vector2(DEFAULT_CARD_SCALE,DEFAULT_CARD_SCALE)
@@ -65,7 +64,6 @@ func on_left_click_released():
 
 func on_hovered_over_card(card):
 	#print("hovered over card")
-	#
 
 	if card.cards_current_slot:
 		return

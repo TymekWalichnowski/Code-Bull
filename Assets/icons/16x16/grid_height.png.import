@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://be845i0uxbko7"
-path="res://.godot/imported/grid_height.png-fd79743fc1d8ff0ab2ddbeff622d4321.ctex"
+path="res://.godot/imported/grid_height.png-391739e91887c1f5cf8d80967bea28b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/grid_height.png"
-dest_files=["res://.godot/imported/grid_height.png-fd79743fc1d8ff0ab2ddbeff622d4321.ctex"]
+source_file="res://Assets/icons/16x16/grid_height.png"
+dest_files=["res://.godot/imported/grid_height.png-391739e91887c1f5cf8d80967bea28b9.ctex"]
 
 [params]
 

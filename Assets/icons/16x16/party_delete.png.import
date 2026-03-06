@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bmsrumj7k8126"
-path="res://.godot/imported/party_delete.png-9879089a4fd2268d941d34fc7b069c68.ctex"
+path="res://.godot/imported/party_delete.png-a9ae352e37c4fdfb0057819b103ec5da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/party_delete.png"
-dest_files=["res://.godot/imported/party_delete.png-9879089a4fd2268d941d34fc7b069c68.ctex"]
+source_file="res://Assets/icons/16x16/party_delete.png"
+dest_files=["res://.godot/imported/party_delete.png-a9ae352e37c4fdfb0057819b103ec5da.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsavo0elx0x5f"]
+[gd_scene load_steps=15 format=3 uid="uid://dsavo0elx0x5f"]
 
 [ext_resource type="Script" uid="uid://c58ll0b2wrcgx" path="res://scenes/globals/player_deck_global.gd" id="1_eibw5"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="2_2xd36"]
@@ -6,13 +6,17 @@
 [ext_resource type="Resource" uid="uid://j61jj7tm3m6g" path="res://objects/cards/2_of_spades.tres" id="3_2r0f0"]
 [ext_resource type="Resource" uid="uid://kqiykl22ic2r" path="res://objects/cards/apply_bleed.tres" id="4_mp35p"]
 [ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="4_rb10u"]
-[ext_resource type="Resource" uid="uid://bw3thnfp6s76h" path="res://objects/cards/basic.tres" id="5_2r0f0"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="7_5lg0m"]
 [ext_resource type="Resource" uid="uid://v2y7mde1tof" path="res://objects/cards/sword.tres" id="8_mp35p"]
+[ext_resource type="Resource" uid="uid://cd88dyupufuki" path="res://objects/cards/draw_2.tres" id="8_pk0xe"]
 [ext_resource type="Resource" uid="uid://df1br38oqmwog" path="res://objects/cards/nullify.tres" id="9_2r0f0"]
+[ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="10_mp35p"]
 [ext_resource type="Resource" uid="uid://c15m7x547auup" path="res://objects/cards_passive/early_guard.tres" id="11_2r0f0"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="11_pk0xe"]
+[ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="14_vsrvu"]
 
 [node name="PlayerDeckGlobal" type="Node"]
 script = ExtResource("1_eibw5")
-global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("7_5lg0m"), ExtResource("4_rb10u"), ExtResource("5_2r0f0"), ExtResource("3_2r0f0"), ExtResource("4_mp35p"), ExtResource("8_mp35p"), ExtResource("9_2r0f0"), ExtResource("8_mp35p")])
+global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("7_5lg0m"), ExtResource("4_rb10u"), ExtResource("10_mp35p"), ExtResource("3_2r0f0"), ExtResource("4_mp35p"), ExtResource("8_pk0xe"), ExtResource("9_2r0f0"), ExtResource("8_mp35p"), ExtResource("10_mp35p"), ExtResource("11_pk0xe")])
 global_player_passives = Array[ExtResource("2_2xd36")]([ExtResource("11_2r0f0")])
+global_player_inventory = Array[ExtResource("2_rb10u")]([ExtResource("14_vsrvu"), ExtResource("14_vsrvu"), ExtResource("9_2r0f0")])

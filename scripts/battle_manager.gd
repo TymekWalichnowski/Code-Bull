@@ -51,9 +51,9 @@ func _ready() -> void:
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
 	
-	if bleed_token_res:
-		%OpponentTokens.add_token(bleed_token_res, 5)
-		%PlayerTokens.add_token(bleed_token_res, 20)
+	#if bleed_token_res:
+		#%OpponentTokens.add_token(bleed_token_res, 5)
+		#%PlayerTokens.add_token(bleed_token_res, 20)
 	opponent_turn()
 
 func _process(float) -> void:
