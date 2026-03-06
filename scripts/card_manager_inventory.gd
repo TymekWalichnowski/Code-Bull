@@ -45,48 +45,58 @@ func finish_drag():
 	var card = card_being_dragged
 	var mouse_pos = get_global_mouse_position()
 	
-	# PATH A: DECK EDITOR LOGIC
 	if card.is_preview or card.is_inventory:
-		# Check which grid the mouse is over
-		var over_deck = %DeckGrid.get_global_rect().has_point(mouse_pos)
-		var over_inventory = %InventoryGrid.get_global_rect().has_point(mouse_pos)
+		var over_deck = %ScrollContainer.get_global_rect().has_point(mouse_pos)
+		var over_inventory = %ScrollContainer2.get_global_rect().has_point(mouse_pos)
+		
+		var target_grid = null
 		
 		if over_deck and card.is_inventory:
-			# Move from Master Inventory -> Your Active Deck
 			PlayerDeckGlobal.global_player_inventory.erase(card.card_data)
 			PlayerDeckGlobal.global_player_cards.append(card.card_data)
-			card.play_audio("place")
-			
+			target_grid = %DeckGrid
 		elif over_inventory and card.is_preview:
-			# Move from Your Active Deck -> Back to Inventory
 			PlayerDeckGlobal.global_player_cards.erase(card.card_data)
 			PlayerDeckGlobal.global_player_inventory.append(card.card_data)
-			card.play_audio("place")
-		
-		# Refresh the UI (This rebuilds the grids and deletes old card visuals)
-		get_node("../../DeckEditor").display_deck(PlayerDeckGlobal.global_player_cards, PlayerDeckGlobal.global_player_inventory)
-		
-		# Delete the specific card visual we were dragging so it doesn't hang around
-		card.queue_free()
+			target_grid = %InventoryGrid
 
-	# PATH B: BATTLE LOGIC (Standard Gameplay)
-	else:
-		card.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
-		var card_slot_found = raycast_check_for_card_slot(card)
-		
-		if card_slot_found and not card_slot_found.card_in_slot:
-			# Successful drop into a battle slot
-			card.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
-			card.cards_current_slot = card_slot_found
-			card.position = card_slot_found.position
-			card_slot_found.card_in_slot = true
-			card_slot_found.card = card
-			card.play_audio("place")
+		if target_grid:
+			# 1. Rebuild the UI now so the new slot is created
+			get_node("../../DeckEditor").display_deck(PlayerDeckGlobal.global_player_cards, PlayerDeckGlobal.global_player_inventory)
+			
+			# 2. Wait 1 frame so Godot can calculate the new positions of the grid items
+			await get_tree().process_frame
+			
+			# 3. Find the visual "clone" that was just created in the grid
+			var target_destination = Vector2.ZERO
+			for child in target_grid.get_children():
+				# Search for the slot holding the same resource we just dropped
+				if child.has_method("get_card_data") and child.get_card_data() == card.card_data:
+					target_destination = child.global_position
+					# Hide the stationary clone so we can animate into its place
+					child.visible = false 
+					
+					# 4. Tween the dragged card to that slot's position
+					var tween = create_tween().set_parallel(true)
+					tween.tween_property(card, "global_position", target_destination, 0.3).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+					tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.3)
+					
+					card.play_audio("place")
+					await tween.finished
+					
+					# 5. Make the stationary version visible and kill the dragged one
+					child.visible = true
+					break
+			
+			card.queue_free()
 		else:
-			# Failed drop, return to hand
-			player_hand_reference.add_card_to_hand(card, DEFAULT_CARD_MOVE_SPEED)
+			# If dropped in the middle of nowhere, just refresh to put it back
+			get_node("../../DeckEditor").display_deck(PlayerDeckGlobal.global_player_cards, PlayerDeckGlobal.global_player_inventory)
+			card.queue_free()
+
+	else:
+		pass
 	
-	# Cleanup reference
 	card_being_dragged = null
 
 func connect_card_signals(card):
