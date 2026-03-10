@@ -32,7 +32,7 @@ func _ready() -> void:
 	$RichTextLabel.text = str(current_deck.size())
 	
 	for i in range(STARTING_HAND_SIZE):
-		draw_card()
+		await draw_card()
 		drawn_card_this_turn = false
 	
 	drawn_card_this_turn = true
@@ -59,8 +59,10 @@ func draw_card():
 
 		if new_card.has_node("AnimationPlayer"):
 			new_card.get_node("AnimationPlayer").play("card_flip")
-			
+		new_card.play_audio("pickup")
 		%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
+		await get_tree().create_timer(0.5).timeout
+
 	else:
 		print("Deck and Graveyard are empty!")
 

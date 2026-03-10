@@ -74,7 +74,7 @@ func execute_card_action(card: Card, action_index: int):
 		"Draw_Card":
 			var deck = player_deck if self_target == player else opponent_deck
 			for i in range(int(value)):
-				deck.draw_card()
+				await deck.draw_card()
 				
 		"Retrigger_Next_Slot":
 			_handle_retrigger(card, int(value))

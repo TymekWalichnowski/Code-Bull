@@ -24,7 +24,7 @@ func _ready() -> void:
 	$RichTextLabel.text = str(active_deck.size())
 
 	for i in range(STARTING_HAND_SIZE):
-		draw_card()
+		await draw_card()
 	
 	spawn_starting_passives()
 
@@ -49,6 +49,10 @@ func draw_card():
 		%CardManager.add_child(new_card)
 		new_card.name = "Opponent_Card_" + card_data.display_name
 		%OpponentHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
+		new_card.play_audio("pickup")
+		await get_tree().create_timer(0.2).timeout
+
+
 	else:
 		print("opponent deck empty! nothing to draw!")
 

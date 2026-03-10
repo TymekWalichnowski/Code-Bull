@@ -65,12 +65,14 @@ func _process(float) -> void:
 	pass
 
 func _on_end_turn_button_pressed() -> void:
+	$"../EndTurnButton".disabled = true
+	$"../EndTurnButton".visible = false
 	await run_activation_phase()
 	await trigger_tokens("On_Phase_End")
 	opponent_turn()
 	%PlayerDeck.draw_card()
-	$"../EndTurnButton".disabled = true
-	$"../EndTurnButton".visible = false
+	
+
 
 func opponent_turn():
 	# wait a bit
@@ -104,9 +106,8 @@ func play_opponent_cards():
 		var tween2 = get_tree().create_tween()
 		tween2.tween_property(card_to_play, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
 
-		if card_to_play.has_node("AnimationPlayer"):
-			card_to_play.get_node("AnimationPlayer").play("card_flip")
-
+		card_to_play.get_node("AnimationPlayer").play("card_flip")
+		card_to_play.play_audio("place")
 		# Wait for animation to finish
 		await tween1.finished
 

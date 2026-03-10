@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b607ui0sspbs4"
-path="res://.godot/imported/location_hand.png-2262f816317a2bb6cdbf78c9daad4f60.ctex"
+path="res://.godot/imported/location_hand.png-a6e47ab951faa8a733a413d672d5b889.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/location_hand.png"
-dest_files=["res://.godot/imported/location_hand.png-2262f816317a2bb6cdbf78c9daad4f60.ctex"]
+source_file="res://assets/icons/16x16/location_hand.png"
+dest_files=["res://.godot/imported/location_hand.png-a6e47ab951faa8a733a413d672d5b889.ctex"]
 
 [params]
 
