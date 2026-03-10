@@ -5,11 +5,13 @@ signal play_sound()
 const PLAYER_POSITION = Vector2(960, 850)
 const OPPONENT_POSITION = Vector2(960, 440)
 
+
 @onready var anim_node = $ActionAnim
 @export var damage_label_scene: PackedScene
 
 var self_position
 var target_position
+var card_position
 var original_scale
 
 func _ready():
@@ -23,9 +25,11 @@ func play_anim(action_name, card_owner):
 	if card_owner == "Player":
 		self_position = PLAYER_POSITION
 		target_position = OPPONENT_POSITION
+		card_position = %PlayerCardPoint.position
 	else:
 		self_position = OPPONENT_POSITION
 		target_position = PLAYER_POSITION
+		card_position = %OpponentCardPoint.position
 	
 	match action_name:
 		"Attack":
@@ -39,12 +43,12 @@ func play_anim(action_name, card_owner):
 			%AudioManager.play_sfx("Shield Summon")
 			anim_node.play("shield_bubble")
 		"Multiply_Or_Divide1":
-			anim_node.position = self_position
+			anim_node.position = card_position
 			anim_node.visible = true
 			%AudioManager.play_sfx("Magic")
 			anim_node.play("multiply_or_divide1")
 		"Multiply_Or_Divide2":
-			anim_node.position = self_position
+			anim_node.position = card_position
 			anim_node.visible = true
 			%AudioManager.play_sfx("Magic")
 			anim_node.play("multiply_or_divide2")
@@ -59,14 +63,13 @@ func play_anim(action_name, card_owner):
 			%AudioManager.play_sfx("Magic")
 			anim_node.play("divide")
 		_:
-			anim_node.position = self_position
+			anim_node.position = card_position
 			anim_node.visible = true
 			anim_node.play("wip")
 	await anim_node.animation_finished
 
 func start_idle(target_node: Node2D):
 	var tween = create_tween().set_loops() # This makes it loop forever
-
 	# Inhale: Slightly wider and shorter
 	# Multiplying by original_scale keeps the base size correct
 	tween.tween_property(target_node, "scale", 

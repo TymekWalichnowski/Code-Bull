@@ -316,9 +316,11 @@ script = ExtResource("1_1nqs0")
 damage_label_scene = ExtResource("14_cmqll")
 
 [node name="ActionAnim" type="AnimatedSprite2D" parent="BattleManager/AnimationManager"]
+unique_name_in_owner = true
 visible = false
 z_index = 5
 position = Vector2(959, 138)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_gdcyb")
 animation = &"wip"
 frame = 7
