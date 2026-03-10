@@ -26,17 +26,24 @@ func _process(delta: float) -> void:
 											  clamp(mouse_pos.y, 0, screen_size.y))
 
 func start_drag(card):
-	card.get_parent().move_child(card,-1) # taken from comment, may be buggy, makes sure cards fall on top of other cards
 	card_being_dragged = card
-	card.scale = Vector2(DEFAULT_CARD_SCALE,DEFAULT_CARD_SCALE)
-	player_hand_reference.remove_card_from_hand(card_being_dragged) # remove from player hand
+	
+	# 1. KILL ROTATION IMMEDIATELY
+	# We use a quick tween so it doesn't just "snap" instantly, but 0.05 is fast enough to feel like a snap.
+	var tween = get_tree().create_tween()
+	tween.tween_property(card, "rotation", 0.0, 0.05)
+	
+	card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
+	card.z_index = 200 # Ensure it's on top of everything
+	
+	player_hand_reference.remove_card_from_hand(card_being_dragged)
 	
 	var card_slot_found = raycast_check_for_card_slot(card)
 	if card_slot_found:
 		card_slot_found.card_in_slot = false
 		card.cards_current_slot = null
 		card_slot_found.card = null
-		print("dragged off card slot")
+		
 	card_being_dragged.play_audio("pickup")
 
 func finish_drag():

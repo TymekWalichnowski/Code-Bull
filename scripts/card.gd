@@ -23,6 +23,7 @@ var original_z_index := 10
 var cards_current_slot
 var hand_position: Vector2 = Vector2.ZERO
 
+
 var card_image: Sprite2D
 var card_back_image: Sprite2D
 
@@ -88,6 +89,12 @@ func _process(delta: float) -> void:
 	# Reduce effect if card is in a slot
 	var effect_max_rotation = max_rotation * 0.4 if cards_current_slot else max_rotation
 	var effect_follow_speed = follow_speed * 0.5 if cards_current_slot else follow_speed
+	
+	if cards_current_slot:
+		z_index = cards_current_slot.z_index + 1
+	else:
+		# This is the key: player_hand.gd updates this value constantly
+		z_index = original_z_index
 
 
 	if hovering:

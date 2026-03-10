@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=65 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://c2gj3tp3iihc0" path="res://scenes/damage_numbers.tscn" id="14_cmqll"]
 [ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="15_pnhog"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="16_gsxep"]
+[ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://Assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour_opponent.tres" id="21_pnhog"]
@@ -113,6 +114,14 @@ region = Rect2(0, 768, 256, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_g6wdg"]
 atlas = ExtResource("39_s3wmy")
 region = Rect2(256, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5grtr"]
+atlas = ExtResource("16_pdwbg")
+region = Rect2(0, 0, 180, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vua0o"]
+atlas = ExtResource("16_pdwbg")
+region = Rect2(180, 0, 180, 180)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gdcyb"]
 animations = [{
@@ -241,12 +250,48 @@ animations = [{
 "loop": false,
 "name": &"shield_bubble",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5grtr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vua0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5grtr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vua0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5grtr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vua0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5grtr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vua0o")
+}],
+"loop": false,
+"name": &"wip",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
 
 [node name="Main" type="Node2D"]
+
+[node name="TempBg" type="Sprite2D" parent="."]
+z_index = -20
+texture_filter = 1
+position = Vector2(961.50006, 541.00006)
+scale = Vector2(3.99375, 3.9925928)
+texture = ExtResource("40_8cp6k")
 
 [node name="BattleManager" type="Node" parent="."]
 script = ExtResource("1_1iba3")
@@ -275,15 +320,18 @@ visible = false
 z_index = 5
 position = Vector2(959, 138)
 sprite_frames = SubResource("SpriteFrames_gdcyb")
-animation = &"attack_slash"
+animation = &"wip"
+frame = 7
+frame_progress = 1.0
 
 [node name="OpponentSprite" type="Sprite2D" parent="BattleManager/AnimationManager"]
 unique_name_in_owner = true
 z_index = -10
 texture_filter = 1
-position = Vector2(960.00006, 537.00006)
+position = Vector2(960.00006, 875.00006)
 scale = Vector2(5.15625, 5.15625)
 texture = ExtResource("33_pnhog")
+offset = Vector2(0, -64)
 
 [node name="DamageNumbers" parent="BattleManager/AnimationManager" instance=ExtResource("14_cmqll")]
 
@@ -513,13 +561,6 @@ text = "END TURN"
 
 [node name="BattleTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-
-[node name="TempBg" type="Sprite2D" parent="."]
-z_index = -20
-texture_filter = 1
-position = Vector2(961.50006, 541.00006)
-scale = Vector2(3.99375, 3.9925928)
-texture = ExtResource("40_8cp6k")
 
 [connection signal="animation_finished" from="BattleManager/AnimationManager/ActionAnim" to="BattleManager/AnimationManager" method="_on_action_anim_animation_finished"]
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]

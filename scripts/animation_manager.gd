@@ -10,11 +10,14 @@ const OPPONENT_POSITION = Vector2(960, 440)
 
 var self_position
 var target_position
+var original_scale
 
 func _ready():
 	# Connect the signals from your Player and Opponent status nodes
 	%Player.damage_taken.connect(_on_entity_damage_taken.bind("Player"))
 	%Opponent.damage_taken.connect(_on_entity_damage_taken.bind("Opponent"))
+	original_scale = $OpponentSprite.scale
+	start_idle($OpponentSprite)
 
 func play_anim(action_name, card_owner):
 	if card_owner == "Player":
@@ -45,10 +48,35 @@ func play_anim(action_name, card_owner):
 			anim_node.visible = true
 			%AudioManager.play_sfx("Magic")
 			anim_node.play("multiply_or_divide2")
+		"Multiply_Next_Card":
+			anim_node.position = self_position
+			anim_node.visible = true
+			%AudioManager.play_sfx("Magic")
+			anim_node.play("multiply")
+		"Divide_Next_Card":
+			anim_node.position = target_position
+			anim_node.visible = true
+			%AudioManager.play_sfx("Magic")
+			anim_node.play("divide")
 		_:
-			return
+			anim_node.position = self_position
+			anim_node.visible = true
+			anim_node.play("wip")
 	await anim_node.animation_finished
 
+func start_idle(target_node: Node2D):
+	var tween = create_tween().set_loops() # This makes it loop forever
+
+	# Inhale: Slightly wider and shorter
+	# Multiplying by original_scale keeps the base size correct
+	tween.tween_property(target_node, "scale", 
+		Vector2(original_scale.x * 1.03, original_scale.y * 0.97), 1.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	# Exhale: Slightly thinner and taller
+	tween.tween_property(target_node, "scale", 
+		Vector2(original_scale.x * 0.98, original_scale.y * 1.02), 1.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func _on_entity_damage_taken(amount: float, is_shield: bool, side: String):
 	# If 'side' is Player, spawn on Player position. If Opponent, spawn there.
