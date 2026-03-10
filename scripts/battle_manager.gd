@@ -158,102 +158,59 @@ func run_activation_phase():
 	for slot_index in range(slot_count):
 		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
 		
-
 		var p_card = player_slots[slot_index].card
 		var o_card = opponent_slots[slot_index].card
 		
-		# resetting stuff
+		# Reset slot stats
 		%Player.current_mult = %Player.next_mult
 		%Player.next_mult = 1.0
 		%Opponent.current_mult = %Opponent.next_mult
 		%Opponent.next_mult = 1.0
-		
 		%Player.nullified = false
 		%Opponent.nullified = false
 
-		# 1. Update total_needed based on how many cards are actually present
+		# 1. Check for cards and move them
 		total_needed = 0
 		if p_card: total_needed += 1
 		if o_card: total_needed += 1
 		
-		if total_needed == 0:
-			continue # No cards in this slot index for either side, skip to next slot
+		if total_needed == 0: continue 
 
-		# 2. Move existing cards to battle point
 		finished_count = 0
 		if p_card: move_card_to_battle_point(p_card)
 		if o_card: move_card_to_battle_point(o_card)
 		
-		# Wait for the cards that exist to finish moving
 		while finished_count < total_needed:
 			await get_tree().process_frame
 		
-		# Trigger slot passives
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
-		# retrigger logic
-		var p_runs = 1
-		var o_runs = 1
+
+		# 2. Sequential Execution: Player First
 		if p_card:
-			p_runs += player_retrigger_counts[slot_index]
+			var p_runs = 1 + player_retrigger_counts[slot_index]
+			for run_idx in range(p_runs):
+				print("Player Slot ", slot_index + 1, " Run ", run_idx + 1)
+				for action_idx in range(p_card.card_data.actions.size()):
+					var action = p_card.card_data.actions[action_idx]
+					if action != null:
+						await action_manager.execute_card_action(p_card, action_idx)
+						await wait(0.8) # Slight pause between actions
+
+		# 3. Sequential Execution: Opponent Second
 		if o_card:
-			o_runs += opponent_retrigger_counts[slot_index]
-		var total_runs = max(p_runs, o_runs)
-		
-		# 3. Determine max actions
-		var p_action_count = p_card.card_data.actions.size() if p_card else 0
-		var o_action_count = o_card.card_data.actions.size() if o_card else 0
-		var max_actions = max(p_action_count, o_action_count)
+			var o_runs = 1 + opponent_retrigger_counts[slot_index]
+			for run_idx in range(o_runs):
+				print("Opponent Slot ", slot_index + 1, " Run ", run_idx + 1)
+				for action_idx in range(o_card.card_data.actions.size()):
+					var action = o_card.card_data.actions[action_idx]
+					if action != null:
+						await action_manager.execute_card_action(o_card, action_idx)
+						await wait(0.8)
 
-		# 4. Action Loop 
-		for run_idx in range(total_runs):
-			print("Slot", slot_index + 1, "Run", run_idx + 1, "/", total_runs)
-
-			for action_idx in range(max_actions):
-				var first_actor = null
-				var second_actor = null
-
-				var p_has_act = (
-					p_card != null
-					and run_idx < p_runs
-					and action_idx < p_card.card_data.actions.size()
-					and p_card.card_data.actions[action_idx] != null
-				)
-
-				var o_has_act = (
-					o_card != null
-					and run_idx < o_runs
-					and action_idx < o_card.card_data.actions.size()
-					and o_card.card_data.actions[action_idx] != null
-				)
-
-				if p_has_act and o_has_act:
-					var p_priority = p_card.card_data.actions[action_idx].priority
-					var o_priority = o_card.card_data.actions[action_idx].priority
-					
-					if p_priority <= o_priority: #player gets priority if tie
-						first_actor = p_card
-						second_actor = o_card
-					elif o_priority < p_priority:
-						first_actor = o_card
-						second_actor = p_card
-				elif p_has_act:
-					first_actor = p_card
-				elif o_has_act:
-					first_actor = o_card
-
-				if first_actor:
-					await action_manager.execute_card_action(first_actor, action_idx)
-					await wait(1.0)
-				if second_actor:
-					await action_manager.execute_card_action(second_actor, action_idx)
-					await wait(1.0)
-		
-		
-		# 5. End of Slot Cleanup
+		# 4. End of Slot Cleanup
 		%Player.current_mult = 1.0
 		%Opponent.current_mult = 1.0
-		
 		player_retrigger_counts[slot_index] = 0
 		opponent_retrigger_counts[slot_index] = 0
 		update_card_effects()
@@ -262,7 +219,7 @@ func run_activation_phase():
 		if o_card: collect_used_card(o_card)
 
 		reset_opponent_slots()
-		await wait(0.8)
+		await wait(0.6)
 
 func check_done(): #making sure both actions are done before
 	finished_count += 1

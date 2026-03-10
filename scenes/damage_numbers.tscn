@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2gj3tp3iihc0"]
+
+[ext_resource type="Script" uid="uid://bv84v4c1r7itn" path="res://scripts/damage_numbers.gd" id="1_bhj6t"]
+
+[node name="DamageNumbers" type="Label"]
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("1_bhj6t")

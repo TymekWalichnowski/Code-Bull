@@ -1,0 +1,509 @@
+[gd_scene load_steps=60 format=3 uid="uid://x0lreijkwmjp"]
+
+[ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
+[ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
+[ext_resource type="Script" uid="uid://nl86bj6ee0c6" path="res://scripts/card_manager.gd" id="1_glv2v"]
+[ext_resource type="Resource" uid="uid://cwgs4ningcbsc" path="res://objects/tokens/bleed.tres" id="2_g6wdg"]
+[ext_resource type="Script" uid="uid://cjexhbgk2ejnc" path="res://scripts/action_manager.gd" id="2_xa025"]
+[ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
+[ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
+[ext_resource type="Resource" uid="uid://bhfp8flf2320e" path="res://objects/tokens/flame.tres" id="3_pnhog"]
+[ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_cm0pq"]
+[ext_resource type="Script" uid="uid://bej4mcopqs30m" path="res://scripts/passive_manager.gd" id="4_dg70y"]
+[ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
+[ext_resource type="Script" uid="uid://ccry32ril1ham" path="res://scripts/token_manager.gd" id="5_g6wdg"]
+[ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
+[ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
+[ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
+[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
+[ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
+[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
+[ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="12_yxlcp"]
+[ext_resource type="PackedScene" uid="uid://c2gj3tp3iihc0" path="res://scenes/damage_numbers.tscn" id="14_cmqll"]
+[ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="15_pnhog"]
+[ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="16_gsxep"]
+[ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
+[ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour_opponent.tres" id="21_pnhog"]
+[ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="26_8cp6k"]
+[ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
+[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
+[ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="32_t70y2"]
+[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://assets/Placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
+[ext_resource type="Texture2D" uid="uid://033uq706uqwr" path="res://assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
+[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://assets/Placeholder/Slash/Classic/2/Classic_09.png" id="34_pdwbg"]
+[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://assets/Placeholder/Slash/Classic/2/Classic_10.png" id="35_5grtr"]
+[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://assets/Placeholder/Slash/Classic/2/Classic_11.png" id="36_vua0o"]
+[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://assets/Placeholder/Slash/Classic/2/Classic_12.png" id="37_t70y2"]
+[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://assets/textures/effects/multiply_divide_sheet.png" id="38_8gny2"]
+[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
+atlas = ExtResource("38_8gny2")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmqll"]
+atlas = ExtResource("38_8gny2")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq6as"]
+atlas = ExtResource("38_8gny2")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxyth"]
+atlas = ExtResource("38_8gny2")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxlcp"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebg2g"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ofn6"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa025"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36rkl"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs0b5"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma7h6"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(512, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2s0e"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(768, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsxep"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(0, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0vrg"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg70y"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(512, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnhog"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(768, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2c4at"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(0, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6wdg"]
+atlas = ExtResource("39_s3wmy")
+region = Rect2(256, 768, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gdcyb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_8cp6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_8b871")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_pdwbg")
+}, {
+"duration": 2.0,
+"texture": ExtResource("35_5grtr")
+}, {
+"duration": 2.0,
+"texture": ExtResource("36_vua0o")
+}, {
+"duration": 2.0,
+"texture": ExtResource("37_t70y2")
+}],
+"loop": false,
+"name": &"attack_slash",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_cobve")
+}],
+"loop": false,
+"name": &"divide",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_cmqll")
+}],
+"loop": false,
+"name": &"multiply",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_cmqll")
+}],
+"loop": false,
+"name": &"multiply_or_divide1",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_hq6as")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_kxyth")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_cobve")
+}],
+"loop": false,
+"name": &"multiply_or_divide2",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxlcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebg2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ofn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa025")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36rkl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs0b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ma7h6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2s0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsxep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0vrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg70y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnhog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2c4at")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6wdg")
+}],
+"loop": false,
+"name": &"shield_bubble",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
+size = Vector2(128, 176)
+
+[node name="Main" type="Node2D"]
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("1_1iba3")
+bleed_token_res = ExtResource("2_g6wdg")
+flame_token_res = ExtResource("3_pnhog")
+
+[node name="ActionManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
+script = ExtResource("2_xa025")
+flame_token_res = ExtResource("3_pnhog")
+bleed_token_res = ExtResource("2_g6wdg")
+
+[node name="AnimationManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
+script = ExtResource("1_1nqs0")
+damage_label_scene = ExtResource("14_cmqll")
+
+[node name="ActionAnim" type="AnimatedSprite2D" parent="BattleManager/AnimationManager"]
+visible = false
+z_index = 5
+position = Vector2(959, 138)
+sprite_frames = SubResource("SpriteFrames_gdcyb")
+animation = &"attack_slash"
+
+[node name="DamageNumbers" parent="BattleManager/AnimationManager" instance=ExtResource("14_cmqll")]
+
+[node name="PassiveManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
+script = ExtResource("4_dg70y")
+
+[node name="TokenManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
+script = ExtResource("5_g6wdg")
+
+[node name="CardManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_glv2v")
+
+[node name="InputManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_3dxm6")
+card_database = ExtResource("12_yxlcp")
+
+[node name="CardSlots" type="Node2D" parent="."]
+z_index = -1
+
+[node name="CardSlot" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -2
+position = Vector2(790, 660)
+
+[node name="CardSlot2" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -2
+position = Vector2(960, 660)
+
+[node name="CardSlot3" parent="CardSlots" instance=ExtResource("3_r0du0")]
+z_index = -2
+position = Vector2(1126, 660)
+
+[node name="OpponentCardSlot" parent="CardSlots" instance=ExtResource("3_nxtc6")]
+z_index = -2
+position = Vector2(790, 178)
+
+[node name="OpponentCardSlot2" parent="CardSlots" instance=ExtResource("3_nxtc6")]
+z_index = -2
+position = Vector2(960, 178)
+
+[node name="OpponentCardSlot3" parent="CardSlots" instance=ExtResource("3_nxtc6")]
+z_index = -2
+position = Vector2(1126, 178)
+
+[node name="PlayerHand" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+script = ExtResource("3_cm0pq")
+
+[node name="OpponentHand" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_q8u5g")
+
+[node name="PlayerLabel" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = 81.0
+offset_top = 570.0
+offset_right = 522.0
+offset_bottom = 749.0
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="OpponentLabel" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = 81.0
+offset_top = 388.0
+offset_right = 542.0
+offset_bottom = 573.0
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
+[node name="Player" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_wp0k4")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Player"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 760.0
+offset_top = 1039.0
+offset_right = 1160.0
+offset_bottom = 1079.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_qmy6f")
+texture_progress = ExtResource("8_mwfav")
+
+[node name="ShieldBar" type="TextureProgressBar" parent="Player"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 763.0
+offset_top = 981.0
+offset_right = 1163.0
+offset_bottom = 1021.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_qmy6f")
+texture_progress = ExtResource("11_2ofn6")
+
+[node name="PlayerTokens" type="Node2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(1495, 879)
+script = ExtResource("15_pnhog")
+
+[node name="Opponent" type="Node2D" parent="." node_paths=PackedStringArray("entity_sprite")]
+unique_name_in_owner = true
+script = ExtResource("6_wp0k4")
+entity_sprite = NodePath("OpponentSprite")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Opponent"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 760.0
+offset_top = -35.0
+offset_right = 1160.0
+offset_bottom = 5.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_qmy6f")
+texture_progress = ExtResource("8_mwfav")
+
+[node name="ShieldBar" type="TextureProgressBar" parent="Opponent"]
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_left = 758.0
+offset_top = 14.0
+offset_right = 1158.0
+offset_bottom = 54.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(200, 0)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_qmy6f")
+texture_progress = ExtResource("11_2ofn6")
+
+[node name="OpponentSprite" type="Sprite2D" parent="Opponent"]
+z_index = -10
+texture_filter = 1
+position = Vector2(960.00006, 537.00006)
+scale = Vector2(5.15625, 5.15625)
+texture = ExtResource("33_pnhog")
+
+[node name="OpponentTokens" type="Node2D" parent="Opponent"]
+unique_name_in_owner = true
+position = Vector2(1505, 61)
+script = ExtResource("15_pnhog")
+
+[node name="PlayerDeck" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(150, 900)
+script = ExtResource("4_fos0i")
+card_database = ExtResource("12_yxlcp")
+
+[node name="DeckViewer" parent="PlayerDeck" instance=ExtResource("21_2c4at")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerDeck"]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("4_cm0pq")
+
+[node name="Area2D" type="Area2D" parent="PlayerDeck"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDeck/Area2D"]
+shape = SubResource("RectangleShape2D_r0du0")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PlayerDeck"]
+z_index = -2
+offset_left = -65.0
+offset_top = -131.0
+offset_right = 64.0
+offset_bottom = -99.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="PlayerPassives" type="Node2D" parent="PlayerDeck"]
+unique_name_in_owner = true
+position = Vector2(173, 0)
+
+[node name="OpponentDeck" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(150, 123)
+script = ExtResource("8_lhr70")
+card_database = ExtResource("12_yxlcp")
+starting_deck = Array[ExtResource("21_kxyth")]([ExtResource("32_t70y2"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("26_8cp6k"), ExtResource("32_t70y2")])
+starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("21_pnhog")])
+
+[node name="Sprite2D" type="Sprite2D" parent="OpponentDeck"]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("4_cm0pq")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="OpponentDeck"]
+z_index = -2
+offset_left = -56.0
+offset_top = -130.0
+offset_right = 73.0
+offset_bottom = -98.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="OpponentPassives" type="Node2D" parent="OpponentDeck"]
+unique_name_in_owner = true
+position = Vector2(125, -29)
+
+[node name="PlayerCardPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(560, 460)
+
+[node name="OpponentCardPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1360, 460)
+
+[node name="EndTurnButton" type="Button" parent="."]
+offset_left = 1419.0
+offset_top = 459.0
+offset_right = 1509.0
+offset_bottom = 490.0
+scale = Vector2(2.5, 2.5)
+text = "END TURN"
+
+[node name="BattleTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="animation_finished" from="BattleManager/AnimationManager/ActionAnim" to="BattleManager/AnimationManager" method="_on_action_anim_animation_finished"]
+[connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
