@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://42fqg15nqivg"
-path="res://.godot/imported/camera_lock.png-eefc0a1948e82feb64a41998b6325b68.ctex"
+path="res://.godot/imported/camera_lock.png-711d02d41910cddff05298f4430e5852.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/camera_lock.png"
-dest_files=["res://.godot/imported/camera_lock.png-eefc0a1948e82feb64a41998b6325b68.ctex"]
+source_file="res://Assets/icons/16x16/camera_lock.png"
+dest_files=["res://.godot/imported/camera_lock.png-711d02d41910cddff05298f4430e5852.ctex"]
 
 [params]
 

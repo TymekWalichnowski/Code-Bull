@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_fcb1a"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_c0ewi"]
-[ext_resource type="Texture2D" uid="uid://4cnavypvrsbs" path="res://assets/textures/cards/card_bleeder.png" id="2_me2ei"]
+[ext_resource type="Texture2D" uid="uid://4cnavypvrsbs" path="res://Assets/textures/cards/card_bleeder.png" id="2_me2ei"]
 
 [sub_resource type="Resource" id="Resource_34ur7"]
 script = ExtResource("1_fcb1a")

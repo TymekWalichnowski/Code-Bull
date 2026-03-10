@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_80w62"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="2_32nxw"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="3_td6vg"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="4_hy522"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_slot_glow.png" id="6_td6vg"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="3_td6vg"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="4_hy522"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_slot_glow.png" id="6_td6vg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kg30u"]
 shader = ExtResource("2_32nxw")
@@ -247,13 +247,13 @@ _data = {
 }
 
 [node name="OpponentCard" type="Node2D"]
-position = Vector2(1736, 132)
 script = ExtResource("1_80w62")
 metadata/_custom_type_script = "uid://vw5rk4xmtwrq"
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
+texture_repeat = 1
 material = SubResource("ShaderMaterial_kg30u")
 scale = Vector2(2, 2)
 texture = ExtResource("3_td6vg")
@@ -268,6 +268,7 @@ texture = ExtResource("6_td6vg")
 unique_name_in_owner = true
 z_index = -1
 texture_filter = 1
+texture_repeat = 1
 material = SubResource("ShaderMaterial_6ligt")
 scale = Vector2(2, 2)
 texture = ExtResource("4_hy522")
@@ -280,11 +281,14 @@ offset_right = 2.0
 offset_bottom = -96.0
 scale = Vector2(2, 2)
 text = "0"
+metadata/_edit_use_anchors_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_td6vg")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
@@ -293,6 +297,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="UIOverlay"]
 layout_mode = 1
@@ -305,6 +310,7 @@ offset_left = -0.84000397
 offset_top = -0.5999985
 offset_right = 0.23999023
 offset_bottom = 0.7599945
+metadata/_edit_use_anchors_ = true
 
 [node name="ActionDescriptionLabel" type="RichTextLabel" parent="UIOverlay/Panel"]
 unique_name_in_owner = true
@@ -318,6 +324,7 @@ theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
 text = "Default Text"
+metadata/_edit_use_anchors_ = true
 
 [node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
 unique_name_in_owner = true

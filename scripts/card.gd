@@ -31,7 +31,8 @@ var is_inventory: bool = false
 
 var sounds = {
 	"place": preload("res://assets/audio/card-place-2.ogg"),
-	"pickup": preload("res://assets/audio/card-place-1.ogg")
+	"pickup": preload("res://assets/audio/card-place-1.ogg"),
+	"use": preload("res://Assets/audio/card-shove-3.ogg")
 }
 
 var card_id: int = 0

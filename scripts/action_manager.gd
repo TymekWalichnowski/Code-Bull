@@ -49,6 +49,7 @@ func execute_card_action(card: Card, action_index: int):
 	
 	# Visuals
 	card.get_node("AnimationPlayer").play("card_basic_use")
+	card.play_audio("use")
 	await animation_manager.play_anim(action, card.card_owner)
 	
 	# Effect Application

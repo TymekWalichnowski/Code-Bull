@@ -1,5 +1,7 @@
 extends Node
 
+signal play_sound()
+
 const PLAYER_POSITION = Vector2(960, 850)
 const OPPONENT_POSITION = Vector2(960, 440)
 
@@ -26,18 +28,22 @@ func play_anim(action_name, card_owner):
 		"Attack":
 			anim_node.position = target_position
 			anim_node.visible = true
+			%AudioManager.play_sfx("Attack")
 			anim_node.play("attack_slash")
 		"Shield":
 			anim_node.position = self_position
 			anim_node.visible = true
+			%AudioManager.play_sfx("Shield Summon")
 			anim_node.play("shield_bubble")
 		"Multiply_Or_Divide1":
 			anim_node.position = self_position
 			anim_node.visible = true
+			%AudioManager.play_sfx("Magic")
 			anim_node.play("multiply_or_divide1")
 		"Multiply_Or_Divide2":
 			anim_node.position = self_position
 			anim_node.visible = true
+			%AudioManager.play_sfx("Magic")
 			anim_node.play("multiply_or_divide2")
 		_:
 			return

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg4n8600ky2u1"
-path="res://.godot/imported/grid_tile_place.png-f6ef6e6d0affb3c3fdcd080f59515e95.ctex"
+path="res://.godot/imported/grid_tile_place.png-104e5f2f056ae0acd957c12049a912a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/grid_tile_place.png"
-dest_files=["res://.godot/imported/grid_tile_place.png-f6ef6e6d0affb3c3fdcd080f59515e95.ctex"]
+source_file="res://Assets/icons/16x16/grid_tile_place.png"
+dest_files=["res://.godot/imported/grid_tile_place.png-104e5f2f056ae0acd957c12049a912a2.ctex"]
 
 [params]
 
