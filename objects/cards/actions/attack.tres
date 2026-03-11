@@ -9,5 +9,5 @@ description = "Deal [value] damage"
 value = 2.0
 priority = 2
 target = "target"
-action_animation_name = "attack_slash"
+action_animation_override = "attack_slash"
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

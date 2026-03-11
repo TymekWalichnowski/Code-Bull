@@ -1,11 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://b0hexiwywlx72"]
+[gd_scene load_steps=19 format=3 uid="uid://b0hexiwywlx72"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_psvab"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="2_foft5"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="3_jh8c6"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="4_ll6wp"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_8j33a"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_slot_glow.png" id="7_ll6wp"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="3_jh8c6"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="4_ll6wp"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="5_8j33a"]
+[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://assets/textures/cards/card_effects/card_slot_debuff.png" id="5_ijgdg"]
+[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://assets/textures/cards/card_effects/card_slot_buff.png" id="6_c30e1"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_effects/card_slot_glow.png" id="7_ll6wp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("2_foft5")
@@ -267,6 +269,14 @@ visible = false
 scale = Vector2(0.9186046, 0.9363636)
 texture = ExtResource("7_ll6wp")
 
+[node name="Debuff" type="Sprite2D" parent="CardBackImage"]
+visible = false
+texture = ExtResource("5_ijgdg")
+
+[node name="Buff" type="Sprite2D" parent="CardBackImage"]
+visible = false
+texture = ExtResource("6_c30e1")
+
 [node name="CardImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 z_index = -1
@@ -299,6 +309,47 @@ libraries = {
 stream = ExtResource("5_8j33a")
 volume_db = -3.0
 
+[node name="DescriptionOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="DescriptionOverlay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.6039999
+anchor_top = 0.78999996
+anchor_right = 1.5940002
+anchor_bottom = 2.206
+offset_left = -0.84000397
+offset_top = -0.5999985
+offset_right = 0.23999023
+offset_bottom = 0.7599945
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionDescriptionLabel" type="RichTextLabel" parent="DescriptionOverlay/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = -0.03448276
+anchor_right = 0.947
+anchor_bottom = 0.91400003
+offset_left = 1.0
+offset_top = 5.0
+offset_right = 0.0010604858
+offset_bottom = -0.012001038
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+bbcode_enabled = true
+text = "Default Text"
+metadata/_edit_use_anchors_ = true
+
 [node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
@@ -308,36 +359,12 @@ offset_bottom = 40.0
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="UIOverlay"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.771
-anchor_top = -2.21
-anchor_right = 4.294
-anchor_bottom = 2.206
-offset_left = -0.84000397
-offset_top = -0.5999985
-offset_right = 0.23999023
-offset_bottom = 0.7599945
-metadata/_edit_use_anchors_ = true
-
-[node name="ActionDescriptionLabel" type="RichTextLabel" parent="UIOverlay/Panel"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1.0
-offset_top = 5.0
-offset_right = 101.0
-offset_bottom = 178.0
-mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 18
-theme_override_font_sizes/bold_font_size = 18
-bbcode_enabled = true
-text = "Default Text"
-metadata/_edit_use_anchors_ = true
-
 [node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
 unique_name_in_owner = true
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -2.675
+anchor_right = -2.675
 offset_left = 171.0
 offset_top = -85.0
 offset_right = 364.0
@@ -346,7 +373,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TagContainer" type="VBoxContainer" parent="UIOverlay"]
 unique_name_in_owner = true
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -2.6
+anchor_right = -2.6
 offset_left = 171.0
 offset_top = -85.0
 offset_right = 273.0

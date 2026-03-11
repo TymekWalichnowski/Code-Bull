@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=2 format=3 uid="uid://dsicqer0dfn6j"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_hxrpj"]
+
+[resource]
+script = ExtResource("1_hxrpj")
+description = "Draw [value] card(s)"
+value = 1.0
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

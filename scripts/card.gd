@@ -16,6 +16,8 @@ signal hovered_off
 @onready var tag_label = %TagLabel
 
 @onready var glow_sprite = %Glow
+@onready var debuff_sprite = %Glow
+@onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
 
 var hovering = false
@@ -168,7 +170,6 @@ func _on_area_2d_mouse_entered() -> void:
 
 func _on_area_2d_mouse_exited() -> void:
 	hovering = false
-	desc_label.text = "" # clear text when not hovering
 	tag_container.visible = false
 	emit_signal("hovered_off", self)
 

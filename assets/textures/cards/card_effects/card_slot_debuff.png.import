@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwfpsawb50ovk"
-path="res://.godot/imported/card_slot_glow.png-69b819beb8ad5716c25afdd2ba6628df.ctex"
+uid="uid://daj8e2il47wo5"
+path="res://.godot/imported/card_slot_debuff.png-770c557318106a797366b2ecd8efe36d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/cards/card_slot_glow.png"
-dest_files=["res://.godot/imported/card_slot_glow.png-69b819beb8ad5716c25afdd2ba6628df.ctex"]
+source_file="res://assets/textures/cards/card_effects/card_slot_debuff.png"
+dest_files=["res://.godot/imported/card_slot_debuff.png-770c557318106a797366b2ecd8efe36d.ctex"]
 
 [params]
 
