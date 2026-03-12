@@ -21,7 +21,10 @@ func _ready():
 	original_scale = $OpponentSprite.scale
 	start_idle($OpponentSprite)
 
-func play_anim(action_name, card_owner):
+func play_anim(action_name, card_owner, slot_idx: int = -1):
+	# Ensure we have a reference to battle_manager (assuming it's the parent)
+	var battle_m = get_parent()
+	
 	if card_owner == "Player":
 		self_position = PLAYER_POSITION
 		target_position = OPPONENT_POSITION
@@ -37,36 +40,43 @@ func play_anim(action_name, card_owner):
 			anim_node.visible = true
 			%AudioManager.play_sfx("Attack")
 			anim_node.play("attack_slash")
+			
 		"Shield":
 			anim_node.position = self_position
 			anim_node.visible = true
 			%AudioManager.play_sfx("Shield Summon")
 			anim_node.play("shield_bubble")
-		"Multiply_Or_Divide1":
-			anim_node.position = card_position
-			anim_node.visible = true
-			%AudioManager.play_sfx("Magic")
-			anim_node.play("multiply_or_divide1")
-		"Multiply_Or_Divide2":
-			anim_node.position = card_position
-			anim_node.visible = true
-			%AudioManager.play_sfx("Magic")
-			anim_node.play("multiply_or_divide2")
+
 		"Multiply_Next_Card":
-			anim_node.position = self_position
-			anim_node.visible = true
-			%AudioManager.play_sfx("Magic")
+			if slot_idx >= 0 and slot_idx < 3:
+				var target_slots = battle_m.player_slots if card_owner == "Player" else battle_m.opponent_slots
+				anim_node.position = target_slots[slot_idx].global_position
+			else:
+				anim_node.position = self_position
 			anim_node.play("multiply")
+
 		"Divide_Next_Card":
-			anim_node.position = target_position
+			if slot_idx >= 0 and slot_idx < 3:
+				# If player is acting, target opponent slots at that index
+				var target_slots = battle_m.opponent_slots if card_owner == "Player" else battle_m.player_slots
+				anim_node.position = target_slots[slot_idx].global_position
+			else:
+				anim_node.position = target_position
+			anim_node.play("divide")
+
+		"Multiply_Or_Divide1", "Multiply_Or_Divide2":
+			anim_node.position = card_position
 			anim_node.visible = true
 			%AudioManager.play_sfx("Magic")
-			anim_node.play("divide")
+			anim_node.play(action_name.to_lower()) # match specific anim name
 		_:
 			anim_node.position = card_position
 			anim_node.visible = true
 			anim_node.play("wip")
+	
+	anim_node.visible = true
 	await anim_node.animation_finished
+	anim_node.visible = false
 
 func start_idle(target_node: Node2D):
 	var tween = create_tween().set_loops() # This makes it loop forever
