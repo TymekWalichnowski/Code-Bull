@@ -37,7 +37,7 @@ var is_inventory: bool = false
 var sounds = {
 	"place": preload("res://assets/audio/card-place-2.ogg"),
 	"pickup": preload("res://assets/audio/card-place-1.ogg"),
-	"use": preload("res://Assets/audio/card-shove-3.ogg")
+	"use": preload("res://assets/audio/card-shove-3.ogg")
 }
 
 var card_id: int = 0
@@ -130,6 +130,7 @@ func _on_area_2d_mouse_exited() -> void:
 		return
 	hovering = false
 	tag_container.visible = false
+	update_hover_ui()
 	emit_signal("hovered_off", self)
 
 func play_audio(name: String) -> void:

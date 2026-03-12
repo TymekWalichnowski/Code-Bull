@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbkuemjuxbgyt"
-path="res://.godot/imported/link_eye.png-b7d712a906c8b7232072e5d4492f8999.ctex"
+path="res://.godot/imported/link_eye.png-8e80066daacac4196477d6803e4e1607.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/link_eye.png"
-dest_files=["res://.godot/imported/link_eye.png-b7d712a906c8b7232072e5d4492f8999.ctex"]
+source_file="res://assets/icons/16x16/link_eye.png"
+dest_files=["res://.godot/imported/link_eye.png-8e80066daacac4196477d6803e4e1607.ctex"]
 
 [params]
 

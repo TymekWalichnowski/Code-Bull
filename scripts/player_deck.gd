@@ -49,22 +49,22 @@ func draw_card():
 		$RichTextLabel.text = str(current_deck.size())
 
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
-		
-		# --- UNIFIED SETUP ---
 		new_card.setup(card_data, "Player")
-		new_card.interactable = true  # Player can tilt/drag their own cards
-		
+		new_card.interactable = true 
 		new_card.name = "Card_" + card_data.display_name
+		
 		%CardManager.add_child(new_card)
+		
+		# --- ADD THIS LINE ---
+		# This sets the card's starting point to this deck's location
+		new_card.global_position = global_position 
 
-		# Visuals
 		if new_card.has_node("AnimationPlayer"):
 			new_card.get_node("AnimationPlayer").play("card_flip")
 		
 		new_card.play_audio("pickup")
 		%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 		await get_tree().create_timer(0.5).timeout
-
 	else:
 		print("Deck and Graveyard are empty!")
 

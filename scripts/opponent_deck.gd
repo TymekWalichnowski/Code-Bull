@@ -39,19 +39,18 @@ func draw_card():
 		$RichTextLabel.text = str(active_deck.size())
 
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
-		
-		# --- UNIFIED SETUP ---
 		new_card.setup(card_data, "Opponent")
-		new_card.interactable = false # Opponent cards remain flat and can't be dragged
+		new_card.interactable = false 
 		
-		# --- VISUAL HIDE ---
-		# Since they are in the opponent's hand, we show the card back
 		if new_card.has_node("CardImage"):
 			new_card.get_node("CardImage").visible = false
 		if new_card.has_node("CardBackImage"):
 			new_card.get_node("CardBackImage").visible = true
 
 		%CardManager.add_child(new_card)
+		
+		new_card.global_position = global_position
+
 		new_card.name = "Opponent_Card_" + card_data.display_name
 		%OpponentHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 		new_card.play_audio("pickup")

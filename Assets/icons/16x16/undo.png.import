@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0i0qoxu5qr1l"
-path="res://.godot/imported/undo.png-2ef66f1cf2efe07b5fa71a8766446bb0.ctex"
+path="res://.godot/imported/undo.png-3d5b1ec0bc7b5a1a34cfaf5fdae59ec5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/undo.png"
-dest_files=["res://.godot/imported/undo.png-2ef66f1cf2efe07b5fa71a8766446bb0.ctex"]
+source_file="res://assets/icons/16x16/undo.png"
+dest_files=["res://.godot/imported/undo.png-3d5b1ec0bc7b5a1a34cfaf5fdae59ec5.ctex"]
 
 [params]
 
