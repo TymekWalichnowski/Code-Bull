@@ -7,7 +7,7 @@ extends Node2D
 var starting_deck = PlayerDeckGlobal.global_player_cards
 var starting_passives = PlayerDeckGlobal.global_player_passives
 
-const CARD_SCENE_PATH = "res://scenes/player_card.tscn"
+const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 5
@@ -40,25 +40,27 @@ func _ready() -> void:
 
 func draw_card():
 	if current_deck.is_empty() and graveyard.size() > 0:
-		print("Refilling deck from graveyard")
 		current_deck = graveyard.duplicate()
 		current_deck.shuffle()
 		graveyard.clear()
 	
 	if !current_deck.is_empty():
-		# Pop the Resource directly
 		var card_data = current_deck.pop_front()
 		$RichTextLabel.text = str(current_deck.size())
 
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
-		# No more database lookup needed; we already have card_data!
+		
+		# --- UNIFIED SETUP ---
 		new_card.setup(card_data, "Player")
+		new_card.interactable = true  # Player can tilt/drag their own cards
 		
 		new_card.name = "Card_" + card_data.display_name
 		%CardManager.add_child(new_card)
 
+		# Visuals
 		if new_card.has_node("AnimationPlayer"):
 			new_card.get_node("AnimationPlayer").play("card_flip")
+		
 		new_card.play_audio("pickup")
 		%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 		await get_tree().create_timer(0.5).timeout

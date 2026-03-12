@@ -70,14 +70,12 @@ func on_left_click_released():
 		finish_drag()
 
 func on_hovered_over_card(card):
-	#print("hovered over card")
-
 	if card.cards_current_slot:
 		return
-
+	if not card.interactable:
+		return
 	if is_hovering_on_card:
 		return
-
 	is_hovering_on_card = true
 	highlight_card(card, true)
 
@@ -94,6 +92,8 @@ func on_hovered_off_card(card):
 		highlight_card(new_card_hovered, true)
 
 func highlight_card(card, hovered):
+	if not card.interactable:
+		return
 	if hovered:
 		card.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
 		print(card.cards_current_slot)

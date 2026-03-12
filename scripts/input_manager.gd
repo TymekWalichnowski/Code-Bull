@@ -37,18 +37,16 @@ func raycast_at_cursor():
 		var collider = result.collider
 		if collider.collision_mask == COLLISION_MASK_CARD:
 			var card_found = collider.get_parent()
-			# Check if it's a regular Card and NOT a PassiveCard
+			
 			if card_found is Card:
-				print("card found")
-				card_manager_reference.start_drag(card_found)
-				return 
-			elif card_found is PassiveCard:
-				print("Clicked a passive card - ignoring drag logic")
-				return # Do nothing for passives
-			if card_found:
-				print("card found")
-				card_manager_reference.start_drag(card_found)
-			return  # Stop after finding the card
+				# ONLY drag if the card belongs to the Player
+				if card_found.card_owner == "Player":
+					print("Player card found - dragging")
+					card_manager_reference.start_drag(card_found)
+					return
+				else:
+					print("Opponent card found - ignoring drag")
+					return
 
 	# disabled clicking deck from tutorial
 

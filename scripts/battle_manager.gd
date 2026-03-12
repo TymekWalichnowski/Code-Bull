@@ -84,14 +84,18 @@ func play_opponent_cards():
 		var tween1 = get_tree().create_tween().set_parallel(true)
 		tween1.tween_property(card_to_play, "position", slot.position, CARD_MOVE_SPEED)
 		tween1.tween_property(card_to_play, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
-
+		
+		# When the card moves to the slot:
+		card_to_play.get_node("CardImage").visible = true
 		card_to_play.get_node("AnimationPlayer").play("card_flip")
 		card_to_play.play_audio("place")
 		await tween1.finished
-
+		card_to_play.interactable = true
+		
 		card_to_play.cards_current_slot = slot
 		slot.card_in_slot = true
 		slot.card = card_to_play
+		card_to_play.update_hover_ui()
 
 		%OpponentHand.remove_card_from_hand(card_to_play)
 		empty_opponent_card_slots.erase(slot)

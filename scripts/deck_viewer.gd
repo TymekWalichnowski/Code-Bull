@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var card_scene: PackedScene = preload("res://scenes/player_card.tscn")
+@export var card_scene: PackedScene = preload("res://scenes/card.tscn")
 
 # Set these to match your card's visual size
 const PREVIEW_SIZE = Vector2(200, 280) 

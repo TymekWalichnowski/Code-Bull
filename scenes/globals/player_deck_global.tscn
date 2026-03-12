@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dsavo0elx0x5f"]
+[gd_scene load_steps=15 format=3 uid="uid://dsavo0elx0x5f"]
 
 [ext_resource type="Script" uid="uid://c58ll0b2wrcgx" path="res://scenes/globals/player_deck_global.gd" id="1_eibw5"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_rb10u"]
@@ -8,9 +8,14 @@
 [ext_resource type="Resource" uid="uid://cd88dyupufuki" path="res://objects/cards/draw_2.tres" id="8_pk0xe"]
 [ext_resource type="Resource" uid="uid://df1br38oqmwog" path="res://objects/cards/nullify.tres" id="9_2r0f0"]
 [ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="9_sdkbx"]
+[ext_resource type="Resource" uid="uid://bbaqsl42y8og5" path="res://objects/cards/apply_burn.tres" id="10_vsrvu"]
+[ext_resource type="Resource" uid="uid://kqiykl22ic2r" path="res://objects/cards/apply_bleed.tres" id="11_5lg0m"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="12_r6sng"]
+[ext_resource type="Resource" uid="uid://bw3thnfp6s76h" path="res://objects/cards/basic.tres" id="13_dgsgh"]
+[ext_resource type="Resource" uid="uid://v2y7mde1tof" path="res://objects/cards/sword.tres" id="14_mqgaq"]
 [ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="14_vsrvu"]
 
 [node name="PlayerDeckGlobal" type="Node"]
 script = ExtResource("1_eibw5")
-global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("14_vsrvu"), ExtResource("14_vsrvu"), ExtResource("8_pk0xe"), ExtResource("9_2r0f0"), ExtResource("7_5lg0m"), ExtResource("7_fa2on"), ExtResource("8_cpoqa"), ExtResource("9_sdkbx")])
+global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("14_vsrvu"), ExtResource("14_vsrvu"), ExtResource("8_pk0xe"), ExtResource("9_2r0f0"), ExtResource("7_5lg0m"), ExtResource("7_fa2on"), ExtResource("8_cpoqa"), ExtResource("9_sdkbx"), ExtResource("10_vsrvu"), ExtResource("11_5lg0m"), ExtResource("12_r6sng"), ExtResource("13_dgsgh"), ExtResource("14_mqgaq")])
 global_player_inventory = Array[ExtResource("2_rb10u")]([ExtResource("14_vsrvu"), ExtResource("14_vsrvu"), ExtResource("9_2r0f0")])

@@ -1,6 +1,6 @@
 extends Node2D
 
-const CARD_SCENE_PATH = "res://scenes/opponent_card.tscn"
+const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
 const CARD_DRAW_SPEED = 0.2
 const STARTING_HAND_SIZE = 6
@@ -29,22 +29,27 @@ func _ready() -> void:
 	spawn_starting_passives()
 
 func draw_card():
-	print("opponent draw_card starting")
-	
-	# Refill logic: Just move resources from graveyard back to deck
 	if active_deck.is_empty() and graveyard.size() > 0:
-		print("Opponent refilling deck from graveyard")
 		active_deck = graveyard.duplicate()
 		graveyard.clear()
 		active_deck.shuffle()
 	
 	if !active_deck.is_empty():
-		# Pop the Resource directly—no database lookup needed!
 		var card_data = active_deck.pop_front()
 		$RichTextLabel.text = str(active_deck.size())
 
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
+		
+		# --- UNIFIED SETUP ---
 		new_card.setup(card_data, "Opponent")
+		new_card.interactable = false # Opponent cards remain flat and can't be dragged
+		
+		# --- VISUAL HIDE ---
+		# Since they are in the opponent's hand, we show the card back
+		if new_card.has_node("CardImage"):
+			new_card.get_node("CardImage").visible = false
+		if new_card.has_node("CardBackImage"):
+			new_card.get_node("CardBackImage").visible = true
 
 		%CardManager.add_child(new_card)
 		new_card.name = "Opponent_Card_" + card_data.display_name
