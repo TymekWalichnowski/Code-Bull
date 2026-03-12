@@ -18,8 +18,20 @@ extends Node # not using this at the moment
 func execute_card_action(card: Card, action_index: int):
 	var action_data = card.card_data.actions[action_index]
 	var action = action_data.action_name
-	var value = action_data.value
 	
+	# --- NEW MULTIPLIER LOGIC ---
+	# Calculate value using internal Card and Action multipliers
+	var base_value = action_data.value
+	var action_mult = action_data.action_multiplier
+	var card_mult = card.card_data.multiplier
+	
+	# Ensure multipliers aren't 0 by default (unless intended)
+	if action_mult == 0: action_mult = 1.0
+	if card_mult == 0: card_mult = 1.0
+	
+	var final_value = (base_value * action_mult) * card_mult
+	# ----------------------------
+
 	var target
 	var self_target
 	if card.card_owner == "Player":
@@ -28,9 +40,6 @@ func execute_card_action(card: Card, action_index: int):
 	else:
 		target = player
 		self_target = opponent
-	
-	# Apply Multipliers
-	value = value * self_target.current_mult
 	
 	if self_target.nullified:
 		return
@@ -71,42 +80,42 @@ func execute_card_action(card: Card, action_index: int):
 	# Pass our specifically calculated anim_target_idx
 	await animation_manager.play_anim(action, card.card_owner, anim_target_idx)
 	
-	# --- EFFECT APPLICATION ---
+	# Effect Application
 	match action:
 		"Attack":
-			target.take_damage(value)
-			var trigger = "On_Damage_Taken_Player" if target == player else "On_Damage_Taken_Opponent"
-			await battle_manager.trigger_passives(trigger)
+			target.take_damage(final_value) # Use final_value
 		"Shield":
-			self_target.gain_shield(value)
+			self_target.gain_shield(final_value) # Use final_value
 		"Multiply_Next_Card":
-			self_target.next_mult *= value
+			# Target Self, Next Slot
+			_apply_multiplier_to_next_slot(card, final_value, false)
+			
 		"Divide_Next_Card":
-			# IMPORTANT: If Player 1 wants to affect Opponent 1, 
-			# use current_mult because Opponent 1 is about to act in this same slot
-			if card.card_owner == "Player":
-				target.current_mult /= value
-			else:
-				target.next_mult /= value
-		
+			# Target Opponent, Next Card in timeline
+			# We use 1.0 / value because "Divide by 2" is "Multiply by 0.5"
+			_apply_multiplier_to_next_slot(card, 1.0 / final_value, true)
+		"Draw_Card":
+			var deck = player_deck if self_target == player else opponent_deck
+			for i in range(int(final_value)):
+				await deck.draw_card()
 		"Nullify":
 			target.nullified = true
 			
 		"Retrigger_Next_Slot":
-			_handle_retrigger(card, int(value))
+			_handle_retrigger(card, int(final_value))
 			battle_manager.update_card_effects()
 			
 		"Apply_Flame":
 			if target == player:
-				%PlayerTokens.add_token(flame_token_res, value)
+				%PlayerTokens.add_token(flame_token_res, final_value)
 			else:
-				%OpponentTokens.add_token(flame_token_res, value)
+				%OpponentTokens.add_token(flame_token_res, final_value)
 		
 		"Apply_Bleed":
 			if target == player:
-				%PlayerTokens.add_token(bleed_token_res, value)
+				%PlayerTokens.add_token(bleed_token_res, final_value)
 			else:
-				%OpponentTokens.add_token(bleed_token_res, value)
+				%OpponentTokens.add_token(bleed_token_res, final_value)
 	
 	# after effect
 	await battle_manager.token_manager.trigger_tokens("After_Action", card.card_owner)
@@ -125,3 +134,43 @@ func _handle_retrigger(card: Card, value: int):
 			battle_manager.player_retrigger_counts[current_idx + 1] += value
 		else:
 			battle_manager.opponent_retrigger_counts[current_idx + 1] += value
+
+func _apply_multiplier_to_next_slot(current_card: Card, multiplier_value: float, target_opponent: bool = false):
+	var current_idx = -1
+	var p_slots = battle_manager.player_slots
+	var o_slots = battle_manager.opponent_slots
+	
+	# 1. Find where we are
+	if current_card.card_owner == "Player":
+		current_idx = p_slots.find(current_card.cards_current_slot)
+	else:
+		current_idx = o_slots.find(current_card.cards_current_slot)
+	
+	if current_idx == -1: return
+
+	# 2. Determine the target slot and side
+	var target_slot_idx = current_idx
+	var target_is_player = (current_card.card_owner == "Player")
+	
+	if target_opponent:
+		# If Player 1 targets Opponent, the next is Opponent 1 (same index)
+		# If Opponent 1 targets Player, the next is Player 2 (index + 1)
+		if current_card.card_owner == "Player":
+			target_is_player = false
+			target_slot_idx = current_idx
+		else:
+			target_is_player = true
+			target_slot_idx = current_idx + 1
+	else:
+		# Targeting self: always the next slot
+		target_slot_idx = current_idx + 1
+
+	# 3. Apply the buff/debuff to the card in that slot
+	if target_slot_idx < 3:
+		var target_slot = p_slots[target_slot_idx] if target_is_player else o_slots[target_slot_idx]
+		if target_slot.card:
+			# Multiply the card-wide multiplier
+			target_slot.card.card_data.multiplier *= multiplier_value
+			# Force the UI to refresh so the player sees the new number
+			target_slot.card.update_hover_ui()
+			print("Applied x", multiplier_value, " to ", target_slot.card.card_name)

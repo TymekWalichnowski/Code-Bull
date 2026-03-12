@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_24aaf"]
 script = ExtResource("1_7ys8i")
 action_name = "Multiply_Or_Divide"
-description = "[color=#888888]50%[/color] chance to multiply next played card by [value]. [color=#888888]50%[/color]  chance to divide instead."
+description = "[color=#888888]50%[/color] chance to multiply next played card by [value]. [color=#888888]50%[/color] chance to divide instead."
 value = 2.0
 priority = 3
 tags = Array[String](["test", ""])

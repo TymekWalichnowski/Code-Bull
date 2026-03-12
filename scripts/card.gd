@@ -43,7 +43,7 @@ var card_name: String = ""
 
 
 func setup(data: CardDataResource, owner: String) -> void:
-	card_data = data
+	card_data = data.duplicate(true) 
 	card_owner = owner
 	card_id = card_data.id
 	card_name = card_data.display_name
@@ -182,38 +182,32 @@ func play_audio(name: String) -> void:
 
 func update_hover_ui():
 	%UIOverlay.visible = true
-
-	if not card_data:
-		return
+	if not card_data: return
 
 	var full_description := ""
-	var tag_list := []
-
-	# Get player/battle state
-	var player = get_node_or_null("/root/Main/Player")
-	var current_mult = 1.0
-	if player:
-		current_mult = player.current_mult if player.current_mult != 1.0 else player.next_mult
+	var tag_list = []
+	
+	# Get the Card-Wide Multiplier
+	var c_mult = card_data.multiplier if card_data.multiplier != 0 else 1.0
 
 	for action in card_data.actions:
-		if not action or action.description == "":
-			continue
+		if not action or action.description == "": continue
 
-		# 1. Calculate the actual number
-		var final_value = action.value * current_mult
-		var display_value_str := str(action.value)
-
-		# 2. Apply colors if multiplied (Green for buff, Red for debuff)
-		if current_mult != 1.0 and action.value != 0:
-			var color = "#00ff00" if current_mult > 1.0 else "#ff4444"
-			display_value_str = "[color=%s]%s[/color]" % [color, final_value]
+		# Calculate Logic
+		var a_mult = action.action_multiplier if action.action_multiplier != 0 else 1.0
+		var total_multiplier = c_mult * a_mult
+		var final_value = action.value * total_multiplier
 		
-		# 3. Dynamic Replacement
-		# This replaces "[value]" in your Resource text with the number
+		var display_value_str := ""
+
+		# UI feedback: If the value is different from base, color it
+		if total_multiplier != 1.0:
+			var color = "#00ff00" if total_multiplier > 1.0 else "#ff4444"
+			display_value_str = "[color=%s]%.1f[/color]" % [color, final_value]
+		else:
+			display_value_str = str(action.value)
+		
 		var action_text = action.description.replace("[value]", display_value_str)
-		
-		# 4. Handle the "50%" grey text specifically if desired, 
-		# or just put the BBCode directly in the Resource description!
 		full_description += "- " + action_text + "\n"
 
 		# Collect tags for the tag box

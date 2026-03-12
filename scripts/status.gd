@@ -5,8 +5,6 @@ signal damage_taken(amount, is_shield)
 var current_health = 1.0
 var current_shield = 0.0
 var nullified = false
-var current_mult = 1.0 
-var next_mult = 1.0
 var max_health = 10
 var max_shield = 10
 

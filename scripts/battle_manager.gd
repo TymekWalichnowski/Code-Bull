@@ -47,10 +47,10 @@ func _ready() -> void:
 	opponent_turn()
 
 func _process(_delta: float) -> void:
-	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f |\n Mult: x%.2f |\n Next Mult x%.2f" % [
-		%Player.current_health, %Player.current_shield, %Player.current_mult, %Player.next_mult]
-	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f |\nMult: x%.2f |\n Next Mult x%.2f" % [
-		%Opponent.current_health, %Opponent.current_shield, %Opponent.current_mult, %Opponent.next_mult]
+	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f " % [
+		%Player.current_health, %Player.current_shield]
+	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f" % [
+		%Opponent.current_health, %Opponent.current_shield]
 
 func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".disabled = true
@@ -132,10 +132,6 @@ func run_activation_phase():
 			continue 
 		
 		# Reset slot shared stats
-		%Player.current_mult = %Player.next_mult
-		%Player.next_mult = 1.0
-		%Opponent.current_mult = %Opponent.next_mult
-		%Opponent.next_mult = 1.0
 		%Player.nullified = false
 		%Opponent.nullified = false
 
@@ -175,8 +171,6 @@ func run_activation_phase():
 			collect_used_card(o_card)
 
 		# --- 3. End of Slot Cleanup ---
-		%Player.current_mult = 1.0
-		%Opponent.current_mult = 1.0
 		player_retrigger_counts[slot_index] = 0
 		opponent_retrigger_counts[slot_index] = 0
 		
@@ -200,6 +194,14 @@ func collect_used_card(card):
 	if card == null: return
 	
 	card.set_retrigger_glow(false)
+	
+	# --- RESET CARD STATS BEFORE GRAVEYARD ---
+	if card.card_data:
+		card.card_data.multiplier = 1.0
+		for action in card.card_data.actions:
+				if action != null: # Check if the action slot is actually filled
+					action.action_multiplier = 1.0
+		# If you eventually add other temporary buffs (like flat damage), reset them here too
 	
 	if card.card_owner == "Player":
 		%PlayerDeck.graveyard.append(card.card_data)
