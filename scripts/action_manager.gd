@@ -13,7 +13,7 @@ extends Node # not using this at the moment
 @onready var battle_manager = get_parent()
 
 @export var flame_token_res: TokenResource # For testing
-@export var bleed_token_res: TokenResource # should probably do this more efficiently
+@export var bleed_token_res: TokenResource # should probably od this more efficiently
 
 func execute_card_action(card: Card, action_index: int):
 	var action_data = card.card_data.actions[action_index]
@@ -38,8 +38,7 @@ func execute_card_action(card: Card, action_index: int):
 		print("Action nullified for ", card.card_owner)
 		return
 
-	# Pre-application logic, cards that do something before their main action,
-	# we hardcode these names as there are 2 possible anims, but might need to do more later
+	# Pre-application logic, cards that do something before their main action, we hardcode these names as there are 2 possible anims
 	if action == "Multiply_Or_Divide":
 		if randf() < 0.5:
 			await animation_manager.play_anim("Multiply_Or_Divide1", card.card_owner)
@@ -50,6 +49,7 @@ func execute_card_action(card: Card, action_index: int):
 	
 	# Visuals
 	card.get_node("AnimationPlayer").play("card_basic_use")
+	card.play_audio("use")
 	await animation_manager.play_anim(action, card.card_owner)
 	
 	# Effect Application

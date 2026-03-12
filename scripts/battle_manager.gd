@@ -4,8 +4,6 @@ signal battle_click_received
 
 var player_retrigger_counts = [0, 0, 0]
 var opponent_retrigger_counts = [0, 0, 0]
-var player_slot_mults = [1.0, 1.0, 1.0]
-var opponent_slot_mults = [1.0, 1.0, 1.0]
 
 @onready var action_manager = %ActionManager
 @onready var passive_manager = %PassiveManager
