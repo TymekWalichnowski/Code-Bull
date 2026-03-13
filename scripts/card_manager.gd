@@ -47,18 +47,21 @@ func start_drag(card):
 	card_being_dragged.play_audio("pickup")
 
 func finish_drag():
-	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
+	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot(card_being_dragged)
-	if card_slot_found and not card_slot_found.card_in_slot:
+	
+	# Check if slot exists, is empty, AND belongs to the card owner
+	if card_slot_found and not card_slot_found.card_in_slot and card_slot_found.slot_owner == card_being_dragged.card_owner:
 		card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 		card_being_dragged.cards_current_slot = card_slot_found
-		#Card dropped in empty card slot
 		card_being_dragged.position = card_slot_found.position
 		card_slot_found.card_in_slot = true
-		card_slot_found.card = card_being_dragged #add card being dragged to the slot
+		card_slot_found.card = card_being_dragged
 		card_being_dragged.play_audio("place")
 	else:
+		# Return to hand if invalid slot or wrong owner
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
+	
 	card_being_dragged = null
 
 func connect_card_signals(card):

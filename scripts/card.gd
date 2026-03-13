@@ -21,12 +21,10 @@ signal hovered_off
 @onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
 
-
 var hovering = false
 var original_z_index := 10
 var cards_current_slot
 var hand_position: Vector2 = Vector2.ZERO
-
 
 var card_image: Sprite2D
 var card_back_image: Sprite2D

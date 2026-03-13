@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=64 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -6,7 +6,6 @@
 [ext_resource type="Resource" uid="uid://cwgs4ningcbsc" path="res://objects/tokens/bleed.tres" id="2_g6wdg"]
 [ext_resource type="Script" uid="uid://cjexhbgk2ejnc" path="res://scripts/action_manager.gd" id="2_xa025"]
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="3_cm0pq"]
-[ext_resource type="PackedScene" uid="uid://desoeij7rhvhu" path="res://scenes/opponent_card_slot.tscn" id="3_nxtc6"]
 [ext_resource type="Resource" uid="uid://bhfp8flf2320e" path="res://objects/tokens/flame.tres" id="3_pnhog"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
 [ext_resource type="Script" uid="uid://bhofib52ahbgp" path="res://scripts/globals/audio_manager.gd" id="4_8b871"]
@@ -370,17 +369,17 @@ position = Vector2(960, 660)
 z_index = -2
 position = Vector2(1126, 660)
 
-[node name="OpponentCardSlot" parent="CardSlots" instance=ExtResource("3_nxtc6")]
-z_index = -2
-position = Vector2(790, 178)
+[node name="CardSlotOpponent1" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(790, 229)
+slot_owner = "Opponent"
 
-[node name="OpponentCardSlot2" parent="CardSlots" instance=ExtResource("3_nxtc6")]
-z_index = -2
-position = Vector2(960, 178)
+[node name="CardSlotOpponent2" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(958, 229)
+slot_owner = "Opponent"
 
-[node name="OpponentCardSlot3" parent="CardSlots" instance=ExtResource("3_nxtc6")]
-z_index = -2
-position = Vector2(1126, 178)
+[node name="CardSlotOpponent3" parent="CardSlots" instance=ExtResource("3_r0du0")]
+position = Vector2(1130, 230)
+slot_owner = "Opponent"
 
 [node name="PlayerHand" type="Node2D" parent="."]
 unique_name_in_owner = true

@@ -18,9 +18,9 @@ var opponent_retrigger_counts = [0, 0, 0]
 ]
 
 @onready var opponent_slots = [
-	$"../CardSlots/OpponentCardSlot",
-	$"../CardSlots/OpponentCardSlot2",
-	$"../CardSlots/OpponentCardSlot3"
+	$"../CardSlots/CardSlotOpponent1",
+	$"../CardSlots/CardSlotOpponent2",
+	$"../CardSlots/CardSlotOpponent3"
 ]
 
 @onready var battle_timer = %BattleTimer
@@ -32,14 +32,14 @@ const CARD_MOVE_SPEED = 0.2
 var player_health
 var opponent_health
 var empty_opponent_card_slots = []
+var player_has_initiative: bool = true
 
 func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
 	
-	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot")
-	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot2")
-	empty_opponent_card_slots.append($"../CardSlots/OpponentCardSlot3")
+	# Automatically find empty slots from the array
+	reset_opponent_slots()
 	
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
@@ -58,6 +58,8 @@ func _on_end_turn_button_pressed() -> void:
 	await run_activation_phase()
 	await trigger_tokens("On_Phase_End")
 	opponent_turn()
+	%PlayerDeck.draw_card()
+	%PlayerDeck.draw_card()
 	%PlayerDeck.draw_card()
 
 func opponent_turn():
@@ -108,7 +110,7 @@ func end_opponent_turn():
 func reset_opponent_slots():
 	empty_opponent_card_slots.clear()
 	for slot in opponent_slots:
-		if not slot.card_in_slot:
+		if is_instance_valid(slot) and not slot.card_in_slot:
 			empty_opponent_card_slots.append(slot)
 
 func wait(wait_time):
@@ -121,63 +123,52 @@ func run_activation_phase():
 	player_retrigger_counts = [0, 0, 0]
 	opponent_retrigger_counts = [0, 0, 0]
 	
+	player_has_initiative = randf() < 0.5
+	print("Initiative: ", "Player" if player_has_initiative else "Opponent")
+	
 	await trigger_passives("On_Phase_Start")
 	await trigger_tokens("On_Phase_Start")
-	update_card_effects() # Update glows after phase-start effects
+	update_card_effects() 
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
-		print("\n ---- CARD SLOT ", slot_index + 1, " ----")
+		var order = ["Player", "Opponent"] if player_has_initiative else ["Opponent", "Player"]
 		
-		var p_card = player_slots[slot_index].card
-		var o_card = opponent_slots[slot_index].card
-		
-		if not p_card and not o_card: 
-			continue 
-		
-		# Reset slot shared stats
-		%Player.nullified = false
-		%Opponent.nullified = false
-
-		await trigger_passives("On_Slot_Start", slot_index)
-		await trigger_tokens("On_Slot_Start")
-		update_card_effects() # Update glows if a passive/token added a retrigger
-
-		# --- 1. Sequential Execution: Player First ---
-		if p_card:
-			await move_card_to_battle_point(p_card).finished
+		for side in order:
+			var card = player_slots[slot_index].card if side == "Player" else opponent_slots[slot_index].card
+			var current_side_node = %Player if side == "Player" else %Opponent
 			
-			var p_runs = 1 + player_retrigger_counts[slot_index]
-			for run_idx in range(p_runs):
-				print("Player Slot ", slot_index + 1, " Run ", run_idx + 1)
-				for action_idx in range(p_card.card_data.actions.size()):
-					var action = p_card.card_data.actions[action_idx]
-					if action != null:
-						await action_manager.execute_card_action(p_card, action_idx)
-						await wait(0.6) 
-			
-			collect_used_card(p_card)
-			await wait(0.3)
+			if not card: continue
 
-		# --- 2. Sequential Execution: Opponent Second ---
-		if o_card:
-			await move_card_to_battle_point(o_card).finished
+			# --- FIX: CHECK NULLIFY BEFORE RESETTING IT ---
+			if current_side_node.nullified:
+				print(side, " is NULLIFIED! Skipping slot ", slot_index + 1)
+				current_side_node.nullified = false # Reset it AFTER skipping the turn
+				collect_used_card(card) # Discard the card because its turn was "spent"
+				await wait(0.3)
+				continue 
+			# ----------------------------------------------
+
+			await trigger_passives("On_Slot_Start", slot_index)
+			await trigger_tokens("On_Slot_Start")
+			update_card_effects()
+
+			await move_card_to_battle_point(card).finished
 			
-			var o_runs = 1 + opponent_retrigger_counts[slot_index]
-			for run_idx in range(o_runs):
-				print("Opponent Slot ", slot_index + 1, " Run ", run_idx + 1)
-				for action_idx in range(o_card.card_data.actions.size()):
-					var action = o_card.card_data.actions[action_idx]
-					if action != null:
-						await action_manager.execute_card_action(o_card, action_idx)
+			var counts = player_retrigger_counts if side == "Player" else opponent_retrigger_counts
+			var runs = 1 + counts[slot_index]
+			
+			for run_idx in range(runs):
+				for action_idx in range(card.card_data.actions.size()):
+					if card.card_data.actions[action_idx] != null:
+						await action_manager.execute_card_action(card, action_idx)
 						await wait(0.6)
 			
-			collect_used_card(o_card)
+			collect_used_card(card)
+			await wait(0.3)
 
-		# --- 3. End of Slot Cleanup ---
 		player_retrigger_counts[slot_index] = 0
 		opponent_retrigger_counts[slot_index] = 0
-		
 		reset_opponent_slots()
 		await wait(0.6)
 
