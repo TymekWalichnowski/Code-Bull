@@ -8,7 +8,8 @@ class_name PassiveCardResource
 
 @export_group("Logic")
 @export_enum("On_Phase_Start", "On_Slot_Start", 
-			 "On_Damage_Taken_Player", "On_Damage_Taken_Opponent") 
+			 "On_Damage_Taken_Player", "On_Damage_Taken_Opponent",
+			 "On_Hit_Taken") 
 
 var trigger_condition: String = "On_Phase_Start"
 @export var effect_name: String = "Effect_Name"

@@ -8,8 +8,6 @@ var opponent_retrigger_counts = [0, 0, 0]
 @onready var action_manager = %ActionManager
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
-@export var bleed_token_res: TokenResource 
-@export var flame_token_res: TokenResource 
 
 @onready var player_slots = [
 	$"../CardSlots/CardSlot",
@@ -126,14 +124,14 @@ func run_activation_phase():
 	player_has_initiative = randf() < 0.5
 	print("Initiative: ", "Player" if player_has_initiative else "Opponent")
 	
-	await trigger_passives("On_Phase_Start")
-	await trigger_tokens("On_Phase_Start")
-	update_card_effects() 
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
 		var order = ["Player", "Opponent"] if player_has_initiative else ["Opponent", "Player"]
 		
+		await trigger_passives("On_Slot_Start", slot_index)
+		await trigger_tokens("On_Slot_Start")
+		update_card_effects()
 		for side in order:
 			var card = player_slots[slot_index].card if side == "Player" else opponent_slots[slot_index].card
 			var current_side_node = %Player if side == "Player" else %Opponent
@@ -148,9 +146,6 @@ func run_activation_phase():
 				await wait(0.3)
 				continue 
 			# ----------------------------------------------
-
-			await trigger_passives("On_Slot_Start", slot_index)
-			await trigger_tokens("On_Slot_Start")
 			update_card_effects()
 
 			await move_card_to_battle_point(card).finished
@@ -229,8 +224,8 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		battle_click_received.emit()
 
-func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
-	await passive_manager.trigger_passives(trigger_type, current_slot_idx)
+func trigger_passives(trigger_type: String, current_slot_idx: int = -1, side: String = "Both"):
+	await passive_manager.trigger_passives(trigger_type, current_slot_idx, side)
 
 func trigger_tokens(trigger_type: String, side: String = "Both"):
 	await token_manager.trigger_tokens(trigger_type, side)

@@ -8,21 +8,23 @@ extends Node
 @onready var passive_map: Dictionary = {
 	"Retrigger_Slot": _passive_retrigger,
 	"Add_Shield_Start": _passive_shield_start,
-	"Spike_Armour_Player": _passive_spike_armour_player,
-	"Spike_Armour_Opponent": _passive_spike_armour_opponent
+	"Spike_Armour": _passive_spike_armour
 }
 
 # Main entry point for the BattleManager to call
-func trigger_passives(trigger_type: String, current_slot_idx: int = -1):
-	# Check Player Passives
-	for card in player_passive_container.get_children():
-		if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
-			await _execute_passive(card, "Player", current_slot_idx)
+func trigger_passives(trigger_type: String, current_slot_idx: int = -1, side_to_trigger: String = "Both"):
+	
+	# Check Player Passives - only if side is "Both" or "Player"
+	if side_to_trigger == "Both" or side_to_trigger == "Player":
+		for card in player_passive_container.get_children():
+			if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
+				await _execute_passive(card, "Player", current_slot_idx)
 			
-	# Check Opponent Passives
-	for card in opponent_passive_container.get_children():
-		if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
-			await _execute_passive(card, "Opponent", current_slot_idx)
+	# Check Opponent Passives - only if side is "Both" or "Opponent"
+	if side_to_trigger == "Both" or side_to_trigger == "Opponent":
+		for card in opponent_passive_container.get_children():
+			if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
+				await _execute_passive(card, "Opponent", current_slot_idx)
 
 func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: int):
 	var effect = card.data.effect_name 
@@ -30,8 +32,8 @@ func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: i
 	var target_slot = card.data.target_slot 
 	
 	if passive_map.has(effect):
-		# If it's a slot-specific passive, only run it if we are on that slot
-		if target_slot != -1 and target_slot != (current_slot_idx + 1):
+		# FIX: Treat 0 and -1 as "Global/All Slots" so older cards don't break
+		if target_slot > 0 and target_slot != (current_slot_idx + 1):
 			return
 			
 		# Visual feedback
@@ -61,10 +63,12 @@ func _passive_shield_start(owner_name: String, value: float, _slot: int):
 	var target = %Player if owner_name == "Player" else %Opponent
 	target.gain_shield(value)
 
-func _passive_spike_armour_player(owner_name: String, value: float, _slot: int):
-	# Owner is Player, so hit the Opponent
-	%Opponent.take_damage(value)
+func _passive_spike_armour(owner_name: String, value: float, _slot: int):
+	# If the Player owns this passive, they hit the Opponent back.
+	# If the Opponent owns it, they hit the Player back.
+	var target = %Opponent if owner_name == "Player" else %Player
 	
-func _passive_spike_armour_opponent(owner_name: String, value: float, _slot: int):
-	# Owner is Opponent, so hit the Player
-	%Player.take_damage(value)
+	# We use a small flag or separate call to ensure this damage 
+	# doesn't count as a "Hit" to avoid infinite recursion.
+	target.take_damage(value)
+	print("Spike Armour: ", owner_name, " dealt ", value, " recoil damage.")

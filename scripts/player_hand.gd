@@ -28,7 +28,7 @@ func update_hand_positions(speed):
 	for i in range(hand_size):
 		var card = player_hand[i]
 		
-		card.original_z_index = -5 + i 
+		card.original_z_index = -10 + i 
 		if not card.hovering:
 			card.z_index = card.original_z_index
 

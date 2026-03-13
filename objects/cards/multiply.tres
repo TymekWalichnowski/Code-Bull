@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_24aaf"]
 script = ExtResource("1_q4aju")
 action_name = "Multiply_Next_Card"
-description = "Multiply all values of the next played slot by [value]"
+description = "Multiply all values of the next played card by [value]"
 value = 2.0
 priority = 3
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

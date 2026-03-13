@@ -27,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://Assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
-[ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour_opponent.tres" id="21_pnhog"]
+[ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="21_pnhog"]
 [ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="26_8cp6k"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
 [ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
@@ -295,8 +295,6 @@ texture = ExtResource("40_8cp6k")
 [node name="BattleManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_1iba3")
-bleed_token_res = ExtResource("2_g6wdg")
-flame_token_res = ExtResource("3_pnhog")
 
 [node name="AudioManager" type="Node" parent="BattleManager"]
 unique_name_in_owner = true
@@ -328,7 +326,8 @@ frame_progress = 1.0
 
 [node name="OpponentSprite" type="Sprite2D" parent="BattleManager/AnimationManager"]
 unique_name_in_owner = true
-z_index = -10
+z_index = -20
+z_as_relative = false
 texture_filter = 1
 position = Vector2(960.00006, 875.00006)
 scale = Vector2(5.15625, 5.15625)
@@ -448,6 +447,7 @@ script = ExtResource("15_pnhog")
 [node name="Opponent" type="Node2D" parent="." node_paths=PackedStringArray("entity_sprite")]
 unique_name_in_owner = true
 script = ExtResource("6_wp0k4")
+side_name = "Opponent"
 entity_sprite = NodePath("../BattleManager/AnimationManager/OpponentSprite")
 
 [node name="HealthBar" type="TextureProgressBar" parent="Opponent"]

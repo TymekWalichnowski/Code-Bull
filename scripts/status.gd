@@ -9,6 +9,7 @@ var max_health = 10
 var max_shield = 10
 var speed = 5.0
 
+@export var side_name: String = "Player" 
 @onready var healthbar = $HealthBar
 @onready var shieldbar = $ShieldBar
 

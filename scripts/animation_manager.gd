@@ -18,11 +18,11 @@ func _ready():
 
 func play_anim(action_name, card_owner, slot_idx: int = -1):
 	var battle_m = get_parent()
-	var is_p = (card_owner == "Player")
+	var is_player = (card_owner == "Player")
 	
-	var self_pos = PLAYER_POSITION if is_p else OPPONENT_POSITION
-	var target_pos = OPPONENT_POSITION if is_p else PLAYER_POSITION
-	var card_point = %PlayerCardPoint.position if is_p else %OpponentCardPoint.position
+	var self_pos = PLAYER_POSITION if is_player else OPPONENT_POSITION
+	var target_pos = OPPONENT_POSITION if is_player else PLAYER_POSITION
+	var card_point = %PlayerCardPoint.position if is_player else %OpponentCardPoint.position
 	
 	anim_node.visible = true
 	
@@ -39,17 +39,17 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 
 		"Multiply_Next_Card", "Retrigger_Next_Slot":
 			if slot_idx >= 0 and slot_idx < 3:
-				var slots = battle_m.player_slots if is_p else battle_m.opponent_slots
+				var slots = battle_m.player_slots if is_player else battle_m.opponent_slots
 				anim_node.position = slots[slot_idx].global_position
 			else:
 				anim_node.position = self_pos
 			anim_node.play("multiply")
 
-		"Divide_Next_Card":
+		"Divide_Next_Card", "Divide_Specific_Slot":
 			if slot_idx >= 0 and slot_idx < 3:
 				# Divide always targets the opponent's side
-				var slots = battle_m.opponent_slots if is_p else battle_m.player_slots
-				anim_node.position = slots[slot_idx].global_position
+				var target_slots = battle_m.opponent_slots if is_player else battle_m.player_slots
+				anim_node.position = target_slots[slot_idx].global_position
 			else:
 				anim_node.position = target_pos
 			anim_node.play("divide")
