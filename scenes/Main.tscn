@@ -9,38 +9,38 @@
 [ext_resource type="Resource" uid="uid://bhfp8flf2320e" path="res://objects/tokens/flame.tres" id="3_pnhog"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
 [ext_resource type="Script" uid="uid://bhofib52ahbgp" path="res://scripts/globals/audio_manager.gd" id="4_8b871"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://bej4mcopqs30m" path="res://scripts/passive_manager.gd" id="4_dg70y"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://ccry32ril1ham" path="res://scripts/token_manager.gd" id="5_g6wdg"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/opponent_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
-[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
-[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
-[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
+[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
 [ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="12_yxlcp"]
 [ext_resource type="PackedScene" uid="uid://c2gj3tp3iihc0" path="res://scenes/damage_numbers.tscn" id="14_cmqll"]
 [ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="15_pnhog"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="16_gsxep"]
-[ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://Assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
+[ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="21_pnhog"]
 [ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="26_8cp6k"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
-[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
+[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
 [ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="32_t70y2"]
-[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
-[ext_resource type="Texture2D" uid="uid://033uq706uqwr" path="res://Assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
-[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="34_pdwbg"]
-[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="35_5grtr"]
-[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="36_vua0o"]
-[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="37_t70y2"]
-[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://Assets/textures/effects/multiply_divide_sheet.png" id="38_8gny2"]
-[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
-[ext_resource type="Texture2D" uid="uid://dgfxtn3so2syp" path="res://Assets/textures/backgrounds/temp_bg.png" id="40_8cp6k"]
+[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://assets/Placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
+[ext_resource type="Texture2D" uid="uid://033uq706uqwr" path="res://assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
+[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://assets/Placeholder/Slash/Classic/2/Classic_09.png" id="34_pdwbg"]
+[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://assets/Placeholder/Slash/Classic/2/Classic_10.png" id="35_5grtr"]
+[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://assets/Placeholder/Slash/Classic/2/Classic_11.png" id="36_vua0o"]
+[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://assets/Placeholder/Slash/Classic/2/Classic_12.png" id="37_t70y2"]
+[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://assets/textures/effects/multiply_divide_sheet.png" id="38_8gny2"]
+[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
+[ext_resource type="Texture2D" uid="uid://dgfxtn3so2syp" path="res://assets/textures/backgrounds/temp_bg.png" id="40_8cp6k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("38_8gny2")
@@ -421,6 +421,7 @@ offset_bottom = 1079.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
+fill_mode = 6
 nine_patch_stretch = true
 texture_under = ExtResource("7_qmy6f")
 texture_progress = ExtResource("8_mwfav")
@@ -428,15 +429,15 @@ texture_progress = ExtResource("8_mwfav")
 [node name="ShieldBar" type="TextureProgressBar" parent="Player"]
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
-offset_left = 763.0
-offset_top = 981.0
-offset_right = 1163.0
-offset_bottom = 1021.0
+offset_left = 760.0
+offset_top = 1039.0
+offset_right = 1160.0
+offset_bottom = 1079.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
+fill_mode = 6
 nine_patch_stretch = true
-texture_under = ExtResource("7_qmy6f")
 texture_progress = ExtResource("11_2ofn6")
 
 [node name="PlayerTokens" type="Node2D" parent="Player"]
@@ -460,6 +461,7 @@ offset_bottom = 5.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
+fill_mode = 6
 nine_patch_stretch = true
 texture_under = ExtResource("7_qmy6f")
 texture_progress = ExtResource("8_mwfav")
@@ -467,15 +469,15 @@ texture_progress = ExtResource("8_mwfav")
 [node name="ShieldBar" type="TextureProgressBar" parent="Opponent"]
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
-offset_left = 758.0
-offset_top = 14.0
-offset_right = 1158.0
-offset_bottom = 54.0
+offset_left = 760.0
+offset_top = -35.0
+offset_right = 1160.0
+offset_bottom = 5.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
+fill_mode = 6
 nine_patch_stretch = true
-texture_under = ExtResource("7_qmy6f")
 texture_progress = ExtResource("11_2ofn6")
 
 [node name="OpponentTokens" type="Node2D" parent="Opponent"]

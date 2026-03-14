@@ -35,7 +35,7 @@ var is_inventory: bool = false
 var sounds = {
 	"place": preload("res://assets/audio/card-place-2.ogg"),
 	"pickup": preload("res://assets/audio/card-place-1.ogg"),
-	"use": preload("res://assets/audio/card-shove-3.ogg")
+	"use": preload("res://assets/audio/card-slide-2.ogg")
 }
 
 var card_id: int = 0
@@ -151,7 +151,7 @@ func update_hover_ui():
 	var show_description = not is_enemy_hand_card or is_preview or is_inventory
 
 	# Tags: ONLY when hovering (unless preview/inventory)
-	var show_tags = (hovering and show_description) or is_preview or is_inventory
+	var show_tags = hovering and (show_description or is_preview or is_inventory)
 
 	%DescriptionOverlay.visible = show_description
 	%UIOverlay.visible = show_tags
