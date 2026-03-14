@@ -32,9 +32,12 @@ func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: i
 	var target_slot = card.data.target_slot 
 	
 	if passive_map.has(effect):
-		# FIX: Treat 0 and -1 as "Global/All Slots" so older cards don't break
-		if target_slot > 0 and target_slot != (current_slot_idx + 1):
-			return
+		# LOGIC CHECK:
+		# If we are doing a slot-specific trigger (like On_Slot_Start), check the index.
+		# If we are doing a turn-wide trigger (like On_Turn_Start), skip the index check.
+		if current_slot_idx != -1: 
+			if target_slot > 0 and target_slot != (current_slot_idx + 1):
+				return
 			
 		# Visual feedback
 		if card.has_node("AnimationPlayer"):
@@ -42,22 +45,26 @@ func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: i
 			anim.play("passive_trigger") 
 			await anim.animation_finished
 		
-		# Small pause
 		await get_tree().create_timer(0.4).timeout
 		
-		# Execute the specific logic
+		# Execute (target_slot is passed as 2 in your case)
 		await passive_map[effect].call(owner_name, val, target_slot)
 
 # --- EFFECT LOGIC ---
 
 func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
 	var index = slot_to_hit - 1
+	var target_slot
+	
 	if owner_name == "Player":
-		battle_manager.player_retrigger_counts[index] += int(value)
+		target_slot = battle_manager.player_slots[index]
 	else:
-		battle_manager.opponent_retrigger_counts[index] += int(value)
-	print("Passive: ", owner_name, " scheduled retrigger for slot ", slot_to_hit)
-	battle_manager.update_card_effects()
+		target_slot = battle_manager.opponent_slots[index]
+		
+	# Apply the buff directly to the slot
+	if target_slot:
+		target_slot.add_retrigger_buff(int(value))
+		print("Passive: ", owner_name, " buffed slot ", slot_to_hit, " with ", value, " retriggers.")
 
 func _passive_shield_start(owner_name: String, value: float, _slot: int):
 	var target = %Player if owner_name == "Player" else %Opponent

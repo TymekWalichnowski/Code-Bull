@@ -7,7 +7,7 @@
 script = ExtResource("1_dmi73")
 card_name = "Retrigger Slot 2"
 card_image = ExtResource("1_vmrmt")
-trigger_condition = "On_Slot_Start"
+trigger_condition = "On_Turn_Start"
 effect_name = "Retrigger_Slot"
 target_slot = 2
 metadata/_custom_type_script = "uid://boekostu7upwt"

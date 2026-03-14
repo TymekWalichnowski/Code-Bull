@@ -28,18 +28,20 @@ func _process(delta: float) -> void:
 func start_drag(card):
 	card_being_dragged = card
 	
-	# 1. KILL ROTATION IMMEDIATELY
-	# We use a quick tween so it doesn't just "snap" instantly, but 0.05 is fast enough to feel like a snap.
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "rotation", 0.0, 0.05)
 	
 	card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
-	card.z_index = 200 # Ensure it's on top of everything
+	card.z_index = 200 
 	
 	player_hand_reference.remove_card_from_hand(card_being_dragged)
 	
 	var card_slot_found = raycast_check_for_card_slot(card)
 	if card_slot_found:
+		# STRIP THE BUFF OFF THE CARD WHEN PICKED UP
+		card.retriggers -= card_slot_found.bonus_retriggers
+		card.update_retrigger_visuals()
+		
 		card_slot_found.card_in_slot = false
 		card.cards_current_slot = null
 		card_slot_found.card = null
@@ -50,16 +52,20 @@ func finish_drag():
 	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot(card_being_dragged)
 	
-	# Check if slot exists, is empty, AND belongs to the card owner
 	if card_slot_found and not card_slot_found.card_in_slot and card_slot_found.slot_owner == card_being_dragged.card_owner:
 		card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 		card_being_dragged.cards_current_slot = card_slot_found
 		card_being_dragged.position = card_slot_found.position
+		
 		card_slot_found.card_in_slot = true
 		card_slot_found.card = card_being_dragged
+		
+		# APPLY THE SLOT'S BUFF TO THE CARD WHEN PLACED
+		card_being_dragged.retriggers += card_slot_found.bonus_retriggers
+		card_being_dragged.update_retrigger_visuals()
+		
 		card_being_dragged.play_audio("place")
 	else:
-		# Return to hand if invalid slot or wrong owner
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	
 	card_being_dragged = null

@@ -95,11 +95,14 @@ func execute_card_action(card: Card, action_index: int):
 
 func _handle_retrigger(is_target_player: bool, target_idx: int, value: int):
 	if target_idx >= 0 and target_idx < 3:
+		var target_slot
 		if is_target_player:
-			battle_manager.player_retrigger_counts[target_idx] += value
+			target_slot = battle_manager.player_slots[target_idx]
 		else:
-			battle_manager.opponent_retrigger_counts[target_idx] += value
-		battle_manager.update_card_effects()
+			target_slot = battle_manager.opponent_slots[target_idx]
+			
+		if target_slot:
+			target_slot.add_retrigger_buff(value)
 
 func _apply_multiplier(is_target_player: bool, target_idx: int, multiplier_value: float):
 	if target_idx < 0 or target_idx >= 3: return

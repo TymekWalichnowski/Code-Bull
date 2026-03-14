@@ -2,9 +2,6 @@ extends Node
 
 signal battle_click_received
 
-var player_retrigger_counts = [0, 0, 0]
-var opponent_retrigger_counts = [0, 0, 0]
-
 @onready var action_manager = %ActionManager
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
@@ -42,6 +39,8 @@ func _ready() -> void:
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
 	
+	await get_tree().create_timer(6.5).timeout #not the best solution, wait until everything is drawn THEN start the turn
+	await trigger_passives("On_Turn_Start")
 	opponent_turn()
 
 func _process(_delta: float) -> void:
@@ -55,10 +54,12 @@ func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".visible = false
 	await run_activation_phase()
 	await trigger_tokens("On_Phase_End")
+	
+	await trigger_passives("On_Turn_Start")
 	opponent_turn()
-	%PlayerDeck.draw_card()
-	%PlayerDeck.draw_card()
-	%PlayerDeck.draw_card()
+	await %PlayerDeck.draw_card()
+	await %PlayerDeck.draw_card()
+	await %PlayerDeck.draw_card()
 
 func opponent_turn():
 	await wait(0.2)
@@ -95,6 +96,9 @@ func play_opponent_cards():
 		card_to_play.cards_current_slot = slot
 		slot.card_in_slot = true
 		slot.card = card_to_play
+		
+		card_to_play.retriggers += slot.bonus_retriggers
+		card_to_play.update_retrigger_visuals()
 		card_to_play.update_hover_ui()
 
 		%OpponentHand.remove_card_from_hand(card_to_play)
@@ -104,6 +108,7 @@ func play_opponent_cards():
 func end_opponent_turn():
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
+	
 
 func reset_opponent_slots():
 	empty_opponent_card_slots.clear()
@@ -118,8 +123,6 @@ func wait(wait_time):
 
 func run_activation_phase():
 	var slot_count = max(player_slots.size(), opponent_slots.size())
-	player_retrigger_counts = [0, 0, 0]
-	opponent_retrigger_counts = [0, 0, 0]
 	
 	player_has_initiative = randf() < 0.5
 	print("Initiative: ", "Player" if player_has_initiative else "Opponent")
@@ -129,29 +132,27 @@ func run_activation_phase():
 	for slot_index in range(slot_count):
 		var order = ["Player", "Opponent"] if player_has_initiative else ["Opponent", "Player"]
 		
+		# Passives trigger here! This is when _passive_retrigger will fire and buff the slots.
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
-		update_card_effects()
+		
 		for side in order:
 			var card = player_slots[slot_index].card if side == "Player" else opponent_slots[slot_index].card
 			var current_side_node = %Player if side == "Player" else %Opponent
 			
 			if not card: continue
 
-			# --- FIX: CHECK NULLIFY BEFORE RESETTING IT ---
 			if current_side_node.nullified:
 				print(side, " is NULLIFIED! Skipping slot ", slot_index + 1)
-				current_side_node.nullified = false # Reset it AFTER skipping the turn
-				collect_used_card(card) # Discard the card because its turn was "spent"
+				current_side_node.nullified = false 
+				collect_used_card(card) 
 				await wait(0.3)
 				continue 
-			# ----------------------------------------------
-			update_card_effects()
 
 			await move_card_to_battle_point(card).finished
 			
-			var counts = player_retrigger_counts if side == "Player" else opponent_retrigger_counts
-			var runs = 1 + counts[slot_index]
+			# THIS IS THE MAGIC. It now just asks the card how many retriggers it has!
+			var runs = 1 + card.retriggers
 			
 			for run_idx in range(runs):
 				for action_idx in range(card.card_data.actions.size()):
@@ -162,8 +163,9 @@ func run_activation_phase():
 			collect_used_card(card)
 			await wait(0.3)
 
-		player_retrigger_counts[slot_index] = 0
-		opponent_retrigger_counts[slot_index] = 0
+		# Wipe the buffs from the slot once both cards have played
+		if player_slots[slot_index]: player_slots[slot_index].clear_buffs()
+		if opponent_slots[slot_index]: opponent_slots[slot_index].clear_buffs()
 		reset_opponent_slots()
 		await wait(0.6)
 
@@ -182,16 +184,15 @@ func move_card_to_battle_point(card) -> Tween:
 
 func collect_used_card(card):
 	if card == null: return
-	
-	card.set_retrigger_glow(false)
+	card.retriggers = 0
+	card.update_retrigger_visuals()
 	
 	# --- RESET CARD STATS BEFORE GRAVEYARD ---
 	if card.card_data:
 		card.card_data.multiplier = 1.0
 		for action in card.card_data.actions:
-				if action != null: # Check if the action slot is actually filled
-					action.action_multiplier = 1.0
-		# If you eventually add other temporary buffs (like flat damage), reset them here too
+			if action != null: 
+				action.action_multiplier = 1.0
 	
 	if card.card_owner == "Player":
 		%PlayerDeck.graveyard.append(card.card_data)
@@ -204,21 +205,6 @@ func collect_used_card(card):
 		card.cards_current_slot = null
 		
 	card.queue_free()
-
-func update_card_effects():
-	# Update Player Cards
-	for i in range(player_slots.size()):
-		var slot = player_slots[i]
-		var has_retrigger = player_retrigger_counts[i] > 0
-		if slot.card:
-			slot.card.set_retrigger_glow(has_retrigger)
-	
-	# Update Opponent Cards
-	for i in range(opponent_slots.size()):
-		var slot = opponent_slots[i]
-		var has_retrigger = opponent_retrigger_counts[i] > 0
-		if slot.card:
-			slot.card.set_retrigger_glow(has_retrigger)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

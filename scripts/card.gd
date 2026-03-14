@@ -40,6 +40,7 @@ var sounds = {
 
 var card_id: int = 0
 var card_name: String = ""
+var retriggers: int = 0
 
 
 func setup(data: CardDataResource, owner: String) -> void:
@@ -219,14 +220,15 @@ func _get_current_slot_index() -> int:
 	var slots = get_node("/root/Main/BattleManager").player_slots
 	return slots.find(cards_current_slot)
 
-func set_retrigger_glow(is_active: bool):
+func update_retrigger_visuals():
+	var is_active = (retriggers > 0)
+	
 	if not glow_sprite or not effect_animation_player:
 		return
 		
 	glow_sprite.visible = is_active
 	
 	if is_active:
-		# Ensure the animation name matches exactly what you named it in the editor
 		if effect_animation_player.has_animation("retrigger_glow"):
 			effect_animation_player.play("retrigger_glow")
 	else:
