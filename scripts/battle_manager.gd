@@ -36,18 +36,22 @@ func _ready() -> void:
 	# Automatically find empty slots from the array
 	reset_opponent_slots()
 	
+	%Player.speed = randi_range(1, 5)
+	%Opponent.speed = randi_range(1, 5)
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
 	
-	await get_tree().create_timer(6.5).timeout #not the best solution, wait until everything is drawn THEN start the turn
+	await get_tree().create_timer(3.5).timeout #not the best solution, wait until everything is drawn THEN start the turn
 	await trigger_passives("On_Turn_Start")
 	opponent_turn()
 
 func _process(_delta: float) -> void:
 	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f " % [
 		%Player.current_health, %Player.current_shield]
+	%Player/SpeedHolder/SpeedLabel.text = str(%Player.speed)
 	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f" % [
 		%Opponent.current_health, %Opponent.current_shield]
+	%Opponent/SpeedHolder/SpeedLabel.text = str(%Opponent.speed)
 
 func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".disabled = true
@@ -56,10 +60,15 @@ func _on_end_turn_button_pressed() -> void:
 	await trigger_tokens("On_Phase_End")
 	
 	await trigger_passives("On_Turn_Start")
+	# 1. Roll random speeds (1-5)
+	%Player.speed = randi_range(1, 5)
+	%Opponent.speed = randi_range(1, 5)
+	
+	await %PlayerDeck.draw_card()
+	await %PlayerDeck.draw_card()
+	await %PlayerDeck.draw_card()
+	
 	opponent_turn()
-	await %PlayerDeck.draw_card()
-	await %PlayerDeck.draw_card()
-	await %PlayerDeck.draw_card()
 
 func opponent_turn():
 	await wait(0.2)
@@ -124,15 +133,24 @@ func wait(wait_time):
 func run_activation_phase():
 	var slot_count = max(player_slots.size(), opponent_slots.size())
 	
-	player_has_initiative = randf() < 0.5
-	print("Initiative: ", "Player" if player_has_initiative else "Opponent")
+	# 2. Determine who has initiative
+	if %Player.speed > %Opponent.speed:
+		player_has_initiative = true
+	elif %Opponent.speed > %Player.speed:
+		player_has_initiative = false
+	else:
+		# Tie-breaker: coin flip
+		player_has_initiative = randf() < 0.5
+		
+	print("Speeds: P:%d vs O:%d | Initiative: %s" % [
+		%Player.speed, %Opponent.speed, "Player" if player_has_initiative else "Opponent"])
 	
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
+		# Calculate order for THIS slot based on initiative
 		var order = ["Player", "Opponent"] if player_has_initiative else ["Opponent", "Player"]
 		
-		# Passives trigger here! This is when _passive_retrigger will fire and buff the slots.
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
 		
@@ -151,9 +169,7 @@ func run_activation_phase():
 
 			await move_card_to_battle_point(card).finished
 			
-			# THIS IS THE MAGIC. It now just asks the card how many retriggers it has!
 			var runs = 1 + card.retriggers
-			
 			for run_idx in range(runs):
 				for action_idx in range(card.card_data.actions.size()):
 					if card.card_data.actions[action_idx] != null:
@@ -163,7 +179,6 @@ func run_activation_phase():
 			collect_used_card(card)
 			await wait(0.3)
 
-		# Wipe the buffs from the slot once both cards have played
 		if player_slots[slot_index]: player_slots[slot_index].clear_buffs()
 		if opponent_slots[slot_index]: opponent_slots[slot_index].clear_buffs()
 		reset_opponent_slots()
