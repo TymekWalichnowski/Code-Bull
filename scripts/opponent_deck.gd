@@ -1,5 +1,8 @@
 extends Node2D
 
+signal deck_setup_complete
+var setup_finished: bool = false
+
 const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
 const CARD_DRAW_SPEED = 0.2
@@ -27,6 +30,8 @@ func _ready() -> void:
 		await draw_card()
 	
 	spawn_starting_passives()
+	setup_finished = true
+	deck_setup_complete.emit()
 
 func draw_card():
 	if active_deck.is_empty() and graveyard.size() > 0:

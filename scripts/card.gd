@@ -192,13 +192,17 @@ func update_hover_ui():
 	# -----------------------------
 	# 3. BUILD TAG TEXT
 	# -----------------------------
-	if tag_list.size() > 0:
+	var lines = []
+	
+	# Add the card type for debugging
+	if card_data and card_data.type != "":
+		lines.append("[b]Type[/b]: " + card_data.type)
+
+	if tag_list.size() > 0 or lines.size() > 0:
 		var tag_descriptions = {
 			"Ethereal": "Cannot be modified by external effects.",
 			"Retrigger": "Triggers again when activated."
 		}
-
-		var lines = []
 
 		for tag in tag_list:
 			var d = tag_descriptions.get(tag, "")
@@ -208,7 +212,6 @@ func update_hover_ui():
 				lines.append(tag)
 
 		tag_label.text = "TAGS:\n" + "\n".join(lines)
-
 		tag_container.visible = show_tags
 	else:
 		tag_container.visible = false

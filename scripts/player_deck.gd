@@ -1,5 +1,8 @@
 extends Node2D
 
+signal deck_setup_complete
+var setup_finished: bool = false
+
 @export var card_database: CardDatabase # Keep if other systems need it
 #@export var starting_deck: Array[CardDataResource]
 #@export var starting_passives: Array[PassiveCardResource]
@@ -37,6 +40,8 @@ func _ready() -> void:
 	
 	drawn_card_this_turn = true
 	spawn_starting_passives()
+	setup_finished = true
+	deck_setup_complete.emit()
 
 func draw_card():
 	if current_deck.is_empty() and graveyard.size() > 0:

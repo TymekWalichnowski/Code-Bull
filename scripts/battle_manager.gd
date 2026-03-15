@@ -29,20 +29,35 @@ var opponent_health
 var empty_opponent_card_slots = []
 var player_has_initiative: bool = true
 
+var player_snapshot: Dictionary = {}
+var opponent_snapshot: Dictionary = {}
+var board_locked: bool = false # Toggle to stop live-updating
+
 func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
 	
-	# Automatically find empty slots from the array
 	reset_opponent_slots()
 	
-	%Player.speed = randi_range(1, 5)
-	%Opponent.speed = randi_range(1, 5)
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
 	
-	await get_tree().create_timer(3.5).timeout #not the best solution, wait until everything is drawn THEN start the turn
+	# --- NEW SAFE WAIT LOGIC ---
+	if not %PlayerDeck.setup_finished:
+		await %PlayerDeck.deck_setup_complete
+		
+	if not %OpponentDeck.setup_finished:
+		await %OpponentDeck.deck_setup_complete
+	
+	# Small buffer to ensure all nodes are placed in the tree
+	await get_tree().create_timer(0.1).timeout
+	
+	# Now trigger your passives
 	await trigger_passives("On_Turn_Start")
+	
+	# Initial board analysis so the text display isn't empty on frame 1
+	analyze_board_state()
+	
 	opponent_turn()
 
 func _process(_delta: float) -> void:
@@ -52,10 +67,15 @@ func _process(_delta: float) -> void:
 	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f" % [
 		%Opponent.current_health, %Opponent.current_shield]
 	%Opponent/SpeedHolder/SpeedLabel.text = str(%Opponent.speed)
+	
+	# Continuously track card types and chains
+	analyze_board_state()
 
 func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".disabled = true
 	$"../EndTurnButton".visible = false
+	board_locked = true
+	
 	await run_activation_phase()
 	await trigger_tokens("On_Phase_End")
 	
@@ -68,6 +88,7 @@ func _on_end_turn_button_pressed() -> void:
 	await %PlayerDeck.draw_card()
 	await %PlayerDeck.draw_card()
 	
+	board_locked = false
 	opponent_turn()
 
 func opponent_turn():
@@ -230,3 +251,62 @@ func trigger_passives(trigger_type: String, current_slot_idx: int = -1, side: St
 
 func trigger_tokens(trigger_type: String, side: String = "Both"):
 	await token_manager.trigger_tokens(trigger_type, side)
+
+func analyze_board_state():
+	# If NOT locked, update the snapshots with live data
+	if not board_locked:
+		player_snapshot = _analyze_slots(player_slots)
+		opponent_snapshot = _analyze_slots(opponent_slots)
+	
+	# Always update the UI using the snapshots (whether they are live or locked)
+	_update_board_label()
+
+func _update_board_label():
+	var display_text = "--- PLAYER BOARD (Locked: %s) ---\n" % str(board_locked)
+	display_text += "Slots: " + str(player_snapshot.slot_types) + "\n"
+	display_text += "Counts: " + str(player_snapshot.type_counts) + "\n"
+	display_text += "Chain: %dx %s\n\n" % [player_snapshot.highest_chain_length, player_snapshot.highest_chain_type]
+	
+	display_text += "--- OPPONENT BOARD ---\n"
+	display_text += "Slots: " + str(opponent_snapshot.slot_types) + "\n"
+	display_text += "Counts: " + str(opponent_snapshot.type_counts) + "\n"
+	display_text += "Chain: %dx %s" % [opponent_snapshot.highest_chain_length, opponent_snapshot.highest_chain_type]
+
+	if has_node("%BoardStateLabel"):
+		%BoardStateLabel.text = display_text
+
+# Keep the _analyze_slots helper function exactly as it was
+func _analyze_slots(slots_array: Array) -> Dictionary:
+	var type_counts = {}
+	var current_chain_type = ""
+	var current_chain_length = 0
+	var highest_chain_type = ""
+	var highest_chain_length = 0
+	var slot_types = []
+	
+	for slot in slots_array:
+		if is_instance_valid(slot) and slot.card_in_slot and slot.card and slot.card.card_data:
+			var c_type = slot.card.card_data.type
+			slot_types.append(c_type)
+			type_counts[c_type] = type_counts.get(c_type, 0) + 1
+			
+			if c_type == current_chain_type:
+				current_chain_length += 1
+			else:
+				current_chain_type = c_type
+				current_chain_length = 1
+				
+			if current_chain_length > highest_chain_length:
+				highest_chain_length = current_chain_length
+				highest_chain_type = current_chain_type
+		else:
+			slot_types.append("Empty")
+			current_chain_type = ""
+			current_chain_length = 0
+			
+	return {
+		"slot_types": slot_types,
+		"type_counts": type_counts,
+		"highest_chain_type": highest_chain_type,
+		"highest_chain_length": highest_chain_length
+	}

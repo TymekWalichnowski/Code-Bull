@@ -391,6 +391,15 @@ script = ExtResource("3_cm0pq")
 unique_name_in_owner = true
 script = ExtResource("5_q8u5g")
 
+[node name="BoardStateLabel" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+offset_left = 1335.0
+offset_top = 555.0
+offset_right = 1776.0
+offset_bottom = 734.0
+theme_override_font_sizes/normal_font_size = 16
+text = "0"
+
 [node name="PlayerLabel" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
 offset_left = 81.0
