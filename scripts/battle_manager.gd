@@ -6,69 +6,62 @@ signal battle_click_received
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
 
-@onready var player_slots = [
-	$"../CardSlots/CardSlot",
-	$"../CardSlots/CardSlot2",
-	$"../CardSlots/CardSlot3"
-]
-
-@onready var opponent_slots = [
-	$"../CardSlots/CardSlotOpponent1",
-	$"../CardSlots/CardSlotOpponent2",
-	$"../CardSlots/CardSlotOpponent3"
-]
-
+@onready var player_slots = [$"../CardSlots/CardSlot", $"../CardSlots/CardSlot2", $"../CardSlots/CardSlot3"]
+@onready var opponent_slots = [$"../CardSlots/CardSlotOpponent1", $"../CardSlots/CardSlotOpponent2", $"../CardSlots/CardSlotOpponent3"]
 @onready var battle_timer = %BattleTimer
 
 const STARTING_HEALTH = 10.0
 const SMALLER_CARD_SCALE = 1.05
 const CARD_MOVE_SPEED = 0.2
+const START_DRAW_COUNT = 6 # Max cards to draw at start
 
-var player_health
-var opponent_health
-var empty_opponent_card_slots = []
 var player_has_initiative: bool = true
-
+var empty_opponent_card_slots = []
 var player_snapshot: Dictionary = {}
 var opponent_snapshot: Dictionary = {}
-var board_locked: bool = false # Toggle to stop live-updating
+var board_locked: bool = false 
 
 func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
-	
 	reset_opponent_slots()
 	
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
 	
-	# --- NEW SAFE WAIT LOGIC ---
-	if not %PlayerDeck.setup_finished:
-		await %PlayerDeck.deck_setup_complete
+	# 1. Initialize data arrays
+	%PlayerDeck.prepare_deck()
+	%OpponentDeck.prepare_deck()
+	
+	# 2. DRAW CARDS SIMULTANEOUSLY
+	# We loop and call draw for both without 'awaiting' the movement inside the deck
+	for i in range(START_DRAW_COUNT):
+		if i < 5: # Player starting hand size
+			%PlayerDeck.draw_card()
+		if i < 6: # Opponent starting hand size
+			%OpponentDeck.draw_card()
 		
-	if not %OpponentDeck.setup_finished:
-		await %OpponentDeck.deck_setup_complete
+		# Wait a small amount between pairs of cards so it looks clean
+		await get_tree().create_timer(0.4).timeout
 	
-	# Small buffer to ensure all nodes are placed in the tree
-	await get_tree().create_timer(0.1).timeout
+	# 3. SPAWN PASSIVES
+	%PlayerDeck.spawn_starting_passives()
+	%OpponentDeck.spawn_starting_passives()
 	
-	# Now trigger your passives
+	# Small buffer for nodes to settle
+	await get_tree().create_timer(0.2).timeout
+	
+	# 4. ACTIVATE PASSIVES
 	await trigger_passives("On_Turn_Start")
 	
-	# Initial board analysis so the text display isn't empty on frame 1
 	analyze_board_state()
-	
 	opponent_turn()
 
 func _process(_delta: float) -> void:
-	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f " % [
-		%Player.current_health, %Player.current_shield]
+	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f " % [%Player.current_health, %Player.current_shield]
 	%Player/SpeedHolder/SpeedLabel.text = str(%Player.speed)
-	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f" % [
-		%Opponent.current_health, %Opponent.current_shield]
+	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f" % [%Opponent.current_health, %Opponent.current_shield]
 	%Opponent/SpeedHolder/SpeedLabel.text = str(%Opponent.speed)
-	
-	# Continuously track card types and chains
 	analyze_board_state()
 
 func _on_end_turn_button_pressed() -> void:
@@ -79,14 +72,17 @@ func _on_end_turn_button_pressed() -> void:
 	await run_activation_phase()
 	await trigger_tokens("On_Phase_End")
 	
-	await trigger_passives("On_Turn_Start")
-	# 1. Roll random speeds (1-5)
+	# New Turn Setup
 	%Player.speed = randi_range(1, 5)
 	%Opponent.speed = randi_range(1, 5)
 	
-	await %PlayerDeck.draw_card()
-	await %PlayerDeck.draw_card()
-	await %PlayerDeck.draw_card()
+	# Draw for next turn (can be simultaneous too)
+	%PlayerDeck.draw_card()
+	%PlayerDeck.draw_card()
+	%PlayerDeck.draw_card()
+	
+	await trigger_passives("On_Turn_Start")
+	await trigger_tokens("On_Turn_Start")
 	
 	board_locked = false
 	opponent_turn()
@@ -103,7 +99,6 @@ func opponent_turn():
 
 func play_opponent_cards():
 	var hand = %OpponentHand.opponent_hand.duplicate()
-
 	while hand.size() > 0 and empty_opponent_card_slots.size() > 0:
 		var card_to_play = hand[0]
 		for card in hand:
@@ -111,12 +106,11 @@ func play_opponent_cards():
 				card_to_play = card
 
 		var slot = empty_opponent_card_slots[0]
-
 		var tween1 = get_tree().create_tween().set_parallel(true)
 		tween1.tween_property(card_to_play, "position", slot.position, CARD_MOVE_SPEED)
 		tween1.tween_property(card_to_play, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
+		tween1.tween_property(card_to_play, "rotation", 0, CARD_MOVE_SPEED)
 		
-		# When the card moves to the slot:
 		card_to_play.get_node("CardImage").visible = true
 		card_to_play.get_node("AnimationPlayer").play("card_flip")
 		card_to_play.play_audio("place")
@@ -126,7 +120,6 @@ func play_opponent_cards():
 		card_to_play.cards_current_slot = slot
 		slot.card_in_slot = true
 		slot.card = card_to_play
-		
 		card_to_play.retriggers += slot.bonus_retriggers
 		card_to_play.update_retrigger_visuals()
 		card_to_play.update_hover_ui()
@@ -138,7 +131,6 @@ func play_opponent_cards():
 func end_opponent_turn():
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
-	
 
 func reset_opponent_slots():
 	empty_opponent_card_slots.clear()
@@ -153,36 +145,24 @@ func wait(wait_time):
 
 func run_activation_phase():
 	var slot_count = max(player_slots.size(), opponent_slots.size())
-	
-	# 2. Determine who has initiative
 	if %Player.speed > %Opponent.speed:
 		player_has_initiative = true
-	elif %Opponent.speed > %Player.speed:
+	elif %Opponent.speed >= %Player.speed:
 		player_has_initiative = false
-	else:
-		# Tie-breaker: coin flip
-		player_has_initiative = randf() < 0.5
-		
-	print("Speeds: P:%d vs O:%d | Initiative: %s" % [
-		%Player.speed, %Opponent.speed, "Player" if player_has_initiative else "Opponent"])
 	
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
-		# Calculate order for THIS slot based on initiative
 		var order = ["Player", "Opponent"] if player_has_initiative else ["Opponent", "Player"]
-		
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
 		
 		for side in order:
 			var card = player_slots[slot_index].card if side == "Player" else opponent_slots[slot_index].card
 			var current_side_node = %Player if side == "Player" else %Opponent
-			
 			if not card: continue
 
 			if current_side_node.nullified:
-				print(side, " is NULLIFIED! Skipping slot ", slot_index + 1)
 				current_side_node.nullified = false 
 				collect_used_card(card) 
 				await wait(0.3)
@@ -206,15 +186,13 @@ func run_activation_phase():
 		await wait(0.6)
 
 func move_card_to_battle_point(card) -> Tween:
-	var target_pos
-	if card.card_owner == "Player":
-		target_pos = %PlayerCardPoint.global_position 
-	else:
-		target_pos = %OpponentCardPoint.global_position 
+	var target_pos = %PlayerCardPoint.global_position if card.card_owner == "Player" else %OpponentCardPoint.global_position 
 		
 	var move_tween = get_tree().create_tween().set_parallel(true)
 	move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
 	move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
+	move_tween.tween_property(card, "rotation", 0, CARD_MOVE_SPEED) 
+	
 	card.z_index = 10
 	return move_tween
 
@@ -222,13 +200,10 @@ func collect_used_card(card):
 	if card == null: return
 	card.retriggers = 0
 	card.update_retrigger_visuals()
-	
-	# --- RESET CARD STATS BEFORE GRAVEYARD ---
 	if card.card_data:
 		card.card_data.multiplier = 1.0
 		for action in card.card_data.actions:
-			if action != null: 
-				action.action_multiplier = 1.0
+			if action != null: action.action_multiplier = 1.0
 	
 	if card.card_owner == "Player":
 		%PlayerDeck.graveyard.append(card.card_data)
@@ -239,7 +214,6 @@ func collect_used_card(card):
 		card.cards_current_slot.card = null
 		card.cards_current_slot.card_in_slot = false
 		card.cards_current_slot = null
-		
 	card.queue_free()
 
 func _input(event: InputEvent) -> void:
@@ -253,29 +227,21 @@ func trigger_tokens(trigger_type: String, side: String = "Both"):
 	await token_manager.trigger_tokens(trigger_type, side)
 
 func analyze_board_state():
-	# If NOT locked, update the snapshots with live data
 	if not board_locked:
 		player_snapshot = _analyze_slots(player_slots)
 		opponent_snapshot = _analyze_slots(opponent_slots)
-	
-	# Always update the UI using the snapshots (whether they are live or locked)
 	_update_board_label()
 
 func _update_board_label():
-	var display_text = "--- PLAYER BOARD (Locked: %s) ---\n" % str(board_locked)
+	var display_text = "--- PLAYER BOARD ---\n"
 	display_text += "Slots: " + str(player_snapshot.slot_types) + "\n"
-	display_text += "Counts: " + str(player_snapshot.type_counts) + "\n"
 	display_text += "Chain: %dx %s\n\n" % [player_snapshot.highest_chain_length, player_snapshot.highest_chain_type]
-	
 	display_text += "--- OPPONENT BOARD ---\n"
 	display_text += "Slots: " + str(opponent_snapshot.slot_types) + "\n"
-	display_text += "Counts: " + str(opponent_snapshot.type_counts) + "\n"
 	display_text += "Chain: %dx %s" % [opponent_snapshot.highest_chain_length, opponent_snapshot.highest_chain_type]
-
 	if has_node("%BoardStateLabel"):
 		%BoardStateLabel.text = display_text
 
-# Keep the _analyze_slots helper function exactly as it was
 func _analyze_slots(slots_array: Array) -> Dictionary:
 	var type_counts = {}
 	var current_chain_type = ""
@@ -283,19 +249,16 @@ func _analyze_slots(slots_array: Array) -> Dictionary:
 	var highest_chain_type = ""
 	var highest_chain_length = 0
 	var slot_types = []
-	
 	for slot in slots_array:
 		if is_instance_valid(slot) and slot.card_in_slot and slot.card and slot.card.card_data:
 			var c_type = slot.card.card_data.type
 			slot_types.append(c_type)
 			type_counts[c_type] = type_counts.get(c_type, 0) + 1
-			
 			if c_type == current_chain_type:
 				current_chain_length += 1
 			else:
 				current_chain_type = c_type
 				current_chain_length = 1
-				
 			if current_chain_length > highest_chain_length:
 				highest_chain_length = current_chain_length
 				highest_chain_type = current_chain_type
@@ -303,10 +266,4 @@ func _analyze_slots(slots_array: Array) -> Dictionary:
 			slot_types.append("Empty")
 			current_chain_type = ""
 			current_chain_length = 0
-			
-	return {
-		"slot_types": slot_types,
-		"type_counts": type_counts,
-		"highest_chain_type": highest_chain_type,
-		"highest_chain_length": highest_chain_length
-	}
+	return {"slot_types": slot_types, "type_counts": type_counts, "highest_chain_type": highest_chain_type, "highest_chain_length": highest_chain_length}

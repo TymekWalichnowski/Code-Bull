@@ -75,3 +75,9 @@ func _effect_flame(side: String, stacks: int, resource: TokenResource):
 	# Ticks down by 1
 	container.add_token(resource, -1)
 	await get_tree().create_timer(0.3).timeout
+
+func _effect_haste(side: String, stacks: int, resource: TokenResource):
+	var target = %Player if side == "Player" else %Opponent
+	var container = %PlayerTokens if side == "Player" else %OpponentTokens
+	
+	print("Haste Triggered: ", side, " earns ", stacks, " speed.")

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bcjq0hyfffhfk"
-path="res://.godot/imported/mouse_free.png-d4d447a6b77ac1cc02a22e9a66e71a14.ctex"
+path="res://.godot/imported/mouse_free.png-22e6e654e06f7cdd7a8fa0257c4e1032.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/mouse_free.png"
-dest_files=["res://.godot/imported/mouse_free.png-d4d447a6b77ac1cc02a22e9a66e71a14.ctex"]
+source_file="res://Assets/icons/16x16/mouse_free.png"
+dest_files=["res://.godot/imported/mouse_free.png-22e6e654e06f7cdd7a8fa0257c4e1032.ctex"]
 
 [params]
 

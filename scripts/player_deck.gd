@@ -1,31 +1,22 @@
 extends Node2D
 
-signal deck_setup_complete
-var setup_finished: bool = false
-
-@export var card_database: CardDatabase # Keep if other systems need it
-#@export var starting_deck: Array[CardDataResource]
-#@export var starting_passives: Array[PassiveCardResource]
-
+@export var card_database: CardDatabase 
 var starting_deck = PlayerDeckGlobal.global_player_cards
 var starting_passives = PlayerDeckGlobal.global_player_passives
 
 const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const PASSIVE_SCENE_PATH = "res://scenes/passive_card.tscn"
 const CARD_DRAW_SPEED = 0.2
-const STARTING_HAND_SIZE = 5
 
-# This now stores the actual Resources, not strings
 var current_deck: Array[CardDataResource] = []
 var graveyard: Array[CardDataResource] = []
 var drawn_card_this_turn = false
 
-func _ready() -> void:
-	# 1. Initialize the deck from the export
+# 1. Prepare data (Step 1 of setup)
+func prepare_deck() -> void:
 	if starting_deck.is_empty():
-		push_warning("Starting deck is empty! Add cards in the Inspector.")
+		push_warning("Starting deck is empty!")
 	
-	# Duplicate the resources into our active deck so we don't modify the originals
 	current_deck = starting_deck.duplicate()
 	current_deck.shuffle()
 
@@ -33,16 +24,8 @@ func _ready() -> void:
 		card_database._initialize_database()
 	
 	$RichTextLabel.text = str(current_deck.size())
-	
-	for i in range(STARTING_HAND_SIZE):
-		await draw_card()
-		drawn_card_this_turn = false
-	
-	drawn_card_this_turn = true
-	spawn_starting_passives()
-	setup_finished = true
-	deck_setup_complete.emit()
 
+# 2. Draw a single card (Step 2 of setup, called by BattleManager)
 func draw_card():
 	if current_deck.is_empty() and graveyard.size() > 0:
 		current_deck = graveyard.duplicate()
@@ -59,9 +42,6 @@ func draw_card():
 		new_card.name = "Card_" + card_data.display_name
 		
 		%CardManager.add_child(new_card)
-		
-		# --- ADD THIS LINE ---
-		# This sets the card's starting point to this deck's location
 		new_card.global_position = global_position 
 
 		if new_card.has_node("AnimationPlayer"):
@@ -69,10 +49,11 @@ func draw_card():
 		
 		new_card.play_audio("pickup")
 		%PlayerHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
-		await get_tree().create_timer(0.5).timeout
+		# We don't await the timer here anymore, BattleManager handles timing
 	else:
-		print("Deck and Graveyard are empty!")
+		print("Player Deck and Graveyard are empty!")
 
+# 3. Spawn passives (Step 3 of setup)
 func spawn_starting_passives():
 	for i in range(starting_passives.size()):
 		var res = starting_passives[i]
