@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dntxnqk5tfl2q"
-path="res://.godot/imported/speed_holder.png-e2152a79333665e523ce0771d38e75a9.ctex"
+path="res://.godot/imported/speed_holder.png-1908bc8064697bacb5d253ecd709f248.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/UI/speed_holder.png"
-dest_files=["res://.godot/imported/speed_holder.png-e2152a79333665e523ce0771d38e75a9.ctex"]
+source_file="res://assets/textures/UI/speed_holder.png"
+dest_files=["res://.godot/imported/speed_holder.png-1908bc8064697bacb5d253ecd709f248.ctex"]
 
 [params]
 
