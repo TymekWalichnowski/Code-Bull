@@ -66,7 +66,6 @@ func _ready() -> void:
 
 	original_z_index = z_index
 
-	# Only apply visuals if data already exists (editor preview)
 	if card_data:
 		_apply_visuals()
 
@@ -79,23 +78,21 @@ func _apply_visuals():
 	if is_preview or is_inventory:
 		card_image.visible = true
 		card_back_image.visible = false
-		# Reset shader rotations so they aren't slanted in the grid
 		if card_image.material:
 			card_image.material.set_shader_parameter("y_rot", 0.0)
 			card_image.material.set_shader_parameter("x_rot", 0.0)
 	update_hover_ui()
 
 func _process(delta: float) -> void:
-	%UIOverlay.rotation = -rotation
+	if has_node("%UIOverlay") and %UIOverlay:
+		%UIOverlay.rotation = -rotation
 	if not card_image or not card_image.texture:
 		return
 
-	# Slot-aware z_index
+	var base_z = original_z_index
 	if cards_current_slot:
-		z_index = cards_current_slot.z_index + 1
-	else:
-		z_index = original_z_index
-
+		base_z = cards_current_slot.z_index + 1
+	
 	if hovering and interactable: 
 		update_hover_ui()
 		var local_mouse = card_image.to_local(get_global_mouse_position())
@@ -107,9 +104,15 @@ func _process(delta: float) -> void:
 		var target_x = y_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
 
 		_lerp_shader_rotations(target_x, target_y, follow_speed * delta)
-		z_index = 100
+		
+		# Prevent crazy jumps in UI Editor
+		if is_preview or is_inventory:
+			z_index = base_z + 10
+		else:
+			z_index = base_z + (15 if cards_current_slot else 100)
 	else:
 		_lerp_shader_rotations(0.0, 0.0, return_speed * delta)
+		z_index = base_z
 
 func _lerp_shader_rotations(tx: float, ty: float, weight: float):
 	for img in [card_image, card_back_image]:
@@ -143,26 +146,15 @@ func update_hover_ui():
 	if desc_label == null or card_data == null:
 		return
 
-	# -----------------------------
-	# VISIBILITY RULES
-	# -----------------------------
 	var is_enemy_hand_card = (card_owner == "Opponent" and cards_current_slot == null)
-
-	# Description: always visible except enemy hand
 	var show_description = not is_enemy_hand_card or is_preview or is_inventory
-
-	# Tags: ONLY when hovering (unless preview/inventory)
 	var show_tags = hovering and (show_description or is_preview or is_inventory)
 
 	%DescriptionOverlay.visible = show_description
 	%UIOverlay.visible = show_tags
 
-	# -----------------------------
-	# 2. BUILD DESCRIPTION TEXT
-	# -----------------------------
 	var full_description := ""
 	var tag_list := []
-
 	var c_mult = card_data.multiplier if card_data.multiplier != 0 else 1.0
 
 	for action in card_data.actions:
@@ -189,12 +181,7 @@ func update_hover_ui():
 
 	desc_label.text = full_description.strip_edges()
 
-	# -----------------------------
-	# 3. BUILD TAG TEXT
-	# -----------------------------
 	var lines = []
-	
-	# Add the card type for debugging
 	if card_data and card_data.type != "":
 		lines.append("[b]Type[/b]: " + card_data.type)
 
@@ -216,8 +203,6 @@ func update_hover_ui():
 	else:
 		tag_container.visible = false
 
-
-# Helper to find which slot index this card is currently sitting in, may be useless rn?
 func _get_current_slot_index() -> int:
 	if not cards_current_slot: return -1
 	var slots = get_node("/root/Main/BattleManager").player_slots

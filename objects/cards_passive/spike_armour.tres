@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PassiveCardResource" load_steps=3 format=3 uid="uid://bduabeshgn0hs"]
 
-[ext_resource type="Texture2D" uid="uid://dwhnfwrotd3kh" path="res://Assets/textures/cards_passive/passive_Spike_Armour.png" id="1_1buq6"]
+[ext_resource type="Texture2D" uid="uid://dwhnfwrotd3kh" path="res://assets/textures/cards_passive/passive_Spike_Armour.png" id="1_1buq6"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="2_gn128"]
 
 [resource]

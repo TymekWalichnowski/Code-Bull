@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxcgsp7qc211j"
-path="res://.godot/imported/voxel_outlines.png-d1e4bbaab49a2584b9a4275f4fe85776.ctex"
+path="res://.godot/imported/voxel_outlines.png-55b01a1f405a91436e61c9594994ce36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/voxel_outlines.png"
-dest_files=["res://.godot/imported/voxel_outlines.png-d1e4bbaab49a2584b9a4275f4fe85776.ctex"]
+source_file="res://assets/icons/16x16/voxel_outlines.png"
+dest_files=["res://.godot/imported/voxel_outlines.png-55b01a1f405a91436e61c9594994ce36.ctex"]
 
 [params]
 

@@ -1,14 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckr6bnvp677wi"]
+[gd_scene load_steps=2 format=3 uid="uid://ckr6bnvp677wi"]
 
 [ext_resource type="Script" uid="uid://so0wlr30j7ig" path="res://scripts/deck_editor.gd" id="1_g0c65"]
-[ext_resource type="Script" uid="uid://bory5iw1syd2o" path="res://scripts/card_manager_inventory.gd" id="2_dk5sw"]
-[ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="4_d7n1u"]
-[ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="5_vkq8h"]
 
 [node name="DeckEditor" type="CanvasLayer"]
 script = ExtResource("1_g0c65")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -24,36 +22,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.27904913, 0.22885656, 0, 1)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-unique_name_in_owner = true
-offset_left = 161.0
-offset_top = 90.0
-offset_right = 961.0
-offset_bottom = 989.0
-
-[node name="DeckGrid" type="GridContainer" parent="ScrollContainer"]
-unique_name_in_owner = true
-z_index = 1
-layout_mode = 2
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
-columns = 3
-
-[node name="ScrollContainer2" type="ScrollContainer" parent="."]
-unique_name_in_owner = true
-offset_left = 945.0
-offset_top = 91.0
-offset_right = 1759.0
-offset_bottom = 990.0
-
-[node name="InventoryGrid" type="GridContainer" parent="ScrollContainer2"]
-unique_name_in_owner = true
-z_index = 1
-layout_mode = 2
-theme_override_constants/h_separation = 1
-theme_override_constants/v_separation = 1
-columns = 3
-
 [node name="CloseButton" type="Button" parent="."]
 offset_left = 1704.0
 offset_top = 61.0
@@ -61,13 +29,28 @@ offset_right = 1802.0
 offset_bottom = 122.0
 text = "Close"
 
-[node name="CardManagerInventory" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("2_dk5sw")
+[node name="ScrollContainerDeck" type="ScrollContainer" parent="."]
+offset_left = 166.0
+offset_top = 96.0
+offset_right = 930.0
+offset_bottom = 494.0
 
-[node name="InputManager" type="Node2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("5_vkq8h")
-card_database = ExtResource("4_d7n1u")
+[node name="ScrollContainerInventory" type="ScrollContainer" parent="."]
+offset_left = 999.0
+offset_top = 91.0
+offset_right = 1757.0
+offset_bottom = 476.0
+
+[node name="ScrollContainerPassives" type="ScrollContainer" parent="."]
+offset_left = 166.0
+offset_top = 573.0
+offset_right = 1007.0
+offset_bottom = 989.0
+
+[node name="ScrollContainerPassivesInventory" type="ScrollContainer" parent="."]
+offset_left = 947.0
+offset_top = 545.0
+offset_right = 1762.0
+offset_bottom = 987.0
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

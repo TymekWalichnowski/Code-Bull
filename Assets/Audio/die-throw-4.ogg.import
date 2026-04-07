@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://d3tlmlwaaw8xx"
-path="res://.godot/imported/die-throw-4.ogg-150af698666014fe058014a966a7e380.oggvorbisstr"
+path="res://.godot/imported/die-throw-4.ogg-9ed026460f4e9cf0316fdefaccf83ef9.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/audio/die-throw-4.ogg"
-dest_files=["res://.godot/imported/die-throw-4.ogg-150af698666014fe058014a966a7e380.oggvorbisstr"]
+source_file="res://assets/audio/die-throw-4.ogg"
+dest_files=["res://.godot/imported/die-throw-4.ogg-9ed026460f4e9cf0316fdefaccf83ef9.oggvorbisstr"]
 
 [params]
 

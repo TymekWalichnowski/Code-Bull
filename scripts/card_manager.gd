@@ -18,8 +18,7 @@ func _ready() -> void:
 	player_hand_reference = %PlayerHand
 	%InputManager.connect("left_mouse_button_released", on_left_click_released)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if card_being_dragged:
 		var mouse_pos = get_global_mouse_position()
 		card_being_dragged.position = Vector2(clamp(mouse_pos.x, 0, screen_size.x), 
@@ -27,7 +26,6 @@ func _process(delta: float) -> void:
 
 func start_drag(card):
 	card_being_dragged = card
-	
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "rotation", 0.0, 0.05)
 	
@@ -38,10 +36,8 @@ func start_drag(card):
 	
 	var card_slot_found = raycast_check_for_card_slot(card)
 	if card_slot_found:
-		# STRIP THE BUFF OFF THE CARD WHEN PICKED UP
 		card.retriggers -= card_slot_found.bonus_retriggers
 		card.update_retrigger_visuals()
-		
 		card_slot_found.card_in_slot = false
 		card.cards_current_slot = null
 		card_slot_found.card = null
@@ -49,21 +45,16 @@ func start_drag(card):
 	card_being_dragged.play_audio("pickup")
 
 func finish_drag():
-	card_being_dragged.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
+	card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot(card_being_dragged)
 	
 	if card_slot_found and not card_slot_found.card_in_slot and card_slot_found.slot_owner == card_being_dragged.card_owner:
-		card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 		card_being_dragged.cards_current_slot = card_slot_found
 		card_being_dragged.position = card_slot_found.position
-		
 		card_slot_found.card_in_slot = true
 		card_slot_found.card = card_being_dragged
-		
-		# APPLY THE SLOT'S BUFF TO THE CARD WHEN PLACED
 		card_being_dragged.retriggers += card_slot_found.bonus_retriggers
 		card_being_dragged.update_retrigger_visuals()
-		
 		card_being_dragged.play_audio("place")
 	else:
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
@@ -71,20 +62,19 @@ func finish_drag():
 	card_being_dragged = null
 
 func connect_card_signals(card):
-	card.connect("hovered", on_hovered_over_card)
-	card.connect("hovered_off", on_hovered_off_card)
+	if not card.is_connected("hovered", on_hovered_over_card):
+		card.connect("hovered", on_hovered_over_card)
+	if not card.is_connected("hovered_off", on_hovered_off_card):
+		card.connect("hovered_off", on_hovered_off_card)
 
 func on_left_click_released():
 	if card_being_dragged:
 		finish_drag()
 
 func on_hovered_over_card(card):
-	if card.cards_current_slot:
+	if not card.interactable or is_hovering_on_card:
 		return
-	if not card.interactable:
-		return
-	if is_hovering_on_card:
-		return
+		
 	is_hovering_on_card = true
 	highlight_card(card, true)
 
@@ -95,20 +85,30 @@ func on_hovered_off_card(card):
 	if card_being_dragged: return
 
 	var new_card_hovered = raycast_check_for_card()
-	# Change 'is CardDataResource' to 'is Card' (the class_name of your card.gd)
-	if new_card_hovered is Card and !new_card_hovered.cards_current_slot:
-		is_hovering_on_card = true
-		highlight_card(new_card_hovered, true)
+	if new_card_hovered and (new_card_hovered is Card or new_card_hovered is PassiveCard):
+		# Only auto-highlight if the new card isn't in a slot
+		var is_slotted = ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null)
+		if not is_slotted:
+			is_hovering_on_card = true
+			highlight_card(new_card_hovered, true)
 
 func highlight_card(card, hovered):
 	if not card.interactable:
 		return
+	
+	# Detect if this is a slotted card (Passives don't have slots)
+	var is_in_slot = ("cards_current_slot" in card and card.cards_current_slot != null)
+
 	if hovered:
-		card.scale = Vector2(BIGGER_CARD_SCALE,BIGGER_CARD_SCALE)
-		print(card.cards_current_slot)
+		# ONLY scale up cards that are in the HAND or Passives (if you want)
+		if not is_in_slot:
+			card.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
 	else:
-		if card.cards_current_slot:
+		# Return to appropriate size
+		if is_in_slot:
 			card.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
+		elif card is PassiveCard:
+			card.scale = Vector2(1.0, 1.0)
 		else:
 			card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
 
@@ -120,9 +120,8 @@ func raycast_check_for_card():
 	parameters.collision_mask = COLLISION_MASK_CARD
 	var result = space_state.intersect_point(parameters)
 	if result.size() > 0:
-		# return result[0].collider.get_parent() # Returns the Card You Clicked
 		return get_card_with_highest_z_index(result)
-	return null # Returns Nothing
+	return null
 
 func raycast_check_for_card_slot(card):
 	var space_state = get_world_2d().direct_space_state
@@ -133,14 +132,11 @@ func raycast_check_for_card_slot(card):
 	var result = space_state.intersect_point(parameters)
 	if result.size() > 0:
 		return result[0].collider.get_parent()
-	return null # Returns Nothing
+	return null
 
 func get_card_with_highest_z_index(cards):
-	# Assume first card in cards array has highest z index
 	var highest_z_card = cards[0].collider.get_parent()
 	var highest_z_index = highest_z_card.z_index
-	
-	# Loop through rest of cards lchecking for card with higher z index
 	for i in range(1, cards.size()):
 		var current_card = cards[i].collider.get_parent()
 		if current_card.z_index > highest_z_index:
