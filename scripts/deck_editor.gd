@@ -5,8 +5,10 @@ extends CanvasLayer
 const PREVIEW_SIZE = Vector2(200, 280)
 
 var dragged_data: Resource = null
-var dragged_from: String = "" # "deck", "inventory", "deck_passive", "inventory_passive"
+var dragged_from: String = ""
+var dragged_original_card: Node2D = null # Tracks the card you picked up
 var drag_visual: Node2D = null
+var is_animating: bool = false # Prevents bugs if you click while a card is flying
 
 @onready var scroll_deck = $ScrollContainerDeck
 @onready var scroll_inventory = $ScrollContainerInventory
@@ -23,7 +25,7 @@ func display_deck():
 	_populate_grid(scroll_deck, deck_data, "deck", false)
 	_populate_grid(scroll_inventory, inventory_data, "inventory", false)
 	
-	# Passives (if nodes exist)
+	# Passives
 	if scroll_passives and scroll_passives_inventory:
 		var passive_deck = PlayerDeckGlobal.global_player_passives
 		var passive_inv = PlayerDeckGlobal.global_player_inventory_passives
@@ -37,7 +39,7 @@ func _get_or_create_grid(scroll: ScrollContainer) -> GridContainer:
 		if child is GridContainer:
 			return child
 	var new_grid = GridContainer.new()
-	new_grid.columns = 4 # Adjust if needed
+	new_grid.columns = 4 # Adjust columns if needed
 	scroll.add_child(new_grid)
 	return new_grid
 
@@ -75,13 +77,15 @@ func _populate_grid(scroll: ScrollContainer, data_array: Array, source_id: Strin
 
 		new_card.position = PREVIEW_SIZE / 2
 		
-		# Disable Area2D so it doesn't fight the base game physics!
+		# Store reference to data so we can find it later for the drop animation
+		new_card.set_meta("linked_data", data)
+		
 		if new_card.has_node("Area2D"):
 			new_card.get_node("Area2D").monitoring = false
 			new_card.get_node("Area2D").monitorable = false
 
-		# Route Control hover signals into the Card's native hover functions
 		wrapper.mouse_entered.connect(func():
+			if is_animating: return
 			new_card.hovering = true
 			new_card.update_hover_ui()
 		)
@@ -93,24 +97,30 @@ func _populate_grid(scroll: ScrollContainer, data_array: Array, source_id: Strin
 		)
 
 		wrapper.gui_input.connect(func(event):
+			if is_animating: return
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-				start_drag(data, source_id, is_passive)
+				start_drag(data, source_id, is_passive, new_card)
 		)
 
-func start_drag(data: Resource, source_id: String, is_passive: bool):
+func start_drag(data: Resource, source_id: String, is_passive: bool, original_card: Node2D):
 	dragged_data = data
 	dragged_from = source_id
+	dragged_original_card = original_card
 	
-	# Create a floating visual clone
+	# Hide the real card so it looks like we picked it up, leaving the grid space empty
+	original_card.visible = false 
+	
 	if is_passive:
 		drag_visual = passive_scene.instantiate() as PassiveCard
-	else:
-		drag_visual = card_scene.instantiate() as Card
-		
-	add_child(drag_visual)
-	if is_passive:
+		drag_visual.is_preview = true # SET BEFORE SETUP so front is shown
+		drag_visual.is_inventory = true
+		add_child(drag_visual)
 		drag_visual.setup(data)
 	else:
+		drag_visual = card_scene.instantiate() as Card
+		drag_visual.is_preview = true # SET BEFORE SETUP so front is shown
+		drag_visual.is_inventory = true
+		add_child(drag_visual)
 		drag_visual.setup(data, "Player")
 		
 	drag_visual.global_position = get_viewport().get_mouse_position()
@@ -118,10 +128,13 @@ func start_drag(data: Resource, source_id: String, is_passive: bool):
 	drag_visual.scale = Vector2(1.2, 1.2)
 
 func _process(_delta):
-	if drag_visual:
+	# Only follow the mouse if we aren't currently animating it snapping into place
+	if drag_visual and not is_animating:
 		drag_visual.global_position = get_viewport().get_mouse_position()
 
 func _input(event):
+	if is_animating: return
+	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		if dragged_data != null:
 			finish_drag()
@@ -134,34 +147,85 @@ func _input(event):
 
 func finish_drag():
 	var target_area = ""
-	
 	if _is_mouse_in_control(scroll_deck): target_area = "deck"
 	elif _is_mouse_in_control(scroll_inventory): target_area = "inventory"
 	elif _is_mouse_in_control(scroll_passives): target_area = "deck_passive"
 	elif _is_mouse_in_control(scroll_passives_inventory): target_area = "inventory_passive"
 
-	# Swap if dropped in a valid new container of the same type (card vs passive)
+	var is_valid_swap = false
 	if target_area != "" and target_area != dragged_from:
 		var is_card_swap = ("passive" not in dragged_from and "passive" not in target_area)
 		var is_passive_swap = ("passive" in dragged_from and "passive" in target_area)
-		
 		if is_card_swap or is_passive_swap:
-			_transfer_data(dragged_data, dragged_from, target_area)
+			is_valid_swap = true
 
-	cancel_drag()
-	display_deck()
+	if is_valid_swap:
+		_transfer_data(dragged_data, dragged_from, target_area)
+		display_deck() # This recreates the nodes
+		
+		# We look for the NEW card created by display_deck()
+		var new_card = _find_card_in_grid(target_area, dragged_data)
+		if is_instance_valid(new_card):
+			_animate_drop(new_card)
+		else:
+			_cleanup_drag()
+	else:
+		# If invalid, we try to go back to the original card
+		if is_instance_valid(dragged_original_card):
+			_animate_drop(dragged_original_card)
+		else:
+			_cleanup_drag()
+
+func _animate_drop(target_card: Node2D):
+	# Safety check 1: Did the nodes survive the transition?
+	if not is_instance_valid(drag_visual) or not is_instance_valid(target_card):
+		_cleanup_drag()
+		return
+
+	is_animating = true
+	target_card.visible = false 
+	
+	# Let the UI engine finish one frame so it knows where the new nodes are positioned
+	await get_tree().process_frame 
+	
+	# Safety check 2: Checking again after the 'await' (timing is everything!)
+	if not is_instance_valid(drag_visual) or not is_instance_valid(target_card):
+		_cleanup_drag()
+		return
+	
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	
+	# Smoothly move to the new slot
+	tween.tween_property(drag_visual, "global_position", target_card.global_position, 0.2)
+	tween.parallel().tween_property(drag_visual, "scale", Vector2(1.0, 1.0), 0.2)
+	
+	await tween.finished
+	
+	# Final reveal
+	if is_instance_valid(target_card):
+		target_card.visible = true 
+		
+	_cleanup_drag()
 
 func cancel_drag():
+	if is_instance_valid(dragged_original_card):
+		_animate_drop(dragged_original_card)
+	else:
+		_cleanup_drag()
+
+func _cleanup_drag():
 	dragged_data = null
 	dragged_from = ""
+	dragged_original_card = null
 	if drag_visual:
 		drag_visual.queue_free()
 		drag_visual = null
+	is_animating = false
 
 func _is_mouse_in_control(control: Control) -> bool:
 	if not control or not control.is_visible_in_tree():
 		return false
-	return control.get_global_rect().has_point(control.get_global_mouse_position())
+	return control.get_global_rect().has_point(get_viewport().get_mouse_position())
 
 func _transfer_data(data, from_id, to_id):
 	var from_arr = _get_array_by_id(from_id)
@@ -177,6 +241,25 @@ func _get_array_by_id(id: String) -> Array:
 		"deck_passive": return PlayerDeckGlobal.global_player_passives
 		"inventory_passive": return PlayerDeckGlobal.global_player_inventory_passives
 	return []
+
+func _find_card_in_grid(area_id: String, target_data: Resource) -> Node2D:
+	var scroll: ScrollContainer
+	match area_id:
+		"deck": scroll = scroll_deck
+		"inventory": scroll = scroll_inventory
+		"deck_passive": scroll = scroll_passives
+		"inventory_passive": scroll = scroll_passives_inventory
+		
+	if not scroll: return null
+	var grid = _get_or_create_grid(scroll)
+	
+	# Search the rebuilt grid for the specific card data
+	for wrapper in grid.get_children():
+		if wrapper.get_child_count() > 0:
+			var card = wrapper.get_child(0)
+			if card.has_meta("linked_data") and card.get_meta("linked_data") == target_data:
+				return card
+	return null
 
 func hide_deck():
 	hide()
