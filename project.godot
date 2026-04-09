@@ -40,6 +40,7 @@ folder_colors={
 "res://assets/textures/cards/": "gray",
 "res://objects/cards/": "yellow",
 "res://objects/cards/actions/": "orange",
+"res://objects/cards/statuses/": "red",
 "res://objects/cards_passive/": "teal",
 "res://objects/tokens/": "red",
 "res://resources/": "pink",

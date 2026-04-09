@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gc3yncrg861f"
-path="res://.godot/imported/token_Haste.png-364469d732bc7a196b89c5e222d28ec5.ctex"
+uid="uid://bkfi58ibuajw5"
+path="res://.godot/imported/card_Attack Block.png-9d04b756bf6496df98f13e507ffc6169.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/tokens/token_Haste.png"
-dest_files=["res://.godot/imported/token_Haste.png-364469d732bc7a196b89c5e222d28ec5.ctex"]
+source_file="res://assets/textures/cards/card_Attack Block.png"
+dest_files=["res://.godot/imported/card_Attack Block.png-9d04b756bf6496df98f13e507ffc6169.ctex"]
 
 [params]
 

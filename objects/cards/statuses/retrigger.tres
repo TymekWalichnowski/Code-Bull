@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="StatusResource" load_steps=2 format=3 uid="uid://djoync7yf0ghe"]
+
+[ext_resource type="Script" uid="uid://fvk1eelp37gl" path="res://resources/status_resource.gd" id="1_vidcs"]
+
+[resource]
+script = ExtResource("1_vidcs")
+metadata/_custom_type_script = "uid://fvk1eelp37gl"
