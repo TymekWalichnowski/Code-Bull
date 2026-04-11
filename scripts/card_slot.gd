@@ -10,6 +10,33 @@ func _ready() -> void:
 	if has_node("%Glow"):
 		%Glow.visible = false
 
+# Safely attaches a card to this slot and applies buffs
+func set_card(new_card: Node2D):
+	if card: 
+		remove_card() # Clear existing if swapping
+	
+	card = new_card
+	card_in_slot = true
+	card.cards_current_slot = self
+	card.position = global_position
+	
+	# Apply slot buffs to the card
+	card.retriggers += bonus_retriggers
+	card.update_retrigger_visuals()
+
+# Safely removes the card and strips slot buffs
+func remove_card():
+	if not card: 
+		return
+	
+	# Remove slot buffs before the card leaves
+	card.retriggers -= bonus_retriggers
+	card.update_retrigger_visuals()
+	
+	card.cards_current_slot = null
+	card = null
+	card_in_slot = false
+
 # Called by passives or other cards to buff this specific slot
 func add_retrigger_buff(amount: int):
 	bonus_retriggers += amount
@@ -27,6 +54,10 @@ func clear_buffs():
 	bonus_retriggers = 0
 	if has_node("%Glow"):
 		%Glow.visible = false
+	
+	# FIX: We must check if card exists and call the function ON the card
 	if card:
-		card.retriggers = 0
+		# We don't necessarily set card.retriggers to 0 because 
+		# the card might have its own base retriggers from its data.
+		# We just need to refresh the visuals now that bonus_retriggers is 0.
 		card.update_retrigger_visuals()

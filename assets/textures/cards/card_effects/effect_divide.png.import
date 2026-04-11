@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7iu2fr4ff1u"
-path="res://.godot/imported/status_multiply.png-6f1d6e9e456762c404c7f6270810e134.ctex"
+uid="uid://7k7lauj06w7i"
+path="res://.godot/imported/effect_divide.png-865652091373dc2c6ba9391ad30dc314.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/cards/card_effects/status_multiply.png"
-dest_files=["res://.godot/imported/status_multiply.png-6f1d6e9e456762c404c7f6270810e134.ctex"]
+source_file="res://assets/textures/cards/card_effects/effect_divide.png"
+dest_files=["res://.godot/imported/effect_divide.png-865652091373dc2c6ba9391ad30dc314.ctex"]
 
 [params]
 

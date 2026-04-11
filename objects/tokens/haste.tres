@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TokenResource" load_steps=3 format=3 uid="uid://chxqxw3y3ikeg"]
+
+[ext_resource type="Script" uid="uid://car848yihi4xm" path="res://resources/token_resource.gd" id="1_uoca1"]
+[ext_resource type="Texture2D" uid="uid://gc3yncrg861f" path="res://assets/textures/tokens/token_Haste.png" id="2_2i8wx"]
+
+[resource]
+script = ExtResource("1_uoca1")
+token_name = "Haste"
+token_image = ExtResource("2_2i8wx")
+metadata/_custom_type_script = "uid://car848yihi4xm"

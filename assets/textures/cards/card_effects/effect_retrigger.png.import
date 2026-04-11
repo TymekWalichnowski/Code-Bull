@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7k7lauj06w7i"
-path="res://.godot/imported/status_divide.png-c804d88ff93bf1e9e99187b7d3bdf061.ctex"
+uid="uid://dmbe4ekbaqltb"
+path="res://.godot/imported/effect_retrigger.png-805d06fd2c71916162e6911125d2e816.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/cards/card_effects/status_divide.png"
-dest_files=["res://.godot/imported/status_divide.png-c804d88ff93bf1e9e99187b7d3bdf061.ctex"]
+source_file="res://assets/textures/cards/card_effects/effect_retrigger.png"
+dest_files=["res://.godot/imported/effect_retrigger.png-805d06fd2c71916162e6911125d2e816.ctex"]
 
 [params]
 

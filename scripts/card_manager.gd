@@ -12,6 +12,7 @@ var screen_size
 var card_being_dragged
 var is_hovering_on_card
 var player_hand_reference
+var source_slot # Tracks where the card started (either a slot or null for hand)
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -26,40 +27,55 @@ func _process(_delta: float) -> void:
 
 func start_drag(card):
 	card_being_dragged = card
+	source_slot = card.cards_current_slot # Store where it came from
+	
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "rotation", 0.0, 0.05)
 	
 	card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
 	card.z_index = 200 
 	
-	player_hand_reference.remove_card_from_hand(card_being_dragged)
-	
-	var card_slot_found = raycast_check_for_card_slot(card)
-	if card_slot_found:
-		card.retriggers -= card_slot_found.bonus_retriggers
-		card.update_retrigger_visuals()
-		card_slot_found.card_in_slot = false
-		card.cards_current_slot = null
-		card_slot_found.card = null
+	# If it was in a slot, remove it (and strip buffs)
+	if source_slot:
+		source_slot.remove_card()
+	else:
+		# If it was in the hand, pull it out of the hand array
+		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		
 	card_being_dragged.play_audio("pickup")
 
 func finish_drag():
 	card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
-	var card_slot_found = raycast_check_for_card_slot(card_being_dragged)
+	var target_slot = raycast_check_for_card_slot(card_being_dragged)
 	
-	if card_slot_found and not card_slot_found.card_in_slot and card_slot_found.slot_owner == card_being_dragged.card_owner:
-		card_being_dragged.cards_current_slot = card_slot_found
-		card_being_dragged.position = card_slot_found.position
-		card_slot_found.card_in_slot = true
-		card_slot_found.card = card_being_dragged
-		card_being_dragged.retriggers += card_slot_found.bonus_retriggers
-		card_being_dragged.update_retrigger_visuals()
+	# LANDING ON A SLOT
+	if target_slot and target_slot.slot_owner == card_being_dragged.card_owner:
+		if target_slot.card_in_slot:
+			var occupied_card = target_slot.card
+			
+			if source_slot:
+				# CASE 1: SLOT TO SLOT SWAP
+				target_slot.remove_card()
+				source_slot.set_card(occupied_card)
+				target_slot.set_card(card_being_dragged)
+			else:
+				# CASE 2: HAND TO OCCUPIED SLOT (Put old card back to hand)
+				target_slot.remove_card()
+				player_hand_reference.add_card_to_hand(occupied_card, DEFAULT_CARD_MOVE_SPEED)
+				target_slot.set_card(card_being_dragged)
+		else:
+			# CASE 3: EMPTY SLOT
+			target_slot.set_card(card_being_dragged)
+		
 		card_being_dragged.play_audio("place")
+	
+	# LANDING OFF-SLOT (Return to hand)
 	else:
+		# If it's dropped in the air, it ALWAYS goes back to the hand
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	
 	card_being_dragged = null
+	source_slot = null
 
 func connect_card_signals(card):
 	if not card.is_connected("hovered", on_hovered_over_card):
@@ -85,8 +101,8 @@ func on_hovered_off_card(card):
 	if card_being_dragged: return
 
 	var new_card_hovered = raycast_check_for_card()
-	if new_card_hovered and (new_card_hovered is Card or new_card_hovered is PassiveCard):
-		# Only auto-highlight if the new card isn't in a slot
+	# Check for Card or PassiveCard classes
+	if new_card_hovered and (new_card_hovered is Card or new_card_hovered.get_class() == "PassiveCard"):
 		var is_slotted = ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null)
 		if not is_slotted:
 			is_hovering_on_card = true
@@ -96,18 +112,15 @@ func highlight_card(card, hovered):
 	if not card.interactable:
 		return
 	
-	# Detect if this is a slotted card (Passives don't have slots)
 	var is_in_slot = ("cards_current_slot" in card and card.cards_current_slot != null)
 
 	if hovered:
-		# ONLY scale up cards that are in the HAND or Passives (if you want)
 		if not is_in_slot:
 			card.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
 	else:
-		# Return to appropriate size
 		if is_in_slot:
 			card.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
-		elif card is PassiveCard:
+		elif "PassiveCard" in card.get_class():
 			card.scale = Vector2(1.0, 1.0)
 		else:
 			card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)

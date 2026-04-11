@@ -6,15 +6,21 @@ signal battle_click_received
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
 
-@onready var player_slots = [$"../CardSlots/CardSlot", $"../CardSlots/CardSlot2", $"../CardSlots/CardSlot3"]
-@onready var opponent_slots = [$"../CardSlots/CardSlotOpponent1", $"../CardSlots/CardSlotOpponent2", $"../CardSlots/CardSlotOpponent3"]
+@onready var player_slots_all = [$"../CardSlots/CardSlot", $"../CardSlots/CardSlot2", $"../CardSlots/CardSlot3", $"../CardSlots/CardSlot4", $"../CardSlots/CardSlot5"]
+@onready var opponent_slots_all = [$"../CardSlots/CardSlotOpponent1", $"../CardSlots/CardSlotOpponent2", $"../CardSlots/CardSlotOpponent3", $"../CardSlots/CardSlotOpponent4", $"../CardSlots/CardSlotOpponent5"]
+
+var player_slots = []
+var opponent_slots = []
+
 @onready var battle_timer = %BattleTimer
 
 const STARTING_HEALTH = 10.0
 const SMALLER_CARD_SCALE = 1.05
 const CARD_MOVE_SPEED = 0.2
-const START_DRAW_COUNT = 6 # Max cards to draw at start
+const START_DRAW_COUNT = 6 
+const SLOT_GAP = 170.0
 
+var turn_count: int = 0
 var player_has_initiative: bool = true
 var empty_opponent_card_slots = []
 var player_snapshot: Dictionary = {}
@@ -24,36 +30,23 @@ var board_locked: bool = false
 func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
-	reset_opponent_slots()
+	advance_turn()
 	
 	%Player.current_health = STARTING_HEALTH
 	%Opponent.current_health = STARTING_HEALTH
-	
-	# 1. Initialize data arrays
 	%PlayerDeck.prepare_deck()
 	%OpponentDeck.prepare_deck()
 	
-	# 2. DRAW CARDS SIMULTANEOUSLY
-	# We loop and call draw for both without 'awaiting' the movement inside the deck
 	for i in range(START_DRAW_COUNT):
-		if i < 5: # Player starting hand size
-			%PlayerDeck.draw_card()
-		if i < 6: # Opponent starting hand size
-			%OpponentDeck.draw_card()
-		
-		# Wait a small amount between pairs of cards so it looks clean
+		if i < 5: %PlayerDeck.draw_card()
+		if i < 6: %OpponentDeck.draw_card()
 		await get_tree().create_timer(0.4).timeout
 	
-	# 3. SPAWN PASSIVES
 	%PlayerDeck.spawn_starting_passives()
 	%OpponentDeck.spawn_starting_passives()
 	
-	# Small buffer for nodes to settle
 	await get_tree().create_timer(0.2).timeout
-	
-	# 4. ACTIVATE PASSIVES
 	await trigger_passives("On_Turn_Start")
-	
 	analyze_board_state()
 	opponent_turn()
 
@@ -64,6 +57,58 @@ func _process(_delta: float) -> void:
 	%Opponent/SpeedHolder/SpeedLabel.text = str(%Opponent.speed)
 	analyze_board_state()
 
+func advance_turn():
+	turn_count += 1
+	if has_node("%TurnLabel"):
+		%TurnLabel.text = "Turn: " + str(turn_count)
+	
+	var slot_limit = 3
+	if turn_count == 2:
+		slot_limit = 4
+	elif turn_count >= 3:
+		slot_limit = 5
+	
+	setup_active_slots(slot_limit)
+
+func setup_active_slots(limit: int):
+	player_slots.clear()
+	opponent_slots.clear()
+	
+	var viewport_width = get_viewport().get_visible_rect().size.x
+	var center_x = viewport_width / 2.0
+	var start_x = center_x - ((limit - 1) * SLOT_GAP) / 2.0
+	
+	for i in range(5):
+		var p_slot = player_slots_all[i]
+		var o_slot = opponent_slots_all[i]
+		var active = (i < limit)
+		
+		# Set Visibility
+		p_slot.visible = active
+		o_slot.visible = active
+		
+		# --- STERN FIX: Physically disable the collision shapes ---
+		# We find the CollisionShape2D inside the Area2D and disable it entirely.
+		# This prevents the Raycast in CardManager from ever seeing the slot.
+		var p_collision = p_slot.find_child("CollisionShape2D", true)
+		var o_collision = o_slot.find_child("CollisionShape2D", true)
+		
+		if p_collision:
+			p_collision.disabled = !active
+		if o_collision:
+			o_collision.disabled = !active
+		# -----------------------------------------------------------
+
+		if active:
+			player_slots.append(p_slot)
+			opponent_slots.append(o_slot)
+			var target_x = start_x + (i * SLOT_GAP)
+			p_slot.global_position.x = target_x
+			o_slot.global_position.x = target_x
+			
+			if p_slot.card: p_slot.card.position = p_slot.global_position
+			if o_slot.card: o_slot.card.position = o_slot.global_position
+
 func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".disabled = true
 	$"../EndTurnButton".visible = false
@@ -72,12 +117,10 @@ func _on_end_turn_button_pressed() -> void:
 	await run_activation_phase()
 	await trigger_tokens("On_Phase_End")
 	
-	# New Turn Setup
 	%Player.speed = randi_range(1, 5)
 	%Opponent.speed = randi_range(1, 5)
 	
-	# Draw for next turn (can be simultaneous too)
-	%PlayerDeck.draw_card()
+	advance_turn()
 	%PlayerDeck.draw_card()
 	%PlayerDeck.draw_card()
 	
@@ -91,10 +134,9 @@ func opponent_turn():
 	await wait(0.2)
 	%OpponentDeck.draw_card()
 	await wait(1)
-	
+	reset_opponent_slots()
 	if empty_opponent_card_slots.size() != 0:
 		await play_opponent_cards() 
-	
 	end_opponent_turn()
 
 func play_opponent_cards():
@@ -102,8 +144,7 @@ func play_opponent_cards():
 	while hand.size() > 0 and empty_opponent_card_slots.size() > 0:
 		var card_to_play = hand[0]
 		for card in hand:
-			if card.card_id > card_to_play.card_id:
-				card_to_play = card
+			if card.card_id > card_to_play.card_id: card_to_play = card
 
 		var slot = empty_opponent_card_slots[0]
 		var tween1 = get_tree().create_tween().set_parallel(true)
@@ -115,15 +156,9 @@ func play_opponent_cards():
 		card_to_play.get_node("AnimationPlayer").play("card_flip")
 		card_to_play.play_audio("place")
 		await tween1.finished
-		card_to_play.interactable = true
 		
-		card_to_play.cards_current_slot = slot
-		slot.card_in_slot = true
-		slot.card = card_to_play
-		card_to_play.retriggers += slot.bonus_retriggers
-		card_to_play.update_retrigger_visuals()
-		card_to_play.update_hover_ui()
-
+		card_to_play.interactable = true
+		slot.set_card(card_to_play)
 		%OpponentHand.remove_card_from_hand(card_to_play)
 		empty_opponent_card_slots.erase(slot)
 		hand.erase(card_to_play)
@@ -145,10 +180,7 @@ func wait(wait_time):
 
 func run_activation_phase():
 	var slot_count = max(player_slots.size(), opponent_slots.size())
-	if %Player.speed > %Opponent.speed:
-		player_has_initiative = true
-	elif %Opponent.speed >= %Player.speed:
-		player_has_initiative = false
+	player_has_initiative = (%Player.speed > %Opponent.speed)
 	
 	await wait(0.4)
 	
@@ -158,10 +190,14 @@ func run_activation_phase():
 		await trigger_tokens("On_Slot_Start")
 		
 		for side in order:
-			var card = player_slots[slot_index].card if side == "Player" else opponent_slots[slot_index].card
+			var active_set = player_slots if side == "Player" else opponent_slots
+			if slot_index >= active_set.size(): continue
+			
+			var slot = active_set[slot_index]
+			var card = slot.card
 			var current_side_node = %Player if side == "Player" else %Opponent
+			
 			if not card: continue
-
 			if current_side_node.nullified:
 				current_side_node.nullified = false 
 				collect_used_card(card) 
@@ -180,40 +216,34 @@ func run_activation_phase():
 			collect_used_card(card)
 			await wait(0.3)
 
-		if player_slots[slot_index]: player_slots[slot_index].clear_buffs()
-		if opponent_slots[slot_index]: opponent_slots[slot_index].clear_buffs()
+		if slot_index < player_slots.size(): player_slots[slot_index].clear_buffs()
+		if slot_index < opponent_slots.size(): opponent_slots[slot_index].clear_buffs()
 		reset_opponent_slots()
 		await wait(0.6)
 
 func move_card_to_battle_point(card) -> Tween:
 	var target_pos = %PlayerCardPoint.global_position if card.card_owner == "Player" else %OpponentCardPoint.global_position 
-		
 	var move_tween = get_tree().create_tween().set_parallel(true)
 	move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
 	move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
 	move_tween.tween_property(card, "rotation", 0, CARD_MOVE_SPEED) 
-	
 	card.z_index = 10
 	return move_tween
 
 func collect_used_card(card):
 	if card == null: return
+	if card.cards_current_slot:
+		card.cards_current_slot.remove_card()
 	card.retriggers = 0
 	card.update_retrigger_visuals()
 	if card.card_data:
 		card.card_data.multiplier = 1.0
 		for action in card.card_data.actions:
 			if action != null: action.action_multiplier = 1.0
-	
 	if card.card_owner == "Player":
 		%PlayerDeck.graveyard.append(card.card_data)
 	else:
 		%OpponentDeck.graveyard.append(card.card_data)
-	
-	if card.cards_current_slot:
-		card.cards_current_slot.card = null
-		card.cards_current_slot.card_in_slot = false
-		card.cards_current_slot = null
 	card.queue_free()
 
 func _input(event: InputEvent) -> void:

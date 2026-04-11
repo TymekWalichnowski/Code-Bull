@@ -4,14 +4,12 @@ const CARD_WIDTH = 110
 const HAND_Y_POSITION = 920 
 const DEFAULT_CARD_MOVE_SPEED = 0.2
 const DEFAULT_CARD_SCALE = 1.2
-
 const MAX_ROTATION_DEGREES = 12.0 
 const VERTICAL_ARCH_HEIGHT = 25.0 
 
 var player_hand = []
-var hand_tweens = {} # Dictionary to store [Card: Tween]
+var hand_tweens = {} 
 
-# Helper to get center screen x safely even if called before _ready
 func get_center_x() -> float:
 	return get_viewport_rect().size.x / 2.0
 
@@ -20,16 +18,16 @@ func add_card_to_hand(card, speed):
 		var index = get_insert_index(card)
 		player_hand.insert(index, card)
 		card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
+		card.interactable = true
 	
 	update_hand_positions(speed)
 
 func update_hand_positions(speed):
 	var hand_size = player_hand.size()
-	var center_x = get_center_x() # Get current center
+	var center_x = get_center_x()
 	
 	for i in range(hand_size):
 		var card = player_hand[i]
-		
 		card.original_z_index = -10 + i 
 		if not card.hovering:
 			card.z_index = card.original_z_index
@@ -53,26 +51,21 @@ func animate_card_to_fan(card, target_pos, target_rot, speed):
 	
 	var tween = get_tree().create_tween().set_parallel(true)
 	tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	
 	tween.tween_property(card, "position", target_pos, speed)
 	tween.tween_property(card, "rotation", target_rot, speed)
-	
 	hand_tweens[card] = tween
 
 func remove_card_from_hand(card):
 	if card in player_hand:
 		player_hand.erase(card)
 		if hand_tweens.has(card):
-			if is_instance_valid(hand_tweens[card]):
-				hand_tweens[card].kill()
+			if is_instance_valid(hand_tweens[card]): hand_tweens[card].kill()
 			hand_tweens.erase(card)
 		update_hand_positions(DEFAULT_CARD_MOVE_SPEED)
 
 func get_insert_index(card):
 	var mouse_x = get_global_mouse_position().x
 	for i in range(player_hand.size()):
-		# Use a fallback of 0 if hand_position hasn't been set yet
-		var card_x = player_hand[i].hand_position.x if player_hand[i].hand_position != null else 0.0
-		if mouse_x < card_x:
-			return i
+		var card_x = player_hand[i].hand_position.x
+		if mouse_x < card_x: return i
 	return player_hand.size()

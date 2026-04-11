@@ -3,7 +3,7 @@ extends Node2D
 const CARD_WIDTH = 110 # Reduced to match player feel, adjust as needed
 const HAND_Y_POSITION = 30
 const DEFAULT_CARD_MOVE_SPEED = 0.2
-const DEFAULT_CARD_SCALE = 1.2
+const DEFAULT_CARD_SCALE = 0.8
 
 const MAX_ROTATION_DEGREES = 12.0 
 const VERTICAL_ARCH_HEIGHT = 25.0 

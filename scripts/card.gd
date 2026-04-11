@@ -17,13 +17,14 @@ signal hovered_off
 @onready var tag_label = %TagLabel
 
 @onready var glow_sprite = %Glow
-@onready var debuff_sprite = %Glow
+# These reference %Glow in your original, likely for different effect layers
+@onready var debuff_sprite = %Glow 
 @onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
 
 var hovering = false
 var original_z_index := 10
-var cards_current_slot
+var cards_current_slot = null
 var hand_position: Vector2 = Vector2.ZERO
 
 var card_image: Sprite2D
@@ -42,7 +43,6 @@ var card_id: int = 0
 var card_name: String = ""
 var retriggers: int = 0
 
-
 func setup(data: CardDataResource, owner: String) -> void:
 	card_data = data.duplicate(true) 
 	card_owner = owner
@@ -53,12 +53,14 @@ func setup(data: CardDataResource, owner: String) -> void:
 	_apply_visuals()
 
 func _ready() -> void:
+	# Connect to the CardManager if it's the parent
 	if get_parent().has_method("connect_card_signals"):
 		get_parent().connect_card_signals(self)
 
 	card_image = %CardImage
 	card_back_image = %CardBackImage
 
+	# Ensure materials are unique so shader params don't sync across all cards
 	if card_image.material:
 		card_image.material = card_image.material.duplicate()
 	if card_back_image.material:
@@ -81,11 +83,14 @@ func _apply_visuals():
 		if card_image.material:
 			card_image.material.set_shader_parameter("y_rot", 0.0)
 			card_image.material.set_shader_parameter("x_rot", 0.0)
+	
 	update_hover_ui()
 
 func _process(delta: float) -> void:
+	# Counter-rotate the UI so text stays upright even if the card tilts
 	if has_node("%UIOverlay") and %UIOverlay:
 		%UIOverlay.rotation = -rotation
+		
 	if not card_image or not card_image.texture:
 		return
 
@@ -100,12 +105,12 @@ func _process(delta: float) -> void:
 		var x_ratio = clamp(local_mouse.x / half.x, -1.0, 1.0)
 		var y_ratio = clamp(local_mouse.y / half.y, -1.0, 1.0)
 
+		# Tilt intensity is reduced if the card is slotted
 		var target_y = -x_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
 		var target_x = y_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
 
 		_lerp_shader_rotations(target_x, target_y, follow_speed * delta)
 		
-		# Prevent crazy jumps in UI Editor
 		if is_preview or is_inventory:
 			z_index = base_z + 10
 		else:
@@ -131,7 +136,8 @@ func _on_area_2d_mouse_exited() -> void:
 	if not interactable:
 		return
 	hovering = false
-	tag_container.visible = false
+	if tag_container:
+		tag_container.visible = false
 	update_hover_ui()
 	emit_signal("hovered_off", self)
 
@@ -203,21 +209,26 @@ func update_hover_ui():
 	else:
 		tag_container.visible = false
 
-func _get_current_slot_index() -> int:
-	if not cards_current_slot: return -1
-	var slots = get_node("/root/Main/BattleManager").player_slots
-	return slots.find(cards_current_slot)
-
 func update_retrigger_visuals():
 	var is_active = (retriggers > 0)
 	
-	if not glow_sprite or not effect_animation_player:
+	if not glow_sprite:
 		return
 		
 	glow_sprite.visible = is_active
 	
 	if is_active:
-		if effect_animation_player.has_animation("retrigger_glow"):
+		if effect_animation_player and effect_animation_player.has_animation("retrigger_glow"):
 			effect_animation_player.play("retrigger_glow")
 	else:
-		effect_animation_player.stop()
+		if effect_animation_player:
+			effect_animation_player.stop()
+
+func _get_current_slot_index() -> int:
+	if not cards_current_slot: 
+		return -1
+	# Assumes the BattleManager is accessible at this path
+	var battle_manager = get_node_or_null("/root/Main/BattleManager")
+	if battle_manager and "player_slots" in battle_manager:
+		return battle_manager.player_slots.find(cards_current_slot)
+	return -1
