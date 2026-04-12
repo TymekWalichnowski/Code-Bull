@@ -12,7 +12,7 @@ var screen_size
 var card_being_dragged
 var is_hovering_on_card
 var player_hand_reference
-var source_slot # Tracks where the card started (either a slot or null for hand)
+var source_slot
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -27,7 +27,8 @@ func _process(_delta: float) -> void:
 
 func start_drag(card):
 	card_being_dragged = card
-	source_slot = card.cards_current_slot # Store where it came from
+	card_being_dragged.is_dragged = true # Lock card physics
+	source_slot = card.cards_current_slot 
 	
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "rotation", 0.0, 0.05)
@@ -35,43 +36,37 @@ func start_drag(card):
 	card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
 	card.z_index = 200 
 	
-	# If it was in a slot, remove it (and strip buffs)
 	if source_slot:
 		source_slot.remove_card()
 	else:
-		# If it was in the hand, pull it out of the hand array
 		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		
 	card_being_dragged.play_audio("pickup")
 
 func finish_drag():
+	if card_being_dragged:
+		card_being_dragged.is_dragged = false # Unlock card physics
+	
 	card_being_dragged.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
 	var target_slot = raycast_check_for_card_slot(card_being_dragged)
 	
-	# LANDING ON A SLOT
 	if target_slot and target_slot.slot_owner == card_being_dragged.card_owner:
 		if target_slot.card_in_slot:
 			var occupied_card = target_slot.card
 			
 			if source_slot:
-				# CASE 1: SLOT TO SLOT SWAP
 				target_slot.remove_card()
 				source_slot.set_card(occupied_card)
 				target_slot.set_card(card_being_dragged)
 			else:
-				# CASE 2: HAND TO OCCUPIED SLOT (Put old card back to hand)
 				target_slot.remove_card()
 				player_hand_reference.add_card_to_hand(occupied_card, DEFAULT_CARD_MOVE_SPEED)
 				target_slot.set_card(card_being_dragged)
 		else:
-			# CASE 3: EMPTY SLOT
 			target_slot.set_card(card_being_dragged)
 		
 		card_being_dragged.play_audio("place")
-	
-	# LANDING OFF-SLOT (Return to hand)
 	else:
-		# If it's dropped in the air, it ALWAYS goes back to the hand
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	
 	card_being_dragged = null
@@ -88,20 +83,20 @@ func on_left_click_released():
 		finish_drag()
 
 func on_hovered_over_card(card):
-	if not card.interactable or is_hovering_on_card:
+	if not card.interactable or is_hovering_on_card or card_being_dragged != null:
 		return
 		
 	is_hovering_on_card = true
 	highlight_card(card, true)
 
 func on_hovered_off_card(card):
+	if card_being_dragged != null: 
+		return
+		
 	highlight_card(card, false)
 	is_hovering_on_card = false
 
-	if card_being_dragged: return
-
 	var new_card_hovered = raycast_check_for_card()
-	# Check for Card or PassiveCard classes
 	if new_card_hovered and (new_card_hovered is Card or new_card_hovered.get_class() == "PassiveCard"):
 		var is_slotted = ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null)
 		if not is_slotted:

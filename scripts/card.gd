@@ -12,17 +12,24 @@ signal hovered_off
 @export var follow_speed = 10.0
 @export var return_speed = 7.0
 
+@export var effect_display_scene: PackedScene
+@export var texture_retrigger: Texture2D
+@export var texture_nullify: Texture2D
+
+@onready var effect_display_container = %EffectDisplayContainer
+
 @onready var desc_label = %ActionDescriptionLabel
 @onready var tag_container = %TagContainer
 @onready var tag_label = %TagLabel
 
 @onready var glow_sprite = %Glow
-# These reference %Glow in your original, likely for different effect layers
 @onready var debuff_sprite = %Glow 
 @onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
+@onready var effect_label = get_node_or_null("%EffectLabel") # <-- Added for effect counts
 
 var hovering = false
+var is_dragged = false # <-- Tracks drag state
 var original_z_index := 10
 var cards_current_slot = null
 var hand_position: Vector2 = Vector2.ZERO
@@ -42,6 +49,7 @@ var sounds = {
 var card_id: int = 0
 var card_name: String = ""
 var retriggers: int = 0
+var nullified: int = 0 # <-- Added for effect counts
 
 func setup(data: CardDataResource, owner: String) -> void:
 	card_data = data.duplicate(true) 
@@ -53,14 +61,12 @@ func setup(data: CardDataResource, owner: String) -> void:
 	_apply_visuals()
 
 func _ready() -> void:
-	# Connect to the CardManager if it's the parent
 	if get_parent().has_method("connect_card_signals"):
 		get_parent().connect_card_signals(self)
 
 	card_image = %CardImage
 	card_back_image = %CardBackImage
 
-	# Ensure materials are unique so shader params don't sync across all cards
 	if card_image.material:
 		card_image.material = card_image.material.duplicate()
 	if card_back_image.material:
@@ -87,12 +93,16 @@ func _apply_visuals():
 	update_hover_ui()
 
 func _process(delta: float) -> void:
-	# Counter-rotate the UI so text stays upright even if the card tilts
 	if has_node("%UIOverlay") and %UIOverlay:
 		%UIOverlay.rotation = -rotation
 		
 	if not card_image or not card_image.texture:
 		return
+
+	# --- FIX: Bypass hover logic if being dragged ---
+	if is_dragged:
+		_lerp_shader_rotations(0.0, 0.0, return_speed * delta)
+		return 
 
 	var base_z = original_z_index
 	if cards_current_slot:
@@ -105,7 +115,6 @@ func _process(delta: float) -> void:
 		var x_ratio = clamp(local_mouse.x / half.x, -1.0, 1.0)
 		var y_ratio = clamp(local_mouse.y / half.y, -1.0, 1.0)
 
-		# Tilt intensity is reduced if the card is slotted
 		var target_y = -x_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
 		var target_x = y_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
 
@@ -126,8 +135,12 @@ func _lerp_shader_rotations(tx: float, ty: float, weight: float):
 			img.material.set_shader_parameter("x_rot", lerp(img.material.get_shader_parameter("x_rot"), tx, weight))
 
 func _on_area_2d_mouse_entered() -> void:
-	if not interactable: 
+	if not interactable or is_dragged: 
 		return
+	# --- FIX: Do not trigger hovers on cards if we are dragging something else ---
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return
+
 	hovering = true
 	update_hover_ui()
 	emit_signal("hovered", self)
@@ -209,26 +222,85 @@ func update_hover_ui():
 	else:
 		tag_container.visible = false
 
-func update_retrigger_visuals():
+func update_visuals():
 	var is_active = (retriggers > 0)
 	
-	if not glow_sprite:
-		return
-		
-	glow_sprite.visible = is_active
-	
-	if is_active:
-		if effect_animation_player and effect_animation_player.has_animation("retrigger_glow"):
-			effect_animation_player.play("retrigger_glow")
-	else:
-		if effect_animation_player:
-			effect_animation_player.stop()
+	if glow_sprite:
+		glow_sprite.visible = is_active
+		if is_active:
+			if effect_animation_player and effect_animation_player.has_animation("retrigger_glow"):
+				effect_animation_player.play("retrigger_glow")
+		else:
+			if effect_animation_player:
+				effect_animation_player.stop()
+
+	# --- NEW: Dynamic Effect UI ---
+	if effect_display_container:
+		# 1. Clear out the old displays so they don't infinitely stack
+		for child in effect_display_container.get_children():
+			child.queue_free()
+			
+		# 2. Rebuild the displays based on current counts
+		if retriggers > 0:
+			_add_effect_display(texture_retrigger, retriggers)
+		if nullified > 0: 
+			_add_effect_display(texture_nullify, nullified)
 
 func _get_current_slot_index() -> int:
 	if not cards_current_slot: 
 		return -1
-	# Assumes the BattleManager is accessible at this path
 	var battle_manager = get_node_or_null("/root/Main/BattleManager")
 	if battle_manager and "player_slots" in battle_manager:
 		return battle_manager.player_slots.find(cards_current_slot)
 	return -1
+
+func declare_effect(effect_name) -> void:
+	var label = %EffectDeclaration
+	var display_time = 0.3
+	# 1. Reset and Setup
+	label.visible = true
+	label.modulate.a = 1.0 # Ensure it's opaque
+	label.pivot_offset = label.size / 2
+	label.scale = Vector2.ZERO
+	label.rotation_degrees = -25.0
+	label.text = (effect_name)
+	
+	var tween = create_tween()
+	
+	# 2. THE APPEARANCE (Parallel)
+	# We use a parallel sub-tween so scale and rotation happen at once
+	var appearance = tween.parallel()
+	appearance.tween_property(label, "scale", Vector2.ONE, 0.4)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	appearance.tween_property(label, "rotation_degrees", 0.0, 0.6)\
+		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	
+	# 3. THE WAIT
+	# The tween will pause here for the duration you specify
+	tween.tween_interval(display_time)
+	
+	# 4. THE DISAPPEARANCE (Parallel)
+	# Shrink it down and fade it out
+	var disappearance = tween.parallel()
+	disappearance.tween_property(label, "scale", Vector2.ZERO, 0.2)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	disappearance.tween_property(label, "modulate:a", 0.0, 0.2)
+	
+	# 5. CLEANUP
+	# Finally, hide the node entirely so it doesn't block mouse clicks
+	tween.tween_callback(func(): label.visible = false)
+	await tween.finished
+
+func _add_effect_display(icon: Texture2D, count: int):
+	if not effect_display_scene or not icon or not effect_display_container:
+		return
+		
+	var display = effect_display_scene.instantiate()
+	effect_display_container.add_child(display)
+	
+	# Unique names (%) work locally within instanced scenes!
+	var img = display.get_node_or_null("%EffectImage")
+	var lbl = display.get_node_or_null("%CountLabel")
+	
+	if img: img.texture = icon
+	if lbl: lbl.text = "x" + str(count) # Optional: add "x" so it reads "x2"

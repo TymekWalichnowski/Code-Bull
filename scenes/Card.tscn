@@ -1,13 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://06hyc5u30ika"]
+[gd_scene load_steps=22 format=3 uid="uid://06hyc5u30ika"]
 
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_tgmmg"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="2_ktuci"]
+[ext_resource type="Texture2D" uid="uid://dmbe4ekbaqltb" path="res://assets/textures/cards/card_effects/effect_retrigger.png" id="3_4wvaf"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
 [ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
+[ext_resource type="Texture2D" uid="uid://kh307f8v25fj" path="res://assets/textures/cards/card_effects/effect_nullified.png" id="4_u8dfr"]
 [ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
 [ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="5_40ytf"]
 [ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
+[ext_resource type="PackedScene" uid="uid://w8eukdjb1h4f" path="res://scenes/effect_display.tscn" id="9_1yd6c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("3_kg30u")
@@ -230,6 +233,9 @@ _data = {
 
 [node name="PlayerCard" type="Node2D"]
 script = ExtResource("1_tgmmg")
+effect_display_scene = ExtResource("9_1yd6c")
+texture_retrigger = ExtResource("3_4wvaf")
+texture_nullify = ExtResource("4_u8dfr")
 metadata/_custom_type_script = "uid://vw5rk4xmtwrq"
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
@@ -265,13 +271,6 @@ texture = ExtResource("1_dd2wi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_jj44u")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-unique_name_in_owner = true
-offset_left = -65.0
-offset_top = -113.0
-offset_right = 63.0
-offset_bottom = -89.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -326,11 +325,36 @@ metadata/_edit_use_anchors_ = true
 [node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="EffectDisplayContainer" type="HBoxContainer" parent="UIOverlay"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -63.000015
+offset_top = -92.32
+offset_right = 105.42105
+offset_bottom = -100.32
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+size_flags_horizontal = 4
+alignment = 1
 
 [node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
 unique_name_in_owner = true
@@ -348,10 +372,10 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 1.675
-anchor_top = -2.125
-anchor_right = 4.225
-anchor_bottom = 2.2
+anchor_left = 2.175
+anchor_top = -1.55
+anchor_right = 4.25
+anchor_bottom = 2.775
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
@@ -363,6 +387,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_dt6cf")
 }
 autoplay = "retrigger_glow"
+
+[node name="EffectDeclaration" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = -120.0
+offset_top = -39.0
+offset_right = 122.0
+offset_bottom = 40.0
+theme_override_font_sizes/normal_font_size = 24
+text = "Retrigger!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

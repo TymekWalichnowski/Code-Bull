@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CardActionAnimation" load_steps=2 format=3 uid="uid://ch853y17fr3t3"]
+
+[ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="1_dvvtw"]
+
+[resource]
+script = ExtResource("1_dvvtw")
+animation_name = "attack_slash"
+animation_target = "Target"
+metadata/_custom_type_script = "uid://bj3fphuhhlpaj"

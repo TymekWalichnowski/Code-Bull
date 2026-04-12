@@ -195,19 +195,23 @@ func run_activation_phase():
 			
 			var slot = active_set[slot_index]
 			var card = slot.card
-			var current_side_node = %Player if side == "Player" else %Opponent
 			
 			if not card: continue
-			if current_side_node.nullified:
-				current_side_node.nullified = false 
-				collect_used_card(card) 
-				await wait(0.3)
-				continue 
-
+			
 			await move_card_to_battle_point(card).finished
 			
+			# Nullified card check
+			if card.nullified > 0:
+				card.nullified = 0
+				await card.declare_effect("Nullified!")
+				collect_used_card(card) 
+				await wait(0.3)
+				continue
+				
 			var runs = 1 + card.retriggers
 			for run_idx in range(runs):
+				if run_idx > 0:
+					await card.declare_effect("Retrigger!")
 				for action_idx in range(card.card_data.actions.size()):
 					if card.card_data.actions[action_idx] != null:
 						await action_manager.execute_card_action(card, action_idx)
@@ -235,7 +239,7 @@ func collect_used_card(card):
 	if card.cards_current_slot:
 		card.cards_current_slot.remove_card()
 	card.retriggers = 0
-	card.update_retrigger_visuals()
+	card.update_visuals()
 	if card.card_data:
 		card.card_data.multiplier = 1.0
 		for action in card.card_data.actions:

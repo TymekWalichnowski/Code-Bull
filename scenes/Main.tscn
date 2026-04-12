@@ -322,9 +322,7 @@ z_index = 5
 position = Vector2(959, 138)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_gdcyb")
-animation = &"wip"
-frame = 7
-frame_progress = 1.0
+animation = &"attack_slash"
 
 [node name="OpponentSprite" type="Sprite2D" parent="BattleManager/AnimationManager"]
 unique_name_in_owner = true

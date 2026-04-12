@@ -1,6 +1,6 @@
 extends Node2D
 
-const CARD_WIDTH = 110 # Reduced to match player feel, adjust as needed
+const CARD_WIDTH = 75 # <-- Reduced from 110 to pack them tighter
 const HAND_Y_POSITION = 30
 const DEFAULT_CARD_MOVE_SPEED = 0.2
 const DEFAULT_CARD_SCALE = 0.8
@@ -9,7 +9,7 @@ const MAX_ROTATION_DEGREES = 12.0
 const VERTICAL_ARCH_HEIGHT = 25.0 
 
 var opponent_hand = []
-var hand_tweens = {} # To prevent jumpy animations
+var hand_tweens = {} 
 
 func get_center_x() -> float:
 	return get_viewport_rect().size.x / 2.0
@@ -29,22 +29,17 @@ func update_hand_positions(speed):
 	for i in range(hand_size):
 		var card = opponent_hand[i]
 		
-		# Set Z-index so center cards are "on top" or just ordered left-to-right
 		card.z_index = -10 + i 
 
 		var ratio = 0.0
 		if hand_size > 1:
-			# This gives a value from -1.0 (left) to 1.0 (right)
 			ratio = (float(i) / (hand_size - 1) - 0.5) * 2.0
 		
 		var x_offset = (hand_size - 1) * CARD_WIDTH
 		var x_pos = center_x + (i * CARD_WIDTH) - (x_offset / 2.0)
 		
-		# MIRROR LOGIC: 
-		# Subtract the arch height so cards move UP toward the screen edge as they fan out
 		var y_pos = HAND_Y_POSITION - (VERTICAL_ARCH_HEIGHT * pow(ratio, 2))
 		
-		# Negate rotation so the "top" of the card fans outward at the top of the screen
 		var target_rot = deg_to_rad(ratio * -MAX_ROTATION_DEGREES)
 		
 		card.hand_position = Vector2(x_pos, y_pos)
@@ -73,7 +68,6 @@ func remove_card_from_hand(card):
 		update_hand_positions(DEFAULT_CARD_MOVE_SPEED)
 
 func get_insert_index(card):
-	# Maintain the opponent's ID sorting or use position
 	for i in range(opponent_hand.size()):
 		if card.card_id > opponent_hand[i].card_id:
 			return i

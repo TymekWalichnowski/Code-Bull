@@ -31,12 +31,10 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 			anim_node.position = target_pos
 			%AudioManager.play_sfx("Attack")
 			anim_node.play("attack_slash")
-			
 		"Shield":
 			anim_node.position = self_pos
 			%AudioManager.play_sfx("Shield Summon")
 			anim_node.play("shield_bubble")
-
 		"Multiply_Next_Card", "Retrigger_Next_Slot":
 			if slot_idx >= 0 and slot_idx < 3:
 				var slots = battle_m.player_slots if is_player else battle_m.opponent_slots
@@ -45,7 +43,7 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 				anim_node.position = self_pos
 			anim_node.play("multiply")
 
-		"Divide_Next_Card", "Divide_Specific_Slot":
+		"Divide_Next_Card", "Divide_Specific_Slot", "Nullify":
 			if slot_idx >= 0 and slot_idx < 3:
 				# Divide always targets the opponent's side
 				var target_slots = battle_m.opponent_slots if is_player else battle_m.player_slots
@@ -53,12 +51,13 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 			else:
 				anim_node.position = target_pos
 			anim_node.play("divide")
-
 		"Multiply_Or_Divide1", "Multiply_Or_Divide2":
 			anim_node.position = card_point
 			%AudioManager.play_sfx("Magic")
 			anim_node.play(action_name.to_lower())
-			
+		"Nullify_Start":
+			anim_node.position = card_point
+			anim_node.play("wip")
 		_:
 			anim_node.position = card_point
 			anim_node.play("wip")
