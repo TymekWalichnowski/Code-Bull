@@ -11,6 +11,8 @@ extends Node
 
 @export var flame_token_res: TokenResource
 @export var bleed_token_res: TokenResource
+@export var haste_token_res: TokenResource
+
 
 func execute_card_action(card: Card, action_index: int):
 	# Secondary safety check
@@ -95,6 +97,8 @@ func execute_card_action(card: Card, action_index: int):
 			_apply_token(target, flame_token_res, final_value)
 		"Apply_Bleed":
 			_apply_token(target, bleed_token_res, final_value)
+		"Gain_Haste":
+			_apply_token(self_target, haste_token_res, final_value)
 	
 	await battle_manager.token_manager.trigger_tokens("After_Action", card.card_owner)
 

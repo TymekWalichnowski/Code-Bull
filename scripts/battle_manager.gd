@@ -117,17 +117,19 @@ func _on_end_turn_button_pressed() -> void:
 	board_locked = true
 	
 	await run_activation_phase()
-	await trigger_tokens("On_Phase_End")
+	await trigger_tokens("On_Turn_End")
 	
+	advance_turn()
+
 	%Player.speed = randi_range(1, 5)
 	%Opponent.speed = randi_range(1, 5)
 	
-	advance_turn()
 	%PlayerDeck.draw_card()
 	%PlayerDeck.draw_card()
 	
 	await trigger_passives("On_Turn_Start")
 	await trigger_tokens("On_Turn_Start")
+
 	
 	board_locked = false
 	opponent_turn()

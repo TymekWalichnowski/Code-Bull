@@ -8,6 +8,6 @@ script = ExtResource("1_3tnhr")
 token_name = "Flame"
 token_image = ExtResource("1_taicr")
 description = "Burns the Opponent"
-trigger_condition = "On_Phase_End"
+trigger_condition = "On_Turn_End"
 effect_name = "Flame"
 metadata/_custom_type_script = "uid://car848yihi4xm"

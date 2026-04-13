@@ -7,7 +7,7 @@ class_name StatusResource
 
 @export_group("Logic")
 
-var trigger_condition: String = "On_Phase_Start"
+var trigger_condition: String = "On_Turn_Start"
 @export var effect_name: String = "Effect_Name"
 @export var value: float = 1.0
 @export var target_slot: int = -1

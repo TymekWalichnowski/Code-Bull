@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=67 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
 [ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
+[ext_resource type="Resource" uid="uid://chxqxw3y3ikeg" path="res://objects/tokens/haste.tres" id="7_vua0o"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/opponent_deck.gd" id="8_lhr70"]
 [ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
 [ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
@@ -309,6 +310,7 @@ unique_name_in_owner = true
 script = ExtResource("2_xa025")
 flame_token_res = ExtResource("3_pnhog")
 bleed_token_res = ExtResource("2_g6wdg")
+haste_token_res = ExtResource("7_vua0o")
 
 [node name="AnimationManager" type="Node" parent="BattleManager"]
 unique_name_in_owner = true

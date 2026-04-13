@@ -7,7 +7,7 @@ class_name PassiveCardResource
 @export var description: String = ""
 
 @export_group("Logic")
-@export_enum("On_Turn_Start", "On_Phase_Start", "On_Slot_Start", 
+@export_enum("On_Turn_Start", "On_Turn_End", "On_Slot_Start", 
 			 "On_Damage_Taken_Player", "On_Damage_Taken_Opponent",
 			 "On_Hit_Taken") 
 

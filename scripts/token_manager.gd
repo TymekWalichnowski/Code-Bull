@@ -4,7 +4,8 @@ extends Node
 
 @onready var token_effect_map: Dictionary = {
 	"Bleed": _effect_bleed,
-	"Flame": _effect_flame
+	"Flame": _effect_flame,
+	"Haste": _effect_haste
 }
 
 # side can be "Player", "Opponent", or "Both" (default for phase starts)
@@ -47,7 +48,6 @@ func _process_container(container: TokenContainer, side: String, trigger_type: S
 						tween.tween_property(top_sprite, "modulate:a", 0.0, 0.2) # Fade out
 						
 						await tween.finished
-
 				
 				await token_effect_map[token_res.effect_name].call(side, stacks, token_res)
 				
@@ -81,3 +81,7 @@ func _effect_haste(side: String, stacks: int, resource: TokenResource):
 	var container = %PlayerTokens if side == "Player" else %OpponentTokens
 	
 	print("Haste Triggered: ", side, " earns ", stacks, " speed.")
+	target.speed += stacks
+	container.add_token(resource, -stacks)
+	await get_tree().create_timer(0.3).timeout
+	
