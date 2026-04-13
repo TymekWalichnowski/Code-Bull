@@ -37,7 +37,7 @@ func start_drag(card):
 	card.z_index = 200 
 	
 	if source_slot:
-		source_slot.remove_card()
+		source_slot.remove_card(true)
 	else:
 		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		
@@ -55,11 +55,11 @@ func finish_drag():
 			var occupied_card = target_slot.card
 			
 			if source_slot:
-				target_slot.remove_card()
+				target_slot.remove_card(true)
 				source_slot.set_card(occupied_card)
 				target_slot.set_card(card_being_dragged)
 			else:
-				target_slot.remove_card()
+				target_slot.remove_card(true)
 				player_hand_reference.add_card_to_hand(occupied_card, DEFAULT_CARD_MOVE_SPEED)
 				target_slot.set_card(card_being_dragged)
 		else:

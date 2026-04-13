@@ -36,10 +36,12 @@ func _ready() -> void:
 	%Opponent.current_health = STARTING_HEALTH
 	%PlayerDeck.prepare_deck()
 	%OpponentDeck.prepare_deck()
+	%Player.speed = randi_range(1, 5)
+	%Opponent.speed = randi_range(1, 5)
 	
 	for i in range(START_DRAW_COUNT):
 		if i < 5: %PlayerDeck.draw_card()
-		if i < 6: %OpponentDeck.draw_card()
+		if i < 5: %OpponentDeck.draw_card()
 		await get_tree().create_timer(0.4).timeout
 	
 	%PlayerDeck.spawn_starting_passives()
@@ -180,7 +182,7 @@ func wait(wait_time):
 
 func run_activation_phase():
 	var slot_count = max(player_slots.size(), opponent_slots.size())
-	player_has_initiative = (%Player.speed > %Opponent.speed)
+	player_has_initiative = (%Player.speed >= %Opponent.speed)
 	
 	await wait(0.4)
 	
@@ -224,6 +226,11 @@ func run_activation_phase():
 		if slot_index < opponent_slots.size(): opponent_slots[slot_index].clear_buffs()
 		reset_opponent_slots()
 		await wait(0.6)
+	# Making slots visible again
+	for slot in player_slots:
+		slot.visible = true
+	for slot in opponent_slots:
+		slot.visible = true
 
 func move_card_to_battle_point(card) -> Tween:
 	var target_pos = %PlayerCardPoint.global_position if card.card_owner == "Player" else %OpponentCardPoint.global_position 
@@ -237,7 +244,7 @@ func move_card_to_battle_point(card) -> Tween:
 func collect_used_card(card):
 	if card == null: return
 	if card.cards_current_slot:
-		card.cards_current_slot.remove_card()
+		card.cards_current_slot.remove_card(false)
 	card.retriggers = 0
 	card.update_visuals()
 	if card.card_data:

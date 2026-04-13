@@ -13,7 +13,7 @@ func _ready() -> void:
 # Safely attaches a card to this slot and applies buffs
 func set_card(new_card: Node2D):
 	if card: 
-		remove_card() # Clear existing if swapping
+		remove_card(true) # Clear existing if swapping
 	
 	card = new_card
 	card_in_slot = true
@@ -26,7 +26,7 @@ func set_card(new_card: Node2D):
 	visible = false
 
 # Safely removes the card and strips slot buffs
-func remove_card():
+func remove_card(show_slot):
 	if not card: 
 		return
 	
@@ -37,7 +37,10 @@ func remove_card():
 	card.cards_current_slot = null
 	card = null
 	card_in_slot = false
-	visible = true
+	if show_slot == true:
+		visible = true # slot stays if we tell it to
+	else:
+		visible = false
 
 # Called by passives or other cards to buff this specific slot
 func add_retrigger_buff(amount: int):
