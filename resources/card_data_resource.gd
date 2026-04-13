@@ -14,5 +14,6 @@ class_name CardDataResource
 			 "Charity", "Diligence", "Kindness",
 			 "Patience", "Humility") 
 var type: String = "Purity"
+@export var one_time_use: bool = 0.0
 
 @export var actions: Array[CardAction] = []

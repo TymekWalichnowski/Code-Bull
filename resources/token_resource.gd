@@ -3,7 +3,7 @@ class_name TokenResource
 @export_group("Visuals")
 @export var token_name: String = "Token Name"
 @export var token_image: Texture2D
-@export var description: String = ""
+@export_multiline var description: String = ""
 
 @export_group("Logic")
 @export_enum("On_Turn_Start", "On_Turn_End", "On_Slot_Start", 
