@@ -23,6 +23,7 @@ func set_card(new_card: Node2D):
 	# Apply slot buffs to the card
 	card.retriggers += bonus_retriggers
 	card.update_visuals()
+	visible = false
 
 # Safely removes the card and strips slot buffs
 func remove_card():
@@ -36,6 +37,7 @@ func remove_card():
 	card.cards_current_slot = null
 	card = null
 	card_in_slot = false
+	visible = true
 
 # Called by passives or other cards to buff this specific slot
 func add_retrigger_buff(amount: int):
