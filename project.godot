@@ -43,6 +43,7 @@ folder_colors={
 "res://objects/cards/animations/": "green",
 "res://objects/cards/statuses/": "red",
 "res://objects/cards_passive/": "teal",
+"res://objects/tags/": "gray",
 "res://objects/tokens/": "red",
 "res://resources/": "pink",
 "res://scenes/": "blue",

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TagResource" load_steps=2 format=3 uid="uid://6bwpkssp22nh"]
+
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="1_xcri7"]
+
+[resource]
+script = ExtResource("1_xcri7")
+tag_name = "Divide"
+metadata/_custom_type_script = "uid://dtvye7fxnroyr"

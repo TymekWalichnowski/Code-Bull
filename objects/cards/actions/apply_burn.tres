@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=4 format=3 uid="uid://bue8wd7hnvlye"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_4d4yn"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_j0edu"]
+[ext_resource type="Resource" uid="uid://bx1d3ng13mhph" path="res://objects/tags/burn.tres" id="3_apox6"]
+
+[resource]
+script = ExtResource("1_4d4yn")
+action_name = "Apply_Flame"
+description = "Apply [value] [color=#ff5203]flame[/color] "
+value = 7.0
+priority = 1
+tags = Array[ExtResource("2_j0edu")]([ExtResource("3_apox6")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

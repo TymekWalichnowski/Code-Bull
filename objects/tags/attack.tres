@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TagResource" load_steps=2 format=3 uid="uid://y5ky8m6xbdbn"]
+
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="1_uxort"]
+
+[resource]
+script = ExtResource("1_uxort")
+tag_name = "Attack"
+metadata/_custom_type_script = "uid://dtvye7fxnroyr"

@@ -1,3 +1,5 @@
+@icon("res://Assets/icons/16x16/page_data.png")
+
 extends Resource
 class_name CardDataResource
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TagResource" load_steps=2 format=3 uid="uid://df36jvec5chn"]
+
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="1_q6lmd"]
+
+[resource]
+script = ExtResource("1_q6lmd")
+tag_name = "Haste"
+description = "Spend all tokens at turn start to increase speed by count."
+visible = true
+metadata/_custom_type_script = "uid://dtvye7fxnroyr"

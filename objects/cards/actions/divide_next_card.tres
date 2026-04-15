@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=3 format=3 uid="uid://cevnodbor4uxq"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_osxoc"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_or2eg"]
+
+[resource]
+script = ExtResource("1_osxoc")
+action_name = "Divide_Next_Card"
+description = "Divide opponent's next upcoming card slot by [value]"
+value = 2.0
+priority = 3
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

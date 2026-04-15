@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=4 format=3 uid="uid://rmnwkvxuo8y0"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_wfhem"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_mwtc0"]
+[ext_resource type="Resource" uid="uid://bvy34rloar7fq" path="res://objects/tags/bleed.tres" id="3_0dkcd"]
+
+[resource]
+script = ExtResource("1_wfhem")
+action_name = "Apply_Bleed"
+description = "Apply [value] [color=#990808]bleed[/color] "
+value = 1.0
+priority = 1
+tags = Array[ExtResource("2_mwtc0")]([ExtResource("3_0dkcd")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

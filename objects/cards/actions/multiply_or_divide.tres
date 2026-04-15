@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=5 format=3 uid="uid://bgnkirmh8dufk"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_t1mau"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_b03rs"]
+[ext_resource type="Resource" uid="uid://bmmnms5u0iile" path="res://objects/tags/multiply.tres" id="3_3iamy"]
+[ext_resource type="Resource" uid="uid://6bwpkssp22nh" path="res://objects/tags/divide.tres" id="4_l27xl"]
+
+[resource]
+script = ExtResource("1_t1mau")
+action_name = "Multiply_Or_Divide"
+description = "50% chance to multiply your card by [value] 50% chance to divide opponent's next card by it instead."
+value = 2.0
+static_value = 1.0
+tags = Array[ExtResource("2_b03rs")]([ExtResource("3_3iamy"), ExtResource("4_l27xl")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

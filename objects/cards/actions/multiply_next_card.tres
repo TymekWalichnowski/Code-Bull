@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardAction" load_steps=4 format=3 uid="uid://cd3ddw7dbeusq"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_oewjd"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_hlnv3"]
+[ext_resource type="Resource" uid="uid://bmmnms5u0iile" path="res://objects/tags/multiply.tres" id="3_gyryv"]
+
+[resource]
+script = ExtResource("1_oewjd")
+action_name = "Multiply_Next_Card"
+description = "Multiply all values of the next played card by [value]"
+value = 2.0
+priority = 3
+tags = Array[ExtResource("2_hlnv3")]([ExtResource("3_gyryv")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

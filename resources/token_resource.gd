@@ -1,3 +1,5 @@
+@icon("res://Assets/icons/16x16/key_t.png")
+
 extends Resource
 class_name TokenResource
 @export_group("Visuals")

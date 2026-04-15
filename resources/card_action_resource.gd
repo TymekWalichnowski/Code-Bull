@@ -1,3 +1,5 @@
+@icon("res://Assets/icons/16x16/sword.png")
+
 extends Resource
 class_name CardAction
 
@@ -9,4 +11,4 @@ class_name CardAction
 @export var priority: int = 0
 @export var target: String # mainly used for animations rather than logic
 @export var action_animation_override: String # might not be relevant enough to use
-@export var tags: Array[String] = []
+@export var tags: Array[TagResource] = []

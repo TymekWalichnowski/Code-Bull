@@ -1,13 +1,36 @@
-[gd_resource type="Resource" script_class="CardDataResource" load_steps=5 format=3 uid="uid://c23im5mgbw7og"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=8 format=3 uid="uid://c23im5mgbw7og"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_ke42n"]
-[ext_resource type="Resource" uid="uid://befonwkx6jr3s" path="res://objects/cards/actions/attack.tres" id="2_jp42c"]
-[ext_resource type="Texture2D" uid="uid://dfg7nhbko8vf2" path="res://assets/textures/cards/card_Double Hit.png" id="2_ke42n"]
+[ext_resource type="Texture2D" uid="uid://dfg7nhbko8vf2" path="res://Assets/textures/cards/card_Double Hit.png" id="2_ke42n"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_kv13t"]
+[ext_resource type="Resource" uid="uid://y5ky8m6xbdbn" path="res://objects/tags/attack.tres" id="3_3pcdb"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_kv13t"]
+
+[sub_resource type="Resource" id="Resource_2hhve"]
+script = ExtResource("1_ke42n")
+action_name = "Attack"
+description = "Deal [value] damage"
+value = 2.0
+priority = 2
+target = "target"
+action_animation_override = "attack_slash"
+tags = Array[ExtResource("2_kv13t")]([ExtResource("3_3pcdb")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[sub_resource type="Resource" id="Resource_8neu0"]
+script = ExtResource("1_ke42n")
+action_name = "Attack"
+description = "Deal [value] damage"
+value = 2.0
+priority = 2
+target = "target"
+action_animation_override = "attack_slash"
+tags = Array[ExtResource("2_kv13t")]([ExtResource("3_3pcdb")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]
 script = ExtResource("3_kv13t")
 display_name = "Double Hit"
 image_texture = ExtResource("2_ke42n")
-actions = Array[ExtResource("1_ke42n")]([ExtResource("2_jp42c"), ExtResource("2_jp42c"), null])
+actions = Array[ExtResource("1_ke42n")]([SubResource("Resource_2hhve"), SubResource("Resource_8neu0")])
 metadata/_custom_type_script = "uid://cfssthidojyly"

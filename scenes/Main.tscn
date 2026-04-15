@@ -28,7 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://Assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
-[ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide.tres" id="26_8cp6k"]
+[ext_resource type="Resource" uid="uid://bxdc6lr2gwrkq" path="res://objects/cards/divide_next_card.tres" id="26_8cp6k"]
 [ext_resource type="Texture2D" uid="uid://dntxnqk5tfl2q" path="res://Assets/textures/UI/speed_holder.png" id="31_5grtr"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
 [ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]

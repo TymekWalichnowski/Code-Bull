@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TagResource" load_steps=2 format=3 uid="uid://dsjlpncrpm2id"]
+
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="1_sp2gq"]
+
+[resource]
+script = ExtResource("1_sp2gq")
+tag_name = "Ethereal"
+description = "This value cannot be modified."
+visible = true
+metadata/_custom_type_script = "uid://dtvye7fxnroyr"

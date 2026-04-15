@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TagResource" load_steps=2 format=3 uid="uid://bmmnms5u0iile"]
+
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="1_g1s00"]
+
+[resource]
+script = ExtResource("1_g1s00")
+tag_name = "Multiply"
+metadata/_custom_type_script = "uid://dtvye7fxnroyr"
