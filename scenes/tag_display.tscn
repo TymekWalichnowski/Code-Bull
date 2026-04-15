@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://celb8jfdduftc"]
+
+[node name="TagDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1705.0
+offset_bottom = -1003.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 0
+offset_right = 208.0
+offset_bottom = 76.0
+theme_override_constants/margin_left = 10
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+custom_minimum_size = Vector2(2.875, 0)
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TagTitle" type="RichTextLabel" parent="MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 18
+text = "Title"
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+
+[node name="TagDescription" type="RichTextLabel" parent="MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "wawwawwawa"
+fit_content = true
