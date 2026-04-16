@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://06hyc5u30ika"]
+[gd_scene load_steps=19 format=3 uid="uid://06hyc5u30ika"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="1_dd2wi"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://Assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
 [ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_40ytf"]
 [ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
-[ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="8_nvopj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("3_kg30u")
@@ -275,83 +274,41 @@ libraries = {
 stream = ExtResource("5_40ytf")
 volume_db = -3.0
 
-[node name="Node" type="Node" parent="."]
-
-[node name="DescriptionOverlay" type="Control" parent="Node"]
+[node name="UIOverlay" type="Control" parent="."]
 unique_name_in_owner = true
+layout_direction = 1
 layout_mode = 3
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1880.0
-offset_bottom = -1040.0
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="Node/DescriptionOverlay"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.6039999
-anchor_top = 0.78999996
-anchor_right = 1.5940002
-anchor_bottom = 2.206
-offset_left = -0.84000397
-offset_top = -0.5999985
-offset_right = 0.23999023
-offset_bottom = 0.7599945
-metadata/_edit_use_anchors_ = true
-
-[node name="ActionDescriptionLabel" type="RichTextLabel" parent="Node/DescriptionOverlay/Panel"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0625
-anchor_top = -0.03448276
-anchor_right = 0.947
-anchor_bottom = 0.91400003
-offset_left = 1.0
-offset_top = 5.0
-offset_right = 0.0010604858
-offset_bottom = -0.012001038
-mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 10
-theme_override_font_sizes/bold_font_size = 10
-bbcode_enabled = true
-text = "Default Text"
-metadata/_edit_use_anchors_ = true
-
-[node name="UIOverlay" type="Control" parent="Node"]
-unique_name_in_owner = true
-layout_mode = 3
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -92.0
-offset_top = -139.0
-offset_right = -1564.0
-offset_bottom = -744.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 0
+anchors_preset = 0
+size_flags_horizontal = 2
 size_flags_vertical = 3
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="EffectDisplayContainer" type="HBoxContainer" parent="Node/UIOverlay"]
+[node name="DescriptionOverlay" type="Control" parent="UIOverlay"]
+unique_name_in_owner = true
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="EffectDisplayContainer" type="HBoxContainer" parent="UIOverlay"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.042000003
 anchor_right = 0.34100002
 anchor_bottom = 0.135
-offset_left = -10.792001
-offset_top = -7.0
-offset_right = 43.45067
-offset_bottom = 18.273312
+offset_left = -63.0
+offset_top = -127.00001
+offset_right = 105.0
+offset_bottom = -75.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.75, 0.75)
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="TagDisplayContainer" type="VBoxContainer" parent="Node/UIOverlay"]
+[node name="TagDisplayContainer" type="VBoxContainer" parent="UIOverlay"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -360,18 +317,12 @@ anchor_top = 0.35200003
 anchor_right = 4.473
 anchor_bottom = 2.5700002
 offset_left = 58.376
-offset_top = -112.20001
-offset_right = -1626.904
-offset_bottom = -991.7501
+offset_top = -85.0
+offset_right = 276.0
+offset_bottom = 91.0
 grow_vertical = 2
 
-[node name="TagDisplay" parent="Node/UIOverlay/TagDisplayContainer" instance=ExtResource("8_nvopj")]
-layout_mode = 2
-
-[node name="TagDisplay2" parent="Node/UIOverlay/TagDisplayContainer" instance=ExtResource("8_nvopj")]
-layout_mode = 2
-
-[node name="TagLabel" type="RichTextLabel" parent="Node/UIOverlay"]
+[node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -385,7 +336,7 @@ size_flags_vertical = 4
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="TagContainer" type="VBoxContainer" parent="Node/UIOverlay"]
+[node name="TagContainer" type="VBoxContainer" parent="UIOverlay"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -397,6 +348,38 @@ offset_right = -0.00024414063
 offset_bottom = -6.1035156e-05
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UIOverlay"]
+layout_mode = 0
+offset_left = -65.0
+offset_top = 23.0
+offset_right = 65.0
+offset_bottom = 78.0
+
+[node name="Panel" type="Panel" parent="UIOverlay/MarginContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionDescriptionLabel" type="RichTextLabel" parent="UIOverlay/MarginContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = -0.03448276
+anchor_right = 0.947
+anchor_bottom = 0.91400003
+offset_left = 1.0
+offset_top = 5.0
+offset_right = 2.0
+offset_bottom = 5.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+bbcode_enabled = true
+text = "Default Text"
+metadata/_edit_use_anchors_ = true
+
+[node name="Node" type="Node" parent="."]
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 

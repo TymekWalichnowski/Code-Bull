@@ -22,6 +22,7 @@ metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 script = ExtResource("1_14x88")
 action_name = "Gain_Haste"
 description = "Gain [value] Haste Tokens"
+value = 2.0
 tags = Array[ExtResource("2_e285j")]([ExtResource("4_kdwuq")])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 

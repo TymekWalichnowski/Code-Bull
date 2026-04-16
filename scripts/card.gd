@@ -234,7 +234,6 @@ func update_visuals():
 			if effect_animation_player:
 				effect_animation_player.stop()
 
-	# --- NEW: Dynamic Effect UI ---
 	if effect_display_container:
 		# 1. Clear out the old displays so they don't infinitely stack
 		for child in effect_display_container.get_children():
