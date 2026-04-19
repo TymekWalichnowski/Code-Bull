@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d038reee2kbjm"
-path="res://.godot/imported/clock_stop.png-1c686dac6d37b7bb9179e74bbd6290e7.ctex"
+path="res://.godot/imported/clock_stop.png-26ca497793b2d0fb3a03bb3cfd03eec3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/clock_stop.png"
-dest_files=["res://.godot/imported/clock_stop.png-1c686dac6d37b7bb9179e74bbd6290e7.ctex"]
+source_file="res://assets/icons/16x16/clock_stop.png"
+dest_files=["res://.godot/imported/clock_stop.png-26ca497793b2d0fb3a03bb3cfd03eec3.ctex"]
 
 [params]
 

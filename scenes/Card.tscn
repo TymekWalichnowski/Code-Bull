@@ -1,13 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://06hyc5u30ika"]
+[gd_scene load_steps=21 format=3 uid="uid://bb1gw8i0aub60"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="1_dd2wi"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="2_ktuci"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="1_dd2wi"]
+[ext_resource type="PackedScene" uid="uid://w8eukdjb1h4f" path="res://scenes/effect_display.tscn" id="2_1yd6c"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
-[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://Assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_40ytf"]
-[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
+[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="5_40ytf"]
+[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
+[ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="9_1yd6c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("3_kg30u")
@@ -230,6 +232,8 @@ _data = {
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_1yd6c")
+effect_display_scene = ExtResource("2_1yd6c")
+tag_display_scene = ExtResource("9_1yd6c")
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -279,88 +283,46 @@ unique_name_in_owner = true
 layout_direction = 1
 layout_mode = 3
 anchors_preset = 0
+offset_left = -64.0
+offset_top = -87.0
+offset_right = 63.0
+offset_bottom = 88.0
+pivot_offset = Vector2(64, 87)
 size_flags_horizontal = 2
 size_flags_vertical = 3
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="DescriptionOverlay" type="Control" parent="UIOverlay"]
 unique_name_in_owner = true
-layout_direction = 1
 layout_mode = 1
-anchors_preset = 0
-mouse_filter = 2
-
-[node name="EffectDisplayContainer" type="HBoxContainer" parent="UIOverlay"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.042000003
-anchor_right = 0.34100002
-anchor_bottom = 0.135
-offset_left = -63.0
-offset_top = -127.00001
-offset_right = 105.0
-offset_bottom = -75.0
+anchor_right = 1.0
+anchor_bottom = 0.84900004
+offset_left = -32.0
+offset_top = 114.0
+offset_right = 40.0
+offset_bottom = 46.424988
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-size_flags_horizontal = 4
-alignment = 1
-
-[node name="TagDisplayContainer" type="VBoxContainer" parent="UIOverlay"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.238
-anchor_top = 0.35200003
-anchor_right = 4.473
-anchor_bottom = 2.5700002
-offset_left = 58.376
-offset_top = -85.0
-offset_right = 276.0
-offset_bottom = 91.0
-grow_vertical = 2
-
-[node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.675
-anchor_top = -2.125
-anchor_right = 4.225
-anchor_bottom = 2.2
-offset_right = -0.00036621094
-offset_bottom = -6.1035156e-05
-size_flags_vertical = 4
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="TagContainer" type="VBoxContainer" parent="UIOverlay"]
-unique_name_in_owner = true
+[node name="MarginContainer" type="MarginContainer" parent="UIOverlay/DescriptionOverlay"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 2.175
-anchor_top = -1.55
-anchor_right = 4.25
-anchor_bottom = 2.775
-offset_right = -0.00024414063
-offset_bottom = -6.1035156e-05
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
+anchor_left = 0.13705584
+anchor_top = 0.04761905
+anchor_right = 0.8223351
+anchor_bottom = 0.75
+offset_right = -1.5258789e-05
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UIOverlay"]
-layout_mode = 0
-offset_left = -65.0
-offset_top = 23.0
-offset_right = 65.0
-offset_bottom = 78.0
-
-[node name="Panel" type="Panel" parent="UIOverlay/MarginContainer"]
+[node name="Panel" type="Panel" parent="UIOverlay/DescriptionOverlay/MarginContainer"]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="ActionDescriptionLabel" type="RichTextLabel" parent="UIOverlay/MarginContainer/Panel"]
+[node name="ActionDescriptionLabel" type="RichTextLabel" parent="UIOverlay/DescriptionOverlay/MarginContainer/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -377,9 +339,6 @@ theme_override_font_sizes/normal_font_size = 10
 theme_override_font_sizes/bold_font_size = 10
 bbcode_enabled = true
 text = "Default Text"
-metadata/_edit_use_anchors_ = true
-
-[node name="Node" type="Node" parent="."]
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 

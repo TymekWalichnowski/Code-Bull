@@ -12,8 +12,6 @@ signal hovered_off
 @export var return_speed = 7.0
 
 @onready var desc_label = %ActionDescriptionLabel
-@onready var tag_container = %TagContainer
-@onready var tag_label = %TagLabel
 @onready var card_image = %CardImage
 
 var hovering = false
@@ -71,7 +69,6 @@ func _on_area_2d_mouse_entered() -> void:
 func _on_area_2d_mouse_exited() -> void:
 	if not interactable: return
 	hovering = false
-	if tag_container: tag_container.visible = false
 	update_hover_ui()
 	emit_signal("hovered_off", self)
 
@@ -91,25 +88,33 @@ func update_hover_ui():
 	if desc_label == null or data == null:
 		return
 
+	# Match the visibility logic of your Action Card
 	%DescriptionOverlay.visible = hovering
-	%UIOverlay.visible = hovering
+
+	if not hovering:
+		return
 
 	var full_description = data.description 
 	
+	# 1. Handle [value] replacement
 	if "[value]" in full_description:
-		full_description = full_description.replace("[value]", str(data.value))
+		# Format to 1 decimal if it's not a whole number, else keep it clean
+		var val_string = str(data.value) if fmod(data.value, 1.0) != 0 else str(int(data.value))
+		full_description = full_description.replace("[value]", val_string)
 
-	desc_label.text = full_description
+	# 2. Handle [target_slot] replacement
+	if "[target_slot]" in full_description:
+		var slot_text = ""
+		slot_text = "Slot " + str(data.target_slot)
+		
+		full_description = full_description.replace("[target_slot]", slot_text)
 
-	var lines = []
-	if data.card_type != "":
-		lines.append("[b]Type[/b]: Passive")
+	# 3. Apply formatting (Bullet point like the Action Cards)
+	desc_label.text = "- " + full_description.strip_edges()
 
-	if lines.size() > 0:
-		tag_label.text = "INFO:\n" + "\n".join(lines)
-		tag_container.visible = hovering
-	else:
-		tag_container.visible = false
+	# 4. Handle Type Labels (Optional: you can add more metadata here)
+	# If you have a separate label for type:
+	# type_label.text = "[b]Type[/b]: Passive"
 
 func play_trigger_anim():
 	if has_node("AnimationPlayer") and $AnimationPlayer.has_animation("passive_trigger"):

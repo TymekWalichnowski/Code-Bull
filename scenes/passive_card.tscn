@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://jn7bivirlflx"]
+[gd_scene load_steps=12 format=3 uid="uid://jn7bivirlflx"]
 
 [ext_resource type="Script" uid="uid://bxw2uuoffygpq" path="res://scripts/passive_card.gd" id="1_p1kcn"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_aaosi"]
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="4_08nfd"]
 [ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_u6wo3"]
 [ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="6_enwn4"]
-[ext_resource type="Theme" uid="uid://4twn8n1dll3t" path="res://assets/themes/Default_Theme.tres" id="7_8qrir"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yywh3"]
 shader = ExtResource("3_aaosi")
@@ -127,6 +126,7 @@ offset_bottom = 0.7599945
 metadata/_edit_use_anchors_ = true
 
 [node name="ActionDescriptionLabel" type="RichTextLabel" parent="DescriptionOverlay/Panel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0625
@@ -143,33 +143,6 @@ theme_override_font_sizes/bold_font_size = 10
 bbcode_enabled = true
 text = "Default Text"
 metadata/_edit_use_anchors_ = true
-
-[node name="UIOverlay" type="Control" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-theme = ExtResource("7_8qrir")
-
-[node name="TagLabel" type="RichTextLabel" parent="UIOverlay"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 171.0
-offset_top = -85.0
-offset_right = 364.0
-offset_bottom = 40.0
-
-[node name="TagContainer" type="VBoxContainer" parent="UIOverlay"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 171.0
-offset_top = -85.0
-offset_right = 273.0
-offset_bottom = 88.0
-mouse_filter = 2
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

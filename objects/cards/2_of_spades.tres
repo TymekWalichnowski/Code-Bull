@@ -1,18 +1,16 @@
-[gd_resource type="Resource" script_class="CardDataResource" load_steps=7 format=3 uid="uid://j61jj7tm3m6g"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=6 format=3 uid="uid://j61jj7tm3m6g"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_rd3gr"]
-[ext_resource type="Texture2D" uid="uid://cl21at1o7rlq0" path="res://Assets/textures/cards/card_2 Of Spades.png" id="2_rd3gr"]
-[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_w03kf"]
-[ext_resource type="Resource" uid="uid://c6te5wser2l33" path="res://objects/tags/retrigger.tres" id="3_dmule"]
+[ext_resource type="Texture2D" uid="uid://cl21at1o7rlq0" path="res://assets/textures/cards/card_2 Of Spades.png" id="2_rd3gr"]
+[ext_resource type="Script" path="res://resources/tag_resource.gd" id="2_w03kf"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_w03kf"]
 
 [sub_resource type="Resource" id="Resource_qh1xm"]
 script = ExtResource("1_rd3gr")
 action_name = "Retrigger_Next_Slot"
 description = "Retrigger the next played slot by [value]"
-value = 1.0
+value = 2.0
 priority = 1
-tags = Array[ExtResource("2_w03kf")]([ExtResource("3_dmule")])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]

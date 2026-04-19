@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg0wxf0qo3pxf"
-path="res://.godot/imported/terrain_smooth_linear.png-2a37a726b3e3a59d6c4f66e87921a7a8.ctex"
+path="res://.godot/imported/terrain_smooth_linear.png-04d86ef6402bca01a0b722d3794a8860.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/terrain_smooth_linear.png"
-dest_files=["res://.godot/imported/terrain_smooth_linear.png-2a37a726b3e3a59d6c4f66e87921a7a8.ctex"]
+source_file="res://assets/icons/16x16/terrain_smooth_linear.png"
+dest_files=["res://.godot/imported/terrain_smooth_linear.png-04d86ef6402bca01a0b722d3794a8860.ctex"]
 
 [params]
 

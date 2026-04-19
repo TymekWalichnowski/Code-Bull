@@ -13,20 +13,20 @@ signal hovered_off
 @export var return_speed = 7.0
 
 @export var effect_display_scene: PackedScene
+@export var tag_display_scene: PackedScene
+
 @export var texture_retrigger: Texture2D
 @export var texture_nullify: Texture2D
 
 @onready var effect_display_container = %EffectDisplayContainer
+@onready var tag_display_container = %TagDisplayContainer
 
 @onready var desc_label = %ActionDescriptionLabel
-@onready var tag_container = %TagContainer
-@onready var tag_label = %TagLabel
 
 @onready var glow_sprite = %Glow
 @onready var debuff_sprite = %Glow 
 @onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
-@onready var effect_label = get_node_or_null("%EffectLabel") # <-- Added for effect counts
 
 var hovering = false
 var is_dragged = false # <-- Tracks drag state
@@ -93,9 +93,8 @@ func _apply_visuals():
 	update_hover_ui()
 
 func _process(delta: float) -> void:
-	if has_node("%UIOverlay") and %UIOverlay:
-		%UIOverlay.rotation = -rotation
-		
+	
+
 	if not card_image or not card_image.texture:
 		return
 
@@ -109,7 +108,6 @@ func _process(delta: float) -> void:
 		base_z = cards_current_slot.z_index + 1
 	
 	if hovering and interactable: 
-		update_hover_ui()
 		var local_mouse = card_image.to_local(get_global_mouse_position())
 		var half = card_image.texture.get_size() * 0.5
 		var x_ratio = clamp(local_mouse.x / half.x, -1.0, 1.0)
@@ -149,8 +147,6 @@ func _on_area_2d_mouse_exited() -> void:
 	if not interactable:
 		return
 	hovering = false
-	if tag_container:
-		tag_container.visible = false
 	update_hover_ui()
 	emit_signal("hovered_off", self)
 
@@ -167,17 +163,18 @@ func update_hover_ui():
 
 	var is_enemy_hand_card = (card_owner == "Opponent" and cards_current_slot == null)
 	var show_description = not is_enemy_hand_card or is_preview or is_inventory
-	var show_tags = hovering and (show_description or is_preview or is_inventory)
 
 	%DescriptionOverlay.visible = show_description
-	%UIOverlay.visible = show_tags
 
 	var full_description := ""
-	var tag_list := []
 	var c_mult = card_data.multiplier if card_data.multiplier != 0 else 1.0
 
 	for action in card_data.actions:
-		if not action or action.description == "":
+		if not action:
+			continue
+
+		# --- DESCRIPTION LOGIC ---
+		if action.description == "":
 			continue
 
 		var a_mult = action.action_multiplier if action.action_multiplier != 0 else 1.0
@@ -194,33 +191,11 @@ func update_hover_ui():
 		var action_text = action.description.replace("[value]", display_value)
 		full_description += "- " + action_text + "\n"
 
-		for tag in action.tags:
-			if not tag_list.has(tag):
-				tag_list.append(tag)
-
 	desc_label.text = full_description.strip_edges()
 
 	var lines = []
 	if card_data and card_data.type != "":
 		lines.append("[b]Type[/b]: " + card_data.type)
-
-	if tag_list.size() > 0 or lines.size() > 0:
-		var tag_descriptions = {
-			"Ethereal": "Cannot be modified by external effects.",
-			"Retrigger": "Triggers again when activated."
-		}
-
-		for tag in tag_list:
-			var d = tag_descriptions.get(tag, "")
-			if d != "":
-				lines.append("[b]%s[/b]: %s" % [tag, d])
-			else:
-				lines.append(tag)
-
-		tag_label.text = "TAGS:\n" + "\n".join(lines)
-		tag_container.visible = show_tags
-	else:
-		tag_container.visible = false
 
 func update_visuals():
 	var is_active = (retriggers > 0)
@@ -233,17 +208,6 @@ func update_visuals():
 		else:
 			if effect_animation_player:
 				effect_animation_player.stop()
-
-	if effect_display_container:
-		# 1. Clear out the old displays so they don't infinitely stack
-		for child in effect_display_container.get_children():
-			child.queue_free()
-			
-		# 2. Rebuild the displays based on current counts
-		if retriggers > 0:
-			_add_effect_display(texture_retrigger, retriggers)
-		if nullified > 0: 
-			_add_effect_display(texture_nullify, nullified)
 
 func _get_current_slot_index() -> int:
 	if not cards_current_slot: 
@@ -289,17 +253,3 @@ func declare_effect(effect_name) -> void:
 	# Finally, hide the node entirely so it doesn't block mouse clicks
 	tween.tween_callback(func(): label.visible = false)
 	await tween.finished
-
-func _add_effect_display(icon: Texture2D, count: int):
-	if not effect_display_scene or not icon or not effect_display_container:
-		return
-		
-	var display = effect_display_scene.instantiate()
-	effect_display_container.add_child(display)
-	
-	# Unique names (%) work locally within instanced scenes!
-	var img = display.get_node_or_null("%EffectImage")
-	var lbl = display.get_node_or_null("%CountLabel")
-	
-	if img: img.texture = icon
-	if lbl: lbl.text = "x" + str(count) # Optional: add "x" so it reads "x2"

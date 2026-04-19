@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwts53eum7n8"
-path="res://.godot/imported/eye_lock.png-f3ad9c4235c0d160554ab588aee82fd4.ctex"
+path="res://.godot/imported/eye_lock.png-e2034f2fd88557dc5f20ec346d6acb6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/eye_lock.png"
-dest_files=["res://.godot/imported/eye_lock.png-f3ad9c4235c0d160554ab588aee82fd4.ctex"]
+source_file="res://assets/icons/16x16/eye_lock.png"
+dest_files=["res://.godot/imported/eye_lock.png-e2034f2fd88557dc5f20ec346d6acb6c.ctex"]
 
 [params]
 

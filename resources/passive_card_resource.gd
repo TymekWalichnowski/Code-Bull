@@ -6,7 +6,7 @@ class_name PassiveCardResource
 @export_group("Visuals")
 @export var card_name: String = "Passive Name"
 @export var card_image: Texture2D
-@export var description: String = ""
+@export_multiline var description: String = ""
 
 @export_group("Logic")
 @export_enum("On_Turn_Start", "On_Turn_End", "On_Slot_Start", 
