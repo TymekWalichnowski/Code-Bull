@@ -58,7 +58,19 @@ func spawn_starting_passives():
 	for i in range(starting_passives.size()):
 		var res = starting_passives[i]
 		var passive_node = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
+		
+		# 1. Add child to the container
 		%PlayerPassives.add_child(passive_node)
+		
+		# 2. Setup data
 		passive_node.setup(res)
-		var offset_x = 140 + (i * 140)
-		passive_node.global_position = self.global_position + Vector2(offset_x, 0)
+		
+		# 3. Start at deck position so they "fly" out to the hand
+		passive_node.global_position = self.global_position
+		
+		if passive_node.has_node("AnimationPlayer"):
+			passive_node.get_node("AnimationPlayer").play("card_flip")
+		
+		# 4. Tell the passive hand to fan it
+		if %PlayerPassives.has_method("add_to_passive_hand"):
+			%PlayerPassives.add_to_passive_hand(passive_node)

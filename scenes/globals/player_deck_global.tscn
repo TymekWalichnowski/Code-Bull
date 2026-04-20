@@ -18,6 +18,6 @@
 [node name="PlayerDeckGlobal" type="Node"]
 script = ExtResource("1_eibw5")
 global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("9_2r0f0"), ExtResource("14_vsrvu"), ExtResource("8_pk0xe"), ExtResource("9_2r0f0"), ExtResource("7_5lg0m"), ExtResource("8_cpoqa"), ExtResource("13_dgsgh"), ExtResource("14_mqgaq"), ExtResource("10_pk0xe"), ExtResource("11_vsrvu")])
-global_player_passives = Array[ExtResource("16_dgsgh")]([ExtResource("17_mqgaq")])
+global_player_passives = Array[ExtResource("16_dgsgh")]([ExtResource("17_mqgaq"), ExtResource("18_mqgaq")])
 global_player_inventory = Array[ExtResource("2_rb10u")]([ExtResource("14_vsrvu"), ExtResource("14_vsrvu"), ExtResource("9_2r0f0")])
 global_player_inventory_passives = Array[ExtResource("16_dgsgh")]([ExtResource("18_mqgaq")])

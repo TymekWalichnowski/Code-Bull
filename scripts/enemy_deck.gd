@@ -13,7 +13,7 @@ var graveyard: Array[CardDataResource] = []
 
 func prepare_deck() -> void:
 	if starting_deck.is_empty():
-		push_warning("Opponent starting deck is empty!")
+		push_warning("Enemy starting deck is empty!")
 	
 	active_deck = starting_deck.duplicate()
 	active_deck.shuffle()
@@ -30,7 +30,7 @@ func draw_card():
 		$RichTextLabel.text = str(active_deck.size())
 
 		var new_card = preload(CARD_SCENE_PATH).instantiate() as Card
-		new_card.setup(card_data, "Opponent")
+		new_card.setup(card_data, "Enemy")
 		new_card.interactable = false 
 		
 		if new_card.has_node("CardImage"):
@@ -40,21 +40,20 @@ func draw_card():
 
 		%CardManager.add_child(new_card)
 		new_card.global_position = global_position
-		new_card.name = "Opponent_Card_" + card_data.display_name
-		%OpponentHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
+		new_card.name = "Enemy_Card_" + card_data.display_name
+		%EnemyHand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 		new_card.play_audio("pickup")
 	else:
-		print("Opponent deck empty!")
+		print("Enemy deck empty!")
 
 func spawn_starting_passives():
 	for i in range(starting_passives.size()):
 		var res = starting_passives[i]
 		var passive_node = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
-
-		if has_node("%OpponentPassives"):
-			%OpponentPassives.add_child(passive_node)
-		else:
-			%PlayerPassives.add_child(passive_node)
+		%EnemyPassives.add_child(passive_node)
+		passive_node.setup(res)
+		if passive_node.has_node("AnimationPlayer"):
+			passive_node.get_node("AnimationPlayer").play("card_flip")
 		
 		passive_node.setup(res)
 		var offset_x = 140 + (i * 140)

@@ -13,22 +13,34 @@ signal hovered_off
 
 @onready var desc_label = %ActionDescriptionLabel
 @onready var card_image = %CardImage
+@onready var card_back_image = %CardBackImage # <--- Added for back rotation
 
 var hovering = false
-var original_z_index := 10
 var is_preview: bool = false
 var is_inventory: bool = false
 
+var hand_position: Vector2 = Vector2.ZERO
+var original_z_index = 10
+
 func setup(resource: PassiveCardResource):
 	data = resource
-	if card_image and card_image.material:
-		card_image.material = card_image.material.duplicate()
+	
+	# Duplicate materials for BOTH front and back to prevent shared instances
+	for img in [card_image, card_back_image]:
+		if img and img.material:
+			img.material = img.material.duplicate()
 	
 	update_visuals()
 	update_hover_ui()
 
 func _ready() -> void:
 	original_z_index = z_index
+	
+	# Redundancy check for materials in case setup isn't called immediately
+	for img in [card_image, card_back_image]:
+		if img and img.material:
+			img.material = img.material.duplicate()
+
 	var card_manager = get_tree().get_first_node_in_group("card_manager") 
 	if card_manager and card_manager.has_method("connect_card_signals"):
 		card_manager.connect_card_signals(self)
@@ -55,10 +67,12 @@ func _process(delta: float) -> void:
 		_lerp_shader_rotations(0.0, 0.0, return_speed * delta)
 		z_index = original_z_index
 
+# --- FIXED: Now loops through both images like the Action Card ---
 func _lerp_shader_rotations(tx: float, ty: float, weight: float):
-	if card_image and card_image.material:
-		card_image.material.set_shader_parameter("y_rot", lerp(card_image.material.get_shader_parameter("y_rot"), ty, weight))
-		card_image.material.set_shader_parameter("x_rot", lerp(card_image.material.get_shader_parameter("x_rot"), tx, weight))
+	for img in [card_image, card_back_image]:
+		if img and img.material:
+			img.material.set_shader_parameter("y_rot", lerp(img.material.get_shader_parameter("y_rot"), ty, weight))
+			img.material.set_shader_parameter("x_rot", lerp(img.material.get_shader_parameter("x_rot"), tx, weight))
 
 func _on_area_2d_mouse_entered() -> void:
 	if not interactable: return
@@ -88,7 +102,6 @@ func update_hover_ui():
 	if desc_label == null or data == null:
 		return
 
-	# Match the visibility logic of your Action Card
 	%DescriptionOverlay.visible = hovering
 
 	if not hovering:
@@ -96,25 +109,15 @@ func update_hover_ui():
 
 	var full_description = data.description 
 	
-	# 1. Handle [value] replacement
 	if "[value]" in full_description:
-		# Format to 1 decimal if it's not a whole number, else keep it clean
 		var val_string = str(data.value) if fmod(data.value, 1.0) != 0 else str(int(data.value))
 		full_description = full_description.replace("[value]", val_string)
 
-	# 2. Handle [target_slot] replacement
 	if "[target_slot]" in full_description:
-		var slot_text = ""
-		slot_text = "Slot " + str(data.target_slot)
-		
+		var slot_text = "Slot " + str(data.target_slot)
 		full_description = full_description.replace("[target_slot]", slot_text)
 
-	# 3. Apply formatting (Bullet point like the Action Cards)
 	desc_label.text = "- " + full_description.strip_edges()
-
-	# 4. Handle Type Labels (Optional: you can add more metadata here)
-	# If you have a separate label for type:
-	# type_label.text = "[b]Type[/b]: Passive"
 
 func play_trigger_anim():
 	if has_node("AnimationPlayer") and $AnimationPlayer.has_animation("passive_trigger"):

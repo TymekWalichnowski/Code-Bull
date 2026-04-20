@@ -7,10 +7,10 @@ signal battle_click_received
 @onready var token_manager = %TokenManager 
 
 @onready var player_slots_all = [$"../CardSlots/CardSlot", $"../CardSlots/CardSlot2", $"../CardSlots/CardSlot3", $"../CardSlots/CardSlot4", $"../CardSlots/CardSlot5"]
-@onready var opponent_slots_all = [$"../CardSlots/CardSlotOpponent1", $"../CardSlots/CardSlotOpponent2", $"../CardSlots/CardSlotOpponent3", $"../CardSlots/CardSlotOpponent4", $"../CardSlots/CardSlotOpponent5"]
+@onready var enemy_slots_all = [$"../CardSlots/CardSlotEnemy1", $"../CardSlots/CardSlotEnemy2", $"../CardSlots/CardSlotEnemy3", $"../CardSlots/CardSlotEnemy4", $"../CardSlots/CardSlotEnemy5"]
 
 var player_slots = []
-var opponent_slots = []
+var enemy_slots = []
 
 @onready var battle_timer = %BattleTimer
 
@@ -22,9 +22,9 @@ const SLOT_GAP = 170.0
 
 var turn_count: int = 0
 var player_has_initiative: bool = true
-var empty_opponent_card_slots = []
+var empty_enemy_card_slots = []
 var player_snapshot: Dictionary = {}
-var opponent_snapshot: Dictionary = {}
+var enemy_snapshot: Dictionary = {}
 var board_locked: bool = false 
 
 func _ready() -> void:
@@ -33,30 +33,30 @@ func _ready() -> void:
 	advance_turn()
 	
 	%Player.current_health = STARTING_HEALTH
-	%Opponent.current_health = STARTING_HEALTH
+	%Enemy.current_health = STARTING_HEALTH
 	%PlayerDeck.prepare_deck()
-	%OpponentDeck.prepare_deck()
+	%EnemyDeck.prepare_deck()
 	%Player.speed = randi_range(1, 5)
-	%Opponent.speed = randi_range(1, 5)
+	%Enemy.speed = randi_range(1, 5)
 	
 	for i in range(START_DRAW_COUNT):
 		if i < 5: %PlayerDeck.draw_card()
-		if i < 5: %OpponentDeck.draw_card()
+		if i < 5: %EnemyDeck.draw_card()
 		await get_tree().create_timer(0.4).timeout
 	
 	%PlayerDeck.spawn_starting_passives()
-	%OpponentDeck.spawn_starting_passives()
+	%EnemyDeck.spawn_starting_passives()
 	
 	await get_tree().create_timer(0.2).timeout
 	await trigger_passives("On_Turn_Start")
 	analyze_board_state()
-	opponent_turn()
+	enemy_turn()
 
 func _process(_delta: float) -> void:
 	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f " % [%Player.current_health, %Player.current_shield]
 	%Player/SpeedHolder/SpeedLabel.text = str(%Player.speed)
-	%OpponentLabel.text = "HP: %.1f  |\n Shield: %.1f" % [%Opponent.current_health, %Opponent.current_shield]
-	%Opponent/SpeedHolder/SpeedLabel.text = str(%Opponent.speed)
+	%EnemyLabel.text = "HP: %.1f  |\n Shield: %.1f" % [%Enemy.current_health, %Enemy.current_shield]
+	%Enemy/SpeedHolder/SpeedLabel.text = str(%Enemy.speed)
 	analyze_board_state()
 
 func advance_turn():
@@ -74,7 +74,7 @@ func advance_turn():
 
 func setup_active_slots(limit: int):
 	player_slots.clear()
-	opponent_slots.clear()
+	enemy_slots.clear()
 	
 	var viewport_width = get_viewport().get_visible_rect().size.x
 	var center_x = viewport_width / 2.0
@@ -82,7 +82,7 @@ func setup_active_slots(limit: int):
 	
 	for i in range(5):
 		var p_slot = player_slots_all[i]
-		var o_slot = opponent_slots_all[i]
+		var o_slot = enemy_slots_all[i]
 		var active = (i < limit)
 		
 		# Set Visibility
@@ -103,7 +103,7 @@ func setup_active_slots(limit: int):
 
 		if active:
 			player_slots.append(p_slot)
-			opponent_slots.append(o_slot)
+			enemy_slots.append(o_slot)
 			var target_x = start_x + (i * SLOT_GAP)
 			p_slot.global_position.x = target_x
 			o_slot.global_position.x = target_x
@@ -122,7 +122,7 @@ func _on_end_turn_button_pressed() -> void:
 	advance_turn()
 
 	%Player.speed = randi_range(1, 5)
-	%Opponent.speed = randi_range(1, 5)
+	%Enemy.speed = randi_range(1, 5)
 	
 	%PlayerDeck.draw_card()
 	%PlayerDeck.draw_card()
@@ -132,25 +132,25 @@ func _on_end_turn_button_pressed() -> void:
 
 	
 	board_locked = false
-	opponent_turn()
+	enemy_turn()
 
-func opponent_turn():
+func enemy_turn():
 	await wait(0.2)
-	%OpponentDeck.draw_card()
+	if turn_count > 1: %EnemyDeck.draw_card()
 	await wait(1)
-	reset_opponent_slots()
-	if empty_opponent_card_slots.size() != 0:
-		await play_opponent_cards() 
-	end_opponent_turn()
+	reset_enemy_slots()
+	if empty_enemy_card_slots.size() != 0:
+		await play_enemy_cards() 
+	end_enemy_turn()
 
-func play_opponent_cards():
-	var hand = %OpponentHand.opponent_hand.duplicate()
-	while hand.size() > 0 and empty_opponent_card_slots.size() > 0:
+func play_enemy_cards():
+	var hand = %EnemyHand.enemy_hand.duplicate()
+	while hand.size() > 0 and empty_enemy_card_slots.size() > 0:
 		var card_to_play = hand[0]
 		for card in hand:
 			if card.card_id > card_to_play.card_id: card_to_play = card
 
-		var slot = empty_opponent_card_slots[0]
+		var slot = empty_enemy_card_slots[0]
 		var tween1 = get_tree().create_tween().set_parallel(true)
 		tween1.tween_property(card_to_play, "position", slot.position, CARD_MOVE_SPEED)
 		tween1.tween_property(card_to_play, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
@@ -163,19 +163,19 @@ func play_opponent_cards():
 		
 		card_to_play.interactable = true
 		slot.set_card(card_to_play)
-		%OpponentHand.remove_card_from_hand(card_to_play)
-		empty_opponent_card_slots.erase(slot)
+		%EnemyHand.remove_card_from_hand(card_to_play)
+		empty_enemy_card_slots.erase(slot)
 		hand.erase(card_to_play)
 
-func end_opponent_turn():
+func end_enemy_turn():
 	$"../EndTurnButton".disabled = false
 	$"../EndTurnButton".visible = true
 
-func reset_opponent_slots():
-	empty_opponent_card_slots.clear()
-	for slot in opponent_slots:
+func reset_enemy_slots():
+	empty_enemy_card_slots.clear()
+	for slot in enemy_slots:
 		if is_instance_valid(slot) and not slot.card_in_slot:
-			empty_opponent_card_slots.append(slot)
+			empty_enemy_card_slots.append(slot)
 
 func wait(wait_time):
 	battle_timer.wait_time = wait_time
@@ -183,18 +183,18 @@ func wait(wait_time):
 	await battle_timer.timeout
 
 func run_activation_phase():
-	var slot_count = max(player_slots.size(), opponent_slots.size())
-	player_has_initiative = (%Player.speed >= %Opponent.speed)
+	var slot_count = max(player_slots.size(), enemy_slots.size())
+	player_has_initiative = (%Player.speed >= %Enemy.speed)
 	
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
-		var order = ["Player", "Opponent"] if player_has_initiative else ["Opponent", "Player"]
+		var order = ["Player", "Enemy"] if player_has_initiative else ["Enemy", "Player"]
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
 		
 		for side in order:
-			var active_set = player_slots if side == "Player" else opponent_slots
+			var active_set = player_slots if side == "Player" else enemy_slots
 			if slot_index >= active_set.size(): continue
 			
 			var slot = active_set[slot_index]
@@ -225,17 +225,17 @@ func run_activation_phase():
 			await wait(0.3)
 
 		if slot_index < player_slots.size(): player_slots[slot_index].clear_buffs()
-		if slot_index < opponent_slots.size(): opponent_slots[slot_index].clear_buffs()
-		reset_opponent_slots()
+		if slot_index < enemy_slots.size(): enemy_slots[slot_index].clear_buffs()
+		reset_enemy_slots()
 		await wait(0.6)
 	# Making slots visible again
 	for slot in player_slots:
 		slot.visible = true
-	for slot in opponent_slots:
+	for slot in enemy_slots:
 		slot.visible = true
 
 func move_card_to_battle_point(card) -> Tween:
-	var target_pos = %PlayerCardPoint.global_position if card.card_owner == "Player" else %OpponentCardPoint.global_position 
+	var target_pos = %PlayerCardPoint.global_position if card.card_owner == "Player" else %EnemyCardPoint.global_position 
 	var move_tween = get_tree().create_tween().set_parallel(true)
 	move_tween.tween_property(card, "position", target_pos, CARD_MOVE_SPEED)
 	move_tween.tween_property(card, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
@@ -256,7 +256,7 @@ func collect_used_card(card):
 	if card.card_owner == "Player":
 		%PlayerDeck.graveyard.append(card.card_data)
 	else:
-		%OpponentDeck.graveyard.append(card.card_data)
+		%EnemyDeck.graveyard.append(card.card_data)
 	card.queue_free()
 
 func _input(event: InputEvent) -> void:
@@ -272,16 +272,16 @@ func trigger_tokens(trigger_type: String, side: String = "Both"):
 func analyze_board_state():
 	if not board_locked:
 		player_snapshot = _analyze_slots(player_slots)
-		opponent_snapshot = _analyze_slots(opponent_slots)
+		enemy_snapshot = _analyze_slots(enemy_slots)
 	_update_board_label()
 
 func _update_board_label():
 	var display_text = "--- PLAYER BOARD ---\n"
 	display_text += "Slots: " + str(player_snapshot.slot_types) + "\n"
 	display_text += "Chain: %dx %s\n\n" % [player_snapshot.highest_chain_length, player_snapshot.highest_chain_type]
-	display_text += "--- OPPONENT BOARD ---\n"
-	display_text += "Slots: " + str(opponent_snapshot.slot_types) + "\n"
-	display_text += "Chain: %dx %s" % [opponent_snapshot.highest_chain_length, opponent_snapshot.highest_chain_type]
+	display_text += "--- ENEMY BOARD ---\n"
+	display_text += "Slots: " + str(enemy_snapshot.slot_types) + "\n"
+	display_text += "Chain: %dx %s" % [enemy_snapshot.highest_chain_length, enemy_snapshot.highest_chain_type]
 	if has_node("%BoardStateLabel"):
 		%BoardStateLabel.text = display_text
 

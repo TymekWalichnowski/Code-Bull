@@ -10,10 +10,10 @@ var dragged_original_card: Node2D = null # Tracks the card you picked up
 var drag_visual: Node2D = null
 var is_animating: bool = false # Prevents bugs if you click while a card is flying
 
-@onready var scroll_deck = $ScrollContainerDeck
-@onready var scroll_inventory = $ScrollContainerInventory
-@onready var scroll_passives = $ScrollContainerPassives
-@onready var scroll_passives_inventory = $ScrollContainerPassivesInventory
+@onready var scroll_deck = %ScrollContainerDeck
+@onready var scroll_inventory = %ScrollContainerInventory
+@onready var scroll_passives = %ScrollContainerPassives
+@onready var scroll_passives_inventory = %ScrollContainerPassivesInventory
 
 func _ready():
 	set_process_input(true)
@@ -39,7 +39,7 @@ func _get_or_create_grid(scroll: ScrollContainer) -> GridContainer:
 		if child is GridContainer:
 			return child
 	var new_grid = GridContainer.new()
-	new_grid.columns = 4 # Adjust columns if needed
+	new_grid.columns = 3 # Adjust columns if needed
 	scroll.add_child(new_grid)
 	return new_grid
 
@@ -83,6 +83,8 @@ func _populate_grid(scroll: ScrollContainer, data_array: Array, source_id: Strin
 		if new_card.has_node("Area2D"):
 			new_card.get_node("Area2D").monitoring = false
 			new_card.get_node("Area2D").monitorable = false
+			new_card.get_node("CardBackImage").visible = false
+			new_card.z_index = 1000
 
 		wrapper.mouse_entered.connect(func():
 			if is_animating: return
@@ -91,8 +93,6 @@ func _populate_grid(scroll: ScrollContainer, data_array: Array, source_id: Strin
 		)
 		wrapper.mouse_exited.connect(func():
 			new_card.hovering = false
-			if "tag_container" in new_card and new_card.tag_container: 
-				new_card.tag_container.visible = false
 			new_card.update_hover_ui()
 		)
 
@@ -124,7 +124,7 @@ func start_drag(data: Resource, source_id: String, is_passive: bool, original_ca
 		drag_visual.setup(data, "Player")
 		
 	drag_visual.global_position = get_viewport().get_mouse_position()
-	drag_visual.z_index = 4000
+	drag_visual.z_index = 300
 	drag_visual.scale = Vector2(1.2, 1.2)
 
 func _process(_delta):

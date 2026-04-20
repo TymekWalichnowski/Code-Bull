@@ -3,7 +3,7 @@ extends Node
 signal play_sound()
 
 const PLAYER_POSITION = Vector2(960, 850)
-const OPPONENT_POSITION = Vector2(960, 440)
+const ENEMY_POSITION = Vector2(960, 440)
 
 @onready var anim_node = $ActionAnim
 @export var damage_label_scene: PackedScene
@@ -12,17 +12,17 @@ var original_scale
 
 func _ready():
 	%Player.damage_taken.connect(_on_entity_damage_taken.bind("Player"))
-	%Opponent.damage_taken.connect(_on_entity_damage_taken.bind("Opponent"))
-	original_scale = $OpponentSprite.scale
-	start_idle($OpponentSprite)
+	%Enemy.damage_taken.connect(_on_entity_damage_taken.bind("Enemy"))
+	original_scale = $EnemySprite.scale
+	start_idle($EnemySprite)
 
 func play_anim(action_name, card_owner, slot_idx: int = -1):
 	var battle_m = get_parent()
 	var is_player = (card_owner == "Player")
 	
-	var self_pos = PLAYER_POSITION if is_player else OPPONENT_POSITION
-	var target_pos = OPPONENT_POSITION if is_player else PLAYER_POSITION
-	var card_point = %PlayerCardPoint.position if is_player else %OpponentCardPoint.position
+	var self_pos = PLAYER_POSITION if is_player else ENEMY_POSITION
+	var target_pos = ENEMY_POSITION if is_player else PLAYER_POSITION
+	var card_point = %PlayerCardPoint.position if is_player else %EnemyCardPoint.position
 	
 	anim_node.visible = true
 	
@@ -37,7 +37,7 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 			anim_node.play("shield_bubble")
 		"Multiply_Next_Card", "Retrigger_Next_Slot":
 			if slot_idx >= 0 and slot_idx < 3:
-				var slots = battle_m.player_slots if is_player else battle_m.opponent_slots
+				var slots = battle_m.player_slots if is_player else battle_m.enemy_slots
 				anim_node.position = slots[slot_idx].global_position
 			else:
 				anim_node.position = self_pos
@@ -45,8 +45,8 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 
 		"Divide_Next_Card", "Divide_Specific_Slot", "Nullify":
 			if slot_idx >= 0 and slot_idx < 3:
-				# Divide always targets the opponent's side
-				var target_slots = battle_m.opponent_slots if is_player else battle_m.player_slots
+				# Divide always targets the enemy's side
+				var target_slots = battle_m.enemy_slots if is_player else battle_m.player_slots
 				anim_node.position = target_slots[slot_idx].global_position
 			else:
 				anim_node.position = target_pos
@@ -76,7 +76,7 @@ func start_idle(target_node: Node2D):
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func _on_entity_damage_taken(amount: float, is_shield: bool, side: String):
-	var spawn_pos = PLAYER_POSITION if side == "Player" else OPPONENT_POSITION
+	var spawn_pos = PLAYER_POSITION if side == "Player" else ENEMY_POSITION
 	spawn_damage_number_at(amount, spawn_pos, is_shield)
 
 func spawn_damage_number_at(amount: float, pos: Vector2, is_shield: bool):

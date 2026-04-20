@@ -2,7 +2,7 @@ extends Node
 
 @onready var battle_manager = get_parent()
 @onready var player_passive_container = %PlayerPassives
-@onready var opponent_passive_container = %OpponentPassives
+@onready var enemy_passive_container = %EnemyPassives
 
 # Map effects to local functions
 @onready var passive_map: Dictionary = {
@@ -20,11 +20,11 @@ func trigger_passives(trigger_type: String, current_slot_idx: int = -1, side_to_
 			if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
 				await _execute_passive(card, "Player", current_slot_idx)
 			
-	# Check Opponent Passives - only if side is "Both" or "Opponent"
-	if side_to_trigger == "Both" or side_to_trigger == "Opponent":
-		for card in opponent_passive_container.get_children():
+	# Check Enemy Passives - only if side is "Both" or "Enemy"
+	if side_to_trigger == "Both" or side_to_trigger == "Enemy":
+		for card in enemy_passive_container.get_children():
 			if card is PassiveCard and card.data and card.data.trigger_condition == trigger_type:
-				await _execute_passive(card, "Opponent", current_slot_idx)
+				await _execute_passive(card, "Enemy", current_slot_idx)
 
 func _execute_passive(card: PassiveCard, owner_name: String, current_slot_idx: int):
 	var effect = card.data.effect_name 
@@ -59,7 +59,7 @@ func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
 	if owner_name == "Player":
 		target_slot = battle_manager.player_slots[index]
 	else:
-		target_slot = battle_manager.opponent_slots[index]
+		target_slot = battle_manager.enemy_slots[index]
 		
 	# Apply the buff directly to the slot
 	if target_slot:
@@ -67,13 +67,13 @@ func _passive_retrigger(owner_name: String, value: float, slot_to_hit: int):
 		print("Passive: ", owner_name, " buffed slot ", slot_to_hit, " with ", value, " retriggers.")
 
 func _passive_shield_start(owner_name: String, value: float, _slot: int):
-	var target = %Player if owner_name == "Player" else %Opponent
+	var target = %Player if owner_name == "Player" else %Enemy
 	target.gain_shield(value)
 
 func _passive_spike_armour(owner_name: String, value: float, _slot: int):
-	# If the Player owns this passive, they hit the Opponent back.
-	# If the Opponent owns it, they hit the Player back.
-	var target = %Opponent if owner_name == "Player" else %Player
+	# If the Player owns this passive, they hit the Enemy back.
+	# If the Enemy owns it, they hit the Player back.
+	var target = %Enemy if owner_name == "Player" else %Player
 	
 	# We use a small flag or separate call to ensure this damage 
 	# doesn't count as a "Hit" to avoid infinite recursion.

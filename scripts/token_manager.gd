@@ -8,13 +8,13 @@ extends Node
 	"Haste": _effect_haste
 }
 
-# side can be "Player", "Opponent", or "Both" (default for phase starts)
+# side can be "Player", "Enemy", or "Both" (default for phase starts)
 func trigger_tokens(trigger_type: String, side: String = "Both"):
 	if side == "Player" or side == "Both":
 		await _process_container(%PlayerTokens, "Player", trigger_type)
 	
-	if side == "Opponent" or side == "Both":
-		await _process_container(%OpponentTokens, "Opponent", trigger_type)
+	if side == "Enemy" or side == "Both":
+		await _process_container(%EnemyTokens, "Enemy", trigger_type)
 
 func _process_container(container: TokenContainer, side: String, trigger_type: String):
 	# We use a duplicate of keys because tokens might be removed during the loop
@@ -55,8 +55,8 @@ func _process_container(container: TokenContainer, side: String, trigger_type: S
 # --- EFFECT LOGIC ---
 
 func _effect_bleed(side: String, stacks: int, resource: TokenResource):
-	var target = %Player if side == "Player" else %Opponent
-	var container = %PlayerTokens if side == "Player" else %OpponentTokens
+	var target = %Player if side == "Player" else %Enemy
+	var container = %PlayerTokens if side == "Player" else %EnemyTokens
 	
 	print("Bleed Triggered: ", side, " taking ", stacks, " damage.")
 	target.take_damage(float(stacks))
@@ -66,8 +66,8 @@ func _effect_bleed(side: String, stacks: int, resource: TokenResource):
 	await get_tree().create_timer(0.3).timeout
 
 func _effect_flame(side: String, stacks: int, resource: TokenResource):
-	var target = %Player if side == "Player" else %Opponent
-	var container = %PlayerTokens if side == "Player" else %OpponentTokens
+	var target = %Player if side == "Player" else %Enemy
+	var container = %PlayerTokens if side == "Player" else %EnemyTokens
 	
 	print("Burn Triggered: ", side, " taking ", stacks, " damage.")
 	target.take_damage(float(stacks))
@@ -77,8 +77,8 @@ func _effect_flame(side: String, stacks: int, resource: TokenResource):
 	await get_tree().create_timer(0.3).timeout
 
 func _effect_haste(side: String, stacks: int, resource: TokenResource):
-	var target = %Player if side == "Player" else %Opponent
-	var container = %PlayerTokens if side == "Player" else %OpponentTokens
+	var target = %Player if side == "Player" else %Enemy
+	var container = %PlayerTokens if side == "Player" else %EnemyTokens
 	
 	print("Haste Triggered: ", side, " earns ", stacks, " speed.")
 	target.speed += stacks

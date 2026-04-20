@@ -1,10 +1,10 @@
 extends Node
 
 @onready var player = %Player
-@onready var opponent = %Opponent
+@onready var enemy = %Enemy
 @onready var animation_manager = %AnimationManager
 @onready var player_deck = %PlayerDeck
-@onready var opponent_deck = %OpponentDeck
+@onready var enemy_deck = %EnemyDeck
 
 # Reference to BattleManager for initiative and retrigger counts
 @onready var battle_manager = get_parent()
@@ -25,9 +25,9 @@ func execute_card_action(card: Card, action_index: int):
 	
 	# Core variables to simplify logic downstream
 	var is_player = (card.card_owner == "Player")
-	var target = opponent if is_player else player
-	var self_target = player if is_player else opponent
-	var slots = battle_manager.player_slots if is_player else battle_manager.opponent_slots
+	var target = enemy if is_player else player
+	var self_target = player if is_player else enemy
+	var slots = battle_manager.player_slots if is_player else battle_manager.enemy_slots
 	var current_idx = slots.find(card.cards_current_slot)
 	
 	# Pre-application value math
@@ -73,7 +73,7 @@ func execute_card_action(card: Card, action_index: int):
 	match action:
 		"Attack":
 			target.take_damage(final_value)
-			var hit_side = "Opponent" if is_player else "Player"
+			var hit_side = "Enemy" if is_player else "Player"
 			
 			if battle_manager.has_method("trigger_passives"):
 				# We send the clean "On_Hit_Taken" and tell the manager WHICH side took the hit
@@ -87,7 +87,7 @@ func execute_card_action(card: Card, action_index: int):
 		"Divide_Specific_Slot":
 			_apply_multiplier(!is_player, anim_target_idx, 1.0 / final_value)
 		"Draw_Card":
-			var deck = player_deck if is_player else opponent_deck
+			var deck = player_deck if is_player else enemy_deck
 			for i in range(int(final_value)): await deck.draw_card()
 		"Nullify":
 			_apply_nullify(!is_player, anim_target_idx, int(final_value))
@@ -110,7 +110,7 @@ func _handle_retrigger(is_target_player: bool, target_idx: int, value: int):
 		if is_target_player:
 			target_slot = battle_manager.player_slots[target_idx]
 		else:
-			target_slot = battle_manager.opponent_slots[target_idx]
+			target_slot = battle_manager.enemy_slots[target_idx]
 			
 		if target_slot:
 			target_slot.add_retrigger_buff(value)
@@ -118,7 +118,7 @@ func _handle_retrigger(is_target_player: bool, target_idx: int, value: int):
 func _apply_multiplier(is_target_player: bool, target_idx: int, multiplier_value: float):
 	if target_idx < 0 or target_idx >= 3: return
 	
-	var target_slots = battle_manager.player_slots if is_target_player else battle_manager.opponent_slots
+	var target_slots = battle_manager.player_slots if is_target_player else battle_manager.enemy_slots
 	var target_slot = target_slots[target_idx]
 	
 	if target_slot.card:
@@ -129,7 +129,7 @@ func _apply_multiplier(is_target_player: bool, target_idx: int, multiplier_value
 func _apply_nullify(is_target_player: bool, target_idx: int, amount: int):
 	if target_idx < 0 or target_idx >= 5: return # Assuming 5 is max slots
 	
-	var target_slots = battle_manager.player_slots if is_target_player else battle_manager.opponent_slots
+	var target_slots = battle_manager.player_slots if is_target_player else battle_manager.enemy_slots
 	
 	# Make sure the slot exists and has a card
 	if target_idx < target_slots.size():
@@ -140,5 +140,5 @@ func _apply_nullify(is_target_player: bool, target_idx: int, amount: int):
 			print("Applied Nullify x", amount, " to ", target_slot.card.card_name)
 
 func _apply_token(target_node: Node, token_res: TokenResource, amount: float):
-	var token_container = %PlayerTokens if target_node == player else %OpponentTokens
+	var token_container = %PlayerTokens if target_node == player else %EnemyTokens
 	token_container.add_token(token_res, amount)

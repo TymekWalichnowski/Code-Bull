@@ -45,7 +45,7 @@ func raycast_at_cursor():
 					card_manager_reference.start_drag(card_found)
 					return
 				else:
-					print("Opponent card found - ignoring drag")
+					print("Enemy card found - ignoring drag")
 					return
 
 	# disabled clicking deck from tutorial
