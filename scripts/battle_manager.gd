@@ -53,10 +53,12 @@ func _ready() -> void:
 	enemy_turn()
 
 func _process(_delta: float) -> void:
-	%PlayerLabel.text = "HP: %.1f  |\n Shield: %.1f " % [%Player.current_health, %Player.current_shield]
-	%Player/SpeedHolder/SpeedLabel.text = str(%Player.speed)
-	%EnemyLabel.text = "HP: %.1f  |\n Shield: %.1f" % [%Enemy.current_health, %Enemy.current_shield]
-	%Enemy/SpeedHolder/SpeedLabel.text = str(%Enemy.speed)
+	%Player/HealthHolder/HealthLabel.text = "%d" % %Player.current_health
+	%Player/ShieldHolder/ShieldLabel.text = "%d" % %Player.current_shield
+	%Player/SpeedHolder/SpeedLabel.text = "%d" % %Player.speed
+	%Enemy/HealthHolder/HealthLabel.text = "%d" % %Enemy.current_health
+	%Enemy/ShieldHolder/ShieldLabel.text = "%d" % %Enemy.current_shield
+	%Enemy/SpeedHolder/SpeedLabel.text = "%d" % %Enemy.speed
 	analyze_board_state()
 
 func advance_turn():

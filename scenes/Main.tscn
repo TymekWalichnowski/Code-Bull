@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=70 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -30,8 +30,10 @@
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
 [ext_resource type="Resource" uid="uid://xmvg48xmdvyr" path="res://objects/cards/divide.tres" id="26_8cp6k"]
 [ext_resource type="Texture2D" uid="uid://dntxnqk5tfl2q" path="res://Assets/textures/UI/speed_holder.png" id="31_5grtr"]
+[ext_resource type="Texture2D" uid="uid://bx6vxqq013to3" path="res://Assets/textures/UI/health_holder.png" id="31_s3wmy"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
 [ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
+[ext_resource type="Texture2D" uid="uid://d36vfuu18pv8x" path="res://Assets/textures/UI/shield_holder.png" id="32_gdcyb"]
 [ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="32_t70y2"]
 [ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="32_vua0o"]
 [ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
@@ -371,11 +373,11 @@ position = Vector2(1126, 660)
 
 [node name="CardSlot4" parent="CardSlots" instance=ExtResource("3_r0du0")]
 z_index = -2
-position = Vector2(1290, 660)
+position = Vector2(2051, 660)
 
 [node name="CardSlot5" parent="CardSlots" instance=ExtResource("3_r0du0")]
 z_index = -2
-position = Vector2(1459, 660)
+position = Vector2(2220, 660)
 
 [node name="CardSlotEnemy1" parent="CardSlots" instance=ExtResource("3_r0du0")]
 position = Vector2(790, 229)
@@ -390,11 +392,11 @@ position = Vector2(1130, 230)
 slot_owner = "Opponent"
 
 [node name="CardSlotEnemy4" parent="CardSlots" instance=ExtResource("3_r0du0")]
-position = Vector2(1304, 230)
+position = Vector2(2065, 230)
 slot_owner = "Opponent"
 
 [node name="CardSlotEnemy5" parent="CardSlots" instance=ExtResource("3_r0du0")]
-position = Vector2(1478, 230)
+position = Vector2(2239, 230)
 slot_owner = "Opponent"
 
 [node name="PlayerHand" type="Node2D" parent="."]
@@ -417,34 +419,79 @@ text = "Turn:"
 
 [node name="BoardStateLabel" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
-offset_left = 1335.0
+offset_left = 1380.0
 offset_top = 555.0
-offset_right = 1776.0
+offset_right = 1890.0
 offset_bottom = 734.0
-theme_override_font_sizes/normal_font_size = 16
-text = "0"
-
-[node name="PlayerLabel" type="RichTextLabel" parent="."]
-unique_name_in_owner = true
-offset_left = 81.0
-offset_top = 570.0
-offset_right = 522.0
-offset_bottom = 749.0
-theme_override_font_sizes/normal_font_size = 16
-text = "0"
-
-[node name="EnemyLabel" type="RichTextLabel" parent="."]
-unique_name_in_owner = true
-offset_left = 81.0
-offset_top = 388.0
-offset_right = 542.0
-offset_bottom = 573.0
 theme_override_font_sizes/normal_font_size = 16
 text = "0"
 
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_wp0k4")
+
+[node name="HealthHolder" type="Sprite2D" parent="Player"]
+z_index = 10
+texture_filter = 1
+position = Vector2(555.00006, 1037)
+scale = Vector2(0.725, 0.725)
+texture = ExtResource("31_s3wmy")
+
+[node name="HealthLabel" type="RichTextLabel" parent="Player/HealthHolder"]
+z_index = 10
+offset_left = -58.7782
+offset_top = -100.164185
+offset_right = 66.46912
+offset_bottom = 76.00781
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("32_vua0o")
+theme_override_font_sizes/normal_font_size = 70
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShieldHolder" type="Sprite2D" parent="Player"]
+z_index = 10
+texture_filter = 1
+position = Vector2(596, 998)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("32_gdcyb")
+
+[node name="ShieldLabel" type="RichTextLabel" parent="Player/ShieldHolder"]
+z_index = 10
+offset_left = -58.7782
+offset_top = -94.0
+offset_right = 66.46912
+offset_bottom = 82.172
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("32_vua0o")
+theme_override_font_sizes/normal_font_size = 70
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeedHolder" type="Sprite2D" parent="Player"]
+z_index = 10
+texture_filter = 1
+position = Vector2(1354, 1037)
+scale = Vector2(0.7248843, 0.7248843)
+texture = ExtResource("31_5grtr")
+
+[node name="SpeedLabel" type="RichTextLabel" parent="Player/SpeedHolder"]
+z_index = 10
+offset_left = -58.7782
+offset_top = -100.164185
+offset_right = 66.46912
+offset_bottom = 76.00781
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("32_vua0o")
+theme_override_font_sizes/normal_font_size = 70
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HealthBar" type="TextureProgressBar" parent="Player"]
 texture_filter = 1
@@ -475,14 +522,25 @@ fill_mode = 6
 nine_patch_stretch = true
 texture_progress = ExtResource("11_2ofn6")
 
-[node name="SpeedHolder" type="Sprite2D" parent="Player"]
+[node name="PlayerTokens" type="Node2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(1495, 960)
+script = ExtResource("15_pnhog")
+
+[node name="Enemy" type="Node2D" parent="." node_paths=PackedStringArray("entity_sprite")]
+unique_name_in_owner = true
+script = ExtResource("6_wp0k4")
+side_name = "Opponent"
+entity_sprite = NodePath("../BattleManager/AnimationManager/EnemySprite")
+
+[node name="HealthHolder" type="Sprite2D" parent="Enemy"]
 z_index = 10
 texture_filter = 1
-position = Vector2(1353.6074, 1036.6074)
-scale = Vector2(0.7248843, 0.7248843)
-texture = ExtResource("31_5grtr")
+position = Vector2(555.39996, 46.4)
+scale = Vector2(0.725, 0.725)
+texture = ExtResource("31_s3wmy")
 
-[node name="SpeedLabel" type="RichTextLabel" parent="Player/SpeedHolder"]
+[node name="HealthLabel" type="RichTextLabel" parent="Enemy/HealthHolder"]
 z_index = 10
 offset_left = -58.7782
 offset_top = -100.164185
@@ -496,16 +554,47 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayerTokens" type="Node2D" parent="Player"]
-unique_name_in_owner = true
-position = Vector2(1495, 960)
-script = ExtResource("15_pnhog")
+[node name="ShieldHolder" type="Sprite2D" parent="Enemy"]
+z_index = 10
+texture_filter = 1
+position = Vector2(596.3999, 85.39994)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("32_gdcyb")
 
-[node name="Enemy" type="Node2D" parent="." node_paths=PackedStringArray("entity_sprite")]
-unique_name_in_owner = true
-script = ExtResource("6_wp0k4")
-side_name = "Opponent"
-entity_sprite = NodePath("../BattleManager/AnimationManager/EnemySprite")
+[node name="ShieldLabel" type="RichTextLabel" parent="Enemy/ShieldHolder"]
+z_index = 10
+offset_left = -58.7782
+offset_top = -90.79988
+offset_right = 66.46912
+offset_bottom = 85.372116
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("32_vua0o")
+theme_override_font_sizes/normal_font_size = 70
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeedHolder" type="Sprite2D" parent="Enemy"]
+z_as_relative = false
+texture_filter = 1
+position = Vector2(1347, 52)
+scale = Vector2(0.7265625, 0.7265625)
+texture = ExtResource("31_5grtr")
+
+[node name="SpeedLabel" type="RichTextLabel" parent="Enemy/SpeedHolder"]
+z_index = 11
+offset_left = -50.924683
+offset_top = -85.3335
+offset_right = 60.81726
+offset_bottom = 60.8966
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("32_vua0o")
+theme_override_font_sizes/normal_font_size = 70
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HealthBar" type="TextureProgressBar" parent="Enemy"]
 texture_filter = 1
@@ -535,27 +624,6 @@ value = 50.0
 fill_mode = 6
 nine_patch_stretch = true
 texture_progress = ExtResource("11_2ofn6")
-
-[node name="SpeedHolder" type="Sprite2D" parent="Enemy"]
-z_as_relative = false
-texture_filter = 1
-position = Vector2(1347, 52)
-scale = Vector2(0.7265625, 0.7265625)
-texture = ExtResource("31_5grtr")
-
-[node name="SpeedLabel" type="RichTextLabel" parent="Enemy/SpeedHolder"]
-z_index = 11
-offset_left = -50.924683
-offset_top = -85.3335
-offset_right = 60.81726
-offset_bottom = 60.8966
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
-theme_override_fonts/normal_font = ExtResource("32_vua0o")
-theme_override_font_sizes/normal_font_size = 70
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="EnemyTokens" type="Node2D" parent="Enemy"]
 unique_name_in_owner = true
