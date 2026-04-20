@@ -103,6 +103,18 @@ func update_visuals():
 		
 	if card_image and data.card_image:
 		card_image.texture = data.card_image
+	
+	# If we are in the deck editor (preview or inventory), show the front and hide the back
+	if is_preview or is_inventory:
+		if card_image:
+			card_image.visible = true
+		if card_back_image:
+			card_back_image.visible = false
+		
+		# Optional: Reset shader rotations so they don't start tilted
+		if card_image and card_image.material:
+			card_image.material.set_shader_parameter("y_rot", 0.0)
+			card_image.material.set_shader_parameter("x_rot", 0.0)
 
 func update_hover_ui():
 	if desc_label == null or data == null:

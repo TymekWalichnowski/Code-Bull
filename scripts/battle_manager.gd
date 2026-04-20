@@ -278,12 +278,13 @@ func analyze_board_state():
 	_update_board_label()
 
 func _update_board_label():
-	var display_text = "--- PLAYER BOARD ---\n"
+	var display_text = "--- ENEMY BOARD ---\n"
+	display_text += "Slots: " + str(enemy_snapshot.slot_types) + "\n"
+	display_text += "Chain: %dx %s" % [enemy_snapshot.highest_chain_length, enemy_snapshot.highest_chain_type] + "\n"
+	display_text += "--- PLAYER BOARD ---\n"
 	display_text += "Slots: " + str(player_snapshot.slot_types) + "\n"
 	display_text += "Chain: %dx %s\n\n" % [player_snapshot.highest_chain_length, player_snapshot.highest_chain_type]
-	display_text += "--- ENEMY BOARD ---\n"
-	display_text += "Slots: " + str(enemy_snapshot.slot_types) + "\n"
-	display_text += "Chain: %dx %s" % [enemy_snapshot.highest_chain_length, enemy_snapshot.highest_chain_type]
+
 	if has_node("%BoardStateLabel"):
 		%BoardStateLabel.text = display_text
 
