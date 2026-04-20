@@ -8,9 +8,9 @@ signal hovered_off
 @export var card_owner: String
 @export var interactable: bool = true
 
-@export var max_rotation = 30.0
-@export var follow_speed = 10.0
-@export var return_speed = 7.0
+@export var max_rotation: = 30.0
+@export var follow_speed: = 10.0
+@export var return_speed: = 7.0
 
 @export var effect_display_scene: PackedScene
 @export var tag_display_scene: PackedScene

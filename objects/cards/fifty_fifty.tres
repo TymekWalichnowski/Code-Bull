@@ -1,9 +1,23 @@
-[gd_resource type="Resource" script_class="CardDataResource" load_steps=6 format=3 uid="uid://cjhn5eqmh2m3x"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=9 format=3 uid="uid://cjhn5eqmh2m3x"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_7ys8i"]
-[ext_resource type="Script" path="res://resources/tag_resource.gd" id="2_4l3at"]
-[ext_resource type="Texture2D" uid="uid://c4v5rfysyr58k" path="res://assets/textures/cards/card_Fifty Fifty.png" id="2_7ys8i"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_4l3at"]
+[ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_6v4la"]
+[ext_resource type="Texture2D" uid="uid://c4v5rfysyr58k" path="res://Assets/textures/cards/card_Fifty Fifty.png" id="2_7ys8i"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_6v4la"]
+
+[sub_resource type="Resource" id="Resource_4l3at"]
+script = ExtResource("2_6v4la")
+animation_name = "Multiply_Or_Divide1"
+animation_sound = "Magic"
+metadata/_custom_type_script = "uid://bj3fphuhhlpaj"
+
+[sub_resource type="Resource" id="Resource_6v4la"]
+script = ExtResource("2_6v4la")
+animation_name = "Multiply_Or_Divide2"
+animation_id = "1b"
+animation_sound = "Magic"
+metadata/_custom_type_script = "uid://bj3fphuhhlpaj"
 
 [sub_resource type="Resource" id="Resource_p15ss"]
 script = ExtResource("1_7ys8i")
@@ -11,6 +25,7 @@ action_name = "Multiply_Or_Divide"
 description = "50% chance to multiply your card by [value] 50% chance to divide opponent's next card by it instead."
 value = 2.0
 static_value = 1.0
+animation_array = Array[ExtResource("2_6v4la")]([SubResource("Resource_4l3at"), SubResource("Resource_6v4la")])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]

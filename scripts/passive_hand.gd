@@ -13,7 +13,7 @@ var hand_tweens = {}
 func add_to_passive_hand(passive_node):
 	if passive_node not in passives_list:
 		passives_list.append(passive_node)
-		# Passives are usually not interactable for enemy, but visible
+		# Passives are us ually not interactable for enemy, but visible
 		passive_node.interactable = !is_enemy 
 		update_passive_positions()
 

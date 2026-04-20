@@ -1,9 +1,16 @@
-[gd_resource type="Resource" script_class="CardDataResource" load_steps=6 format=3 uid="uid://j61jj7tm3m6g"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=8 format=3 uid="uid://j61jj7tm3m6g"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_rd3gr"]
-[ext_resource type="Texture2D" uid="uid://cl21at1o7rlq0" path="res://assets/textures/cards/card_2 Of Spades.png" id="2_rd3gr"]
-[ext_resource type="Script" path="res://resources/tag_resource.gd" id="2_w03kf"]
+[ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_dmule"]
+[ext_resource type="Texture2D" uid="uid://cl21at1o7rlq0" path="res://Assets/textures/cards/card_2 Of Spades.png" id="2_rd3gr"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_w03kf"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_w03kf"]
+
+[sub_resource type="Resource" id="Resource_w03kf"]
+script = ExtResource("2_dmule")
+animation_name = "_"
+animation_sound = "Magic"
+metadata/_custom_type_script = "uid://bj3fphuhhlpaj"
 
 [sub_resource type="Resource" id="Resource_qh1xm"]
 script = ExtResource("1_rd3gr")
@@ -11,6 +18,7 @@ action_name = "Retrigger_Next_Slot"
 description = "Retrigger the next played slot by [value]"
 value = 2.0
 priority = 1
+animation_array = Array[ExtResource("2_dmule")]([SubResource("Resource_w03kf")])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]

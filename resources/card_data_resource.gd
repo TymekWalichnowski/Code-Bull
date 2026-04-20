@@ -12,10 +12,9 @@ class_name CardDataResource
 @export var priority: int
 @export var multiplier: float = 1.0
 @export var nullified: bool = 0.0
-@export_enum("Purity", "Faith", "Temperance", 
-			 "Charity", "Diligence", "Kindness",
-			 "Patience", "Humility") 
-var type: String = "Purity"
-@export var one_time_use: bool = 0.0
+@export_enum("Cup", "Wand",
+			 "Sword", "Star") 
+var type: String = "Cup"
+@export var one_time_use: bool = 0
 
 @export var actions: Array[CardAction] = []

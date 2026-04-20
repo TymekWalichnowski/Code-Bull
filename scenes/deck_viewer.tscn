@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://y3u3a7s7601t"]
 
 [ext_resource type="Script" uid="uid://df58d2b3oj5u6" path="res://scripts/deck_viewer.gd" id="1_e8xft"]
-[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="2_hk8ax"]
+[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://Assets/themes/Basic_Theme.tres" id="2_hk8ax"]
 
 [node name="DeckViewer" type="CanvasLayer"]
 script = ExtResource("1_e8xft")
@@ -15,6 +15,21 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("2_hk8ax")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel2"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 4.0
+offset_right = -503.0
+offset_bottom = -821.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hk8ax")
+text = "Remaining In Deck"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel2"]
 layout_mode = 0
@@ -51,6 +66,21 @@ unique_name_in_owner = true
 z_index = 1
 layout_mode = 2
 columns = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel3"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 27.0
+offset_top = 4.0
+offset_right = -564.0
+offset_bottom = -821.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hk8ax")
+text = "Graveyard"
 
 [node name="CloseButton" type="Button" parent="."]
 offset_left = 1770.0

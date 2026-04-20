@@ -1,14 +1,14 @@
 [gd_scene load_steps=21 format=3 uid="uid://bb1gw8i0aub60"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="1_dd2wi"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="PackedScene" uid="uid://w8eukdjb1h4f" path="res://scenes/effect_display.tscn" id="2_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="2_ktuci"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
-[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="5_40ytf"]
-[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
+[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://Assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_40ytf"]
+[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
 [ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="9_1yd6c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
@@ -232,6 +232,11 @@ _data = {
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_1yd6c")
+card_owner = null
+interactable = null
+max_rotation = null
+follow_speed = null
+return_speed = null
 effect_display_scene = ExtResource("2_1yd6c")
 tag_display_scene = ExtResource("9_1yd6c")
 

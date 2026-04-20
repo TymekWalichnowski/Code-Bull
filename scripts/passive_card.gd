@@ -22,6 +22,12 @@ var is_inventory: bool = false
 var hand_position: Vector2 = Vector2.ZERO
 var original_z_index = 10
 
+var sounds = {
+	"place": preload("res://assets/audio/card-place-2.ogg"),
+	"pickup": preload("res://assets/audio/card-place-1.ogg"),
+	"use": preload("res://assets/audio/card-slide-2.ogg")
+}
+
 func setup(resource: PassiveCardResource):
 	data = resource
 	
@@ -122,3 +128,10 @@ func update_hover_ui():
 func play_trigger_anim():
 	if has_node("AnimationPlayer") and $AnimationPlayer.has_animation("passive_trigger"):
 		$AnimationPlayer.play("passive_trigger")
+
+func play_audio(name: String) -> void:
+	if sounds.has(name):
+		$AudioStreamPlayer.stream = sounds[name]
+		$AudioStreamPlayer.play()
+	else:
+		push_warning("Sound not found: " + name)

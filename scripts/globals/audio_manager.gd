@@ -1,5 +1,6 @@
 extends Node
 
+# we keep card sounds located in the card scene so they work in scenes without an audio manager
 @onready var sfx_library = {
 	"Attack": preload("res://Assets/audio/sfx/sfx_sword_attack.mp3"),
 	"Shield": preload("res://Assets/audio/sfx/sfx_shield.mp3"),

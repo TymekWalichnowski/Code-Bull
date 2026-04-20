@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjxldxe51muc3"
-path="res://.godot/imported/shield_shatter.png-71ccd9782ac250b6f5c4df52a548dd07.ctex"
+path="res://.godot/imported/shield_shatter.png-a4fe17db3d90b020f273d53717355814.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/effects/shield_shatter.png"
-dest_files=["res://.godot/imported/shield_shatter.png-71ccd9782ac250b6f5c4df52a548dd07.ctex"]
+source_file="res://Assets/textures/effects/shield_shatter.png"
+dest_files=["res://.godot/imported/shield_shatter.png-a4fe17db3d90b020f273d53717355814.ctex"]
 
 [params]
 

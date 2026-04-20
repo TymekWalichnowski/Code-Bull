@@ -49,12 +49,13 @@ func draw_card():
 func spawn_starting_passives():
 	for i in range(starting_passives.size()):
 		var res = starting_passives[i]
-		var passive_node = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
-		%EnemyPassives.add_child(passive_node)
-		passive_node.setup(res)
-		if passive_node.has_node("AnimationPlayer"):
-			passive_node.get_node("AnimationPlayer").play("card_flip")
+		var new_passive_card = preload(PASSIVE_SCENE_PATH).instantiate() as PassiveCard
+		%EnemyPassives.add_child(new_passive_card)
+		new_passive_card.setup(res)
+		if new_passive_card.has_node("AnimationPlayer"):
+			new_passive_card.get_node("AnimationPlayer").play("card_flip")
 		
-		passive_node.setup(res)
+		new_passive_card.setup(res)
 		var offset_x = 140 + (i * 140)
-		passive_node.global_position = self.global_position + Vector2(offset_x, 0)
+		new_passive_card.global_position = self.global_position + Vector2(offset_x, 0)
+		new_passive_card.play_audio("pickup")
