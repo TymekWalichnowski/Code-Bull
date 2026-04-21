@@ -56,6 +56,6 @@ func spawn_starting_passives():
 			new_passive_card.get_node("AnimationPlayer").play("card_flip")
 		
 		new_passive_card.setup(res)
-		var offset_x = 140 + (i * 140)
-		new_passive_card.global_position = self.global_position + Vector2(offset_x, 0)
+		var offset_x = 40 + (i * 140)
+		new_passive_card.global_position = %EnemyPassives.global_position + Vector2(offset_x, 0)
 		new_passive_card.play_audio("pickup")

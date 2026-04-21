@@ -1,7 +1,7 @@
 extends Node2D
 
 const CARD_WIDTH = 110 
-const HAND_Y_POSITION = 920 
+const HAND_Y_POSITION = 940 
 const DEFAULT_CARD_MOVE_SPEED = 0.2
 const DEFAULT_CARD_SCALE = 1.2
 const MAX_ROTATION_DEGREES = 12.0 

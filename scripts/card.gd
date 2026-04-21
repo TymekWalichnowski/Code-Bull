@@ -168,7 +168,7 @@ func update_hover_ui():
 	var is_enemy_hand_card = (card_owner == "Enemy" and cards_current_slot == null)
 	var show_description = not is_enemy_hand_card or is_preview or is_inventory
 
-	%DescriptionOverlay.visible = show_description
+	%DescriptionOverlay.visible = false #change to show_description later
 
 	var full_description := ""
 	var c_mult = card_data.multiplier if card_data.multiplier != 0 else 1.0

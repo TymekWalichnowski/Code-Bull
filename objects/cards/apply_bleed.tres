@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_fcb1a"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_34ur7"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_c0ewi"]
-[ext_resource type="Texture2D" uid="uid://4cnavypvrsbs" path="res://Assets/textures/cards/card_bleeder.png" id="2_me2ei"]
+[ext_resource type="Texture2D" uid="uid://4cnavypvrsbs" path="res://Assets/Textures/Cards/card_bleeder.png" id="2_me2ei"]
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_ohyex"]
 [ext_resource type="Resource" uid="uid://bvy34rloar7fq" path="res://objects/tags/bleed.tres" id="4_v6bni"]
 

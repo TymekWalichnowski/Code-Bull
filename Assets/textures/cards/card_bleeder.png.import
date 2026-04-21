@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://4cnavypvrsbs"
-path="res://.godot/imported/card_bleeder.png-0451e61b35f4e905a5dcaa29ff8e78fa.ctex"
+path="res://.godot/imported/card_bleeder.png-eb4b5d0d028a45a8baa824897834df3a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/cards/card_bleeder.png"
-dest_files=["res://.godot/imported/card_bleeder.png-0451e61b35f4e905a5dcaa29ff8e78fa.ctex"]
+source_file="res://Assets/Textures/Cards/card_bleeder.png"
+dest_files=["res://.godot/imported/card_bleeder.png-eb4b5d0d028a45a8baa824897834df3a.ctex"]
 
 [params]
 
