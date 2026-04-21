@@ -19,6 +19,7 @@ signal hovered_off
 @export var texture_nullify: Texture2D
 
 @onready var effect_display_container = %EffectDisplayContainer
+@onready var tag_display_container = %TagDisplayContainer
 
 @onready var desc_label = %ActionDescriptionLabel
 
@@ -88,7 +89,7 @@ func _apply_visuals():
 		if card_image.material:
 			card_image.material.set_shader_parameter("y_rot", 0.0)
 			card_image.material.set_shader_parameter("x_rot", 0.0)
-	
+	update_tags_display()
 	update_hover_ui()
 
 func _process(delta: float) -> void:
@@ -159,7 +160,11 @@ func play_audio(name: String) -> void:
 func update_hover_ui():
 	if desc_label == null or card_data == null:
 		return
-
+	
+	if hovering == true:
+		%TagDisplayContainer.visible = true
+	else:
+		%TagDisplayContainer.visible = false
 	var is_enemy_hand_card = (card_owner == "Enemy" and cards_current_slot == null)
 	var show_description = not is_enemy_hand_card or is_preview or is_inventory
 
@@ -277,3 +282,47 @@ func _add_effect_display(icon: Texture2D, count: int):
 	if img: img.texture = icon
 	if lbl: lbl.text = "x" + str(count) # Optional: add "x" so it reads "x2"
 	
+func update_tags_display():
+	if not tag_display_container or not tag_display_scene or not card_data:
+		return
+
+	# 1. Clear out old tags
+	for child in tag_display_container.get_children():
+		child.queue_free()
+
+	var processed_tags: Array[String] = []
+	var all_tags: Array[TagResource] = []
+	
+	# 2. Gather tags from the card itself
+	if "tags" in card_data:
+		all_tags.append_array(card_data.tags)
+		
+	# 3. Gather tags from all actions
+	for action in card_data.actions:
+		if action and "tags" in action:
+			all_tags.append_array(action.tags)
+			
+	# 4. Instantiate displays without repeats
+	for tag in all_tags:
+		# Skip null tags or tags that shouldn't be visible
+		if not tag or not tag.visible: 
+			continue
+			
+		# Check for repeats using the tag's name
+		if tag.tag_name in processed_tags:
+			continue
+			
+		processed_tags.append(tag.tag_name)
+		
+		# Instantiate and add to container
+		var tag_display = tag_display_scene.instantiate()
+		tag_display_container.add_child(tag_display)
+		
+		# Set the text (using local unique nodes inside the instantiated scene)
+		var title_label = tag_display.get_node_or_null("%TagTitle")
+		var desc_label = tag_display.get_node_or_null("%TagDescription")
+		
+		if title_label: 
+			title_label.text = tag.tag_name
+		if desc_label: 
+			desc_label.text = tag.description

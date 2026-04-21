@@ -18,3 +18,4 @@ var type: String = "Cup"
 @export var one_time_use: bool = 0
 
 @export var actions: Array[CardAction] = []
+@export var tags: Array[TagResource] = []
