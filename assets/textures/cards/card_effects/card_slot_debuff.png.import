@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://daj8e2il47wo5"
-path="res://.godot/imported/card_slot_debuff.png-5cdad6311f9fe25b5389a8916d302ebe.ctex"
+path="res://.godot/imported/card_slot_debuff.png-db98bc3c12f16e46af0093398f23cbd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Cards/card_effects/card_slot_debuff.png"
-dest_files=["res://.godot/imported/card_slot_debuff.png-5cdad6311f9fe25b5389a8916d302ebe.ctex"]
+source_file="res://Assets/textures/cards/card_effects/card_slot_debuff.png"
+dest_files=["res://.godot/imported/card_slot_debuff.png-db98bc3c12f16e46af0093398f23cbd0.ctex"]
 
 [params]
 

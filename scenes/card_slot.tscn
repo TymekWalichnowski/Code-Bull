@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsuuljgrc5evc"]
+[gd_scene load_steps=15 format=3 uid="uid://bsuuljgrc5evc"]
 
 [ext_resource type="Script" uid="uid://cfuut4xpf3eg5" path="res://scripts/card_slot.gd" id="1_cypty"]
-[ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://assets/textures/cards/card_slot.png" id="1_mxh2e"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://assets/textures/cards/card_effects/card_slot_glow.png" id="2_hrxt0"]
+[ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/textures/cards/card_Slot.png" id="1_mxh2e"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_effects/card_slot_glow.png" id="2_hrxt0"]
+[ext_resource type="Shader" uid="uid://mhv8orvsq3o2" path="res://shaders/invert.gdshader" id="3_dwl65"]
 
 [sub_resource type="Shader" id="Shader_cypty"]
 code = "shader_type canvas_item;
@@ -170,6 +171,12 @@ colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
 gradient = SubResource("Gradient_cypty")
 width = 89
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dt6cf"]
+shader = ExtResource("3_dwl65")
+shader_parameter/factor = 1.0
+shader_parameter/color_middle = 0.0
+shader_parameter/hue_shift = Vector3(1.5, 0.815, 2.895)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cypty"]
 size = Vector2(158, 206)
 
@@ -223,17 +230,18 @@ offset_right = 77.0
 offset_bottom = 105.0
 texture = SubResource("GradientTexture1D_hrxt0")
 
+[node name="CardSlotImage" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_dt6cf")
+scale = Vector2(2, 2)
+texture = ExtResource("1_mxh2e")
+
 [node name="Glow" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-1.9073486e-06, -3.2186508e-06)
 scale = Vector2(1.8372092, 1.8727272)
 texture = ExtResource("2_hrxt0")
-
-[node name="CardSlotImage" type="Sprite2D" parent="."]
-texture_filter = 1
-scale = Vector2(2, 2)
-texture = ExtResource("1_mxh2e")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(-1.52588e-05, -2.28882e-05)

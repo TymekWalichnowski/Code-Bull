@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ewgjxdeiba1u"
-path="res://.godot/imported/passive_Initial_Shield.png-955a0979bb3af219c48e9a506442e061.ctex"
+path="res://.godot/imported/passive_Initial_Shield.png-d9ea5ca0c87a8fd7a887c5bd43a20dec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/cards_passive/passive_Initial_Shield.png"
-dest_files=["res://.godot/imported/passive_Initial_Shield.png-955a0979bb3af219c48e9a506442e061.ctex"]
+source_file="res://Assets/textures/cards_passive/passive_Initial_Shield.png"
+dest_files=["res://.godot/imported/passive_Initial_Shield.png-d9ea5ca0c87a8fd7a887c5bd43a20dec.ctex"]
 
 [params]
 

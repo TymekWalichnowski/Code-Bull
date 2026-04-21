@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b85gmj83uys81"]
+[gd_scene load_steps=6 format=3 uid="uid://b85gmj83uys81"]
 
 [ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
 [ext_resource type="Script" uid="uid://1mxdpoyob13n" path="res://addons/sprouty_dialogs/nodes/dialog_player.gd" id="2_2epne"]
+[ext_resource type="Texture2D" uid="uid://cituhylr7eyfi" path="res://Assets/textures/UI/title.png" id="2_chg43"]
 [ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://Assets/dialogue/dialogues/test2.tres" id="3_2epne"]
 [ext_resource type="PackedScene" uid="uid://ckr6bnvp677wi" path="res://scenes/deck_editor.tscn" id="4_rif6e"]
 
@@ -43,6 +44,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Edit Deck"
+
+[node name="Title" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(970.0001, 171.00003)
+scale = Vector2(4.7994013, 4.7994013)
+texture = ExtResource("2_chg43")
 
 [node name="DialogPlayer" type="Node" parent="."]
 script = ExtResource("2_2epne")
