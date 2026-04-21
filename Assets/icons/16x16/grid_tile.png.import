@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpiqglue2sxtk"
-path="res://.godot/imported/grid_tile.png-b9325ea53d211d11f057450629c3dc7a.ctex"
+path="res://.godot/imported/grid_tile.png-1aa1358c8db65cd244fdbfe231047701.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/16x16/grid_tile.png"
-dest_files=["res://.godot/imported/grid_tile.png-b9325ea53d211d11f057450629c3dc7a.ctex"]
+source_file="res://Assets/icons/16x16/grid_tile.png"
+dest_files=["res://.godot/imported/grid_tile.png-1aa1358c8db65cd244fdbfe231047701.ctex"]
 
 [params]
 

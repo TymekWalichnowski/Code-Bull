@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://033uq706uqwr"
-path="res://.godot/imported/TestWizard.png-4bfdd677957dfbc4337df199601be8df.ctex"
+path="res://.godot/imported/TestWizard.png-81420cb9f3aba6f9bff7189bf92e2edb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/characters/battle/TestWizard.png"
-dest_files=["res://.godot/imported/TestWizard.png-4bfdd677957dfbc4337df199601be8df.ctex"]
+source_file="res://Assets/Textures/characters/battle/TestWizard.png"
+dest_files=["res://.godot/imported/TestWizard.png-81420cb9f3aba6f9bff7189bf92e2edb.ctex"]
 
 [params]
 

@@ -1,14 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://bb1gw8i0aub60"]
+[gd_scene load_steps=23 format=3 uid="uid://bb1gw8i0aub60"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="1_dd2wi"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="PackedScene" uid="uid://w8eukdjb1h4f" path="res://scenes/effect_display.tscn" id="2_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="2_ktuci"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
-[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://Assets/textures/cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_40ytf"]
-[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
+[ext_resource type="Texture2D" uid="uid://dmbe4ekbaqltb" path="res://Assets/Textures/Cards/card_effects/effect_retrigger.png" id="3_ulcbd"]
+[ext_resource type="Texture2D" uid="uid://kh307f8v25fj" path="res://Assets/Textures/Cards/card_effects/effect_nullified.png" id="4_nii3k"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/Textures/Cards/card_effects/card_slot_glow.png" id="4_nvopj"]
+[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://Assets/Textures/Cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/Audio/card-place-2.ogg" id="5_40ytf"]
+[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/Textures/Cards/card_effects/card_slot_buff.png" id="6_we8pq"]
 [ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="9_1yd6c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
@@ -232,13 +234,10 @@ _data = {
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_1yd6c")
-card_owner = null
-interactable = null
-max_rotation = null
-follow_speed = null
-return_speed = null
 effect_display_scene = ExtResource("2_1yd6c")
 tag_display_scene = ExtResource("9_1yd6c")
+texture_retrigger = ExtResource("3_ulcbd")
+texture_nullify = ExtResource("4_nii3k")
 
 [node name="CardBackImage" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -296,6 +295,18 @@ pivot_offset = Vector2(64, 87)
 size_flags_horizontal = 2
 size_flags_vertical = 3
 mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UIOverlay"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = -20.0
+offset_right = 128.0
+use_top_left = true
+
+[node name="EffectDisplayContainer" type="HBoxContainer" parent="UIOverlay/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
 
 [node name="DescriptionOverlay" type="Control" parent="UIOverlay"]
 unique_name_in_owner = true

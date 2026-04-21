@@ -19,7 +19,6 @@ signal hovered_off
 @export var texture_nullify: Texture2D
 
 @onready var effect_display_container = %EffectDisplayContainer
-@onready var tag_display_container = %TagDisplayContainer
 
 @onready var desc_label = %ActionDescriptionLabel
 
@@ -208,6 +207,16 @@ func update_visuals():
 		else:
 			if effect_animation_player:
 				effect_animation_player.stop()
+	if effect_display_container:
+		# 1. Clear out the old displays so they don't infinitely stack
+		for child in effect_display_container.get_children():
+			child.queue_free()
+			
+		# 2. Rebuild the displays based on current counts
+		if retriggers > 0:
+			_add_effect_display(texture_retrigger, retriggers)
+		if nullified > 0: 
+			_add_effect_display(texture_nullify, nullified)
 
 func _get_current_slot_index() -> int:
 	if not cards_current_slot: 
@@ -253,3 +262,18 @@ func declare_effect(effect_name) -> void:
 	# Finally, hide the node entirely so it doesn't block mouse clicks
 	tween.tween_callback(func(): label.visible = false)
 	await tween.finished
+
+func _add_effect_display(icon: Texture2D, count: int):
+	if not effect_display_scene or not icon or not effect_display_container:
+		return
+		
+	var display = effect_display_scene.instantiate()
+	effect_display_container.add_child(display)
+	
+	# Unique names (%) work locally within instanced scenes!
+	var img = display.get_node_or_null("%EffectImage")
+	var lbl = display.get_node_or_null("%CountLabel")
+	
+	if img: img.texture = icon
+	if lbl: lbl.text = "x" + str(count) # Optional: add "x" so it reads "x2"
+	
