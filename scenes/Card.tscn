@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dnj8lxsm2fgti"]
+[gd_scene load_steps=24 format=3 uid="uid://dnj8lxsm2fgti"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
 [ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="1_dd2wi"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_40ytf"]
 [ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/textures/cards/card_effects/card_slot_buff.png" id="6_we8pq"]
 [ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="9_1yd6c"]
+[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="13_hpf3o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("3_kg30u")
@@ -318,6 +319,7 @@ offset_bottom = 176.0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="DescriptionOverlay" type="Control" parent="UIOverlay"]
 unique_name_in_owner = true
@@ -383,6 +385,8 @@ offset_left = -120.0
 offset_top = -39.0
 offset_right = 122.0
 offset_bottom = 40.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("13_hpf3o")
 theme_override_font_sizes/normal_font_size = 24
 text = "Retrigger!"
 horizontal_alignment = 1

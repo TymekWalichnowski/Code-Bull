@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=74 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -34,7 +34,6 @@
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
 [ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
 [ext_resource type="Texture2D" uid="uid://d36vfuu18pv8x" path="res://Assets/textures/UI/shield_holder.png" id="32_gdcyb"]
-[ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="32_t70y2"]
 [ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="32_vua0o"]
 [ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
 [ext_resource type="Texture2D" uid="uid://033uq706uqwr" path="res://Assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
@@ -47,6 +46,10 @@
 [ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
 [ext_resource type="Texture2D" uid="uid://dgfxtn3so2syp" path="res://Assets/textures/backgrounds/temp_bg.png" id="40_8cp6k"]
 [ext_resource type="Resource" uid="uid://b42uqjkasts7o" path="res://objects/cards_passive/retrigger_slot.tres" id="43_5grtr"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="45_oa6sj"]
+[ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="46_0f1tp"]
+[ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="49_0qimb"]
+[ext_resource type="Texture2D" uid="uid://cccim80tdu0l1" path="res://Assets/textures/cards/card_Block.png" id="50_0f1tp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("38_8gny2")
@@ -289,6 +292,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qimb"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="Main" type="Node2D"]
 
 [node name="TempBg" type="Sprite2D" parent="."]
@@ -410,15 +425,16 @@ script = ExtResource("5_q8u5g")
 
 [node name="TurnLabel" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
-offset_left = 1521.0
-offset_top = 35.0
-offset_right = 1874.0
-offset_bottom = 305.0
+offset_left = 1506.0
+offset_top = 447.0
+offset_right = 1859.0
+offset_bottom = 516.0
 theme_override_font_sizes/normal_font_size = 48
 text = "Turn:"
 
 [node name="BoardStateLabel" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
+visible = false
 offset_left = 1380.0
 offset_top = 555.0
 offset_right = 1890.0
@@ -454,7 +470,7 @@ vertical_alignment = 1
 [node name="ShieldHolder" type="Sprite2D" parent="Player"]
 z_index = 10
 texture_filter = 1
-position = Vector2(596, 998)
+position = Vector2(511, 997.60004)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("32_gdcyb")
 
@@ -471,6 +487,7 @@ theme_override_font_sizes/normal_font_size = 70
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SpeedHolder" type="Sprite2D" parent="Player"]
 z_index = 10
@@ -553,11 +570,12 @@ theme_override_font_sizes/normal_font_size = 70
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ShieldHolder" type="Sprite2D" parent="Enemy"]
 z_index = 10
 texture_filter = 1
-position = Vector2(596.3999, 85.39994)
+position = Vector2(511.3999, 85)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("32_gdcyb")
 
@@ -574,6 +592,7 @@ theme_override_font_sizes/normal_font_size = 70
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SpeedHolder" type="Sprite2D" parent="Enemy"]
 z_as_relative = false
@@ -595,6 +614,7 @@ theme_override_font_sizes/normal_font_size = 70
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="Enemy"]
 texture_filter = 1
@@ -633,7 +653,7 @@ script = ExtResource("15_pnhog")
 [node name="PlayerDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(150, 900)
+position = Vector2(148, 875)
 script = ExtResource("4_fos0i")
 card_database = ExtResource("12_yxlcp")
 
@@ -643,10 +663,15 @@ visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerDeck"]
 texture_filter = 1
-scale = Vector2(2, 2)
+position = Vector2(-0.41654927, 112.64044)
+rotation = -0.044820033
+scale = Vector2(2.8015106, 2.8015106)
 texture = ExtResource("4_cm0pq")
 
 [node name="Area2D" type="Area2D" parent="PlayerDeck"]
+position = Vector2(-0.41654927, 112.64044)
+rotation = -0.044820033
+scale = Vector2(1.4007553, 1.4007553)
 collision_layer = 4
 collision_mask = 4
 
@@ -655,16 +680,16 @@ shape = SubResource("RectangleShape2D_r0du0")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PlayerDeck"]
 z_index = -2
-offset_left = -65.0
-offset_top = -131.0
-offset_right = 64.0
-offset_bottom = -99.0
+offset_left = 87.0
+offset_top = -62.0
+offset_right = 216.0
+offset_bottom = -30.0
 scale = Vector2(2, 2)
 text = "0"
 
 [node name="PlayerPassives" type="Node2D" parent="PlayerDeck"]
 unique_name_in_owner = true
-position = Vector2(226, 37)
+position = Vector2(1564, 96)
 script = ExtResource("38_t70y2")
 
 [node name="EnemyDeck" type="Node2D" parent="."]
@@ -672,26 +697,28 @@ unique_name_in_owner = true
 position = Vector2(150, 123)
 script = ExtResource("8_lhr70")
 card_database = ExtResource("12_yxlcp")
-starting_deck = Array[ExtResource("21_kxyth")]([ExtResource("32_t70y2"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("26_8cp6k"), ExtResource("32_t70y2")])
-starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("43_5grtr")])
+starting_deck = Array[ExtResource("21_kxyth")]([ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("26_8cp6k"), ExtResource("45_oa6sj"), ExtResource("46_0f1tp")])
+starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("43_5grtr"), ExtResource("49_0qimb")])
 
 [node name="Sprite2D" type="Sprite2D" parent="EnemyDeck"]
 texture_filter = 1
-scale = Vector2(2, 2)
+position = Vector2(2.5331974e-07, -34)
+rotation = 0.045378562
+scale = Vector2(2.8015106, 2.8015106)
 texture = ExtResource("4_cm0pq")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="EnemyDeck"]
 z_index = -2
-offset_left = -56.0
-offset_top = -130.0
-offset_right = 73.0
-offset_bottom = -98.0
+offset_left = 98.0
+offset_top = 57.0
+offset_right = 227.0
+offset_bottom = 89.0
 scale = Vector2(2, 2)
 text = "0"
 
 [node name="EnemyPassives" type="Node2D" parent="EnemyDeck"]
 unique_name_in_owner = true
-position = Vector2(125, -29)
+position = Vector2(207, -33)
 script = ExtResource("38_t70y2")
 is_enemy = true
 
@@ -704,15 +731,30 @@ unique_name_in_owner = true
 position = Vector2(961, 419)
 
 [node name="EndTurnButton" type="Button" parent="."]
-offset_left = 1419.0
-offset_top = 459.0
-offset_right = 1509.0
-offset_bottom = 490.0
+offset_left = 1685.0
+offset_top = 443.0
+offset_right = 1775.0
+offset_bottom = 474.0
 scale = Vector2(2.5, 2.5)
 text = "END TURN"
 
 [node name="BattleTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+
+[node name="CardBlock" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.22745098)
+position = Vector2(350, 474.25)
+scale = Vector2(5.5937505, 5.59375)
+texture = ExtResource("50_0f1tp")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+offset_left = 170.0
+offset_top = 223.0
+offset_right = 529.0
+offset_bottom = 721.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0qimb")
 
 [connection signal="animation_finished" from="BattleManager/AnimationManager/ActionAnim" to="BattleManager/AnimationManager" method="_on_action_anim_animation_finished"]
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]

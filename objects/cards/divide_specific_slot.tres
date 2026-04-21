@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="CardDataResource" load_steps=7 format=3 uid="uid://5g3wwcrn34ac"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=8 format=3 uid="uid://5g3wwcrn34ac"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_ukax2"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_8m4r2"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_hysgw"]
 [ext_resource type="Texture2D" uid="uid://b152lm5kk03ln" path="res://Assets/textures/cards/card_Explosion.png" id="2_mnukw"]
+[ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_vbqm8"]
 [ext_resource type="Resource" uid="uid://6bwpkssp22nh" path="res://objects/tags/divide.tres" id="3_vbqm8"]
 
 [sub_resource type="Resource" id="Resource_dvr3u"]
