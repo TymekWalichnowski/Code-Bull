@@ -34,7 +34,7 @@ portrait_scene_path = "res://Assets/dialogue/portraits/Waah.tscn"
 export_overrides = {
 "portrait_image": {
 "type": 4,
-"value": "res://Assets/textures/characters/dialogue/npc_test_1.png"
+"value": "res://Assets/textures/characters/dialogue/protag_test_1.png"
 }
 }
 typing_sound = {}

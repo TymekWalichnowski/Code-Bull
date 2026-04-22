@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://qt20w1k4gtes"]
+[gd_scene load_steps=0 format=3 uid="uid://qt20w1k4gtes"]
 
 [ext_resource type="Script" uid="uid://dwnhj4odubmvu" path="res://addons/sprouty_dialogs/editor/components/scripts/conditions_container.gd" id="1_58evq"]
 [ext_resource type="Texture2D" uid="uid://tkq4pamepmr5" path="res://addons/sprouty_dialogs/editor/icons/interactable/collapse-down.svg" id="2_itu1p"]

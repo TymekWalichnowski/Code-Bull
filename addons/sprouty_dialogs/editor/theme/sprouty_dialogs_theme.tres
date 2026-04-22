@@ -1,4 +1,4 @@
-[gd_resource type="Theme" format=3 uid="uid://q74awv67f4ih"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://q74awv67f4ih"]
 
 [ext_resource type="StyleBox" uid="uid://b271vxtvm2bt7" path="res://addons/sprouty_dialogs/editor/theme/node_panel.tres" id="1_xmt66"]
 [ext_resource type="StyleBox" uid="uid://cw5fvbadmyuc2" path="res://addons/sprouty_dialogs/editor/theme/node_panel_selected.tres" id="2_3u307"]
