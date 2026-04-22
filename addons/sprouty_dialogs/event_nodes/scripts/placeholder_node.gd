@@ -18,6 +18,7 @@ func get_data() -> Dictionary:
 	# Update the position and connections
 	_node_data["offset"] = position_offset
 	_node_data["to_node"] = get_output_connections()
+	_node_data["to_dialog"] = to_dialog
 
 	dict[name.to_snake_case()] = _node_data
 	return dict # Return the updated node data
@@ -29,6 +30,7 @@ func set_data(dict: Dictionary) -> void:
 	node_index = dict["node_index"]
 	position_offset = dict["offset"]
 	to_node = dict["to_node"]
+	to_dialog = dict.get("to_dialog", "")
 	size = dict["size"]
 	_node_data = dict
 

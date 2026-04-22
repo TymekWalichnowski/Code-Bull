@@ -69,6 +69,7 @@ func get_data() -> Dictionary:
 		"operator": _operator_dropdown.get_item_id(_operator_dropdown.selected),
 		"new_value": _var_value,
 		"to_node": get_output_connections(),
+		"to_dialog": to_dialog,
 		"offset": position_offset,
 		"size": size
 	}
@@ -79,6 +80,7 @@ func set_data(dict: Dictionary) -> void:
 	node_type = dict["node_type"]
 	node_index = dict["node_index"]
 	to_node = dict["to_node"]
+	to_dialog = dict.get("to_dialog", "")
 	position_offset = dict["offset"]
 	size = dict["size"]
 
