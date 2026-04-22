@@ -708,6 +708,12 @@ unique_name_in_owner = true
 position = Vector2(220, 98)
 script = ExtResource("42_ptdxi")
 
+[node name="Panel" type="Panel" parent="PlayerDeck"]
+offset_left = 388.0
+offset_top = -628.0
+offset_right = 1229.0
+offset_bottom = -462.0
+
 [node name="EnemyDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(150, 123)
