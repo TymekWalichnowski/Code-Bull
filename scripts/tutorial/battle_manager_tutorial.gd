@@ -13,14 +13,17 @@ func _ready() -> void:
 	%Enemy.speed = 2
 	
 	for i in range(START_DRAW_COUNT):
-		if i < 5: %PlayerDeck.draw_card()
-		if i < 5: %EnemyDeck.draw_card()
+		if i < 1: %PlayerDeck.draw_card()
+		if i < 1: %EnemyDeck.draw_card()
 		await get_tree().create_timer(0.4).timeout
 	
-	await get_tree().create_timer(0.2).timeout
 	await trigger_passives("On_Turn_Start")
 	analyze_board_state()
-	enemy_turn()
+	await enemy_turn()
+	%TutorialText.text = "Welcome to card mania!\n
+See that red card above the opponent? That's the card they're planning to use on you.
+See those yellow diamonds with numbers on them? That's your speed. Whoever has the higher speed will play their cards first.
+Slot in a shield card to defend yourself, then press activate!"
 
 func _process(_delta: float) -> void:
 	%Player/HealthHolder/HealthLabel.text = "%d" % %Player.current_health
@@ -110,11 +113,45 @@ func _on_end_turn_button_pressed() -> void:
 	await trigger_tokens("On_Turn_End")
 	
 	advance_turn()
+	
 
-	
-	%PlayerDeck.draw_card()
-	%PlayerDeck.draw_card()
-	
+	if turn_count == 2:
+		%Player.speed = 2
+		%Enemy.speed = 4
+		%PlayerDeck.draw_card()
+		await wait(0.2)
+		%PlayerDeck.draw_card()
+		%TutorialText.text = "Nice going!\n
+As the match progresses, you unlock more card slots!
+See how the opponent readied up two shield cards?
+Try slotting in two of your sword cards."
+							  
+	elif turn_count == 3:
+		%Player.speed = 1
+		%Enemy.speed = 3
+		%PlayerDeck.draw_card()
+		await wait(0.2)
+		%PlayerDeck.draw_card()
+		await wait(0.2)
+		%PlayerDeck.draw_card()
+		%TutorialText.text = "Hm!\n
+They had the speed advantage that round and their shield absorbed all your damage!
+What if you were to hit them with something a little harder? Here is where the true combo-creation of this game comes in: Slot your multiply card in the first and second slots, then a sword in the third."
+	elif turn_count == 4:
+		%Player.speed = 4
+		%Enemy.speed = 2
+		%PlayerDeck.draw_card()
+		await wait(0.2)
+		%PlayerDeck.draw_card()
+		await wait(0.2)
+		%PlayerDeck.draw_card()
+		%TutorialText.text = "Did you see that!? The first multiply card multiplied your second multiply card into a 4x multiply card, which then multiplied your sword card, increasing the attach damage from a measly 2 into a staggering 8,breaking through the opponent's shield and dealing some health damage. \n
+Now. Finish him off. Generate some shield and then use a multiply card to boost the power of a double hit card, a card that hits twice in one use!"
+	elif turn_count == 5:
+		%TutorialText.text = "The Opponent's health hit 0, you won!!!"
+		await wait(2.0)
+		get_tree().change_scene_to_file("res://scenes/level_select.tscn")
+		
 	await trigger_passives("On_Turn_Start")
 	await trigger_tokens("On_Turn_Start")
 
@@ -123,9 +160,23 @@ func _on_end_turn_button_pressed() -> void:
 	enemy_turn()
 
 func enemy_turn():
-	await wait(0.2)
-	if turn_count > 1: %EnemyDeck.draw_card()
-	await wait(1)
+	if turn_count == 2:
+		%EnemyDeck.draw_card()
+		await wait(0.2)
+		%EnemyDeck.draw_card()
+	elif turn_count == 3:
+		%EnemyDeck.draw_card()
+		await wait(0.2)
+		%EnemyDeck.draw_card()
+		await wait(0.2)
+		%EnemyDeck.draw_card()
+	elif turn_count == 4:
+		%EnemyDeck.draw_card()
+		await wait(0.2)
+		%EnemyDeck.draw_card()
+		await wait(0.2)
+		%EnemyDeck.draw_card()
+	await wait(0.5)
 	reset_enemy_slots()
 	if empty_enemy_card_slots.size() != 0:
 		await play_enemy_cards() 
@@ -281,6 +332,34 @@ func _analyze_slots(slots_array: Array) -> Dictionary:
 	var highest_chain_type = ""
 	var highest_chain_length = 0
 	var slot_types = []
+	# TUTORIAL CHECKER - Only run for Player slots
+	if slots_array == player_slots:
+		var end_turn_btn = $"../EndTurnButton"
+		
+		match turn_count:
+			1:
+				end_turn_btn.disabled = !(_is_card_in_player_slot(0, "Block"))
+			2:
+				var has_sword = _is_card_in_player_slot(0, "Sword")
+				var has_sword_2 = _is_card_in_player_slot(1, "Sword")
+				end_turn_btn.disabled = !(has_sword and has_sword_2)
+			3:
+				var has_multiply = _is_card_in_player_slot(0, "Multiply")
+				var has_multiply_2 = _is_card_in_player_slot(1, "Multiply")
+				var has_sword = _is_card_in_player_slot(2, "Sword")
+				end_turn_btn.disabled = !(has_multiply and has_multiply_2 and has_sword)
+			4:
+				var has_block = _is_card_in_player_slot(0, "Block")
+				var has_multiply = _is_card_in_player_slot(1, "Multiply")
+				var has_double_hit = _is_card_in_player_slot(2, "Double Hit")
+				end_turn_btn.disabled = !(has_block and has_multiply and has_double_hit)
+			_:
+				# After tutorial turns, ensure the button isn't stuck disabled
+				# (Unless you have other logic that disables it)
+				if not board_locked:
+					%EndTurnButton.disabled = false
+	
+	# CODE FOR CHAINS
 	for slot in slots_array:
 		if is_instance_valid(slot) and slot.card_in_slot and slot.card and slot.card.card_data:
 			var c_type = slot.card.card_data.type
@@ -299,5 +378,14 @@ func _analyze_slots(slots_array: Array) -> Dictionary:
 			current_chain_type = ""
 			current_chain_length = 0
 	return {"slot_types": slot_types, "type_counts": type_counts, "highest_chain_type": highest_chain_type, "highest_chain_length": highest_chain_length}
-
 	
+func _is_card_in_player_slot(slot_index: int, target_card_name: String) -> bool:
+	if slot_index < 0 or slot_index >= player_slots.size():
+		return false
+	
+	var slot = player_slots[slot_index]
+	if is_instance_valid(slot) and slot.card and slot.card.card_data:
+		# Changed '.card_name' to '.display_name' to match your Resource script
+		return slot.card.card_data.display_name == target_card_name
+	
+	return false

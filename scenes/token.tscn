@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b72wdhj577ula"]
 
 [ext_resource type="Script" uid="uid://bkmt4yb48puec" path="res://scripts/token.gd" id="1_7438t"]
-[ext_resource type="Texture2D" uid="uid://ckars6soro3o5" path="res://Assets/textures/tokens/Token_Blank.png" id="2_20bui"]
+[ext_resource type="Texture2D" uid="uid://ckars6soro3o5" path="res://Assets/textures/Tokens/Token_Blank.png" id="2_20bui"]
 
 [node name="Token" type="Node2D"]
 script = ExtResource("1_7438t")

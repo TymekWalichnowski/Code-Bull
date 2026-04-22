@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://w8eukdjb1h4f"]
 
-[ext_resource type="Texture2D" uid="uid://dmbe4ekbaqltb" path="res://Assets/Textures/Cards/card_effects/effect_retrigger.png" id="1_iu8nl"]
+[ext_resource type="Texture2D" uid="uid://dmbe4ekbaqltb" path="res://Assets/textures/Cards/card_effects/effect_retrigger.png" id="1_iu8nl"]
 
 [node name="EffectDisplay" type="Control"]
 custom_minimum_size = Vector2(64, 32)

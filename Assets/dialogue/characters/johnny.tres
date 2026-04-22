@@ -3,18 +3,6 @@
 [ext_resource type="Script" uid="uid://ygs6blymsjbh" path="res://addons/sprouty_dialogs/resources/portrait_data.gd" id="1_clqe0"]
 [ext_resource type="Script" uid="uid://kwoapf8il7ee" path="res://addons/sprouty_dialogs/resources/character_data.gd" id="1_mvtly"]
 
-[sub_resource type="Resource" id="Resource_clqe0"]
-script = ExtResource("1_clqe0")
-portrait_scene_uid = 2050367948379374357
-portrait_scene_path = "res://Assets/dialogue/portraits/Waah.tscn"
-export_overrides = {
-"portrait_image": {
-"type": 4,
-"value": "res://Assets/textures/characters/dialogue/npc_test_1.png"
-}
-}
-typing_sound = {}
-
 [sub_resource type="Resource" id="Resource_d7gug"]
 script = ExtResource("1_clqe0")
 portrait_scene_uid = 4461002098669249851
@@ -35,6 +23,18 @@ export_overrides = {
 "portrait_image": {
 "type": 4,
 "value": "res://Assets/textures/characters/dialogue/protag_test_1.png"
+}
+}
+typing_sound = {}
+
+[sub_resource type="Resource" id="Resource_clqe0"]
+script = ExtResource("1_clqe0")
+portrait_scene_uid = 2050367948379374357
+portrait_scene_path = "res://Assets/dialogue/portraits/Waah.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://Assets/textures/characters/dialogue/npc_test_1.png"
 }
 }
 typing_sound = {}

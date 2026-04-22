@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b3gnsjj5xksth"
-path="res://.godot/imported/action_icon_divide.png-1a126bcdb72720ce1132262cb3dea7b8.ctex"
+path="res://.godot/imported/action_icon_divide.png-26ea763132992ed3652a6aeba8c12c92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/cards/action_icons/action_icon_divide.png"
-dest_files=["res://.godot/imported/action_icon_divide.png-1a126bcdb72720ce1132262cb3dea7b8.ctex"]
+source_file="res://Assets/textures/Cards/action_icons/action_icon_divide.png"
+dest_files=["res://.godot/imported/action_icon_divide.png-26ea763132992ed3652a6aeba8c12c92.ctex"]
 
 [params]
 

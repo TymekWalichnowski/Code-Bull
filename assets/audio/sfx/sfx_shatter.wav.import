@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b5rrq4jp2br4d"
-path="res://.godot/imported/sfx_shatter.wav-dbec27a856c51186206a8768b6dcb2b1.sample"
+path="res://.godot/imported/sfx_shatter.wav-9047781c3191352376d0ec3b02c1b8d7.sample"
 
 [deps]
 
-source_file="res://Assets/audio/sfx/sfx_shatter.wav"
-dest_files=["res://.godot/imported/sfx_shatter.wav-dbec27a856c51186206a8768b6dcb2b1.sample"]
+source_file="res://Assets/Audio/sfx/sfx_shatter.wav"
+dest_files=["res://.godot/imported/sfx_shatter.wav-9047781c3191352376d0ec3b02c1b8d7.sample"]
 
 [params]
 

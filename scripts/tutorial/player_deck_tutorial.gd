@@ -8,7 +8,6 @@ func prepare_deck() -> void:
 		push_warning("Starting deck is empty!")
 	
 	current_deck = starting_deck_tutorial.duplicate()
-	current_deck.shuffle()
 
 	if card_database:
 		card_database._initialize_database()

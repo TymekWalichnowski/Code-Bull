@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="1_frxfp"]
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_kg058"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_0d2b7"]
-[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://Assets/textures/cards/action_icons/action_icon_attack.png" id="2_1x5bs"]
+[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://Assets/textures/Cards/action_icons/action_icon_attack.png" id="2_1x5bs"]
 [ext_resource type="Resource" uid="uid://y5ky8m6xbdbn" path="res://objects/tags/attack.tres" id="3_qqt4l"]
 
 [resource]

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfg7nhbko8vf2"
-path="res://.godot/imported/card_Double Hit.png-6f7034282c41a9696887cb288dd83d41.ctex"
+path="res://.godot/imported/card_Double Hit.png-97dc8595c8d9d72d47ba4ddab9a263cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/cards/card_Double Hit.png"
-dest_files=["res://.godot/imported/card_Double Hit.png-6f7034282c41a9696887cb288dd83d41.ctex"]
+source_file="res://Assets/textures/Cards/card_Double Hit.png"
+dest_files=["res://.godot/imported/card_Double Hit.png-97dc8595c8d9d72d47ba4ddab9a263cd.ctex"]
 
 [params]
 

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bxw2uuoffygpq" path="res://scripts/passive_card.gd" id="1_p1kcn"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_aaosi"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://assets/textures/cards/card_Basic.png" id="4_08nfd"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://assets/textures/cards/card_back.png" id="4_u6wo3"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://assets/audio/card-place-2.ogg" id="6_enwn4"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/Cards/card_Basic.png" id="4_08nfd"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/Cards/card_back.png" id="4_u6wo3"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/Audio/card-place-2.ogg" id="6_enwn4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yywh3"]
 shader = ExtResource("3_aaosi")

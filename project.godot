@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Card Bull"
-run/main_scene="uid://x0lreijkwmjp"
+run/main_scene="uid://b85gmj83uys81"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 

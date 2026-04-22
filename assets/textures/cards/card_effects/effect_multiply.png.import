@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7iu2fr4ff1u"
-path="res://.godot/imported/effect_multiply.png-c434cc654c6e344d59f33d78225a7c1c.ctex"
+path="res://.godot/imported/effect_multiply.png-94aa7286163c3e0b5f6b9b2babe1b17b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/cards/card_effects/effect_multiply.png"
-dest_files=["res://.godot/imported/effect_multiply.png-c434cc654c6e344d59f33d78225a7c1c.ctex"]
+source_file="res://Assets/textures/Cards/card_effects/effect_multiply.png"
+dest_files=["res://.godot/imported/effect_multiply.png-94aa7286163c3e0b5f6b9b2babe1b17b.ctex"]
 
 [params]
 

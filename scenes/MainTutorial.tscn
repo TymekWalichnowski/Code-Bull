@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://c38kvg55nkyql"]
+[gd_scene load_steps=80 format=3 uid="uid://c38kvg55nkyql"]
 
 [ext_resource type="Texture2D" uid="uid://dgfxtn3so2syp" path="res://Assets/textures/backgrounds/temp_bg.png" id="1_reqaw"]
 [ext_resource type="Script" uid="uid://l7sm87xfopyv" path="res://scripts/tutorial/battle_manager_tutorial.gd" id="2_4nk04"]
@@ -29,9 +29,10 @@
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="27_7mm0r"]
 [ext_resource type="Script" uid="uid://ji3apbbf1wk" path="res://scripts/player_hand.gd" id="28_tl8v2"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/enemy_hand.gd" id="29_ogf45"]
+[ext_resource type="Script" uid="uid://b6je6ojbcix4g" path="res://scripts/tutorial/status_tutorial.gd" id="30_tnlbo"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="30_xf5uu"]
 [ext_resource type="Texture2D" uid="uid://bx6vxqq013to3" path="res://Assets/textures/UI/health_holder.png" id="31_yrk2j"]
-[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="32_bnr8e"]
+[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/Fonts/twstd-roots.ttf" id="32_bnr8e"]
 [ext_resource type="Texture2D" uid="uid://d36vfuu18pv8x" path="res://Assets/textures/UI/shield_holder.png" id="33_3wlx7"]
 [ext_resource type="Texture2D" uid="uid://dntxnqk5tfl2q" path="res://Assets/textures/UI/speed_holder.png" id="34_nbf03"]
 [ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="35_01rqh"]
@@ -40,18 +41,20 @@
 [ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="38_h2p3e"]
 [ext_resource type="Script" uid="uid://ds6u02yualkok" path="res://scripts/tutorial/player_deck_tutorial.gd" id="39_4nk04"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="40_agtn4"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="41_6ophy"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/Cards/card_back.png" id="41_6ophy"]
 [ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="41_q26yp"]
 [ext_resource type="Script" uid="uid://bj62dwc26u5jp" path="res://scripts/passive_hand.gd" id="42_ptdxi"]
 [ext_resource type="Script" uid="uid://cyhswfmol7iiu" path="res://scripts/tutorial/enemy_deck_tutorial.gd" id="43_4nk04"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="43_onp7g"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="44_d5ifq"]
+[ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="44_reqaw"]
 [ext_resource type="Resource" uid="uid://v2y7mde1tof" path="res://objects/cards/sword.tres" id="45_4nk04"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="49_0yhdh"]
 [ext_resource type="Resource" uid="uid://b42uqjkasts7o" path="res://objects/cards_passive/retrigger_slot.tres" id="50_h28hv"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="51_s185t"]
-[ext_resource type="Texture2D" uid="uid://cccim80tdu0l1" path="res://Assets/textures/cards/card_Block.png" id="52_j2gmn"]
+[ext_resource type="Texture2D" uid="uid://cccim80tdu0l1" path="res://Assets/textures/Cards/card_Block.png" id="52_j2gmn"]
 [ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://Assets/themes/Basic_Theme.tres" id="53_s4mxn"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="54_v5qwn"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/Cards/card_Basic.png" id="54_v5qwn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("16_5gj27")
@@ -294,6 +297,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(128, 176)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onp7g"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qimb"]
 content_margin_left = 0.0
 content_margin_top = 0.0
@@ -454,7 +460,7 @@ text = "0"
 
 [node name="Player" type="Node2D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("30_xf5uu")
+script = ExtResource("30_tnlbo")
 
 [node name="HealthHolder" type="Sprite2D" parent="Player"]
 z_index = 10
@@ -670,7 +676,7 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(148, 875)
 script = ExtResource("39_4nk04")
-starting_deck_tutorial = Array[ExtResource("44_d5ifq")]([ExtResource("41_q26yp")])
+starting_deck_tutorial = Array[ExtResource("44_d5ifq")]([ExtResource("41_q26yp"), ExtResource("45_4nk04"), ExtResource("45_4nk04"), ExtResource("43_onp7g"), ExtResource("43_onp7g"), ExtResource("45_4nk04"), ExtResource("41_q26yp"), ExtResource("43_onp7g"), ExtResource("44_reqaw")])
 card_database = ExtResource("26_5edal")
 
 [node name="DeckViewer" parent="PlayerDeck" instance=ExtResource("40_agtn4")]
@@ -708,18 +714,12 @@ unique_name_in_owner = true
 position = Vector2(220, 98)
 script = ExtResource("42_ptdxi")
 
-[node name="Panel" type="Panel" parent="PlayerDeck"]
-offset_left = 388.0
-offset_top = -628.0
-offset_right = 1229.0
-offset_bottom = -462.0
-
 [node name="EnemyDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(150, 123)
 script = ExtResource("43_4nk04")
 card_database = ExtResource("26_5edal")
-starting_deck = Array[ExtResource("44_d5ifq")]([ExtResource("45_4nk04")])
+starting_deck = Array[ExtResource("44_d5ifq")]([ExtResource("45_4nk04"), ExtResource("41_q26yp"), ExtResource("41_q26yp"), ExtResource("41_q26yp"), ExtResource("41_q26yp"), ExtResource("41_q26yp"), ExtResource("45_4nk04"), ExtResource("45_4nk04"), ExtResource("45_4nk04")])
 starting_passives = Array[ExtResource("49_0yhdh")]([ExtResource("50_h28hv"), ExtResource("51_s185t")])
 
 [node name="Sprite2D" type="Sprite2D" parent="EnemyDeck"]
@@ -753,12 +753,14 @@ unique_name_in_owner = true
 position = Vector2(961, 419)
 
 [node name="EndTurnButton" type="Button" parent="."]
+unique_name_in_owner = true
 offset_left = 1685.0
 offset_top = 443.0
 offset_right = 1775.0
 offset_bottom = 474.0
 scale = Vector2(2.5, 2.5)
-text = "END TURN"
+disabled = true
+text = "ACTIVATE"
 
 [node name="BattleTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -769,6 +771,22 @@ modulate = Color(1, 1, 1, 0.22745098)
 position = Vector2(173, 545.25)
 scale = Vector2(5.5937505, 5.59375)
 texture = ExtResource("52_j2gmn")
+
+[node name="Tutorial Panel" type="Panel" parent="."]
+offset_left = 1334.0001
+offset_top = 125.00001
+offset_right = 1924.0001
+offset_bottom = 332.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_onp7g")
+
+[node name="TutorialText" type="RichTextLabel" parent="Tutorial Panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 13.999878
+offset_top = 11.999992
+offset_right = 584.9999
+offset_bottom = 192.0
+text = "tutorial!"
 
 [node name="InfoPanel" type="Panel" parent="."]
 unique_name_in_owner = true

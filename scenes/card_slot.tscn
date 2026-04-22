@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://bsuuljgrc5evc"]
 
 [ext_resource type="Script" uid="uid://cfuut4xpf3eg5" path="res://scripts/card_slot.gd" id="1_cypty"]
-[ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/textures/cards/card_Slot.png" id="1_mxh2e"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_effects/card_slot_glow.png" id="2_hrxt0"]
+[ext_resource type="Texture2D" uid="uid://dxsyk6m3fy6se" path="res://Assets/textures/Cards/card_slot.png" id="1_mxh2e"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/Cards/card_effects/card_slot_glow.png" id="2_hrxt0"]
 [ext_resource type="Shader" uid="uid://mhv8orvsq3o2" path="res://shaders/invert.gdshader" id="3_dwl65"]
 
 [sub_resource type="Shader" id="Shader_cypty"]

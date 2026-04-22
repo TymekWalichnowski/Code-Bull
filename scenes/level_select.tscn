@@ -69,5 +69,6 @@ metadata/_custom_type_script = "uid://1mxdpoyob13n"
 [node name="DeckEditor" parent="." instance=ExtResource("4_rif6e")]
 visible = false
 
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EnterLevelButton" to="." method="_on_enter_level_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EditDeckButton" to="." method="_on_edit_deck_button_pressed"]
