@@ -1,18 +1,24 @@
-[gd_scene load_steps=24 format=3 uid="uid://dnj8lxsm2fgti"]
+[gd_scene load_steps=23 format=3 uid="uid://dnj8lxsm2fgti"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/Textures/Cards/card_Basic.png" id="1_dd2wi"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="1_dd2wi"]
 [ext_resource type="PackedScene" uid="uid://w8eukdjb1h4f" path="res://scenes/effect_display.tscn" id="2_1yd6c"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/Textures/Cards/card_back.png" id="2_ktuci"]
+[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/cards/card_Back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
-[ext_resource type="Texture2D" uid="uid://dmbe4ekbaqltb" path="res://Assets/Textures/Cards/card_effects/effect_retrigger.png" id="3_ulcbd"]
-[ext_resource type="Texture2D" uid="uid://kh307f8v25fj" path="res://Assets/Textures/Cards/card_effects/effect_nullified.png" id="4_nii3k"]
-[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/Textures/Cards/card_effects/card_slot_glow.png" id="4_nvopj"]
-[ext_resource type="Texture2D" uid="uid://daj8e2il47wo5" path="res://Assets/Textures/Cards/card_effects/card_slot_debuff.png" id="5_1yd6c"]
-[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/Audio/card-place-2.ogg" id="5_40ytf"]
-[ext_resource type="Texture2D" uid="uid://do0sg8sv3qugn" path="res://Assets/Textures/Cards/card_effects/card_slot_buff.png" id="6_we8pq"]
+[ext_resource type="Texture2D" uid="uid://dmbe4ekbaqltb" path="res://Assets/textures/cards/card_effects/effect_retrigger.png" id="3_ulcbd"]
+[ext_resource type="Texture2D" uid="uid://kh307f8v25fj" path="res://Assets/textures/cards/card_effects/effect_nullified.png" id="4_nii3k"]
+[ext_resource type="Texture2D" uid="uid://cwfpsawb50ovk" path="res://Assets/textures/cards/card_effects/card_slot_glow.png" id="4_nvopj"]
+[ext_resource type="AudioStream" uid="uid://2wy8o5vwyemh" path="res://Assets/audio/card-place-2.ogg" id="5_40ytf"]
 [ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="9_1yd6c"]
-[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/Fonts/twstd-roots.ttf" id="13_hpf3o"]
+[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/fonts/twstd-roots.ttf" id="13_hpf3o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42b55"]
+shader = ExtResource("3_kg30u")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijgdg"]
 shader = ExtResource("3_kg30u")
@@ -22,13 +28,17 @@ shader_parameter/y_rot = 0.0
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c30e1"]
-shader = ExtResource("3_kg30u")
-shader_parameter/fov = 90.0
-shader_parameter/cull_back = true
-shader_parameter/y_rot = 0.0
-shader_parameter/x_rot = 0.0
-shader_parameter/inset = 0.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpf3o"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jj44u"]
 size = Vector2(128, 176)
@@ -38,7 +48,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardBackImage:scale")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/CardBackImage:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +60,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardBackImage:z_index")
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/CardBackImage:z_index")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -62,7 +72,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CardImage:z_index")
+tracks/2/path = NodePath("SubViewportContainer/SubViewport/CardImage:z_index")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -74,7 +84,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CardImage:scale")
+tracks/3/path = NodePath("SubViewportContainer/SubViewport/CardImage:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -86,7 +96,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CardImage:rotation")
+tracks/4/path = NodePath("SubViewportContainer/SubViewport/CardImage:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -98,7 +108,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CardBackImage:rotation")
+tracks/5/path = NodePath("SubViewportContainer/SubViewport/CardBackImage:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -115,7 +125,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardImage:rotation")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/CardImage:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -127,7 +137,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardBackImage:rotation")
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/CardBackImage:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -143,7 +153,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardBackImage:scale")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/CardBackImage:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -155,7 +165,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardBackImage:z_index")
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/CardBackImage:z_index")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -167,7 +177,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CardImage:scale")
+tracks/2/path = NodePath("SubViewportContainer/SubViewport/CardImage:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -179,7 +189,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CardImage:z_index")
+tracks/3/path = NodePath("SubViewportContainer/SubViewport/CardImage:z_index")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -201,7 +211,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardBackImage/Glow:self_modulate")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/Glow:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -217,7 +227,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardBackImage/Glow:self_modulate")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/Glow:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -240,34 +250,75 @@ tag_display_scene = ExtResource("9_1yd6c")
 texture_retrigger = ExtResource("3_ulcbd")
 texture_nullify = ExtResource("4_nii3k")
 
-[node name="CardBackImage" type="Sprite2D" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_42b55")
+offset_left = -78.0
+offset_top = -103.0
+offset_right = 78.0
+offset_bottom = 103.0
+pivot_offset = Vector2(78, 89)
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(156, 206)
+render_target_update_mode = 4
+
+[node name="Glow" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(78, 103.99999)
+scale = Vector2(1.8372092, 1.8727272)
+texture = ExtResource("4_nvopj")
+
+[node name="CardBackImage" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_ijgdg")
+position = Vector2(78, 103.99999)
 scale = Vector2(2, 2)
 texture = ExtResource("2_ktuci")
 
-[node name="Glow" type="Sprite2D" parent="CardBackImage"]
-unique_name_in_owner = true
-visible = false
-scale = Vector2(0.9186046, 0.9363636)
-texture = ExtResource("4_nvopj")
-
-[node name="Debuff" type="Sprite2D" parent="CardBackImage"]
-visible = false
-texture = ExtResource("5_1yd6c")
-
-[node name="Buff" type="Sprite2D" parent="CardBackImage"]
-visible = false
-texture = ExtResource("6_we8pq")
-
-[node name="CardImage" type="Sprite2D" parent="."]
+[node name="CardImage" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
 z_index = -1
 texture_filter = 1
-material = SubResource("ShaderMaterial_c30e1")
+position = Vector2(78, 103.99999)
 scale = Vector2(2, 2)
 texture = ExtResource("1_dd2wi")
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewportContainer/SubViewport"]
+offset_left = 22.0
+offset_top = 23.0
+offset_right = 134.0
+offset_bottom = 57.0
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/SubViewport/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hpf3o")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/SubViewport/MarginContainer/Panel"]
+layout_mode = 0
+offset_right = 112.0
+offset_bottom = 23.0
+
+[node name="ActionAnchor" type="Control" parent="SubViewportContainer/SubViewport/MarginContainer/Panel/CenterContainer"]
+custom_minimum_size = Vector2(112, 32)
+layout_mode = 2
+
+[node name="ActionDisplayContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport/MarginContainer/Panel/CenterContainer/ActionAnchor"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 56.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 16.0
+alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -301,7 +352,7 @@ mouse_filter = 2
 layout_mode = 0
 offset_left = 65.0
 offset_top = -20.0
-offset_right = 128.0
+offset_right = 65.0
 use_top_left = true
 
 [node name="EffectDisplayContainer" type="HBoxContainer" parent="UIOverlay/CenterContainer"]

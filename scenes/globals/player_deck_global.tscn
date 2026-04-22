@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dsavo0elx0x5f"]
+[gd_scene load_steps=16 format=3 uid="uid://dsavo0elx0x5f"]
 
 [ext_resource type="Script" uid="uid://c58ll0b2wrcgx" path="res://scenes/globals/player_deck_global.gd" id="1_eibw5"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_rb10u"]
@@ -8,9 +8,8 @@
 [ext_resource type="Resource" uid="uid://caklmi2qgoqii" path="res://objects/cards/gain_haste.tres" id="10_pk0xe"]
 [ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="11_5lg0m"]
 [ext_resource type="Resource" uid="uid://dmsx3x1g5gw78" path="res://objects/cards/quick_slash.tres" id="11_vsrvu"]
-[ext_resource type="Resource" uid="uid://bbaqsl42y8og5" path="res://objects/cards/apply_burn.tres" id="12_dgsgh"]
+[ext_resource type="Resource" uid="uid://c7x3cr00hve34" path="res://objects/cards/triple_slash.tres" id="12_5lg0m"]
 [ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="12_r6sng"]
-[ext_resource type="Resource" uid="uid://kqiykl22ic2r" path="res://objects/cards/apply_bleed.tres" id="13_mqgaq"]
 [ext_resource type="Resource" uid="uid://5g3wwcrn34ac" path="res://objects/cards/divide_specific_slot.tres" id="13_r6sng"]
 [ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="14_vsrvu"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="16_dgsgh"]
@@ -19,7 +18,7 @@
 
 [node name="PlayerDeckGlobal" type="Node"]
 script = ExtResource("1_eibw5")
-global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("9_2r0f0"), ExtResource("14_vsrvu"), ExtResource("8_pk0xe"), ExtResource("8_cpoqa"), ExtResource("10_pk0xe"), ExtResource("11_vsrvu"), ExtResource("11_5lg0m"), ExtResource("11_5lg0m"), ExtResource("12_r6sng"), ExtResource("13_r6sng"), ExtResource("12_dgsgh"), ExtResource("13_mqgaq")])
+global_player_cards = Array[ExtResource("2_rb10u")]([ExtResource("9_2r0f0"), ExtResource("14_vsrvu"), ExtResource("8_pk0xe"), ExtResource("8_cpoqa"), ExtResource("10_pk0xe"), ExtResource("11_vsrvu"), ExtResource("11_5lg0m"), ExtResource("11_5lg0m"), ExtResource("12_r6sng"), ExtResource("13_r6sng"), ExtResource("12_5lg0m")])
 global_player_passives = Array[ExtResource("16_dgsgh")]([ExtResource("17_mqgaq"), ExtResource("18_mqgaq")])
 global_player_inventory = Array[ExtResource("2_rb10u")]([ExtResource("14_vsrvu"), ExtResource("14_vsrvu"), ExtResource("9_2r0f0")])
 global_player_inventory_passives = Array[ExtResource("16_dgsgh")]([ExtResource("18_mqgaq")])

@@ -5,6 +5,7 @@ class_name CardAction
 
 @export var action_name: String
 @export_multiline var description: String
+@export var icon: Texture2D
 @export var value: float = 0.0
 @export var static_value: float = 0.0
 @export var action_multiplier: float = 1.0

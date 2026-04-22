@@ -20,6 +20,7 @@ signal hovered_off
 
 @onready var effect_display_container = %EffectDisplayContainer
 @onready var tag_display_container = %TagDisplayContainer
+@onready var action_display_container = %ActionDisplayContainer
 
 @onready var desc_label = %ActionDescriptionLabel
 
@@ -27,6 +28,8 @@ signal hovered_off
 @onready var debuff_sprite = %Glow 
 @onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
+
+@onready var visual_container = $SubViewportContainer
 
 var hovering = false
 var is_dragged = false # <-- Tracks drag state
@@ -39,6 +42,7 @@ var card_back_image: Sprite2D
 
 var is_preview: bool = false
 var is_inventory: bool = false
+
 
 var sounds = {
 	"place": preload("res://assets/audio/card-place-2.ogg"),
@@ -67,10 +71,8 @@ func _ready() -> void:
 	card_image = %CardImage
 	card_back_image = %CardBackImage
 
-	if card_image.material:
-		card_image.material = card_image.material.duplicate()
-	if card_back_image.material:
-		card_back_image.material = card_back_image.material.duplicate()
+	if visual_container and visual_container.material:
+		visual_container.material = visual_container.material.duplicate()
 
 	original_z_index = z_index
 
@@ -90,15 +92,14 @@ func _apply_visuals():
 			card_image.material.set_shader_parameter("y_rot", 0.0)
 			card_image.material.set_shader_parameter("x_rot", 0.0)
 	update_tags_display()
+	update_action_icons_display()
 	update_hover_ui()
 
 func _process(delta: float) -> void:
-	
-
-	if not card_image or not card_image.texture:
+	# Use the container for the basic check
+	if not visual_container:
 		return
 
-	# --- FIX: Bypass hover logic if being dragged ---
 	if is_dragged:
 		_lerp_shader_rotations(0.0, 0.0, return_speed * delta)
 		return 
@@ -108,10 +109,12 @@ func _process(delta: float) -> void:
 		base_z = cards_current_slot.z_index + 1
 	
 	if hovering and interactable: 
-		var local_mouse = card_image.to_local(get_global_mouse_position())
-		var half = card_image.texture.get_size() * 0.5
-		var x_ratio = clamp(local_mouse.x / half.x, -1.0, 1.0)
-		var y_ratio = clamp(local_mouse.y / half.y, -1.0, 1.0)
+		# Calculate based on the Container's size
+		var local_mouse = visual_container.get_local_mouse_position()
+		var half = visual_container.size * 0.5
+		
+		var x_ratio = clamp(local_mouse.x / half.x - 1.0, -1.0, 1.0)
+		var y_ratio = clamp(local_mouse.y / half.y - 1.0, -1.0, 1.0)
 
 		var target_y = -x_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
 		var target_x = y_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
@@ -127,10 +130,13 @@ func _process(delta: float) -> void:
 		z_index = base_z
 
 func _lerp_shader_rotations(tx: float, ty: float, weight: float):
-	for img in [card_image, card_back_image]:
-		if img and img.material:
-			img.material.set_shader_parameter("y_rot", lerp(img.material.get_shader_parameter("y_rot"), ty, weight))
-			img.material.set_shader_parameter("x_rot", lerp(img.material.get_shader_parameter("x_rot"), tx, weight))
+	if visual_container and visual_container.material:
+		var mat = visual_container.material
+		var current_y = mat.get_shader_parameter("y_rot")
+		var current_x = mat.get_shader_parameter("x_rot")
+		
+		mat.set_shader_parameter("y_rot", lerp(current_y, ty, weight))
+		mat.set_shader_parameter("x_rot", lerp(current_x, tx, weight))
 
 func _on_area_2d_mouse_entered() -> void:
 	if not interactable or is_dragged: 
@@ -326,3 +332,75 @@ func update_tags_display():
 			title_label.text = tag.tag_name
 		if desc_label: 
 			desc_label.text = tag.description
+
+func update_action_icons_display() -> void:
+	if not action_display_container or not card_data:
+		return
+	
+	# 1. Clear and Reset
+	for child in action_display_container.get_children():
+		child.queue_free()
+	
+	action_display_container.scale = Vector2.ONE
+	# We set this to (0,0) relative to the new Anchor node
+	action_display_container.position = Vector2.ZERO 
+	
+	var actions = card_data.actions.filter(func(a): return a != null and a.icon != null)
+	if actions.size() == 0: return
+
+	var c_mult = card_data.multiplier if card_data.multiplier != 0 else 1.0
+
+	# 2. Build the HBox content
+	for action in actions:
+		var a_mult = action.action_multiplier if action.action_multiplier != 0 else 1.0
+		var total_multiplier = c_mult * a_mult
+		var final_value = action.value * total_multiplier
+
+		var action_unit = HBoxContainer.new()
+		action_unit.alignment = BoxContainer.ALIGNMENT_CENTER
+		action_display_container.add_child(action_unit)
+
+		var icon_rect = TextureRect.new()
+		icon_rect.texture = action.icon
+		icon_rect.custom_minimum_size = Vector2(32, 32)
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		action_unit.add_child(icon_rect)
+
+		var val_label = Label.new()
+		val_label.text = str(int(final_value)) if fmod(final_value, 1.0) == 0 else "%.1f" % final_value
+		if total_multiplier > 1.0: val_label.self_modulate = Color.GREEN
+		elif total_multiplier < 1.0: val_label.self_modulate = Color.RED
+		val_label.add_theme_font_size_override("font_size", 20)
+		action_unit.add_child(val_label)
+
+	# 3. Wait for the engine to draw the labels
+	await get_tree().process_frame
+	if not is_instance_valid(action_display_container): return
+
+	# 4. SCALE TO 112px
+	var current_w = action_display_container.get_combined_minimum_size().x
+	var max_w = 112.0
+	
+	# Set pivot to the center of the HBox
+	action_display_container.pivot_offset = action_display_container.size / 2.0
+	
+	if current_w > max_w:
+		var s = max_w / current_w
+		action_display_container.scale = Vector2(s, s)
+	else:
+		action_display_container.scale = Vector2.ONE
+
+	# 5. THE CENTER FIX
+	# Because the parent 'ActionAnchor' is exactly 112px wide, 
+	# we center the HBox inside it. 
+	var anchor = action_display_container.get_parent()
+	var anchor_size = anchor.size # This should be (112, 32)
+	
+	# Place the HBox center at the Anchor's center
+	action_display_container.position.x = (anchor_size.x / 2.0) - (action_display_container.size.x / 2.0)
+	action_display_container.position.y = (anchor_size.y / 2.0) - (action_display_container.size.y / 2.0)
+
+	# 6. VERTICAL NUDGE
+	# Adjust this to move it exactly where it looks best on the card
+	action_display_container.position.y += 0

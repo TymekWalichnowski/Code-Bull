@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=11 format=3 uid="uid://c7x3cr00hve34"]
+
+[ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_1mohs"]
+[ext_resource type="Texture2D" uid="uid://c4yt3jcmbwmva" path="res://Assets/textures/cards/card_Triple Slash.png" id="2_levcj"]
+[ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_ned0y"]
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_ta0xf"]
+[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://Assets/textures/cards/action_icons/action_icon_attack.png" id="3_e0uha"]
+[ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="3_levcj"]
+[ext_resource type="Resource" uid="uid://y5ky8m6xbdbn" path="res://objects/tags/attack.tres" id="5_nr7i0"]
+
+[sub_resource type="Resource" id="Resource_ic7fq"]
+script = ExtResource("1_1mohs")
+action_name = "Attack"
+description = "Deal [value] damage"
+icon = ExtResource("3_e0uha")
+value = 20.0
+priority = 2
+tags = Array[ExtResource("3_levcj")]([ExtResource("5_nr7i0")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[sub_resource type="Resource" id="Resource_ecdgk"]
+script = ExtResource("1_1mohs")
+action_name = "Attack"
+description = "Deal [value] damage"
+icon = ExtResource("3_e0uha")
+value = 20.0
+priority = 2
+tags = Array[ExtResource("3_levcj")]([ExtResource("5_nr7i0")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[sub_resource type="Resource" id="Resource_qqb2l"]
+script = ExtResource("1_1mohs")
+action_name = "Attack"
+description = "Deal [value] damage"
+icon = ExtResource("3_e0uha")
+value = 20.0
+priority = 2
+tags = Array[ExtResource("3_levcj")]([ExtResource("5_nr7i0")])
+metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
+
+[resource]
+script = ExtResource("2_ta0xf")
+display_name = "Triple Slash"
+image_texture = ExtResource("2_levcj")
+actions = Array[ExtResource("1_1mohs")]([SubResource("Resource_ic7fq"), SubResource("Resource_ecdgk"), SubResource("Resource_qqb2l")])
+metadata/_custom_type_script = "uid://cfssthidojyly"

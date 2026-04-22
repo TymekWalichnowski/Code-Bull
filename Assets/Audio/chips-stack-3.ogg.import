@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://b3llncnedq1i4"
-path="res://.godot/imported/chips-stack-3.ogg-ada990a0a46810e3f51f8edac5f3f100.oggvorbisstr"
+path="res://.godot/imported/chips-stack-3.ogg-5e77a68f49d725d66c6cde4c88c0c8d4.oggvorbisstr"
 
 [deps]
 
-source_file="res://Assets/Audio/chips-stack-3.ogg"
-dest_files=["res://.godot/imported/chips-stack-3.ogg-ada990a0a46810e3f51f8edac5f3f100.oggvorbisstr"]
+source_file="res://Assets/audio/chips-stack-3.ogg"
+dest_files=["res://.godot/imported/chips-stack-3.ogg-5e77a68f49d725d66c6cde4c88c0c8d4.oggvorbisstr"]
 
 [params]
 

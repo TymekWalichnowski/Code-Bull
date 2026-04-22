@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://gig13n063hnd"
-path="res://.godot/imported/action_icon_multiply.png-d003c3ea50bf2b177dcabb7f6c4d40bc.ctex"
+path="res://.godot/imported/action_icon_multiply.png-5c7688d92dd6c64f34bad90432ab2cf2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Cards/action_icons/action_icon_multiply.png"
-dest_files=["res://.godot/imported/action_icon_multiply.png-d003c3ea50bf2b177dcabb7f6c4d40bc.ctex"]
+source_file="res://Assets/textures/cards/action_icons/action_icon_multiply.png"
+dest_files=["res://.godot/imported/action_icon_multiply.png-5c7688d92dd6c64f34bad90432ab2cf2.ctex"]
 
 [params]
 

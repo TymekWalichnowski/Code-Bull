@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bkvlvqvl0rtq7"
-path="res://.godot/imported/sfx_sword_attack.mp3-28f5eebff9d13c20414ec405174227ea.mp3str"
+path="res://.godot/imported/sfx_sword_attack.mp3-0d1304ef33b814638281a7eada24f5fa.mp3str"
 
 [deps]
 
-source_file="res://Assets/Audio/sfx/sfx_sword_attack.mp3"
-dest_files=["res://.godot/imported/sfx_sword_attack.mp3-28f5eebff9d13c20414ec405174227ea.mp3str"]
+source_file="res://Assets/audio/sfx/sfx_sword_attack.mp3"
+dest_files=["res://.godot/imported/sfx_sword_attack.mp3-0d1304ef33b814638281a7eada24f5fa.mp3str"]
 
 [params]
 

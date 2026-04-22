@@ -1,15 +1,17 @@
-[gd_resource type="Resource" script_class="CardDataResource" load_steps=7 format=3 uid="uid://vg7cn4iqv4du"]
+[gd_resource type="Resource" script_class="CardDataResource" load_steps=8 format=3 uid="uid://vg7cn4iqv4du"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_q4aju"]
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_7roq0"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_ipirw"]
-[ext_resource type="Texture2D" uid="uid://dyre37cuayid2" path="res://Assets/Textures/Cards/card_Multiply.png" id="2_q4aju"]
+[ext_resource type="Texture2D" uid="uid://dyre37cuayid2" path="res://Assets/textures/cards/card_Multiply.png" id="2_q4aju"]
+[ext_resource type="Texture2D" uid="uid://gig13n063hnd" path="res://Assets/textures/cards/action_icons/action_icon_multiply.png" id="3_7roq0"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_ipirw"]
 
 [sub_resource type="Resource" id="Resource_notdm"]
 script = ExtResource("1_q4aju")
 action_name = "Multiply_Next_Card"
 description = "Multiply all values of the next played card by [value]"
+icon = ExtResource("3_7roq0")
 value = 2.0
 priority = 3
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"

@@ -55,10 +55,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	%Player/HealthHolder/HealthLabel.text = "%d" % %Player.current_health
 	%Player/ShieldHolder/ShieldLabel.text = "%d" % %Player.current_shield
-	%Player/SpeedHolder/SpeedLabel.text = "%d" % %Player.speed
+	%PlayerSpeedHolder/SpeedLabel.text = "%d" % %Player.speed
 	%Enemy/HealthHolder/HealthLabel.text = "%d" % %Enemy.current_health
 	%Enemy/ShieldHolder/ShieldLabel.text = "%d" % %Enemy.current_shield
-	%Enemy/SpeedHolder/SpeedLabel.text = "%d" % %Enemy.speed
+	%EnemySpeedHolder/SpeedLabel.text = "%d" % %Enemy.speed
 	analyze_board_state()
 
 func advance_turn():
@@ -112,6 +112,24 @@ func setup_active_slots(limit: int):
 			
 			if p_slot.card: p_slot.card.position = p_slot.global_position
 			if o_slot.card: o_slot.card.position = o_slot.global_position
+	# speed holder positioning
+	
+	# Calculate the exact X position of the furthest right active slot
+	var last_slot_x = start_x + ((limit - 1) * SLOT_GAP)
+	
+	# Determine how many pixels to the right the speed holder should sit.
+	# You will likely need to adjust this number based on your card/slot widths!
+	var right_padding = 130.0 
+	
+	# Fetch the nodes (I used the exact names you provided. If your tree uses
+	# "%Player/SpeedHolder" like in your _process function, change the string below!)
+	var p_speed_holder = get_node_or_null("%PlayerSpeedHolder")
+	var e_speed_holder = get_node_or_null("%EnemySpeedHolder")
+	
+	if p_speed_holder:
+		p_speed_holder.global_position.x = last_slot_x + right_padding
+	if e_speed_holder:
+		e_speed_holder.global_position.x = last_slot_x + right_padding
 
 func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".disabled = true
@@ -158,7 +176,7 @@ func play_enemy_cards():
 		tween1.tween_property(card_to_play, "scale", Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE), CARD_MOVE_SPEED)
 		tween1.tween_property(card_to_play, "rotation", 0, CARD_MOVE_SPEED)
 		
-		card_to_play.get_node("CardImage").visible = true
+		card_to_play.get_node("%CardImage").visible = true
 		card_to_play.get_node("AnimationPlayer").play("card_flip")
 		card_to_play.play_audio("place")
 		await tween1.finished

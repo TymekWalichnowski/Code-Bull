@@ -83,7 +83,7 @@ func _populate_grid(scroll: ScrollContainer, data_array: Array, source_id: Strin
 		if new_card.has_node("Area2D"):
 			new_card.get_node("Area2D").monitoring = false
 			new_card.get_node("Area2D").monitorable = false
-			new_card.get_node("CardBackImage").visible = false
+			new_card.get_node("%CardBackImage").visible = false
 			new_card.z_index = 1000
 
 		wrapper.mouse_entered.connect(func():
