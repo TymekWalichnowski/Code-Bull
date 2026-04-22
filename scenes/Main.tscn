@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=78 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://Assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
+[ext_resource type="Script" uid="uid://b674wkdg31lgb" path="res://scenes/ui_manager.gd" id="22_0qimb"]
+[ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="23_in2eo"]
 [ext_resource type="Resource" uid="uid://xmvg48xmdvyr" path="res://objects/cards/divide.tres" id="26_8cp6k"]
 [ext_resource type="Texture2D" uid="uid://dntxnqk5tfl2q" path="res://Assets/textures/UI/speed_holder.png" id="31_5grtr"]
 [ext_resource type="Texture2D" uid="uid://bx6vxqq013to3" path="res://Assets/textures/UI/health_holder.png" id="31_s3wmy"]
@@ -50,6 +52,8 @@
 [ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="46_0f1tp"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="49_0qimb"]
 [ext_resource type="Texture2D" uid="uid://cccim80tdu0l1" path="res://Assets/textures/cards/card_Block.png" id="50_0f1tp"]
+[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/cards/card_Basic.png" id="53_dyyw8"]
+[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://Assets/themes/Basic_Theme.tres" id="53_gjpm3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("38_8gny2")
@@ -361,6 +365,13 @@ script = ExtResource("4_dg70y")
 [node name="TokenManager" type="Node" parent="BattleManager"]
 unique_name_in_owner = true
 script = ExtResource("5_g6wdg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BattleManager/TokenManager"]
+
+[node name="UIManager" type="Node" parent="BattleManager"]
+unique_name_in_owner = true
+script = ExtResource("22_0qimb")
+tag_display_scene = ExtResource("23_in2eo")
 
 [node name="CardManager" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -753,13 +764,61 @@ position = Vector2(173, 545.25)
 scale = Vector2(5.5937505, 5.59375)
 texture = ExtResource("50_0f1tp")
 
-[node name="Panel" type="Panel" parent="."]
-visible = false
-offset_left = -7.0
-offset_top = 294.0
-offset_right = 352.0
+[node name="InfoPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = -361.0
+offset_top = 226.0
+offset_right = -2.0
 offset_bottom = 792.0
+theme = ExtResource("53_gjpm3")
 theme_override_styles/panel = SubResource("StyleBoxFlat_0qimb")
+
+[node name="CardTitle" type="RichTextLabel" parent="InfoPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 360.0
+offset_bottom = 79.0
+theme_override_font_sizes/normal_font_size = 48
+horizontal_alignment = 1
+
+[node name="CardImage" type="TextureRect" parent="InfoPanel"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 115.0
+offset_top = 75.0
+offset_right = 179.0
+offset_bottom = 163.0
+scale = Vector2(2, 2)
+texture = ExtResource("53_dyyw8")
+
+[node name="CenterContainer2" type="CenterContainer" parent="InfoPanel"]
+visible = false
+layout_mode = 0
+offset_left = -24.0
+offset_top = 59.0
+offset_right = 337.0
+offset_bottom = 233.0
+
+[node name="DescriptionContainer" type="VBoxContainer" parent="InfoPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 267.0
+offset_right = 359.0
+offset_bottom = 564.0
+
+[node name="CenterContainer" type="CenterContainer" parent="InfoPanel"]
+layout_mode = 0
+offset_left = 360.0
+offset_right = 462.0
+offset_bottom = 500.0
+
+[node name="TagDisplayContainer" type="VBoxContainer" parent="InfoPanel/CenterContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+mouse_filter = 2
 
 [connection signal="animation_finished" from="BattleManager/AnimationManager/ActionAnim" to="BattleManager/AnimationManager" method="_on_action_anim_animation_finished"]
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]

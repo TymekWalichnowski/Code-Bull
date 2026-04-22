@@ -123,6 +123,7 @@ func _apply_multiplier(is_target_player: bool, target_idx: int, multiplier_value
 	
 	if target_slot.card:
 		target_slot.card.card_data.multiplier *= multiplier_value
+		target_slot.card.update_action_icons_display()
 		target_slot.card.update_hover_ui()
 		print("Applied x", multiplier_value, " to ", target_slot.card.card_name, " at index ", target_idx)
 

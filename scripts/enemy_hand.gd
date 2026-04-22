@@ -1,7 +1,7 @@
 extends Node2D
 
 const CARD_WIDTH = 75 # <-- Reduced from 110 to pack them tighter
-const HAND_Y_POSITION = 30
+const HAND_Y_POSITION = 40
 const DEFAULT_CARD_MOVE_SPEED = 0.2
 const DEFAULT_CARD_SCALE = 0.8
 

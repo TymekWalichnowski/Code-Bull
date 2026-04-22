@@ -218,6 +218,8 @@ func update_visuals():
 		else:
 			if effect_animation_player:
 				effect_animation_player.stop()
+	update_action_icons_display() # Redraws icons with new math/colors
+	update_hover_ui()             # Refreshes the text description
 	if effect_display_container:
 		# 1. Clear out the old displays so they don't infinitely stack
 		for child in effect_display_container.get_children():
@@ -375,12 +377,20 @@ func update_action_icons_display() -> void:
 		action_unit.add_child(val_label)
 
 	# 3. Wait for the engine to draw the labels
+	# We use two frames to ensure the parent containers (GridContainer/CenterContainer) 
+	# have also finished their layout pass.
 	await get_tree().process_frame
+	await get_tree().process_frame
+	
 	if not is_instance_valid(action_display_container): return
 
 	# 4. SCALE TO 112px
+	# Use get_combined_minimum_size() as it is more reliable for children of containers
 	var current_w = action_display_container.get_combined_minimum_size().x
 	var max_w = 112.0
+	
+	# Force the HBox to its minimum size so .size is accurate for the math below
+	action_display_container.size = action_display_container.get_combined_minimum_size()
 	
 	# Set pivot to the center of the HBox
 	action_display_container.pivot_offset = action_display_container.size / 2.0
@@ -392,15 +402,16 @@ func update_action_icons_display() -> void:
 		action_display_container.scale = Vector2.ONE
 
 	# 5. THE CENTER FIX
-	# Because the parent 'ActionAnchor' is exactly 112px wide, 
-	# we center the HBox inside it. 
 	var anchor = action_display_container.get_parent()
-	var anchor_size = anchor.size # This should be (112, 32)
+	
+	# FALLBACK: If anchor size is 0 (hasn't layouted yet), 
+	# we assume the 112px we designed for.
+	var a_size_x = anchor.size.x if anchor.size.x > 0 else 112.0
+	var a_size_y = anchor.size.y if anchor.size.y > 0 else 32.0
 	
 	# Place the HBox center at the Anchor's center
-	action_display_container.position.x = (anchor_size.x / 2.0) - (action_display_container.size.x / 2.0)
-	action_display_container.position.y = (anchor_size.y / 2.0) - (action_display_container.size.y / 2.0)
+	action_display_container.position.x = (a_size_x / 2.0) - (action_display_container.size.x / 2.0)
+	action_display_container.position.y = (a_size_y / 2.0) - (action_display_container.size.y / 2.0)
 
 	# 6. VERTICAL NUDGE
-	# Adjust this to move it exactly where it looks best on the card
 	action_display_container.position.y += 0

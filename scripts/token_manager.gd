@@ -8,6 +8,11 @@ extends Node
 	"Haste": _effect_haste
 }
 
+# add sounds for unique actions later
+var sounds = { 
+	"use": preload("res://Assets/audio/chips-handle-1.ogg"), 
+}
+
 # side can be "Player", "Enemy", or "Both" (default for phase starts)
 func trigger_tokens(trigger_type: String, side: String = "Both"):
 	if side == "Player" or side == "Both":
@@ -59,6 +64,7 @@ func _effect_bleed(side: String, stacks: int, resource: TokenResource):
 	var container = %PlayerTokens if side == "Player" else %EnemyTokens
 	
 	print("Bleed Triggered: ", side, " taking ", stacks, " damage.")
+	play_audio("use")
 	target.take_damage(float(stacks))
 	
 	# Ticks down by 1
@@ -70,6 +76,7 @@ func _effect_flame(side: String, stacks: int, resource: TokenResource):
 	var container = %PlayerTokens if side == "Player" else %EnemyTokens
 	
 	print("Burn Triggered: ", side, " taking ", stacks, " damage.")
+	play_audio("use")
 	target.take_damage(float(stacks))
 	
 	# Ticks down by 1
@@ -81,7 +88,14 @@ func _effect_haste(side: String, stacks: int, resource: TokenResource):
 	var container = %PlayerTokens if side == "Player" else %EnemyTokens
 	
 	print("Haste Triggered: ", side, " earns ", stacks, " speed.")
+	play_audio("use")
 	target.speed += stacks
 	container.add_token(resource, -stacks)
 	await get_tree().create_timer(0.3).timeout
 	
+func play_audio(name: String) -> void:
+	if sounds.has(name):
+		$AudioStreamPlayer.stream = sounds[name]
+		$AudioStreamPlayer.play()
+	else:
+		push_warning("Sound not found: " + name)

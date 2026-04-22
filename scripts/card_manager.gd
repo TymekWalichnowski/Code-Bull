@@ -1,5 +1,8 @@
 extends Node2D
 
+signal hovered_over_card_signal(card)
+signal hovered_off_card_signal(card)
+
 const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_CARD_SLOT = 2
 
@@ -13,6 +16,7 @@ var card_being_dragged
 var is_hovering_on_card
 var player_hand_reference
 var source_slot
+
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -88,6 +92,7 @@ func on_hovered_over_card(card):
 		
 	is_hovering_on_card = true
 	highlight_card(card, true)
+	emit_signal("hovered_over_card_signal", card)
 
 func on_hovered_off_card(card):
 	if card_being_dragged != null: 
@@ -96,12 +101,14 @@ func on_hovered_off_card(card):
 	highlight_card(card, false)
 	is_hovering_on_card = false
 
+	emit_signal("hovered_off_card_signal", card)
 	var new_card_hovered = raycast_check_for_card()
 	if new_card_hovered and (new_card_hovered is Card or new_card_hovered.get_class() == "PassiveCard"):
 		var is_slotted = ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null)
 		if not is_slotted:
 			is_hovering_on_card = true
 			highlight_card(new_card_hovered, true)
+			emit_signal("hovered_over_card_signal", new_card_hovered)
 
 func highlight_card(card, hovered):
 	if not card.interactable:

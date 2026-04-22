@@ -20,6 +20,7 @@ metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]
 script = ExtResource("2_hysgw")
+display_name = "Divide Specific Slot"
 image_texture = ExtResource("2_mnukw")
 actions = Array[ExtResource("1_ukax2")]([SubResource("Resource_dvr3u")])
 metadata/_custom_type_script = "uid://cfssthidojyly"
