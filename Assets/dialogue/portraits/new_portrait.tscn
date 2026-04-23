@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4s7b2botymet"]
+[gd_scene load_steps=3 format=3 uid="uid://b4s7b2botymet"]
 
 [ext_resource type="Script" uid="uid://c1urx65pls6u" path="res://Assets/dialogue/portraits/new_portrait.gd" id="1_j1121"]
+[ext_resource type="Texture2D" uid="uid://dg1qmfo56s1j" path="res://Assets/textures/characters/dialogue/protag_test_1.png" id="2_phf5a"]
 
 [node name="NewPortrait" type="Node2D"]
 script = ExtResource("1_j1121")
 animation_time = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_phf5a")

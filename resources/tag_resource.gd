@@ -1,4 +1,4 @@
-@icon("res://Assets/icons/16x16/tag_blue.png")
+@icon("res://assets/icons/16x16/tag_blue.png")
 
 extends Resource
 class_name TagResource

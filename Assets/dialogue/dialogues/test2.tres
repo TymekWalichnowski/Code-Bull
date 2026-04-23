@@ -14,7 +14,8 @@ graph_data = {
 "node_type": "dialogue_node",
 "offset": Vector2(1120, 100),
 "portrait": "Newest Portrait",
-"size": Vector2(400.00018, 382.0001),
+"size": Vector2(400.0003, 315),
+"to_dialog": "",
 "to_node": ["dialogue_node_2"]
 },
 "dialogue_node_2": {
@@ -25,7 +26,8 @@ graph_data = {
 "node_type": "dialogue_node",
 "offset": Vector2(1700, 100),
 "portrait": "testman_talk",
-"size": Vector2(328, 382.0001),
+"size": Vector2(328, 340),
+"to_dialog": "",
 "to_node": ["END"]
 },
 "start_node_1": {
@@ -34,6 +36,7 @@ graph_data = {
 "offset": Vector2(658, 482),
 "size": Vector2(308.00006, 77),
 "start_id": "FIRST",
+"to_dialog": "",
 "to_node": ["dialogue_node_1"]
 }
 }

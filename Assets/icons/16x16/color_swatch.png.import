@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dvurm5m17ibdu"
-path="res://.godot/imported/color_swatch.png-8101421ca7501846163600018f54fa23.ctex"
+path="res://.godot/imported/color_swatch.png-07908f7ab93e449baf1c61318c15f0dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/color_swatch.png"
-dest_files=["res://.godot/imported/color_swatch.png-8101421ca7501846163600018f54fa23.ctex"]
+source_file="res://assets/icons/16x16/color_swatch.png"
+dest_files=["res://.godot/imported/color_swatch.png-07908f7ab93e449baf1c61318c15f0dd.ctex"]
 
 [params]
 

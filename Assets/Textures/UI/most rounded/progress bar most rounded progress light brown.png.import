@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dos3ie1bomvbo"
-path="res://.godot/imported/progress bar most rounded progress light brown.png-7aecc5fee528e0dea7738a8582befe71.ctex"
+path="res://.godot/imported/progress bar most rounded progress light brown.png-6d75f5d403735f40048256a7a5c2abbc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/UI/most rounded/progress bar most rounded progress light brown.png"
-dest_files=["res://.godot/imported/progress bar most rounded progress light brown.png-7aecc5fee528e0dea7738a8582befe71.ctex"]
+source_file="res://assets/textures/ui/most rounded/progress bar most rounded progress light brown.png"
+dest_files=["res://.godot/imported/progress bar most rounded progress light brown.png-6d75f5d403735f40048256a7a5c2abbc.ctex"]
 
 [params]
 

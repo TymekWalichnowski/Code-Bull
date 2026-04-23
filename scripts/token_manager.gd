@@ -10,7 +10,7 @@ extends Node
 
 # add sounds for unique actions later
 var sounds = { 
-	"use": preload("res://Assets/audio/chips-handle-1.ogg"), 
+	"use": preload("res://assets/audio/chips-handle-1.ogg"), 
 }
 
 # side can be "Player", "Enemy", or "Both" (default for phase starts)

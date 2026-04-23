@@ -2,12 +2,12 @@ extends Node
 
 # we keep card sounds located in the card scene so they work in scenes without an audio manager
 @onready var sfx_library = {
-	"Attack": preload("res://Assets/audio/sfx/sfx_sword_attack.mp3"),
-	"Shield": preload("res://Assets/audio/sfx/sfx_shield.mp3"),
-	"Magic": preload("res://Assets/audio/sfx/sfx_magic.mp3"),
-	"Impact": preload("res://Assets/audio/sfx/sfx_impact.mp3"),
-	"Shatter": preload("res://Assets/audio/sfx/sfx_shatter.wav"),
-	"Shield Summon": preload("res://Assets/audio/sfx/sfx_shield_summon.wav")
+	"Attack": preload("res://assets/audio/sfx/sfx_sword_attack.mp3"),
+	"Shield": preload("res://assets/audio/sfx/sfx_shield.mp3"),
+	"Magic": preload("res://assets/audio/sfx/sfx_magic.mp3"),
+	"Impact": preload("res://assets/audio/sfx/sfx_impact.mp3"),
+	"Shatter": preload("res://assets/audio/sfx/sfx_shatter.wav"),
+	"Shield Summon": preload("res://assets/audio/sfx/sfx_shield_summon.wav")
 }
 
 func play_sfx(sfx_name: String):

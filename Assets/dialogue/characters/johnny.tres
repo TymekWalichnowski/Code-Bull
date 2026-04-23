@@ -3,38 +3,38 @@
 [ext_resource type="Script" uid="uid://ygs6blymsjbh" path="res://addons/sprouty_dialogs/resources/portrait_data.gd" id="1_clqe0"]
 [ext_resource type="Script" uid="uid://kwoapf8il7ee" path="res://addons/sprouty_dialogs/resources/character_data.gd" id="1_mvtly"]
 
-[sub_resource type="Resource" id="Resource_d7gug"]
-script = ExtResource("1_clqe0")
-portrait_scene_uid = 4461002098669249851
-portrait_scene_path = "res://Assets/dialogue/portraits/new_portrait.tscn"
-export_overrides = {
-"portrait_image": {
-"type": 4,
-"value": "res://Assets/textures/characters/dialogue/npc_test_2.png"
-}
-}
-typing_sound = {}
-
-[sub_resource type="Resource" id="Resource_d6bny"]
-script = ExtResource("1_clqe0")
-portrait_scene_uid = 1718874157106446254
-portrait_scene_path = "res://Assets/dialogue/portraits/protagonist_portrait.tscn"
-export_overrides = {
-"portrait_image": {
-"type": 4,
-"value": "res://Assets/textures/characters/dialogue/protag_test_1.png"
-}
-}
-typing_sound = {}
-
-[sub_resource type="Resource" id="Resource_clqe0"]
+[sub_resource type="Resource" id="Resource_j2qi5"]
 script = ExtResource("1_clqe0")
 portrait_scene_uid = 2050367948379374357
-portrait_scene_path = "res://Assets/dialogue/portraits/Waah.tscn"
+portrait_scene_path = "res://assets/dialogue/portraits/Waah.tscn"
 export_overrides = {
 "portrait_image": {
 "type": 4,
-"value": "res://Assets/textures/characters/dialogue/protag_test_1.png"
+"value": "res://assets/textures/characters/dialogue/protag_test_1.png"
+}
+}
+typing_sound = {}
+
+[sub_resource type="Resource" id="Resource_lg1ey"]
+script = ExtResource("1_clqe0")
+portrait_scene_uid = 4461002098669249851
+portrait_scene_path = "res://assets/dialogue/portraits/new_portrait.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://assets/textures/characters/dialogue/npc_test_2.png"
+}
+}
+typing_sound = {}
+
+[sub_resource type="Resource" id="Resource_uqe7d"]
+script = ExtResource("1_clqe0")
+portrait_scene_uid = 1718874157106446254
+portrait_scene_path = "res://assets/dialogue/portraits/protagonist_portrait.tscn"
+export_overrides = {
+"portrait_image": {
+"type": 4,
+"value": "res://assets/textures/characters/dialogue/protag_test_1.png"
 }
 }
 typing_sound = {}
@@ -47,7 +47,7 @@ display_name = {
 "en": ""
 }
 dialog_box_uid = 7075210436752359140
-dialog_box_path = "res://Assets/dialogue/dialogue_boxes/default_dialogue_box.tscn"
+dialog_box_path = "res://assets/dialogue/dialogue_boxes/default_dialogue_box.tscn"
 default_portrait = "Newest Portrait"
 main_transform_settings = {
 "mirror": false,
@@ -58,15 +58,15 @@ main_transform_settings = {
 }
 portraits = {
 "New Portrait wawawa": {
-"data": SubResource("Resource_d7gug"),
+"data": SubResource("Resource_lg1ey"),
 "index": 1
 },
 "Newest Portrait": {
-"data": SubResource("Resource_d6bny"),
+"data": SubResource("Resource_uqe7d"),
 "index": 2
 },
 "Waah": {
-"data": SubResource("Resource_clqe0"),
+"data": SubResource("Resource_j2qi5"),
 "index": 0
 }
 }

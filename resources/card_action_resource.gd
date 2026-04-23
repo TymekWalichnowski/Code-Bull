@@ -1,4 +1,4 @@
-@icon("res://Assets/icons/16x16/sword.png")
+@icon("res://assets/icons/16x16/sword.png")
 
 extends Resource
 class_name CardAction

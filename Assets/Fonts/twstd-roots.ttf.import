@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://cm6l28gx8hbkm"
-path="res://.godot/imported/twstd-roots.ttf-22b11972039f571bfd0ae678b1aed1cb.fontdata"
+path="res://.godot/imported/twstd-roots.ttf-6bbc9411df6dcf9208602f9b4fb50421.fontdata"
 
 [deps]
 
-source_file="res://Assets/Fonts/twstd-roots.ttf"
-dest_files=["res://.godot/imported/twstd-roots.ttf-22b11972039f571bfd0ae678b1aed1cb.fontdata"]
+source_file="res://assets/Fonts/twstd-roots.ttf"
+dest_files=["res://.godot/imported/twstd-roots.ttf-6bbc9411df6dcf9208602f9b4fb50421.fontdata"]
 
 [params]
 

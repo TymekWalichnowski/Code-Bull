@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cc4jdhe6wbsrv"
-path="res://.godot/imported/sword_stop.png-c5341ddf37026fdb201601ccf54005cf.ctex"
+path="res://.godot/imported/sword_stop.png-3621316b6f90247883a32438faf7e10d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/icons/16x16/sword_stop.png"
-dest_files=["res://.godot/imported/sword_stop.png-c5341ddf37026fdb201601ccf54005cf.ctex"]
+source_file="res://assets/icons/16x16/sword_stop.png"
+dest_files=["res://.godot/imported/sword_stop.png-3621316b6f90247883a32438faf7e10d.ctex"]
 
 [params]
 

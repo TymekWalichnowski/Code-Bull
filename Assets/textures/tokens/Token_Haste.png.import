@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://gc3yncrg861f"
-path="res://.godot/imported/Token_Haste.png-838f99014d239e635849e7a7aaea86a6.ctex"
+path="res://.godot/imported/Token_Haste.png-312cb9598dde575d5c189d7cc0d93c08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/Tokens/Token_Haste.png"
-dest_files=["res://.godot/imported/Token_Haste.png-838f99014d239e635849e7a7aaea86a6.ctex"]
+source_file="res://assets/textures/tokens/Token_Haste.png"
+dest_files=["res://.godot/imported/Token_Haste.png-312cb9598dde575d5c189d7cc0d93c08.ctex"]
 
 [params]
 

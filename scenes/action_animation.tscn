@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cjt1xfmqtin7p"]
 
-[ext_resource type="Texture2D" uid="uid://b6b8f0rsybswi" path="res://assets/Placeholder/Slash/Classic/attack_sheet.png" id="1_y0dkm"]
+[ext_resource type="Texture2D" uid="uid://b6b8f0rsybswi" path="res://Assets/Placeholder/Slash/Classic/attack_sheet.png" id="1_y0dkm"]
 
 [sub_resource type="Animation" id="Animation_2x47h"]
 resource_name = "action_basic_attack"

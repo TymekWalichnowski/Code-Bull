@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dm67dm2qri1s6"
-path="res://.godot/imported/Token_Dodge.png-06a514a0827a0655a8efc3d14b48d002.ctex"
+path="res://.godot/imported/Token_Dodge.png-aae86b6fb36f1f5b054436fc0762b168.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/Tokens/Token_Dodge.png"
-dest_files=["res://.godot/imported/Token_Dodge.png-06a514a0827a0655a8efc3d14b48d002.ctex"]
+source_file="res://assets/textures/tokens/Token_Dodge.png"
+dest_files=["res://.godot/imported/Token_Dodge.png-aae86b6fb36f1f5b054436fc0762b168.ctex"]
 
 [params]
 

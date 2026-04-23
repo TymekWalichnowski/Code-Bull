@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SproutyDialogsCharacterData" load_steps=2 format=3 uid="uid://bvmmyo2e3r4ix"]
+
+[ext_resource type="Script" uid="uid://kwoapf8il7ee" path="res://addons/sprouty_dialogs/resources/character_data.gd" id="1_culp6"]
+
+[resource]
+script = ExtResource("1_culp6")
+key_name = "johnny2"

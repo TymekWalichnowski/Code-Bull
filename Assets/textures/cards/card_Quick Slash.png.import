@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://btxda302xkp18"
-path="res://.godot/imported/card_Quick Slash.png-04ed50536bf2c2bdae36a0f7128d4684.ctex"
+path="res://.godot/imported/card_Quick Slash.png-0ce3146442db61b7a6ab3283e125faa4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures/Cards/card_Quick Slash.png"
-dest_files=["res://.godot/imported/card_Quick Slash.png-04ed50536bf2c2bdae36a0f7128d4684.ctex"]
+source_file="res://assets/textures/cards/card_Quick Slash.png"
+dest_files=["res://.godot/imported/card_Quick Slash.png-0ce3146442db61b7a6ab3283e125faa4.ctex"]
 
 [params]
 
