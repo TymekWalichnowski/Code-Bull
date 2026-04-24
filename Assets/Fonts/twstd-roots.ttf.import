@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cm6l28gx8hbkm"
-path="res://.godot/imported/twstd-roots.ttf-6bbc9411df6dcf9208602f9b4fb50421.fontdata"
+uid="uid://bsyo8r7mhsf45"
+path="res://.godot/imported/twstd-roots.ttf-df4edda24f39d73508dbf99cd02c2f3b.fontdata"
 
 [deps]
 
-source_file="res://assets/Fonts/twstd-roots.ttf"
-dest_files=["res://.godot/imported/twstd-roots.ttf-6bbc9411df6dcf9208602f9b4fb50421.fontdata"]
+source_file="res://assets/fonts/twstd-roots.ttf"
+dest_files=["res://.godot/imported/twstd-roots.ttf-df4edda24f39d73508dbf99cd02c2f3b.fontdata"]
 
 [params]
 
@@ -16,8 +16,8 @@ Rendering=null
 antialiasing=1
 generate_mipmaps=false
 disable_embedded_bitmaps=true
-multichannel_signed_distance_field=true
-msdf_pixel_range=40
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false

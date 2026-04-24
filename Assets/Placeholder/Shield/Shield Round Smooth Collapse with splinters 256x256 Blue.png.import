@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt4lx5ll68auy"
-path="res://.godot/imported/Shield Round Smooth Collapse with splinters 256x256 Blue.png-46ca6d7764aecabbc06da0a910cf05fc.ctex"
+uid="uid://bl7h340pbnoyr"
+path="res://.godot/imported/Shield Round Smooth Collapse with splinters 256x256 Blue.png-3aad325a55a231894335f233a78f2943.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder/shield/Shield Round Smooth Collapse with splinters 256x256 Blue.png"
-dest_files=["res://.godot/imported/Shield Round Smooth Collapse with splinters 256x256 Blue.png-46ca6d7764aecabbc06da0a910cf05fc.ctex"]
+source_file="res://assets/placeholder/Shield/Shield Round Smooth Collapse with splinters 256x256 Blue.png"
+dest_files=["res://.godot/imported/Shield Round Smooth Collapse with splinters 256x256 Blue.png-3aad325a55a231894335f233a78f2943.ctex"]
 
 [params]
 

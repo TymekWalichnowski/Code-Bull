@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx6vxqq013to3"
-path="res://.godot/imported/health_holder.png-72efedb3c786b287863907bde227255b.ctex"
+uid="uid://bal0ulvr1uq47"
+path="res://.godot/imported/health_holder.png-db365b8c1383206145e87941ca178509.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/health_holder.png"
-dest_files=["res://.godot/imported/health_holder.png-72efedb3c786b287863907bde227255b.ctex"]
+source_file="res://assets/textures/UI/health_holder.png"
+dest_files=["res://.godot/imported/health_holder.png-db365b8c1383206145e87941ca178509.ctex"]
 
 [params]
 

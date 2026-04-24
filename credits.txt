@@ -2,7 +2,6 @@ card shader - https://godotshaders.com/shader/3d-perspective-texturerect-with-to
 progress bar - https://catshaped.itch.io/pixel-progress-bar-asset-pack?download
 forgot where the icons came from
 weapon slash - https://opengameart.org/content/weapon-slash-effect
-damage numbers - https://minosdamagenumbers.carrd.co/#docs
 magic sfx - https://pixabay.com/sound-effects/film-special-effects-080245-sfx-magic-84935/
 sword slash - https://pixabay.com/sound-effects/film-special-effects-sword-hit-flesh-demo-310494/
 shield - https://pixabay.com/sound-effects/film-special-effects-shield-guard-6963/

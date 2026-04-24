@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8fw00jpmhev8"
-path="res://.godot/imported/Shield Round Smooth Crack Break 256x256 Blue.png-dccee8eff0334d762d88469bb36a36c4.ctex"
+uid="uid://c04caf7a168tk"
+path="res://.godot/imported/Shield Round Smooth Crack Break 256x256 Blue.png-6ca744872f500a4dde18f1cb2710059c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder/shield/Shield Round Smooth Crack Break 256x256 Blue.png"
-dest_files=["res://.godot/imported/Shield Round Smooth Crack Break 256x256 Blue.png-dccee8eff0334d762d88469bb36a36c4.ctex"]
+source_file="res://assets/placeholder/Shield/Shield Round Smooth Crack Break 256x256 Blue.png"
+dest_files=["res://.godot/imported/Shield Round Smooth Crack Break 256x256 Blue.png-6ca744872f500a4dde18f1cb2710059c.ctex"]
 
 [params]
 

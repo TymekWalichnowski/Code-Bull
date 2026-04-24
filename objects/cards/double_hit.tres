@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_ke42n"]
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_3pcdb"]
-[ext_resource type="Texture2D" uid="uid://dfg7nhbko8vf2" path="res://assets/textures/cards/card_Double Hit.png" id="2_ke42n"]
+[ext_resource type="Texture2D" uid="uid://dfg7nhbko8vf2" path="res://Assets/textures/cards/card_Double Hit.png" id="2_ke42n"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_kv13t"]
-[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://assets/textures/cards/action_icons/action_icon_attack.png" id="3_3pcdb"]
+[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://Assets/textures/cards/action_icons/action_icon_attack.png" id="3_3pcdb"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_kv13t"]
 
 [sub_resource type="Resource" id="Resource_2hhve"]

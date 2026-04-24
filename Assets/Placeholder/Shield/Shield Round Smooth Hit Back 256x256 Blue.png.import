@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd0ptvc8v6qel"
-path="res://.godot/imported/Shield Round Smooth Hit Back 256x256 Blue.png-6a21e0f5a5db96acce77ba14573db346.ctex"
+uid="uid://d20lp40v1328a"
+path="res://.godot/imported/Shield Round Smooth Hit Back 256x256 Blue.png-fa175d7c99eebc07b0320ffb32cbe501.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder/shield/Shield Round Smooth Hit Back 256x256 Blue.png"
-dest_files=["res://.godot/imported/Shield Round Smooth Hit Back 256x256 Blue.png-6a21e0f5a5db96acce77ba14573db346.ctex"]
+source_file="res://assets/placeholder/Shield/Shield Round Smooth Hit Back 256x256 Blue.png"
+dest_files=["res://.godot/imported/Shield Round Smooth Hit Back 256x256 Blue.png-fa175d7c99eebc07b0320ffb32cbe501.ctex"]
 
 [params]
 

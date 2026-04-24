@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_a2fh5"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="2_by7o0"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_e285j"]
-[ext_resource type="Texture2D" uid="uid://btxda302xkp18" path="res://Assets/textures/Cards/card_Quick Slash.png" id="3_a2fh5"]
-[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://Assets/textures/Cards/action_icons/action_icon_attack.png" id="3_kdwuq"]
+[ext_resource type="Texture2D" uid="uid://btxda302xkp18" path="res://Assets/textures/cards/card_Quick Slash.png" id="3_a2fh5"]
+[ext_resource type="Texture2D" uid="uid://cmo2g3yhgj4i1" path="res://Assets/textures/cards/action_icons/action_icon_attack.png" id="3_kdwuq"]
 [ext_resource type="Resource" uid="uid://df36jvec5chn" path="res://objects/tags/haste.tres" id="4_e285j"]
-[ext_resource type="Texture2D" uid="uid://dfnfgbhfkn6su" path="res://Assets/textures/Cards/action_icons/action_icon_effect.png" id="5_8q7ym"]
+[ext_resource type="Texture2D" uid="uid://dfnfgbhfkn6su" path="res://Assets/textures/cards/action_icons/action_icon_effect.png" id="5_8q7ym"]
 
 [sub_resource type="Resource" id="Resource_8q7ym"]
 script = ExtResource("1_14x88")
