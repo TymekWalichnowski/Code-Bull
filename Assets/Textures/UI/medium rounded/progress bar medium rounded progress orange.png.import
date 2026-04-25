@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c2jyjpvhnhc"
-path="res://.godot/imported/progress bar medium rounded progress orange.png-865fff8a0ea9c6d1d4e6c6d8a48d588c.ctex"
+path="res://.godot/imported/progress bar medium rounded progress orange.png-16b251a82139f208ffdc564bde32d8e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/UI/medium rounded/progress bar medium rounded progress orange.png"
-dest_files=["res://.godot/imported/progress bar medium rounded progress orange.png-865fff8a0ea9c6d1d4e6c6d8a48d588c.ctex"]
+source_file="res://assets/textures/ui/medium rounded/progress bar medium rounded progress orange.png"
+dest_files=["res://.godot/imported/progress bar medium rounded progress orange.png-16b251a82139f208ffdc564bde32d8e3.ctex"]
 
 [params]
 

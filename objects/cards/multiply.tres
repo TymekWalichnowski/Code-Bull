@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_q4aju"]
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_7roq0"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_ipirw"]
-[ext_resource type="Texture2D" uid="uid://dyre37cuayid2" path="res://Assets/textures/cards/card_Multiply.png" id="2_q4aju"]
-[ext_resource type="Texture2D" uid="uid://gig13n063hnd" path="res://Assets/textures/cards/action_icons/action_icon_multiply.png" id="3_7roq0"]
+[ext_resource type="Texture2D" uid="uid://338rrcvo5ugh" path="res://assets/textures/cards/card_Multiply.png" id="2_q4aju"]
+[ext_resource type="Texture2D" uid="uid://0vbh1ktj5m2d" path="res://assets/textures/cards/action_icons/action_icon_multiply.png" id="3_7roq0"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_ipirw"]
 
 [sub_resource type="Resource" id="Resource_notdm"]

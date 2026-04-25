@@ -3,6 +3,7 @@ extends Node
 signal battle_click_received
 
 @onready var action_manager = %ActionManager
+@onready var animation_manager = %AnimationManager
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
 
@@ -73,6 +74,8 @@ func advance_turn():
 		slot_limit = 5
 	
 	setup_active_slots(slot_limit)
+	action_manager.set_slot_amount(slot_limit)
+	animation_manager.set_slot_amount(slot_limit)
 
 func setup_active_slots(limit: int):
 	player_slots.clear()

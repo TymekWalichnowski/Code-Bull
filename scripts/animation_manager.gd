@@ -9,6 +9,7 @@ const ENEMY_POSITION = Vector2(960, 440)
 @export var damage_label_scene: PackedScene
 
 var original_scale
+var slot_limit #how many card slots are there, what is the last one?
 
 func _ready():
 	%Player.damage_taken.connect(_on_entity_damage_taken.bind("Player"))
@@ -36,7 +37,7 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 			%AudioManager.play_sfx("Shield Summon")
 			anim_node.play("shield_bubble")
 		"Multiply_Next_Card", "Retrigger_Next_Slot":
-			if slot_idx >= 0 and slot_idx < 3:
+			if slot_idx >= 0 and slot_idx < slot_limit:
 				var slots = battle_m.player_slots if is_player else battle_m.enemy_slots
 				anim_node.position = slots[slot_idx].global_position
 			else:
@@ -44,7 +45,7 @@ func play_anim(action_name, card_owner, slot_idx: int = -1):
 			anim_node.play("multiply")
 
 		"Divide_Next_Card", "Divide_Specific_Slot", "Nullify":
-			if slot_idx >= 0 and slot_idx < 3:
+			if slot_idx >= 0 and slot_idx < slot_limit:
 				# Divide always targets the enemy's side
 				var target_slots = battle_m.enemy_slots if is_player else battle_m.player_slots
 				anim_node.position = target_slots[slot_idx].global_position
@@ -88,3 +89,6 @@ func spawn_damage_number_at(amount: float, pos: Vector2, is_shield: bool):
 
 func _on_action_anim_animation_finished() -> void:
 	anim_node.visible = false
+
+func set_slot_amount(slots_unlocked):
+	slot_limit = slots_unlocked

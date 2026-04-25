@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="CardDataResource" load_steps=9 format=3 uid="uid://cd88dyupufuki"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_2wpmc"]
-[ext_resource type="Texture2D" uid="uid://crdrk5nn4yss2" path="res://Assets/textures/cards/card_Draw 2.png" id="2_2wpmc"]
+[ext_resource type="Texture2D" uid="uid://d3u47an8omnss" path="res://assets/textures/cards/card_Draw 2.png" id="2_2wpmc"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_eof5a"]
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_u1xnl"]
-[ext_resource type="Texture2D" uid="uid://dfnfgbhfkn6su" path="res://Assets/textures/cards/action_icons/action_icon_effect.png" id="3_co6g8"]
+[ext_resource type="Texture2D" uid="uid://ct4e8l50uemnk" path="res://assets/textures/cards/action_icons/action_icon_effect.png" id="3_co6g8"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_eof5a"]
 [ext_resource type="Resource" uid="uid://dfldsh45xggpe" path="res://objects/tags/draw_card.tres" id="4_u1xnl"]
 

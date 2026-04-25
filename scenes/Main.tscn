@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=79 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -9,51 +9,52 @@
 [ext_resource type="Resource" uid="uid://bhfp8flf2320e" path="res://objects/tokens/flame.tres" id="3_pnhog"]
 [ext_resource type="PackedScene" uid="uid://bsuuljgrc5evc" path="res://scenes/card_slot.tscn" id="3_r0du0"]
 [ext_resource type="Script" uid="uid://bhofib52ahbgp" path="res://scripts/globals/audio_manager.gd" id="4_8b871"]
-[ext_resource type="Texture2D" uid="uid://vl76mnodwtfv" path="res://Assets/textures/Cards/card_back.png" id="4_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://b34f3olifyr8v" path="res://assets/textures/cards/card_back.png" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://bej4mcopqs30m" path="res://scripts/passive_manager.gd" id="4_dg70y"]
 [ext_resource type="Script" uid="uid://c3p4igxg6jwrm" path="res://scripts/player_deck.gd" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://ccry32ril1ham" path="res://scripts/token_manager.gd" id="5_g6wdg"]
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/enemy_hand.gd" id="5_q8u5g"]
 [ext_resource type="Script" uid="uid://b2wavb5tjxs1m" path="res://scripts/input_manager.gd" id="6_3dxm6"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="6_wp0k4"]
-[ext_resource type="Texture2D" uid="uid://b0gv7kfculi2q" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="7_qmy6f"]
 [ext_resource type="Resource" uid="uid://chxqxw3y3ikeg" path="res://objects/tokens/haste.tres" id="7_vua0o"]
 [ext_resource type="Script" uid="uid://dc50vcsfm3xtn" path="res://scripts/enemy_deck.gd" id="8_lhr70"]
-[ext_resource type="Texture2D" uid="uid://djrgdvrs6c28a" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="8_mwfav"]
-[ext_resource type="Texture2D" uid="uid://ckekq6e07m3wf" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="11_2ofn6"]
 [ext_resource type="Resource" uid="uid://cbql4artnyyew" path="res://objects/card_database.tres" id="12_yxlcp"]
 [ext_resource type="PackedScene" uid="uid://c2gj3tp3iihc0" path="res://scenes/damage_numbers.tscn" id="14_cmqll"]
 [ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="15_pnhog"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="16_gsxep"]
-[ext_resource type="Texture2D" uid="uid://d225ywhn20csb" path="res://Assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
+[ext_resource type="Texture2D" uid="uid://sd24i3rlcxr7" path="res://assets/textures/effects/wip_sheet.png" id="16_pdwbg"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="21_kxyth"]
 [ext_resource type="Script" uid="uid://b674wkdg31lgb" path="res://scenes/ui_manager.gd" id="22_0qimb"]
 [ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="23_in2eo"]
 [ext_resource type="Resource" uid="uid://xmvg48xmdvyr" path="res://objects/cards/divide.tres" id="26_8cp6k"]
-[ext_resource type="Texture2D" uid="uid://dntxnqk5tfl2q" path="res://Assets/textures/UI/speed_holder.png" id="31_5grtr"]
-[ext_resource type="Texture2D" uid="uid://bx6vxqq013to3" path="res://Assets/textures/UI/health_holder.png" id="31_s3wmy"]
+[ext_resource type="Texture2D" uid="uid://3f77t35lnb27" path="res://assets/textures/ui/speed_holder.png" id="31_5grtr"]
+[ext_resource type="Texture2D" uid="uid://bal0ulvr1uq47" path="res://assets/textures/ui/health_holder.png" id="31_s3wmy"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="31_vua0o"]
-[ext_resource type="Texture2D" uid="uid://c16xtrvm5ajew" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
-[ext_resource type="Texture2D" uid="uid://d36vfuu18pv8x" path="res://Assets/textures/UI/shield_holder.png" id="32_gdcyb"]
-[ext_resource type="FontFile" uid="uid://cm6l28gx8hbkm" path="res://Assets/Fonts/twstd-roots.ttf" id="32_vua0o"]
-[ext_resource type="Texture2D" uid="uid://blm83ty35pjk1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
-[ext_resource type="Texture2D" uid="uid://033uq706uqwr" path="res://Assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
-[ext_resource type="Texture2D" uid="uid://dwscefr2c6xmd" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="34_pdwbg"]
-[ext_resource type="Texture2D" uid="uid://c87k2p3jk2a5w" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="35_5grtr"]
-[ext_resource type="Texture2D" uid="uid://xn5wpq2blwq3" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="36_vua0o"]
-[ext_resource type="Texture2D" uid="uid://cxdowburis2e0" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="37_t70y2"]
-[ext_resource type="Texture2D" uid="uid://bhy47pkj4gleb" path="res://Assets/textures/effects/multiply_divide_sheet.png" id="38_8gny2"]
+[ext_resource type="Texture2D" uid="uid://lohtkmt5yy4j" path="res://assets/placeholder/slash/Classic/2/Classic_07.png" id="32_8cp6k"]
+[ext_resource type="Texture2D" uid="uid://biw1vwrv8i16v" path="res://assets/textures/ui/shield_holder.png" id="32_gdcyb"]
+[ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://assets/Fonts/twstd-roots.ttf" id="32_vua0o"]
+[ext_resource type="Texture2D" uid="uid://c0t8oskuuv5ho" path="res://assets/placeholder/slash/Classic/2/Classic_08.png" id="33_8b871"]
+[ext_resource type="Texture2D" uid="uid://c7gpyd4mwuq7g" path="res://assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
+[ext_resource type="Texture2D" uid="uid://b3r5s5su4iqyy" path="res://assets/placeholder/slash/Classic/2/Classic_09.png" id="34_pdwbg"]
+[ext_resource type="Texture2D" uid="uid://cmwjaebadr03p" path="res://assets/textures/ui/healthbar1.png" id="35_1v6qk"]
+[ext_resource type="Texture2D" uid="uid://cr47futmi22o1" path="res://assets/placeholder/slash/Classic/2/Classic_10.png" id="35_5grtr"]
+[ext_resource type="Texture2D" uid="uid://c4tyghnshvhi4" path="res://assets/textures/ui/healthbar2.png" id="36_augu2"]
+[ext_resource type="Texture2D" uid="uid://duekuxdcjdygo" path="res://assets/placeholder/slash/Classic/2/Classic_11.png" id="36_vua0o"]
+[ext_resource type="Texture2D" uid="uid://bpuepjtlrbw1y" path="res://assets/placeholder/slash/Classic/2/Classic_12.png" id="37_t70y2"]
+[ext_resource type="Texture2D" uid="uid://j716frikf60y" path="res://assets/textures/ui/healthbar3.png" id="37_tm6hj"]
+[ext_resource type="Texture2D" uid="uid://3u77kih4ooxx" path="res://assets/textures/effects/multiply_divide_sheet.png" id="38_8gny2"]
 [ext_resource type="Script" uid="uid://bj62dwc26u5jp" path="res://scripts/passive_hand.gd" id="38_t70y2"]
-[ext_resource type="Texture2D" uid="uid://dqp51phwv5hk" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
-[ext_resource type="Texture2D" uid="uid://dgfxtn3so2syp" path="res://Assets/textures/backgrounds/temp_bg.png" id="40_8cp6k"]
+[ext_resource type="Texture2D" uid="uid://denyrsi4fupbg" path="res://assets/placeholder/shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
+[ext_resource type="Texture2D" uid="uid://dcf5bud4j5uml" path="res://assets/textures/backgrounds/temp_bg.png" id="40_8cp6k"]
 [ext_resource type="Resource" uid="uid://b42uqjkasts7o" path="res://objects/cards_passive/retrigger_slot.tres" id="43_5grtr"]
 [ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="45_oa6sj"]
 [ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="46_0f1tp"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="49_0qimb"]
-[ext_resource type="Texture2D" uid="uid://cccim80tdu0l1" path="res://Assets/textures/Cards/card_Block.png" id="50_0f1tp"]
-[ext_resource type="Texture2D" uid="uid://dm0eesjsjd5v5" path="res://Assets/textures/Cards/card_Basic.png" id="53_dyyw8"]
-[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://Assets/themes/Basic_Theme.tres" id="53_gjpm3"]
+[ext_resource type="Texture2D" uid="uid://ch7bi58m72u33" path="res://assets/textures/cards/card_Block.png" id="50_0f1tp"]
+[ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://assets/textures/cards/card_Basic.png" id="53_dyyw8"]
+[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="53_gjpm3"]
+[ext_resource type="PackedScene" uid="uid://jn7bivirlflx" path="res://scenes/passive_card.tscn" id="55_ids8r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("38_8gny2")
@@ -460,21 +461,27 @@ script = ExtResource("6_wp0k4")
 [node name="HealthHolder" type="Sprite2D" parent="Player"]
 z_index = 10
 texture_filter = 1
-position = Vector2(1351, 1036.4)
-scale = Vector2(0.725, 0.725)
+position = Vector2(570.9999, 1033)
+scale = Vector2(2.416667, 2.5291667)
 texture = ExtResource("31_s3wmy")
 
 [node name="HealthLabel" type="RichTextLabel" parent="Player/HealthHolder"]
 z_index = 10
-offset_left = -58.7782
-offset_top = -100.164185
-offset_right = 66.46912
-offset_bottom = 76.00781
+anchors_preset = -1
+anchor_left = -2.019743
+anchor_top = -2.7669318
+anchor_right = -2.019743
+anchor_bottom = -2.7669318
+offset_left = 83.84337
+offset_top = 108.98941
+offset_right = 112.14302
+offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
+theme_override_constants/outline_size = 10
 theme_override_fonts/normal_font = ExtResource("32_vua0o")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 26
 text = "0"
+autowrap_trim_flags = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -482,21 +489,27 @@ metadata/_edit_use_anchors_ = true
 [node name="ShieldHolder" type="Sprite2D" parent="Player"]
 z_index = 10
 texture_filter = 1
-position = Vector2(1427, 1036)
-scale = Vector2(0.5, 0.5)
+position = Vector2(1363.0001, 1033)
+scale = Vector2(2.416667, 2.5291667)
 texture = ExtResource("32_gdcyb")
 
 [node name="ShieldLabel" type="RichTextLabel" parent="Player/ShieldHolder"]
 z_index = 10
-offset_left = -58.7782
-offset_top = -94.0
-offset_right = 66.46912
-offset_bottom = 82.172
+anchors_preset = -1
+anchor_left = -2.019743
+anchor_top = -2.7669318
+anchor_right = -2.019743
+anchor_bottom = -2.7669318
+offset_left = 83.84337
+offset_top = 108.98941
+offset_right = 112.14302
+offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
+theme_override_constants/outline_size = 10
 theme_override_fonts/normal_font = ExtResource("32_vua0o")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 26
 text = "0"
+autowrap_trim_flags = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -528,30 +541,30 @@ metadata/_edit_use_anchors_ = true
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
 offset_left = 760.0
-offset_top = 1022.0
+offset_top = 1001.0
 offset_right = 1160.0
-offset_bottom = 1062.0
+offset_bottom = 1041.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
 fill_mode = 6
 nine_patch_stretch = true
-texture_under = ExtResource("7_qmy6f")
-texture_progress = ExtResource("8_mwfav")
+texture_under = ExtResource("35_1v6qk")
+texture_progress = ExtResource("36_augu2")
 
 [node name="ShieldBar" type="TextureProgressBar" parent="Player"]
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
 offset_left = 760.0
-offset_top = 1022.0
+offset_top = 1001.0
 offset_right = 1160.0
-offset_bottom = 1062.0
+offset_bottom = 1041.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
 fill_mode = 6
 nine_patch_stretch = true
-texture_progress = ExtResource("11_2ofn6")
+texture_progress = ExtResource("37_tm6hj")
 
 [node name="PlayerTokens" type="Node2D" parent="Player"]
 unique_name_in_owner = true
@@ -567,21 +580,27 @@ entity_sprite = NodePath("../BattleManager/AnimationManager/EnemySprite")
 [node name="HealthHolder" type="Sprite2D" parent="Enemy"]
 z_index = 10
 texture_filter = 1
-position = Vector2(1354.8999, 26.900002)
-scale = Vector2(0.725, 0.725)
+position = Vector2(571, 37.69989)
+scale = Vector2(2.416667, 2.5291667)
 texture = ExtResource("31_s3wmy")
 
 [node name="HealthLabel" type="RichTextLabel" parent="Enemy/HealthHolder"]
 z_index = 10
-offset_left = -58.7782
-offset_top = -100.164185
-offset_right = 66.46912
-offset_bottom = 76.00781
+anchors_preset = -1
+anchor_left = -2.019743
+anchor_top = -2.7669318
+anchor_right = -2.019743
+anchor_bottom = -2.7669318
+offset_left = 83.84337
+offset_top = 108.98941
+offset_right = 112.14302
+offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
+theme_override_constants/outline_size = 10
 theme_override_fonts/normal_font = ExtResource("32_vua0o")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 26
 text = "0"
+autowrap_trim_flags = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -589,21 +608,27 @@ metadata/_edit_use_anchors_ = true
 [node name="ShieldHolder" type="Sprite2D" parent="Enemy"]
 z_index = 10
 texture_filter = 1
-position = Vector2(1430, 27)
-scale = Vector2(0.5, 0.5)
+position = Vector2(1363.0002, 37.69989)
+scale = Vector2(2.416667, 2.5291667)
 texture = ExtResource("32_gdcyb")
 
 [node name="ShieldLabel" type="RichTextLabel" parent="Enemy/ShieldHolder"]
 z_index = 10
-offset_left = -58.7782
-offset_top = -90.79988
-offset_right = 66.46912
-offset_bottom = 85.372116
+anchors_preset = -1
+anchor_left = -2.019743
+anchor_top = -2.7669318
+anchor_right = -2.019743
+anchor_bottom = -2.7669318
+offset_left = 83.84337
+offset_top = 108.98941
+offset_right = 112.14302
+offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
+theme_override_constants/outline_size = 10
 theme_override_fonts/normal_font = ExtResource("32_vua0o")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 26
 text = "0"
+autowrap_trim_flags = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -635,31 +660,33 @@ metadata/_edit_use_anchors_ = true
 [node name="HealthBar" type="TextureProgressBar" parent="Enemy"]
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
-offset_left = 760.0
-offset_top = -20.0
-offset_right = 1160.0
-offset_bottom = 20.0
+offset_left = 762.0
+offset_top = 76.00003
+offset_right = 1162.0
+offset_bottom = 116.00003
+rotation = 3.1415927
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
 fill_mode = 6
 nine_patch_stretch = true
-texture_under = ExtResource("7_qmy6f")
-texture_progress = ExtResource("8_mwfav")
+texture_under = ExtResource("35_1v6qk")
+texture_progress = ExtResource("36_augu2")
 
 [node name="ShieldBar" type="TextureProgressBar" parent="Enemy"]
 texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
-offset_left = 760.0
-offset_top = -20.0
-offset_right = 1160.0
-offset_bottom = 20.0
+offset_left = 762.0
+offset_top = 76.00003
+offset_right = 1162.0
+offset_bottom = 116.00003
+rotation = 3.1415927
 scale = Vector2(2, 2)
 pivot_offset = Vector2(200, 0)
 value = 50.0
 fill_mode = 6
 nine_patch_stretch = true
-texture_progress = ExtResource("11_2ofn6")
+texture_progress = ExtResource("37_tm6hj")
 
 [node name="EnemyTokens" type="Node2D" parent="Enemy"]
 unique_name_in_owner = true
@@ -705,7 +732,7 @@ text = "0"
 
 [node name="PlayerPassives" type="Node2D" parent="PlayerDeck"]
 unique_name_in_owner = true
-position = Vector2(220, 98)
+position = Vector2(293, -259)
 script = ExtResource("38_t70y2")
 
 [node name="EnemyDeck" type="Node2D" parent="."]
@@ -752,7 +779,7 @@ offset_top = 443.0
 offset_right = 1775.0
 offset_bottom = 474.0
 scale = Vector2(2.5, 2.5)
-text = "END TURN"
+text = "ACTIVATE"
 
 [node name="BattleTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -819,6 +846,21 @@ visible = false
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 mouse_filter = 2
+
+[node name="PassiveCard3" parent="." instance=ExtResource("55_ids8r")]
+position = Vector2(499.00006, 969.99994)
+rotation = -0.045378566
+scale = Vector2(1.1999999, 1.1999999)
+
+[node name="PassiveCard2" parent="." instance=ExtResource("55_ids8r")]
+position = Vector2(382, 975.00006)
+rotation = -0.045378562
+scale = Vector2(1.2, 1.2)
+
+[node name="PassiveCard" parent="." instance=ExtResource("55_ids8r")]
+position = Vector2(258, 981)
+rotation = -0.045378566
+scale = Vector2(1.1999999, 1.1999999)
 
 [connection signal="animation_finished" from="BattleManager/AnimationManager/ActionAnim" to="BattleManager/AnimationManager" method="_on_action_anim_animation_finished"]
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]

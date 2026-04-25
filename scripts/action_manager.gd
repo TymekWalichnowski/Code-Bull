@@ -13,6 +13,7 @@ extends Node
 @export var bleed_token_res: TokenResource
 @export var haste_token_res: TokenResource
 
+var slot_limit #how many card slots are there, what is the last one?
 
 func execute_card_action(card: Card, action_index: int):
 	# Secondary safety check
@@ -105,7 +106,7 @@ func execute_card_action(card: Card, action_index: int):
 # --- HELPER FUNCTIONS ---
 
 func _handle_retrigger(is_target_player: bool, target_idx: int, value: int):
-	if target_idx >= 0 and target_idx < 3:
+	if target_idx >= 0 and target_idx < slot_limit:
 		var target_slot
 		if is_target_player:
 			target_slot = battle_manager.player_slots[target_idx]
@@ -116,7 +117,7 @@ func _handle_retrigger(is_target_player: bool, target_idx: int, value: int):
 			target_slot.add_retrigger_buff(value)
 
 func _apply_multiplier(is_target_player: bool, target_idx: int, multiplier_value: float):
-	if target_idx < 0 or target_idx >= 3: return
+	if target_idx < 0 or target_idx >= slot_limit: return
 	
 	var target_slots = battle_manager.player_slots if is_target_player else battle_manager.enemy_slots
 	var target_slot = target_slots[target_idx]
@@ -128,7 +129,7 @@ func _apply_multiplier(is_target_player: bool, target_idx: int, multiplier_value
 		print("Applied x", multiplier_value, " to ", target_slot.card.card_name, " at index ", target_idx)
 
 func _apply_nullify(is_target_player: bool, target_idx: int, amount: int):
-	if target_idx < 0 or target_idx >= 5: return # Assuming 5 is max slots
+	if target_idx < 0 or target_idx >= slot_limit: return # Assuming 5 is max slots
 	
 	var target_slots = battle_manager.player_slots if is_target_player else battle_manager.enemy_slots
 	
@@ -143,3 +144,6 @@ func _apply_nullify(is_target_player: bool, target_idx: int, amount: int):
 func _apply_token(target_node: Node, token_res: TokenResource, amount: float):
 	var token_container = %PlayerTokens if target_node == player else %EnemyTokens
 	token_container.add_token(token_res, amount)
+
+func set_slot_amount(slots_unlocked):
+	slot_limit = slots_unlocked

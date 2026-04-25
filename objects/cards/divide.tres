@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="CardDataResource" load_steps=8 format=3 uid="uid://xmvg48xmdvyr"]
 
 [ext_resource type="Script" uid="uid://bgvo8n84ehe2e" path="res://resources/card_action_resource.gd" id="1_eaotp"]
-[ext_resource type="Texture2D" uid="uid://85hap4dscrlb" path="res://Assets/textures/cards/card_Divide.png" id="2_eaotp"]
+[ext_resource type="Texture2D" uid="uid://b5luhsa8uffb5" path="res://assets/textures/cards/card_Divide.png" id="2_eaotp"]
 [ext_resource type="Script" uid="uid://dtvye7fxnroyr" path="res://resources/tag_resource.gd" id="2_g6if3"]
 [ext_resource type="Script" uid="uid://bj3fphuhhlpaj" path="res://resources/card_action_animation.gd" id="2_sir7l"]
-[ext_resource type="Texture2D" uid="uid://b3gnsjj5xksth" path="res://Assets/textures/cards/action_icons/action_icon_divide.png" id="3_0bwt4"]
+[ext_resource type="Texture2D" uid="uid://k4wodjtg7hre" path="res://assets/textures/cards/action_icons/action_icon_divide.png" id="3_0bwt4"]
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="3_sir7l"]
 
 [sub_resource type="Resource" id="Resource_24aaf"]
