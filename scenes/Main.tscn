@@ -52,9 +52,9 @@
 [ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="46_0f1tp"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="49_0qimb"]
 [ext_resource type="Texture2D" uid="uid://ch7bi58m72u33" path="res://assets/textures/cards/card_Block.png" id="50_0f1tp"]
+[ext_resource type="Resource" uid="uid://c15m7x547auup" path="res://objects/cards_passive/early_guard.tres" id="52_ids8r"]
 [ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://assets/textures/cards/card_Basic.png" id="53_dyyw8"]
 [ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="53_gjpm3"]
-[ext_resource type="PackedScene" uid="uid://jn7bivirlflx" path="res://scenes/passive_card.tscn" id="55_ids8r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("38_8gny2")
@@ -695,7 +695,7 @@ script = ExtResource("15_pnhog")
 
 [node name="PlayerDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
-z_index = 1
+z_index = 100
 position = Vector2(148, 875)
 script = ExtResource("4_fos0i")
 card_database = ExtResource("12_yxlcp")
@@ -705,6 +705,7 @@ unique_name_in_owner = true
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerDeck"]
+z_index = 100
 texture_filter = 1
 position = Vector2(-32.85598, 100.558716)
 rotation = -0.044820033
@@ -732,18 +733,20 @@ text = "0"
 
 [node name="PlayerPassives" type="Node2D" parent="PlayerDeck"]
 unique_name_in_owner = true
-position = Vector2(293, -259)
+position = Vector2(96, 107)
 script = ExtResource("38_t70y2")
 
 [node name="EnemyDeck" type="Node2D" parent="."]
 unique_name_in_owner = true
+z_index = 20
 position = Vector2(150, 123)
 script = ExtResource("8_lhr70")
 card_database = ExtResource("12_yxlcp")
 starting_deck = Array[ExtResource("21_kxyth")]([ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("26_8cp6k"), ExtResource("45_oa6sj"), ExtResource("46_0f1tp")])
-starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("43_5grtr"), ExtResource("49_0qimb")])
+starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("43_5grtr"), ExtResource("49_0qimb"), ExtResource("52_ids8r"), ExtResource("52_ids8r"), ExtResource("52_ids8r")])
 
 [node name="Sprite2D" type="Sprite2D" parent="EnemyDeck"]
+z_index = 25
 texture_filter = 1
 position = Vector2(-29.000004, -34)
 rotation = 0.045378562
@@ -761,7 +764,7 @@ text = "0"
 
 [node name="EnemyPassives" type="Node2D" parent="EnemyDeck"]
 unique_name_in_owner = true
-position = Vector2(124, -28)
+position = Vector2(104, -28)
 script = ExtResource("38_t70y2")
 is_enemy = true
 
@@ -846,21 +849,6 @@ visible = false
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 mouse_filter = 2
-
-[node name="PassiveCard3" parent="." instance=ExtResource("55_ids8r")]
-position = Vector2(499.00006, 969.99994)
-rotation = -0.045378566
-scale = Vector2(1.1999999, 1.1999999)
-
-[node name="PassiveCard2" parent="." instance=ExtResource("55_ids8r")]
-position = Vector2(382, 975.00006)
-rotation = -0.045378562
-scale = Vector2(1.2, 1.2)
-
-[node name="PassiveCard" parent="." instance=ExtResource("55_ids8r")]
-position = Vector2(258, 981)
-rotation = -0.045378566
-scale = Vector2(1.1999999, 1.1999999)
 
 [connection signal="animation_finished" from="BattleManager/AnimationManager/ActionAnim" to="BattleManager/AnimationManager" method="_on_action_anim_animation_finished"]
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]

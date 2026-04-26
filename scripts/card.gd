@@ -141,20 +141,27 @@ func _lerp_shader_rotations(tx: float, ty: float, weight: float):
 func _on_area_2d_mouse_entered() -> void:
 	if not interactable or is_dragged: 
 		return
-	# --- FIX: Do not trigger hovers on cards if we are dragging something else ---
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		return
 
-	hovering = true
-	update_hover_ui()
+	# ONLY emit the signal. Let the CardManager decide if we actually get hovered!
 	emit_signal("hovered", self)
+	
+	# Safe fallback just in case you test a card in a scene without the CardManager
+	if not get_parent().has_method("raycast_check_for_card"):
+		hovering = true
+		update_hover_ui()
 
 func _on_area_2d_mouse_exited() -> void:
 	if not interactable:
 		return
-	hovering = false
-	update_hover_ui()
+		
 	emit_signal("hovered_off", self)
+	
+	# Safe fallback just in case you test a card in a scene without the CardManager
+	if not get_parent().has_method("raycast_check_for_card"):
+		hovering = false
+		update_hover_ui()
 
 func play_audio(name: String) -> void:
 	if sounds.has(name):

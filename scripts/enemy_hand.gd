@@ -35,9 +35,7 @@ func update_hand_positions(speed):
 		if hand_size > 1:
 			ratio = (float(i) / (hand_size - 1) - 0.5) * 2.0
 		
-		var x_offset = (hand_size - 1) * CARD_WIDTH
-		var x_pos = center_x + (i * CARD_WIDTH) - (x_offset / 2.0)
-		
+		var x_pos = center_x + (i - (hand_size - 1) / 2.0) * min(CARD_WIDTH, 800.0 / max(1, hand_size))
 		var y_pos = HAND_Y_POSITION - (VERTICAL_ARCH_HEIGHT * pow(ratio, 2))
 		
 		var target_rot = deg_to_rad(ratio * -MAX_ROTATION_DEGREES)

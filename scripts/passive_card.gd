@@ -81,16 +81,32 @@ func _lerp_shader_rotations(tx: float, ty: float, weight: float):
 			img.material.set_shader_parameter("x_rot", lerp(img.material.get_shader_parameter("x_rot"), tx, weight))
 
 func _on_area_2d_mouse_entered() -> void:
-	if not interactable: return
-	hovering = true
-	update_hover_ui()
+	if not interactable: 
+		return
+	# Do not trigger hovers if we are actively dragging a regular card
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return
+
+	# ONLY emit the signal. Let the CardManager decide if we actually get hovered!
 	emit_signal("hovered", self)
+	
+	# Safe fallback just in case you test a card in a scene without the CardManager
+	var card_manager = get_tree().get_first_node_in_group("card_manager") 
+	if not card_manager or not card_manager.has_method("raycast_check_for_card"):
+		hovering = true
+		update_hover_ui()
 
 func _on_area_2d_mouse_exited() -> void:
-	if not interactable: return
-	hovering = false
-	update_hover_ui()
+	if not interactable: 
+		return
+		
 	emit_signal("hovered_off", self)
+	
+	# Safe fallback just in case you test a card in a scene without the CardManager
+	var card_manager = get_tree().get_first_node_in_group("card_manager") 
+	if not card_manager or not card_manager.has_method("raycast_check_for_card"):
+		hovering = false
+		update_hover_ui()
 
 func update_visuals():
 	if not data: return

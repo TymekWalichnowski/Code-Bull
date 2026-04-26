@@ -8,7 +8,7 @@ const COLLISION_MASK_CARD_SLOT = 2
 
 const DEFAULT_CARD_MOVE_SPEED = 0.1
 const DEFAULT_CARD_SCALE = 1.2
-const BIGGER_CARD_SCALE = 1.4
+const BIGGER_CARD_SCALE = 1.25
 const SMALLER_CARD_SCALE = 1.05
 
 var screen_size
@@ -16,7 +16,7 @@ var card_being_dragged
 var is_hovering_on_card
 var player_hand_reference
 var source_slot
-
+var currently_hovered_card = null
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -87,10 +87,28 @@ func on_left_click_released():
 		finish_drag()
 
 func on_hovered_over_card(card):
-	if not card.interactable or is_hovering_on_card or card_being_dragged != null:
+	if not card.interactable or card_being_dragged != null:
 		return
 		
+	# NON-DESTRUCTIVE CHECK: Only accept the hover if this is truly the top-most card
+	var top_card = raycast_check_for_card()
+	if top_card != null and top_card != card:
+		return 
+
+	if currently_hovered_card == card:
+		return
+
+	# If somehow hovering a different card underneath, force it off first
+	if currently_hovered_card != null:
+		on_hovered_off_card(currently_hovered_card)
+
+	currently_hovered_card = card
 	is_hovering_on_card = true
+	
+	# Tell the card it is officially hovered (safely)
+	if "hovering" in card: card.hovering = true
+	if card.has_method("update_hover_ui"): card.update_hover_ui()
+
 	highlight_card(card, true)
 	emit_signal("hovered_over_card_signal", card)
 
@@ -98,17 +116,24 @@ func on_hovered_off_card(card):
 	if card_being_dragged != null: 
 		return
 		
+	# Tell the card it is officially no longer hovered
+	if "hovering" in card: card.hovering = false
+	if card.has_method("update_hover_ui"): card.update_hover_ui()
+		
 	highlight_card(card, false)
-	is_hovering_on_card = false
+	
+	if currently_hovered_card == card:
+		currently_hovered_card = null
+		is_hovering_on_card = false
 
 	emit_signal("hovered_off_card_signal", card)
+	
+	# Your existing seamless fallback logic, routed safely through our new z-index check
 	var new_card_hovered = raycast_check_for_card()
 	if new_card_hovered and (new_card_hovered is Card or new_card_hovered.get_class() == "PassiveCard"):
 		var is_slotted = ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null)
 		if not is_slotted:
-			is_hovering_on_card = true
-			highlight_card(new_card_hovered, true)
-			emit_signal("hovered_over_card_signal", new_card_hovered)
+			on_hovered_over_card(new_card_hovered)
 
 func highlight_card(card, hovered):
 	if not card.interactable:
