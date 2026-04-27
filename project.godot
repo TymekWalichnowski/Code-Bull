@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 PlayerDeckGlobal="*res://scenes/globals/player_deck_global.tscn"
 SproutyDialogs="*res://addons/sprouty_dialogs/sprouty_dialogs_manager.gd"
 AudioManager="*res://scripts/globals/audio_manager.gd"
+PlayerCompletion="*res://scripts/globals/enemy_list_global.gd"
 
 [display]
 

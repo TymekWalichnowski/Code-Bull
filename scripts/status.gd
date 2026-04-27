@@ -1,6 +1,7 @@
 extends Node2D
 
 signal damage_taken(amount, is_shield)
+signal defeated(side)
 
 var current_health = 1.0
 var current_shield = 0.0
@@ -41,6 +42,9 @@ func take_damage(damage_amount):
 	else:
 		current_health -= damage_amount
 	
+	if current_health <= 0:
+		current_health = 0
+		defeated.emit(side_name)
 	damage_taken.emit(damage_amount, was_shielded)
 	
 	if was_shielded:

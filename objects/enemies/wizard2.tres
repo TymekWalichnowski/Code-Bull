@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=14 format=3 uid="uid://cj06dtfbfbepo"]
+
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="1_lqrmo"]
+[ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="2_m2xm0"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="2_rcogk"]
+[ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="3_gq56h"]
+[ext_resource type="Script" uid="uid://bu6t2p6e66o2l" path="res://resources/enemy_resource.gd" id="3_jib28"]
+[ext_resource type="Resource" uid="uid://df1br38oqmwog" path="res://objects/cards/nullify.tres" id="4_8bvnj"]
+[ext_resource type="Resource" uid="uid://cd88dyupufuki" path="res://objects/cards/draw_2.tres" id="5_i15tb"]
+[ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="6_i3pfu"]
+[ext_resource type="Resource" uid="uid://v2y7mde1tof" path="res://objects/cards/sword.tres" id="7_36bio"]
+[ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="8_itwm4"]
+[ext_resource type="Resource" uid="uid://dmsx3x1g5gw78" path="res://objects/cards/quick_slash.tres" id="9_0u86v"]
+[ext_resource type="Resource" uid="uid://b42uqjkasts7o" path="res://objects/cards_passive/retrigger_slot.tres" id="11_d0gqc"]
+[ext_resource type="Texture2D" uid="uid://pcbefmvlqi7w" path="res://assets/textures/characters/battle/TestWizard2.png" id="13_h0hsl"]
+
+[resource]
+script = ExtResource("3_jib28")
+enemy_name = "Second Wizard"
+health = 30
+sprite = ExtResource("13_h0hsl")
+cards = Array[ExtResource("1_lqrmo")]([ExtResource("2_rcogk"), ExtResource("3_gq56h"), ExtResource("3_gq56h"), ExtResource("3_gq56h"), ExtResource("4_8bvnj"), ExtResource("5_i15tb"), ExtResource("6_i3pfu"), ExtResource("7_36bio"), ExtResource("8_itwm4"), ExtResource("9_0u86v")])
+passive_cards = Array[ExtResource("2_m2xm0")]([ExtResource("11_d0gqc")])
+metadata/_custom_type_script = "uid://bu6t2p6e66o2l"

@@ -11,15 +11,17 @@ signal battle_click_received
 @onready var player_slots_all = [$"../CardSlots/CardSlot", $"../CardSlots/CardSlot2", $"../CardSlots/CardSlot3", $"../CardSlots/CardSlot4", $"../CardSlots/CardSlot5"]
 @onready var enemy_slots_all = [$"../CardSlots/CardSlotEnemy1", $"../CardSlots/CardSlotEnemy2", $"../CardSlots/CardSlotEnemy3", $"../CardSlots/CardSlotEnemy4", $"../CardSlots/CardSlotEnemy5"]
 
+@onready var battle_timer = %BattleTimer
+
+# THE DATA PUSHED FROM LEVEL SELECT
+@export var enemy_data: EnemyResource
+
 var player_slots = []
 var enemy_slots = []
 
-@onready var battle_timer = %BattleTimer
-
-const STARTING_HEALTH = 10.0
 const SMALLER_CARD_SCALE = 1.05
 const CARD_MOVE_SPEED = 0.2
-const START_DRAW_COUNT = 6 
+const START_DRAW_COUNT = 5 
 const SLOT_GAP = 170.0
 
 var turn_count: int = 0
@@ -28,23 +30,42 @@ var empty_enemy_card_slots = []
 var player_snapshot: Dictionary = {}
 var enemy_snapshot: Dictionary = {}
 var board_locked: bool = false 
+var battle_active: bool = true
 
 func _ready() -> void:
+	%Player.defeated.connect(_on_battle_over)
+	%Enemy.defeated.connect(_on_battle_over)
+	
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
-	advance_turn()
 	
-	%Player.current_health = STARTING_HEALTH
-	%Enemy.current_health = STARTING_HEALTH
-	%PlayerDeck.prepare_deck()
-	%EnemyDeck.prepare_deck()
+	if not enemy_data:
+		push_warning("BattleManager started without Enemy Data! Run from Level Select or assign a .tres in the Inspector for testing.")
+		return
+		
+	setup_battle(enemy_data)
+
+func setup_battle(resource: EnemyResource):
+	# 1. Setup Enemy Visuals/Stats from Resource
+	%Enemy.max_health = resource.health
+	%Enemy.current_health = resource.health
+	if %Enemy.entity_sprite:
+		%Enemy.entity_sprite.texture = resource.sprite
+	
+	# 2. Setup Decks (This replaces all old editor assignments)
+	%EnemyDeck.load_enemy_data(resource.cards, resource.passive_cards)
+	%PlayerDeck.prepare_deck() # PlayerDeck pulls from PlayerDeckGlobal internally
+	
+	# 3. Game State Initialization
 	%Player.speed = randi_range(1, 5)
 	%Enemy.speed = randi_range(1, 5)
+	advance_turn()
 	
+	# 4. Opening Sequence
 	for i in range(START_DRAW_COUNT):
-		if i < 5: %PlayerDeck.draw_card()
-		if i < 5: %EnemyDeck.draw_card()
-		await get_tree().create_timer(0.4).timeout
+		%PlayerDeck.draw_card()
+		%EnemyDeck.draw_card()
+		await get_tree().create_timer(0.3).timeout
 	
 	%PlayerDeck.spawn_starting_passives()
 	%EnemyDeck.spawn_starting_passives()
@@ -141,6 +162,9 @@ func _on_end_turn_button_pressed() -> void:
 	board_locked = true
 	
 	await run_activation_phase()
+	
+	# Fix: If the battle ended during the activation phase, stop everything right here.
+	if not battle_active: return
 	await trigger_tokens("On_Turn_End")
 	
 	advance_turn()
@@ -213,11 +237,13 @@ func run_activation_phase():
 	await wait(0.4)
 	
 	for slot_index in range(slot_count):
+		if not battle_active: break 	# CHECKING IF DEAD: Before a new slot starts
 		var order = ["Player", "Enemy"] if player_has_initiative else ["Enemy", "Player"]
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
 		
 		for side in order:
+			if not battle_active: break 	# CHECKING IF DEAD: Before a specific side acts
 			var active_set = player_slots if side == "Player" else enemy_slots
 			if slot_index >= active_set.size(): continue
 			
@@ -238,20 +264,25 @@ func run_activation_phase():
 				
 			var runs = 1 + card.retriggers
 			for run_idx in range(runs):
+				if not battle_active: break 	# CHECKING IF DEAD: Before a retrigger
 				if run_idx > 0:
 					await card.declare_effect("Retrigger!")
 				for action_idx in range(card.card_data.actions.size()):
+					if not battle_active: break 	# CHECKING IF DEAD: Before an action
 					if card.card_data.actions[action_idx] != null:
 						await action_manager.execute_card_action(card, action_idx)
 						await wait(0.6)
 			
 			collect_used_card(card)
 			await wait(1.0)
-
+		if not battle_active: # Fix: If someone died during the attack, immediately clean up and EXIT.
+			clear_entire_board()
+			return
 		if slot_index < player_slots.size(): player_slots[slot_index].clear_buffs()
 		if slot_index < enemy_slots.size(): enemy_slots[slot_index].clear_buffs()
 		reset_enemy_slots()
 		await wait(0.6)
+	if not battle_active: clear_entire_board()  # DEAD: do cleanup
 	# Making slots visible again
 	for slot in player_slots:
 		slot.visible = true
@@ -337,3 +368,45 @@ func _analyze_slots(slots_array: Array) -> Dictionary:
 			current_chain_type = ""
 			current_chain_length = 0
 	return {"slot_types": slot_types, "type_counts": type_counts, "highest_chain_type": highest_chain_type, "highest_chain_length": highest_chain_length}
+
+func _on_battle_over(defeated_side: String):
+	if not battle_active: return
+	battle_active = false
+	board_locked = true
+	
+	if defeated_side == "Enemy":
+		# Logic for win tracking
+		if not PlayerDeckGlobal.global_enemies_defeated.has(enemy_data.enemy_name):
+			PlayerDeckGlobal.global_enemies_defeated.append(enemy_data.enemy_name)
+			grant_rewards()
+	
+	show_win_loss_ui(defeated_side)
+
+func grant_rewards():
+	for reward in enemy_data.completion_rewards:
+		if reward is CardDataResource:
+			PlayerDeckGlobal.global_player_inventory.append(reward)
+		elif reward is PassiveCardResource:
+			PlayerDeckGlobal.global_player_inventory_passives.append(reward)
+
+func clear_entire_board():
+	# Remove all cards from slots and hands
+	for slot in player_slots_all + enemy_slots_all:
+		if slot.card:
+			slot.card.queue_free()
+			slot.card_in_slot = false
+
+	# Optionally clear hands
+	for card in %PlayerHand.get_children(): card.queue_free()
+	for card in %EnemyHand.get_children(): card.queue_free()
+
+func show_win_loss_ui(side):
+	# Just a simple example, you should make a nice UI node for this
+	var label = Label.new()
+	label.text = "YOU LOSE!" if side == "Enemy" else "YOU WIN!" # If enemy died, you win
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	label.add_theme_font_size_override("font_size", 64)
+	add_child(label)
+	await get_tree().create_timer(5.0).timeout
+	get_tree().change_scene_to_file("res://scenes/level_select.tscn")

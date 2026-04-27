@@ -16,6 +16,9 @@ extends Node
 var slot_limit #how many card slots are there, what is the last one?
 
 func execute_card_action(card: Card, action_index: int):
+	# CHECK: Stop immediately if the battle ended from a previous action/retrigger
+	if not battle_manager.battle_active: 
+		return
 	# Secondary safety check
 	if card.nullified > 0:
 		print(card.card_owner, " action blocked by nullify!")
@@ -75,6 +78,7 @@ func execute_card_action(card: Card, action_index: int):
 		"Attack":
 			target.take_damage(final_value)
 			var hit_side = "Enemy" if is_player else "Player"
+			if not battle_manager.battle_active: return # Check if that hit ended the game
 			
 			if battle_manager.has_method("trigger_passives"):
 				# We send the clean "On_Hit_Taken" and tell the manager WHICH side took the hit
@@ -101,6 +105,7 @@ func execute_card_action(card: Card, action_index: int):
 		"Gain_Haste":
 			_apply_token(self_target, haste_token_res, final_value)
 	
+	if not battle_manager.battle_active: return
 	await battle_manager.token_manager.trigger_tokens("After_Action", card.card_owner)
 
 # --- HELPER FUNCTIONS ---
