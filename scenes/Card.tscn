@@ -1,12 +1,16 @@
-[gd_scene load_steps=24 format=3 uid="uid://dnj8lxsm2fgti"]
+[gd_scene load_steps=28 format=3 uid="uid://dnj8lxsm2fgti"]
 
 [ext_resource type="Script" uid="uid://vw5rk4xmtwrq" path="res://scripts/card.gd" id="1_1yd6c"]
 [ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://Assets/textures/Cards/card_Basic.png" id="1_dd2wi"]
+[ext_resource type="PackedScene" uid="uid://w8eukdjb1h4f" path="res://scenes/effect_display.tscn" id="2_1yd6c"]
 [ext_resource type="Texture2D" uid="uid://b34f3olifyr8v" path="res://Assets/textures/Cards/card_back.png" id="2_ktuci"]
 [ext_resource type="Shader" uid="uid://o7ldrvjuyamm" path="res://shaders/card_perspective.gdshader" id="3_kg30u"]
 [ext_resource type="Texture2D" uid="uid://cvpurm3mdy5v0" path="res://Assets/textures/Cards/card_effects/card_slot_glow.png" id="4_nvopj"]
+[ext_resource type="Texture2D" uid="uid://ueuqj0ccmaim" path="res://assets/textures/cards/card_effects/effect_retrigger.png" id="4_u8dfr"]
 [ext_resource type="AudioStream" uid="uid://b8o381u75t2c2" path="res://Assets/Audio/card-place-2.ogg" id="5_40ytf"]
+[ext_resource type="Texture2D" uid="uid://70i3fda2ld7s" path="res://assets/textures/cards/card_effects/effect_nullified.png" id="5_hpf3o"]
 [ext_resource type="Shader" uid="uid://ch0c8qfrhah46" path="res://shaders/burn.gdshader" id="5_nvopj"]
+[ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="9_1yd6c"]
 [ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://Assets/Fonts/twstd-roots.ttf" id="13_hpf3o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_42b55"]
@@ -300,6 +304,10 @@ _data = {
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_1yd6c")
+effect_display_scene = ExtResource("2_1yd6c")
+tag_display_scene = ExtResource("9_1yd6c")
+texture_retrigger = ExtResource("4_u8dfr")
+texture_nullify = ExtResource("5_hpf3o")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1

@@ -19,6 +19,7 @@ class_name Card
 
 var card_image: Sprite2D
 var card_back_image: Sprite2D
+var card_burn_container: SubViewportContainer
 
 var card_id: int = 0
 var card_name: String = ""
@@ -29,10 +30,12 @@ func _ready() -> void:
 	super._ready() # This handles the CardManager signal connections
 	card_image = %CardImage
 	card_back_image = %CardBackImage
+	card_burn_container = %BurnContainer
 	
-	# CRITICAL: Tell BaseCard what to apply the shader rotation to
+	# Tell BaseCard what to apply the shader rotation to
 	visual_nodes_to_rotate = [visual_container]
 	duplicate_materials()
+	card_burn_container.material = card_burn_container.material.duplicate()
 
 	if card_data:
 		_apply_visuals()
@@ -159,6 +162,7 @@ func declare_effect(effect_name) -> void:
 
 func _add_effect_display(icon: Texture2D, count: int):
 	if not effect_display_scene or not icon or not effect_display_container:
+		print("effect display error")
 		return
 		
 	var display = effect_display_scene.instantiate()
