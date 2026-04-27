@@ -1,10 +1,115 @@
-[gd_scene load_steps=6 format=3 uid="uid://b85gmj83uys81"]
+[gd_scene load_steps=21 format=3 uid="uid://b85gmj83uys81"]
 
 [ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
 [ext_resource type="Script" uid="uid://1mxdpoyob13n" path="res://addons/sprouty_dialogs/nodes/dialog_player.gd" id="2_2epne"]
-[ext_resource type="Texture2D" uid="uid://cituhylr7eyfi" path="res://Assets/textures/UI/title.png" id="2_chg43"]
-[ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://Assets/dialogue/dialogues/test2.tres" id="3_2epne"]
+[ext_resource type="Texture2D" uid="uid://cekfd62mjh1nt" path="res://Assets/textures/UI/title.png" id="2_chg43"]
+[ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://assets/dialogue/dialogues/test2.tres" id="3_2epne"]
 [ext_resource type="PackedScene" uid="uid://ckr6bnvp677wi" path="res://scenes/deck_editor.tscn" id="4_rif6e"]
+
+[sub_resource type="Shader" id="Shader_chg43"]
+code = "shader_type canvas_item;
+
+uniform vec2 pixelation = vec2(256, 256); //The resolution of the Texture
+uniform sampler2D cloud_noise1; //The first scroling noise for the clouds
+uniform vec2 scroll_speed1 = vec2(0.02, 0.007); //The scroll-speed of the first noise
+uniform sampler2D cloud_noise2; //The second scroling noise for the clouds
+uniform vec2 scroll_speed2 = vec2(-0.015, -0.004); //The scroll-speed of the second noise
+uniform vec2 center_pos = vec2(0.5, 0.0); //The position, the clouds are bend around
+uniform float position_impact : hint_range(0.0, 1.0, 0.01) = 0.75;
+uniform sampler2D color_gardient; //The colors of the cloud-sky-transition as a 1D-Gradient (set interpolation to constant for more pixel look)
+
+void fragment() {
+	//The pixelated UV (so that the texture is actually pixelart)
+	vec2 pixel_uv = floor(UV * pixelation) / pixelation;
+	//Makes sure the clouds aren't stretched, even if it's not square shaped
+	vec2 noise_uv_scale = pixel_uv;
+	noise_uv_scale.x *= pixelation.x / pixelation.y;
+	//The UVs inside the noise texture with time-offset
+	vec2 noise1uv = fract(noise_uv_scale + TIME * scroll_speed1);
+	vec2 noise2uv = fract(noise_uv_scale + TIME * scroll_speed2);
+	//Determents the average color of the two noises
+	vec4 noise_col = (texture(cloud_noise1, noise1uv) + texture(cloud_noise2, noise2uv)) * 0.5;
+	//The pixels distance to the center
+	float dist = distance(pixel_uv, center_pos);
+	//Scales the distance to a range between 0 and 1
+	vec2 furthest = vec2(-min(sign(center_pos.x - 0.5), 0.0), -min(sign(center_pos.y - 0.5), 0.0));
+	float max_dist = distance(center_pos, furthest);
+	dist /= max_dist;
+	//Mixes the noise color with the distance to get noise that warps around the center
+	float final = mix(1.0-noise_col.r, dist, position_impact);
+	//applies the color from the gradient
+	COLOR = texture(color_gardient, vec2(final, final));
+}
+
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_chg43"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r77uv"]
+noise = SubResource("FastNoiseLite_chg43")
+seamless = true
+normalize = false
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4nqmc"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7plkq"]
+noise = SubResource("FastNoiseLite_4nqmc")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_ckc44"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.025423728, 0.5762712, 0.7372881, 1)
+colors = PackedColorArray(0.59277725, 0.5104055, 0.59393376, 1, 0.99183345, 0.51, 1, 0.3764706, 1.6065241, 0.70118004, 2.130671, 0.41960785, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_o2xx4"]
+gradient = SubResource("Gradient_ckc44")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htctk"]
+shader = SubResource("Shader_chg43")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_r77uv")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/cloud_noise2 = SubResource("NoiseTexture2D_7plkq")
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0)
+shader_parameter/position_impact = 0.0
+shader_parameter/color_gardient = SubResource("GradientTexture1D_o2xx4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r77uv"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4nqmc"]
+noise = SubResource("FastNoiseLite_r77uv")
+seamless = true
+normalize = false
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7plkq"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ckc44"]
+noise = SubResource("FastNoiseLite_7plkq")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_s6tf7"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.66101694, 0.7372881, 1)
+colors = PackedColorArray(0.81, 0.5994, 0.6029099, 0, 0.99135023, 0.51393956, 1, 1, 1.603926, 0.69461787, 2.1303682, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r77uv"]
+gradient = SubResource("Gradient_s6tf7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4nqmc"]
+shader = SubResource("Shader_chg43")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_4nqmc")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/cloud_noise2 = SubResource("NoiseTexture2D_ckc44")
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0)
+shader_parameter/position_impact = 0.75
+shader_parameter/color_gardient = SubResource("GradientTexture1D_r77uv")
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource("1_3shnc")
@@ -68,6 +173,16 @@ metadata/_custom_type_script = "uid://1mxdpoyob13n"
 
 [node name="DeckEditor" parent="." instance=ExtResource("4_rif6e")]
 visible = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_htctk")
+offset_right = 1924.0
+offset_bottom = 1078.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_4nqmc")
+offset_right = 1924.0
+offset_bottom = 1078.0
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EnterLevelButton" to="." method="_on_enter_level_button_pressed"]
