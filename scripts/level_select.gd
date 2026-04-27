@@ -8,11 +8,17 @@ func _ready() -> void:
 	pass
 
 func _on_enter_level_button_pressed() -> void:
-	enter_level(preload("res://objects/enemies/wizard2.tres"))
+	print(PlayerDeckGlobal.global_enemies_defeated)
+	var to_load = preload("res://objects/enemies/wizard1.tres")
+	if PlayerDeckGlobal.global_enemies_defeated.has("First Wizard"):
+		to_load = (preload("res://objects/enemies/wizard2.tres"))
+	if PlayerDeckGlobal.global_enemies_defeated.has("Second Wizard"):
+		to_load = (preload("res://objects/enemies/wizard3.tres"))
+	print(to_load)
+	enter_level(to_load)
 
 func _on_edit_deck_button_pressed() -> void:
 	$DeckEditor.display_deck()
-
 
 func _on_tutorial_button_pressed() -> void:
 	print("changing to tutorial scene")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=10 format=3 uid="uid://2bajdsfkhttu"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=12 format=3 uid="uid://2bajdsfkhttu"]
 
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="1_k585k"]
 [ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="2_vwrxb"]
@@ -8,6 +8,8 @@
 [ext_resource type="Resource" uid="uid://caklmi2qgoqii" path="res://objects/cards/gain_haste.tres" id="6_8h33f"]
 [ext_resource type="Script" uid="uid://bu6t2p6e66o2l" path="res://resources/enemy_resource.gd" id="7_73mb4"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="7_80rgx"]
+[ext_resource type="Resource" uid="uid://cjhn5eqmh2m3x" path="res://objects/cards/fifty_fifty.tres" id="7_yoskk"]
+[ext_resource type="Resource" uid="uid://c15m7x547auup" path="res://objects/cards_passive/early_guard.tres" id="8_8h33f"]
 [ext_resource type="Texture2D" uid="uid://c7gpyd4mwuq7g" path="res://assets/textures/characters/battle/TestWizard.png" id="9_ekn2q"]
 
 [resource]
@@ -16,5 +18,5 @@ enemy_name = "First Wizard"
 health = 15
 sprite = ExtResource("9_ekn2q")
 cards = Array[ExtResource("1_k585k")]([ExtResource("2_vwrxb"), ExtResource("3_80rgx"), ExtResource("3_80rgx"), ExtResource("4_ekn2q"), ExtResource("4_ekn2q"), ExtResource("5_yoskk"), ExtResource("6_8h33f")])
-completion_rewards = [null, null]
+completion_rewards = [ExtResource("7_yoskk"), ExtResource("8_8h33f")]
 metadata/_custom_type_script = "uid://bu6t2p6e66o2l"

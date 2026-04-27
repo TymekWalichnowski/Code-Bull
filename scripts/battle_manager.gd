@@ -49,6 +49,7 @@ func setup_battle(resource: EnemyResource):
 	# 1. Setup Enemy Visuals/Stats from Resource
 	%Enemy.max_health = resource.health
 	%Enemy.current_health = resource.health
+	%Player.current_health = %Player.max_health
 	if %Enemy.entity_sprite:
 		%Enemy.entity_sprite.texture = resource.sprite
 	
@@ -375,9 +376,10 @@ func _on_battle_over(defeated_side: String):
 	board_locked = true
 	
 	if defeated_side == "Enemy":
-		# Logic for win tracking
+		# Tracks win against enemy
 		if not PlayerDeckGlobal.global_enemies_defeated.has(enemy_data.enemy_name):
 			PlayerDeckGlobal.global_enemies_defeated.append(enemy_data.enemy_name)
+			print(PlayerDeckGlobal.global_enemies_defeated)
 			grant_rewards()
 	
 	show_win_loss_ui(defeated_side)
@@ -403,7 +405,7 @@ func clear_entire_board():
 func show_win_loss_ui(side):
 	# Just a simple example, you should make a nice UI node for this
 	var label = Label.new()
-	label.text = "YOU LOSE!" if side == "Enemy" else "YOU WIN!" # If enemy died, you win
+	label.text = "YOU WIN!" if side == "Enemy" else "YOU LOSE!" # If enemy died, you win
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	label.add_theme_font_size_override("font_size", 64)

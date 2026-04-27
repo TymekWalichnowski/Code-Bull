@@ -10,7 +10,6 @@ var max_health = 10
 var max_shield = 10
 var speed: int = 5
 
-@export var side_name: String = "Player" 
 @onready var healthbar = $HealthBar
 @onready var shieldbar = $ShieldBar
 
@@ -44,7 +43,7 @@ func take_damage(damage_amount):
 	
 	if current_health <= 0:
 		current_health = 0
-		defeated.emit(side_name)
+		defeated.emit(name)
 	damage_taken.emit(damage_amount, was_shielded)
 	
 	if was_shielded:

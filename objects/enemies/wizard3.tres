@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=14 format=3 uid="uid://cqj88rnbib3y2"]
+
+[ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="1_glfof"]
+[ext_resource type="Resource" uid="uid://bbaqsl42y8og5" path="res://objects/cards/apply_burn.tres" id="2_rm2jn"]
+[ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="2_tpx5i"]
+[ext_resource type="Script" uid="uid://bu6t2p6e66o2l" path="res://resources/enemy_resource.gd" id="3_7ohr0"]
+[ext_resource type="Resource" uid="uid://cd88dyupufuki" path="res://objects/cards/draw_2.tres" id="3_xh83p"]
+[ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="4_8xg1a"]
+[ext_resource type="Resource" uid="uid://dmsx3x1g5gw78" path="res://objects/cards/quick_slash.tres" id="5_8bg56"]
+[ext_resource type="Resource" uid="uid://vg7cn4iqv4du" path="res://objects/cards/multiply.tres" id="6_acnit"]
+[ext_resource type="Resource" uid="uid://j61jj7tm3m6g" path="res://objects/cards/2_of_spades.tres" id="7_kaj50"]
+[ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="8_6sigi"]
+[ext_resource type="Resource" uid="uid://b42uqjkasts7o" path="res://objects/cards_passive/retrigger_slot.tres" id="10_o42t7"]
+[ext_resource type="Resource" uid="uid://c15m7x547auup" path="res://objects/cards_passive/early_guard.tres" id="11_jfcb0"]
+[ext_resource type="Texture2D" uid="uid://cxxbrhpsybsvx" path="res://assets/textures/characters/battle/TestWizard3.png" id="13_brs13"]
+
+[resource]
+script = ExtResource("3_7ohr0")
+enemy_name = "Third Wizard"
+health = 45
+sprite = ExtResource("13_brs13")
+cards = Array[ExtResource("1_glfof")]([ExtResource("2_rm2jn"), ExtResource("2_rm2jn"), ExtResource("3_xh83p"), ExtResource("4_8xg1a"), ExtResource("5_8bg56"), ExtResource("6_acnit"), ExtResource("7_kaj50"), ExtResource("8_6sigi"), ExtResource("6_acnit"), ExtResource("5_8bg56")])
+passive_cards = Array[ExtResource("2_tpx5i")]([ExtResource("10_o42t7"), ExtResource("11_jfcb0")])
+metadata/_custom_type_script = "uid://bu6t2p6e66o2l"
