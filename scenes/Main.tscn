@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://x0lreijkwmjp"]
+[gd_scene load_steps=78 format=3 uid="uid://x0lreijkwmjp"]
 
 [ext_resource type="Script" uid="uid://bbc4ah2uevt4o" path="res://scripts/battle_manager.gd" id="1_1iba3"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="1_1nqs0"]
@@ -52,7 +52,6 @@
 [ext_resource type="Resource" uid="uid://bvaeq6m85pfh6" path="res://objects/cards/slash_block.tres" id="46_0f1tp"]
 [ext_resource type="Resource" uid="uid://bduabeshgn0hs" path="res://objects/cards_passive/spike_armour.tres" id="49_0qimb"]
 [ext_resource type="Texture2D" uid="uid://ch7bi58m72u33" path="res://assets/textures/cards/card_Block.png" id="50_0f1tp"]
-[ext_resource type="Resource" uid="uid://c15m7x547auup" path="res://objects/cards_passive/early_guard.tres" id="52_ids8r"]
 [ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://assets/textures/cards/card_Basic.png" id="53_dyyw8"]
 [ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="53_gjpm3"]
 
@@ -470,11 +469,11 @@ z_index = 10
 anchors_preset = -1
 anchor_left = -2.019743
 anchor_top = -2.7669318
-anchor_right = -2.019743
+anchor_right = -0.66389847
 anchor_bottom = -2.7669318
-offset_left = 83.84337
+offset_left = 52.258057
 offset_top = 108.98941
-offset_right = 112.14302
+offset_right = 80.55771
 offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -498,11 +497,11 @@ z_index = 10
 anchors_preset = -1
 anchor_left = -2.019743
 anchor_top = -2.7669318
-anchor_right = -2.019743
+anchor_right = -0.6294174
 anchor_bottom = -2.7669318
-offset_left = 83.84337
+offset_left = 51.844162
 offset_top = 108.98941
-offset_right = 112.14302
+offset_right = 80.143814
 offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -589,12 +588,12 @@ z_index = 10
 anchors_preset = -1
 anchor_left = -2.019743
 anchor_top = -2.7669318
-anchor_right = -2.019743
+anchor_right = -0.06045087
 anchor_bottom = -2.7669318
-offset_left = 83.84337
-offset_top = 108.98941
-offset_right = 112.14302
-offset_bottom = 152.34868
+offset_left = 37.361454
+offset_top = 108.41739
+offset_right = 65.6611
+offset_bottom = 151.77666
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/normal_font = ExtResource("32_vua0o")
@@ -617,11 +616,11 @@ z_index = 10
 anchors_preset = -1
 anchor_left = -2.019743
 anchor_top = -2.7669318
-anchor_right = -2.019743
+anchor_right = -0.96562576
 anchor_bottom = -2.7669318
-offset_left = 83.84337
+offset_left = 60.119972
 offset_top = 108.98941
-offset_right = 112.14302
+offset_right = 88.419624
 offset_bottom = 152.34868
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -743,7 +742,7 @@ position = Vector2(150, 123)
 script = ExtResource("8_lhr70")
 card_database = ExtResource("12_yxlcp")
 starting_deck = Array[ExtResource("21_kxyth")]([ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("31_vua0o"), ExtResource("26_8cp6k"), ExtResource("45_oa6sj"), ExtResource("46_0f1tp")])
-starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("43_5grtr"), ExtResource("49_0qimb"), ExtResource("52_ids8r"), ExtResource("52_ids8r"), ExtResource("52_ids8r")])
+starting_passives = Array[ExtResource("16_gsxep")]([ExtResource("43_5grtr"), ExtResource("49_0qimb")])
 
 [node name="Sprite2D" type="Sprite2D" parent="EnemyDeck"]
 z_index = 25

@@ -1,198 +1,77 @@
-extends Node2D
+extends BaseCard
 class_name Card
-
-signal hovered
-signal hovered_off
 
 @export var card_data: CardDataResource
 @export var card_owner: String
-@export var interactable: bool = true
-
-@export var max_rotation: = 30.0
-@export var follow_speed: = 10.0
-@export var return_speed: = 7.0
 
 @export var effect_display_scene: PackedScene
 @export var tag_display_scene: PackedScene
-
 @export var texture_retrigger: Texture2D
 @export var texture_nullify: Texture2D
 
 @onready var effect_display_container = %EffectDisplayContainer
 @onready var tag_display_container = %TagDisplayContainer
 @onready var action_display_container = %ActionDisplayContainer
-
 @onready var desc_label = %ActionDescriptionLabel
-
 @onready var glow_sprite = %Glow
-@onready var debuff_sprite = %Glow 
-@onready var buff_sprite = %Glow
 @onready var effect_animation_player = %EffectPlayer
-
 @onready var visual_container = $SubViewportContainer
-
-var hovering = false
-var is_dragged = false # <-- Tracks drag state
-var original_z_index := 10
-var cards_current_slot = null
-var hand_position: Vector2 = Vector2.ZERO
 
 var card_image: Sprite2D
 var card_back_image: Sprite2D
 
-var is_preview: bool = false
-var is_inventory: bool = false
-
-
-var sounds = {
-	"place": preload("res://assets/audio/card-place-2.ogg"),
-	"pickup": preload("res://assets/audio/card-place-1.ogg"),
-	"use": preload("res://assets/audio/card-slide-2.ogg")
-}
-
 var card_id: int = 0
 var card_name: String = ""
 var retriggers: int = 0
-var nullified: int = 0 # <-- Added for effect counts
+var nullified: int = 0
+
+func _ready() -> void:
+	super._ready() # This handles the CardManager signal connections
+	card_image = %CardImage
+	card_back_image = %CardBackImage
+	
+	# CRITICAL: Tell BaseCard what to apply the shader rotation to
+	visual_nodes_to_rotate = [visual_container]
+	duplicate_materials()
+
+	if card_data:
+		_apply_visuals()
 
 func setup(data: CardDataResource, owner: String) -> void:
 	card_data = data.duplicate(true) 
 	card_owner = owner
 	card_id = card_data.id
 	card_name = card_data.display_name
-	card_image = %CardImage
-	card_back_image = %CardBackImage
 	_apply_visuals()
 
-func _ready() -> void:
-	if get_parent().has_method("connect_card_signals"):
-		get_parent().connect_card_signals(self)
-
-	card_image = %CardImage
-	card_back_image = %CardBackImage
-
-	if visual_container and visual_container.material:
-		visual_container.material = visual_container.material.duplicate()
-
-	original_z_index = z_index
-
-	if card_data:
-		_apply_visuals()
-
 func _apply_visuals():
-	if not card_data:
-		return
-	if card_data.image_texture:
-		card_image.texture = card_data.image_texture
+	if not card_data: return
+	if card_image: card_image.texture = card_data.image_texture
 	
 	if is_preview or is_inventory:
 		card_image.visible = true
 		card_back_image.visible = false
-		if card_image.material:
-			card_image.material.set_shader_parameter("y_rot", 0.0)
-			card_image.material.set_shader_parameter("x_rot", 0.0)
+	
 	update_tags_display()
 	update_action_icons_display()
 	update_hover_ui()
-
-func _process(delta: float) -> void:
-	# Use the container for the basic check
-	if not visual_container:
-		return
-
-	if is_dragged:
-		_lerp_shader_rotations(0.0, 0.0, return_speed * delta)
-		return 
-
-	var base_z = original_z_index
-	if cards_current_slot:
-		base_z = cards_current_slot.z_index + 1
-	
-	if hovering and interactable: 
-		# Calculate based on the Container's size
-		var local_mouse = visual_container.get_local_mouse_position()
-		var half = visual_container.size * 0.5
-		
-		var x_ratio = clamp(local_mouse.x / half.x - 1.0, -1.0, 1.0)
-		var y_ratio = clamp(local_mouse.y / half.y - 1.0, -1.0, 1.0)
-
-		var target_y = -x_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
-		var target_x = y_ratio * (max_rotation * 0.4 if cards_current_slot else max_rotation)
-
-		_lerp_shader_rotations(target_x, target_y, follow_speed * delta)
-		
-		if is_preview or is_inventory:
-			z_index = base_z + 10
-		else:
-			z_index = base_z + (15 if cards_current_slot else 100)
-	else:
-		_lerp_shader_rotations(0.0, 0.0, return_speed * delta)
-		z_index = base_z
-
-func _lerp_shader_rotations(tx: float, ty: float, weight: float):
-	if visual_container and visual_container.material:
-		var mat = visual_container.material
-		var current_y = mat.get_shader_parameter("y_rot")
-		var current_x = mat.get_shader_parameter("x_rot")
-		
-		mat.set_shader_parameter("y_rot", lerp(current_y, ty, weight))
-		mat.set_shader_parameter("x_rot", lerp(current_x, tx, weight))
-
-func _on_area_2d_mouse_entered() -> void:
-	if not interactable or is_dragged: 
-		return
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		return
-
-	# ONLY emit the signal. Let the CardManager decide if we actually get hovered!
-	emit_signal("hovered", self)
-	
-	# Safe fallback just in case you test a card in a scene without the CardManager
-	if not get_parent().has_method("raycast_check_for_card"):
-		hovering = true
-		update_hover_ui()
-
-func _on_area_2d_mouse_exited() -> void:
-	if not interactable:
-		return
-		
-	emit_signal("hovered_off", self)
-	
-	# Safe fallback just in case you test a card in a scene without the CardManager
-	if not get_parent().has_method("raycast_check_for_card"):
-		hovering = false
-		update_hover_ui()
-
-func play_audio(name: String) -> void:
-	if sounds.has(name):
-		$AudioStreamPlayer.stream = sounds[name]
-		$AudioStreamPlayer.play()
-	else:
-		push_warning("Sound not found: " + name)
 
 func update_hover_ui():
 	if desc_label == null or card_data == null:
 		return
 	
-	if hovering == true:
-		%TagDisplayContainer.visible = true
-	else:
-		%TagDisplayContainer.visible = false
+	# Uses 'hovering' from BaseCard
+	%TagDisplayContainer.visible = hovering
+	
 	var is_enemy_hand_card = (card_owner == "Enemy" and cards_current_slot == null)
-	var show_description = not is_enemy_hand_card or is_preview or is_inventory
-
-	%DescriptionOverlay.visible = false #change to show_description later
+	%DescriptionOverlay.visible = false 
 
 	var full_description := ""
 	var c_mult = card_data.multiplier if card_data.multiplier != 0 else 1.0
 
 	for action in card_data.actions:
-		if not action:
-			continue
-
-		# --- DESCRIPTION LOGIC ---
-		if action.description == "":
-			continue
+		if not action: continue
+		if action.description == "": continue
 
 		var a_mult = action.action_multiplier if action.action_multiplier != 0 else 1.0
 		var total_multiplier = c_mult * a_mult
@@ -205,14 +84,9 @@ func update_hover_ui():
 		else:
 			display_value = str(action.value)
 
-		var action_text = action.description.replace("[value]", display_value)
-		full_description += "- " + action_text + "\n"
+		full_description += "- " + action.description.replace("[value]", display_value) + "\n"
 
 	desc_label.text = full_description.strip_edges()
-
-	var lines = []
-	if card_data and card_data.type != "":
-		lines.append("[b]Type[/b]: " + card_data.type)
 
 func update_visuals():
 	var is_active = (retriggers > 0)
@@ -420,5 +294,10 @@ func update_action_icons_display() -> void:
 	action_display_container.position.x = (a_size_x / 2.0) - (action_display_container.size.x / 2.0)
 	action_display_container.position.y = (a_size_y / 2.0) - (action_display_container.size.y / 2.0)
 
-	# 6. VERTICAL NUDGE
-	action_display_container.position.y += 0
+func burn_away(duration):
+	var tween = create_tween().set_parallel(true)
+	%BurnContainer.material.set_shader_parameter("dissolve_value", 1.0)
+	tween.tween_property(%BurnContainer.material, "shader_parameter/dissolve_value", 0.0, duration)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN_OUT)
+	await tween.finished

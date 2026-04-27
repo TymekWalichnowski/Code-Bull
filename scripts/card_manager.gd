@@ -87,38 +87,44 @@ func on_left_click_released():
 		finish_drag()
 
 func on_hovered_over_card(card):
-	if not card.interactable or card_being_dragged != null:
+	if card_being_dragged != null:
 		return
-		
-	# NON-DESTRUCTIVE CHECK: Only accept the hover if this is truly the top-most card
+
+	# Instead of blocking, we find the actual top card under the mouse
 	var top_card = raycast_check_for_card()
-	if top_card != null and top_card != card:
-		return 
-
-	if currently_hovered_card == card:
+	
+	# If there's nothing there, or it's not a card, use the one that sent the signal
+	if top_card == null:
+		top_card = card
+	
+	if not top_card.interactable:
 		return
 
-	# If somehow hovering a different card underneath, force it off first
+	# If we are already hovering this specific card, don't restart the logic
+	if currently_hovered_card == top_card:
+		return
+
+	# Clean up previous hover
 	if currently_hovered_card != null:
 		on_hovered_off_card(currently_hovered_card)
 
-	currently_hovered_card = card
+	currently_hovered_card = top_card
 	is_hovering_on_card = true
 	
-	# Tell the card it is officially hovered (safely)
-	if "hovering" in card: card.hovering = true
-	if card.has_method("update_hover_ui"): card.update_hover_ui()
+	top_card.hovering = true
+	if top_card.has_method("update_hover_ui"):
+		top_card.update_hover_ui()
 
-	highlight_card(card, true)
-	emit_signal("hovered_over_card_signal", card)
+	highlight_card(top_card, true)
+	emit_signal("hovered_over_card_signal", top_card)
 
 func on_hovered_off_card(card):
 	if card_being_dragged != null: 
 		return
 		
-	# Tell the card it is officially no longer hovered
-	if "hovering" in card: card.hovering = false
-	if card.has_method("update_hover_ui"): card.update_hover_ui()
+	card.hovering = false
+	if card.has_method("update_hover_ui"): 
+		card.update_hover_ui()
 		
 	highlight_card(card, false)
 	
@@ -128,11 +134,11 @@ func on_hovered_off_card(card):
 
 	emit_signal("hovered_off_card_signal", card)
 	
-	# Your existing seamless fallback logic, routed safely through our new z-index check
+	# Seamless transition check
 	var new_card_hovered = raycast_check_for_card()
-	if new_card_hovered and (new_card_hovered is Card or new_card_hovered.get_class() == "PassiveCard"):
-		var is_slotted = ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null)
-		if not is_slotted:
+	if new_card_hovered and new_card_hovered is BaseCard:
+		# Only transition if it's in a hand (not a slot)
+		if not ("cards_current_slot" in new_card_hovered and new_card_hovered.cards_current_slot != null):
 			on_hovered_over_card(new_card_hovered)
 
 func highlight_card(card, hovered):
@@ -145,13 +151,14 @@ func highlight_card(card, hovered):
 		if not is_in_slot:
 			card.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
 	else:
+		# Return to their natural state
 		if is_in_slot:
 			card.scale = Vector2(SMALLER_CARD_SCALE, SMALLER_CARD_SCALE)
-		elif "PassiveCard" in card.get_class():
-			card.scale = Vector2(1.0, 1.0)
+		elif card is PassiveCard:
+			# If you want passives to have a specific scale in the hand, set it here
+			card.scale = Vector2(1.2, 1.2) 
 		else:
 			card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
-
 func raycast_check_for_card():
 	var space_state = get_world_2d().direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()

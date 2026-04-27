@@ -7,7 +7,8 @@ extends Node
 	"Magic": preload("res://assets/audio/sfx/sfx_magic.mp3"),
 	"Impact": preload("res://assets/audio/sfx/sfx_impact.mp3"),
 	"Shatter": preload("res://assets/audio/sfx/sfx_shatter.wav"),
-	"Shield Summon": preload("res://assets/audio/sfx/sfx_shield_summon.wav")
+	"Shield Summon": preload("res://assets/audio/sfx/sfx_shield_summon.wav"),
+	"Burn_Card": preload("res://assets/audio/sfx/sfx_fire.mp3")
 }
 
 func play_sfx(sfx_name: String):

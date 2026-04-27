@@ -3,6 +3,7 @@ extends Node
 signal battle_click_received
 
 @onready var action_manager = %ActionManager
+@onready var audio_manager = %AudioManager
 @onready var animation_manager = %AnimationManager
 @onready var passive_manager = %PassiveManager
 @onready var token_manager = %TokenManager 
@@ -245,7 +246,7 @@ func run_activation_phase():
 						await wait(0.6)
 			
 			collect_used_card(card)
-			await wait(0.3)
+			await wait(1.0)
 
 		if slot_index < player_slots.size(): player_slots[slot_index].clear_buffs()
 		if slot_index < enemy_slots.size(): enemy_slots[slot_index].clear_buffs()
@@ -268,6 +269,8 @@ func move_card_to_battle_point(card) -> Tween:
 
 func collect_used_card(card):
 	if card == null: return
+	audio_manager.play_sfx("Burn_Card")
+	await card.burn_away(0.6)
 	if card.cards_current_slot:
 		card.cards_current_slot.remove_card(false)
 	card.retriggers = 0
