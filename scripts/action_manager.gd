@@ -81,8 +81,7 @@ func execute_card_action(card: Card, action_index: int):
 			if not battle_manager.battle_active: return # Check if that hit ended the game
 			
 			if battle_manager.has_method("trigger_passives"):
-				# We send the clean "On_Hit_Taken" and tell the manager WHICH side took the hit
-				await battle_manager.trigger_passives("On_Hit_Taken", -1, hit_side)
+				await battle_manager.trigger_passives("On_Hit_Taken", -1, hit_side) # May have to change if dodges get added
 		"Shield":
 			self_target.gain_shield(final_value)
 		"Multiply_Next_Card":
