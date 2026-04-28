@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="PassiveCardResource" load_steps=3 format=3 uid="uid://c15m7x547auup"]
 
-[ext_resource type="Texture2D" uid="uid://ewgjxdeiba1u" path="res://Assets/textures/cards_passive/passive_Initial_Shield.png" id="1_nou67"]
+[ext_resource type="Texture2D" uid="uid://t4secljyyb8g" path="res://Assets/textures/cards_passive/passive_Initial_Shield.png" id="1_nou67"]
 [ext_resource type="Script" uid="uid://boekostu7upwt" path="res://resources/passive_card_resource.gd" id="2_d3h0q"]
 
 [resource]
 script = ExtResource("2_d3h0q")
+card_name = "Early Guard"
 card_image = ExtResource("1_nou67")
 description = "Summon [value] shield on activation phase start"
 trigger_condition = "On_Turn_Start"

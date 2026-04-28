@@ -308,6 +308,7 @@ texture_filter = 1
 position = Vector2(961.50006, 541.00006)
 scale = Vector2(3.99375, 3.9925928)
 texture = ExtResource("40_8cp6k")
+metadata/_edit_lock_ = true
 
 [node name="BattleManager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -438,10 +439,10 @@ text = "Turn:"
 [node name="BoardStateLabel" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
 visible = false
-offset_left = 1380.0
-offset_top = 555.0
-offset_right = 1890.0
-offset_bottom = 734.0
+offset_left = 1580.0
+offset_top = 21.0
+offset_right = 2090.0
+offset_bottom = 200.0
 theme_override_font_sizes/normal_font_size = 16
 text = "0"
 

@@ -4,23 +4,23 @@
 [ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="2_8ntot"]
 
 [node name="PopUpGlobal" type="CanvasLayer"]
-layer = 2
+layer = 3
 script = ExtResource("1_6la13")
 
 [node name="Panel" type="Panel" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 100)
-offset_left = 1307.0
-offset_top = 520.0
-offset_right = 1932.0
-offset_bottom = 723.0
+offset_left = 1318.0
+offset_top = 415.0
+offset_right = 1943.0
+offset_bottom = 515.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("2_8ntot")
 
 [node name="Button" type="Button" parent="Panel"]
 unique_name_in_owner = true
-z_index = 25
+z_index = 30
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 2
@@ -40,6 +40,7 @@ offset_left = 29.0
 offset_top = 8.0
 offset_right = 607.0
 offset_bottom = 493.0
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2

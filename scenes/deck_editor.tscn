@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckr6bnvp677wi"]
 
 [ext_resource type="Script" uid="uid://so0wlr30j7ig" path="res://scripts/deck_editor.gd" id="1_g0c65"]
-[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://Assets/themes/Basic_Theme.tres" id="2_0wi45"]
+[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="2_0wi45"]
 
 [node name="DeckEditor" type="CanvasLayer"]
 script = ExtResource("1_g0c65")
@@ -11,6 +11,7 @@ offset_left = 1765.0
 offset_top = 22.0
 offset_right = 1863.0
 offset_bottom = 83.0
+theme = ExtResource("2_0wi45")
 text = "Close"
 
 [node name="Panel" type="Panel" parent="."]
@@ -23,6 +24,15 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("2_0wi45")
+
+[node name="ScrollContainerDeck" type="ScrollContainer" parent="Panel"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 756.0
+offset_bottom = 430.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
 texture_filter = 1
@@ -38,15 +48,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_0wi45")
 text = "Current Deck"
-
-[node name="ScrollContainerDeck" type="ScrollContainer" parent="Panel"]
-unique_name_in_owner = true
-z_index = 1
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 756.0
-offset_bottom = 430.0
 
 [node name="Panel2" type="Panel" parent="."]
 z_index = -1
@@ -84,6 +85,7 @@ theme = ExtResource("2_0wi45")
 text = "Inventory Deck"
 
 [node name="Panel3" type="Panel" parent="."]
+z_index = -1
 offset_left = 230.0
 offset_top = 503.0
 offset_right = 991.0
@@ -92,6 +94,15 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("2_0wi45")
+
+[node name="ScrollContainerPassives" type="ScrollContainer" parent="Panel3"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 756.0
+offset_bottom = 430.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel3"]
 texture_filter = 1
@@ -107,15 +118,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_0wi45")
 text = "Current Passives"
-
-[node name="ScrollContainerPassives" type="ScrollContainer" parent="Panel3"]
-unique_name_in_owner = true
-z_index = 1
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 756.0
-offset_bottom = 430.0
 
 [node name="Panel4" type="Panel" parent="."]
 z_index = -1

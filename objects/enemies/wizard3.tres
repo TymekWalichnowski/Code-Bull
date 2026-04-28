@@ -17,7 +17,7 @@
 [resource]
 script = ExtResource("3_7ohr0")
 enemy_name = "Third Wizard"
-health = 45
+health = 40
 sprite = ExtResource("13_brs13")
 cards = Array[ExtResource("1_glfof")]([ExtResource("2_rm2jn"), ExtResource("2_rm2jn"), ExtResource("3_xh83p"), ExtResource("4_8xg1a"), ExtResource("5_8bg56"), ExtResource("6_acnit"), ExtResource("7_kaj50"), ExtResource("8_6sigi"), ExtResource("6_acnit"), ExtResource("5_8bg56")])
 passive_cards = Array[ExtResource("2_tpx5i")]([ExtResource("10_o42t7"), ExtResource("11_jfcb0")])

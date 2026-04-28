@@ -270,6 +270,7 @@ func run_activation_phase():
 			for run_idx in range(runs):
 				if not battle_active: break 	# CHECKING IF DEAD: Before a retrigger
 				if run_idx > 0: # Declare if retrigger
+					%AudioManager.play_sfx("Magic")
 					await card.declare_effect("Retrigger!")
 				# LOOP THROUGH ACTIONS
 				for action_idx in range(card.card_data.actions.size()): 
@@ -392,6 +393,7 @@ func _on_battle_over(defeated_side: String):
 			print(PlayerDeckGlobal.global_enemies_defeated)
 			PopUpGlobal.show_pop("Enemy Defeated! New Rewards in Inventory!")
 			grant_rewards()
+		
 	
 	show_win_loss_ui(defeated_side)
 
@@ -415,11 +417,14 @@ func clear_entire_board():
 
 func show_win_loss_ui(side):
 	# Just a simple example, you should make a nice UI node for this
-	var label = Label.new()
-	label.text = "YOU WIN!" if side == "Enemy" else "YOU LOSE!" # If enemy died, you win
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	label.add_theme_font_size_override("font_size", 64)
-	add_child(label)
+	#var label = Label.new()
+	#label.text = "YOU WIN!" if side == "Enemy" else "YOU LOSE!" # If enemy died, you win
+	#label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	#label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	#label.add_theme_font_size_override("font_size", 64)
+	#add_child(label)
 	await get_tree().create_timer(5.0).timeout
-	get_tree().change_scene_to_file("res://scenes/level_select.tscn")
+	if PlayerDeckGlobal.global_enemies_defeated.has("Third Wizard"):
+		get_tree().change_scene_to_file("res://scenes/victory_screen.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/level_select.tscn")
