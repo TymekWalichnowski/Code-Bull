@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
 [ext_resource type="Script" uid="uid://1mxdpoyob13n" path="res://addons/sprouty_dialogs/nodes/dialog_player.gd" id="2_2epne"]
-[ext_resource type="Texture2D" uid="uid://cekfd62mjh1nt" path="res://Assets/textures/UI/title.png" id="2_chg43"]
-[ext_resource type="PackedScene" uid="uid://x0lreijkwmjp" path="res://scenes/main.tscn" id="2_r77uv"]
+[ext_resource type="Texture2D" uid="uid://cekfd62mjh1nt" path="res://assets/textures/UI/title.png" id="2_chg43"]
+[ext_resource type="PackedScene" uid="uid://x0lreijkwmjp" path="res://scenes/Main.tscn" id="2_r77uv"]
 [ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://assets/dialogue/dialogues/test2.tres" id="3_2epne"]
 [ext_resource type="PackedScene" uid="uid://ckr6bnvp677wi" path="res://scenes/deck_editor.tscn" id="4_rif6e"]
 
