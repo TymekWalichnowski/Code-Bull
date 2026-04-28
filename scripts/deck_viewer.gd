@@ -80,6 +80,5 @@ func _input(event):
 func hide_deck():
 	hide()
 
-
 func _on_close_button_pressed() -> void:
 	hide_deck()

@@ -380,6 +380,7 @@ func _on_battle_over(defeated_side: String):
 		if not PlayerDeckGlobal.global_enemies_defeated.has(enemy_data.enemy_name):
 			PlayerDeckGlobal.global_enemies_defeated.append(enemy_data.enemy_name)
 			print(PlayerDeckGlobal.global_enemies_defeated)
+			PopUpGlobal.show_pop("Enemy Defeated! New Rewards in Inventory!")
 			grant_rewards()
 	
 	show_win_loss_ui(defeated_side)

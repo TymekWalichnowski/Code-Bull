@@ -1,12 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://b85gmj83uys81"]
+[gd_scene load_steps=17 format=3 uid="uid://dft2ijqghn8hl"]
 
-[ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
-[ext_resource type="Script" uid="uid://1mxdpoyob13n" path="res://addons/sprouty_dialogs/nodes/dialog_player.gd" id="2_2epne"]
-[ext_resource type="Texture2D" uid="uid://cekfd62mjh1nt" path="res://Assets/textures/UI/title.png" id="2_chg43"]
-[ext_resource type="PackedScene" uid="uid://x0lreijkwmjp" path="res://scenes/main.tscn" id="2_r77uv"]
-[ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://assets/dialogue/dialogues/test2.tres" id="3_2epne"]
-[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="3_4nqmc"]
-[ext_resource type="PackedScene" uid="uid://ckr6bnvp677wi" path="res://scenes/deck_editor.tscn" id="4_rif6e"]
+[ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="1_ujlt3"]
 
 [sub_resource type="Shader" id="Shader_chg43"]
 code = "shader_type canvas_item;
@@ -45,30 +39,30 @@ void fragment() {
 
 "
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_chg43"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kh3bl"]
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r77uv"]
-noise = SubResource("FastNoiseLite_chg43")
+noise = SubResource("FastNoiseLite_kh3bl")
 seamless = true
 normalize = false
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_4nqmc"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ujlt3"]
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7plkq"]
-noise = SubResource("FastNoiseLite_4nqmc")
+noise = SubResource("FastNoiseLite_ujlt3")
 seamless = true
 
-[sub_resource type="Gradient" id="Gradient_ckc44"]
+[sub_resource type="Gradient" id="Gradient_wdgif"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0.025423728, 0.5762712, 0.7372881, 1)
 colors = PackedColorArray(0.59277725, 0.5104055, 0.59393376, 1, 0.99183345, 0.51, 1, 0.3764706, 1.6065241, 0.70118004, 2.130671, 0.41960785, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_o2xx4"]
-gradient = SubResource("Gradient_ckc44")
+gradient = SubResource("Gradient_wdgif")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_htctk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pfcnd"]
 shader = SubResource("Shader_chg43")
 shader_parameter/pixelation = Vector2(256, 256)
 shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_r77uv")
@@ -79,30 +73,30 @@ shader_parameter/center_pos = Vector2(0.5, 0)
 shader_parameter/position_impact = 0.0
 shader_parameter/color_gardient = SubResource("GradientTexture1D_o2xx4")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_r77uv"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rixwf"]
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4nqmc"]
-noise = SubResource("FastNoiseLite_r77uv")
+noise = SubResource("FastNoiseLite_rixwf")
 seamless = true
 normalize = false
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7plkq"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ll51u"]
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ckc44"]
-noise = SubResource("FastNoiseLite_7plkq")
+noise = SubResource("FastNoiseLite_ll51u")
 seamless = true
 
-[sub_resource type="Gradient" id="Gradient_s6tf7"]
+[sub_resource type="Gradient" id="Gradient_1juoc"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.66101694, 0.7372881, 1)
 colors = PackedColorArray(0.81, 0.5994, 0.6029099, 0, 0.99135023, 0.51393956, 1, 1, 1.603926, 0.69461787, 2.1303682, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_r77uv"]
-gradient = SubResource("Gradient_s6tf7")
+gradient = SubResource("Gradient_1juoc")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4nqmc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wbi6c"]
 shader = SubResource("Shader_chg43")
 shader_parameter/pixelation = Vector2(256, 256)
 shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_4nqmc")
@@ -113,82 +107,29 @@ shader_parameter/center_pos = Vector2(0.5, 0)
 shader_parameter/position_impact = 0.75
 shader_parameter/color_gardient = SubResource("GradientTexture1D_r77uv")
 
-[node name="LevelSelect" type="Node2D"]
-script = ExtResource("1_3shnc")
-main_battle_scene = ExtResource("2_r77uv")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
-texture_filter = 1
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.521
-anchor_top = 0.5
-anchor_right = 0.521
-anchor_bottom = 0.5
-offset_left = -180.32007
-offset_top = -94.0
-offset_right = -86.32007
-offset_bottom = -28.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3, 3)
-theme = ExtResource("3_4nqmc")
-
-[node name="TutorialButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
-layout_mode = 2
-text = "Tutorial"
-
-[node name="EnterLevelButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = " Enter Level "
-
-[node name="EditDeckButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = " Edit Deck "
-
-[node name="Title" type="Sprite2D" parent="CanvasLayer"]
-texture_filter = 1
-position = Vector2(970.0001, 171.00003)
-scale = Vector2(4.7994013, 4.7994013)
-texture = ExtResource("2_chg43")
-
-[node name="DialogPlayer" type="Node" parent="."]
-script = ExtResource("2_2epne")
-_dialog_data_uid = 552219111207196902
-_dialog_file_name = "test2"
-_dialog_data = ExtResource("3_2epne")
-_start_id = "FIRST"
-_play_on_ready = false
-_destroy_on_end = true
-_print_debug = false
-metadata/_custom_type_script = "uid://1mxdpoyob13n"
-
-[node name="DeckEditor" parent="." instance=ExtResource("4_rif6e")]
-visible = false
+[node name="VictoryScreen" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_htctk")
+material = SubResource("ShaderMaterial_pfcnd")
 offset_right = 1924.0
 offset_bottom = 1078.0
 
 [node name="ColorRect2" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_4nqmc")
+visible = false
+material = SubResource("ShaderMaterial_wbi6c")
 offset_right = 1924.0
 offset_bottom = 1078.0
 
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EnterLevelButton" to="." method="_on_enter_level_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EditDeckButton" to="." method="_on_edit_deck_button_pressed"]
+[node name="Label" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 223.0
+offset_right = 1922.0
+offset_bottom = 897.0
+theme = ExtResource("1_ujlt3")
+theme_override_constants/outline_size = 70
+theme_override_font_sizes/font_size = 114
+text = "YOU HAVE BEATEN EVERY OPPONENT
+AND COMPLETED THE DEMO!
+
+CONGRATULATIONS!"
+horizontal_alignment = 1

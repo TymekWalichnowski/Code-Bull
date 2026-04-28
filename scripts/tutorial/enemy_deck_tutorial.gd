@@ -1,10 +1,12 @@
 extends "res://scripts/enemy_deck.gd"
 
+@export var starting_deck_tutorial: Array[CardDataResource]
+
 func prepare_deck() -> void:
-	if starting_deck.is_empty():
+	if starting_deck_tutorial.is_empty():
 		push_warning("Enemy starting deck is empty!")
 	
-	active_deck = starting_deck.duplicate()
+	active_deck = starting_deck_tutorial.duplicate()
 	$RichTextLabel.text = str(active_deck.size())
 
 func draw_card():

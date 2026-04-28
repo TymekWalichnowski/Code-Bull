@@ -1,6 +1,14 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://copdfirsknxh0"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://copdfirsknxh0"]
 
 [ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://assets/Fonts/twstd-roots.ttf" id="1_m8fcl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqm1o"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqwi5"]
 bg_color = Color(0, 0, 0, 1)
@@ -13,4 +21,6 @@ anti_aliasing = false
 [resource]
 default_font = ExtResource("1_m8fcl")
 default_font_size = 24
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_aqm1o")
 Panel/styles/panel = SubResource("StyleBoxFlat_gqwi5")

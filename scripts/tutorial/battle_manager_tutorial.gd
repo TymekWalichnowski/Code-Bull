@@ -1,5 +1,6 @@
 extends "res://scripts/battle_manager.gd"
 
+const STARTING_HEALTH = 10
 func _ready() -> void:
 	battle_timer.one_shot = true
 	battle_timer.wait_time = 0.2
@@ -46,6 +47,8 @@ func advance_turn():
 		slot_limit = 3
 	
 	setup_active_slots(slot_limit)
+	action_manager.set_slot_amount(slot_limit)
+	animation_manager.set_slot_amount(slot_limit)
 
 func setup_active_slots(limit: int):
 	player_slots.clear()

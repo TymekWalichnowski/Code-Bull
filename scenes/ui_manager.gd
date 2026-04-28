@@ -78,7 +78,7 @@ func _update_panel_content(card):
 			t_ui.get_node("%TagTitle").text = tag.tag_name
 			t_ui.get_node("%TagDescription").text = tag.description
 
-	# If it's a Passive Card
+# If it's a Passive Card
 	elif card is PassiveCard:
 		card_title_label.text = card.data.card_name
 		if card.data.card_image:
@@ -89,10 +89,16 @@ func _update_panel_content(card):
 		lbl.fit_content = true
 		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
-		# Replace [value] with the passive card's value
+		# 1. Handle Value replacement
 		var val_string = str(card.data.value) if fmod(card.data.value, 1.0) != 0 else str(int(card.data.value))
-		lbl.text = card.data.description.replace("[value]", val_string)
+		var final_text = card.data.description.replace("[value]", val_string)
 		
+		# 2. Handle Slot replacement 
+		# We add 1 because code starts at 0, but players start at 1.
+		var slot_string = str(card.data.target_slot) 
+		final_text = final_text.replace("[slot]", slot_string)
+		
+		lbl.text = final_text
 		desc_container.add_child(lbl)
 
 func _animate_panel(show: bool):
