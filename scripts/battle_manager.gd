@@ -162,6 +162,7 @@ func _on_end_turn_button_pressed() -> void:
 	$"../EndTurnButton".visible = false
 	board_locked = true
 	
+	await wait(0.3)
 	await run_activation_phase()
 	
 	# Fix: If the battle ended during the activation phase, stop everything right here.
@@ -232,58 +233,67 @@ func wait(wait_time):
 	await battle_timer.timeout
 
 func run_activation_phase():
+	# FIND AMOUNT OF SLOTS AND WHAT SIDE GOES FIRST
 	var slot_count = max(player_slots.size(), enemy_slots.size())
 	player_has_initiative = (%Player.speed >= %Enemy.speed)
-	
-	await wait(0.4)
-	
-	for slot_index in range(slot_count):
+
+	# LOOP THROUGH CARD SLOTS
+	for slot_index in range(slot_count): 
 		if not battle_active: break 	# CHECKING IF DEAD: Before a new slot starts
 		var order = ["Player", "Enemy"] if player_has_initiative else ["Enemy", "Player"]
 		await trigger_passives("On_Slot_Start", slot_index)
 		await trigger_tokens("On_Slot_Start")
 		
-		for side in order:
+		# LOOP THROUGH PLAYER/ENEMY CARDS ON CURRENT SLOT
+		for side in order: 
 			if not battle_active: break 	# CHECKING IF DEAD: Before a specific side acts
+			
 			var active_set = player_slots if side == "Player" else enemy_slots
-			if slot_index >= active_set.size(): continue
+			if slot_index >= active_set.size(): continue # Skips to next iteration if current index is over its side's limit
 			
 			var slot = active_set[slot_index]
 			var card = slot.card
-			
-			if not card: continue
+			if not card: continue # Skips to next iteration if no card in current slot
 			
 			await move_card_to_battle_point(card).finished
+			await wait(0.3)
 			
-			# Nullified card check
-			if card.nullified > 0:
+			if card.nullified > 0: # Nullified card check
 				card.nullified = 0
 				await card.declare_effect("Nullified!")
 				collect_used_card(card) 
 				await wait(0.3)
 				continue
-				
+			
+			# LOOP THROUGH ACTIVATIONS
 			var runs = 1 + card.retriggers
 			for run_idx in range(runs):
 				if not battle_active: break 	# CHECKING IF DEAD: Before a retrigger
-				if run_idx > 0:
+				if run_idx > 0: # Declare if retrigger
 					await card.declare_effect("Retrigger!")
-				for action_idx in range(card.card_data.actions.size()):
+				# LOOP THROUGH ACTIONS
+				for action_idx in range(card.card_data.actions.size()): 
 					if not battle_active: break 	# CHECKING IF DEAD: Before an action
 					if card.card_data.actions[action_idx] != null:
-						await action_manager.execute_card_action(card, action_idx)
+						await action_manager.execute_card_action(card, action_idx) # CALLING ACTION MANAGER: Handles card actions
 						await wait(0.6)
 			
 			collect_used_card(card)
 			await wait(1.0)
-		if not battle_active: # Fix: If someone died during the attack, immediately clean up and EXIT.
+		
+		if not battle_active: # CHECKING IF DEAD
 			clear_entire_board()
 			return
+		
 		if slot_index < player_slots.size(): player_slots[slot_index].clear_buffs()
 		if slot_index < enemy_slots.size(): enemy_slots[slot_index].clear_buffs()
 		reset_enemy_slots()
 		await wait(0.6)
-	if not battle_active: clear_entire_board()  # DEAD: do cleanup
+
+	# PLAYER/ENEMY DEAD: do cleanup
+	if not battle_active: 
+		clear_entire_board()  
+	
 	# Making slots visible again
 	for slot in player_slots:
 		slot.visible = true

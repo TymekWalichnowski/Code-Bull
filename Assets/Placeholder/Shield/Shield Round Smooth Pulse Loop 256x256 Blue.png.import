@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://2wosjd0ph1ve"
-path="res://.godot/imported/Shield Round Smooth Pulse Loop 256x256 Blue.png-666697bc79042f15d5452cc8d8c9f68d.ctex"
+path="res://.godot/imported/Shield Round Smooth Pulse Loop 256x256 Blue.png-9de8114551540fd1c61e26724a53ac23.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder/shield/Shield Round Smooth Pulse Loop 256x256 Blue.png"
-dest_files=["res://.godot/imported/Shield Round Smooth Pulse Loop 256x256 Blue.png-666697bc79042f15d5452cc8d8c9f68d.ctex"]
+source_file="res://assets/placeholder/Shield/Shield Round Smooth Pulse Loop 256x256 Blue.png"
+dest_files=["res://.godot/imported/Shield Round Smooth Pulse Loop 256x256 Blue.png-9de8114551540fd1c61e26724a53ac23.ctex"]
 
 [params]
 

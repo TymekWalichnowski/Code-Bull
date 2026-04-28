@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bh3psqqmlfgj"
-path="res://.godot/imported/Shield Round Smooth Scan Loop V2 256x256 Blue.png-35bf6fd2f5799143562286963cad6b3a.ctex"
+path="res://.godot/imported/Shield Round Smooth Scan Loop V2 256x256 Blue.png-d79324da01450402f8eed2c77ceedf08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder/shield/Shield Round Smooth Scan Loop V2 256x256 Blue.png"
-dest_files=["res://.godot/imported/Shield Round Smooth Scan Loop V2 256x256 Blue.png-35bf6fd2f5799143562286963cad6b3a.ctex"]
+source_file="res://assets/placeholder/Shield/Shield Round Smooth Scan Loop V2 256x256 Blue.png"
+dest_files=["res://.godot/imported/Shield Round Smooth Scan Loop V2 256x256 Blue.png-d79324da01450402f8eed2c77ceedf08.ctex"]
 
 [params]
 
