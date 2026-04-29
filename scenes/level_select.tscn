@@ -2,11 +2,26 @@
 
 [ext_resource type="Script" uid="uid://c62exnl6322i6" path="res://scripts/level_select.gd" id="1_3shnc"]
 [ext_resource type="Script" uid="uid://1mxdpoyob13n" path="res://addons/sprouty_dialogs/nodes/dialog_player.gd" id="2_2epne"]
-[ext_resource type="Texture2D" uid="uid://cekfd62mjh1nt" path="res://assets/textures/ui/title.png" id="2_chg43"]
+[ext_resource type="Texture2D" uid="uid://cekfd62mjh1nt" path="res://assets/textures/UI/title.png" id="2_chg43"]
 [ext_resource type="PackedScene" uid="uid://x0lreijkwmjp" path="res://scenes/main.tscn" id="2_r77uv"]
 [ext_resource type="Resource" uid="uid://h4q76dp8dap7" path="res://assets/dialogue/dialogues/test2.tres" id="3_2epne"]
 [ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="3_4nqmc"]
 [ext_resource type="PackedScene" uid="uid://ckr6bnvp677wi" path="res://scenes/deck_editor.tscn" id="4_rif6e"]
+
+[sub_resource type="Animation" id="Animation_7plkq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(970.0001, 171.00003)]
+}
 
 [sub_resource type="Animation" id="Animation_4nqmc"]
 resource_name = "float"
@@ -23,21 +38,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.5, 0.5, 0.5),
 "update": 0,
 "values": [Vector2(970, 180), Vector2(970, 190), Vector2(970, 180)]
-}
-
-[sub_resource type="Animation" id="Animation_7plkq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(970.0001, 171.00003)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ckc44"]

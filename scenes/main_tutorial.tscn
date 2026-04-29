@@ -1,6 +1,6 @@
 [gd_scene load_steps=77 format=3 uid="uid://c38kvg55nkyql"]
 
-[ext_resource type="Texture2D" uid="uid://dcf5bud4j5uml" path="res://Assets/textures/backgrounds/temp_bg.png" id="1_reqaw"]
+[ext_resource type="Texture2D" uid="uid://dcf5bud4j5uml" path="res://assets/textures/backgrounds/temp_bg.png" id="1_reqaw"]
 [ext_resource type="Script" uid="uid://l7sm87xfopyv" path="res://scripts/tutorial/battle_manager_tutorial.gd" id="2_4nk04"]
 [ext_resource type="Script" uid="uid://bhofib52ahbgp" path="res://scripts/globals/audio_manager.gd" id="3_ma4ks"]
 [ext_resource type="Script" uid="uid://cjexhbgk2ejnc" path="res://scripts/action_manager.gd" id="4_hcf35"]
@@ -9,16 +9,16 @@
 [ext_resource type="Resource" uid="uid://chxqxw3y3ikeg" path="res://objects/tokens/haste.tres" id="7_qmaf8"]
 [ext_resource type="Script" uid="uid://dj8fic1vtvfmr" path="res://scripts/animation_manager.gd" id="8_3de2j"]
 [ext_resource type="PackedScene" uid="uid://c2gj3tp3iihc0" path="res://scenes/damage_numbers.tscn" id="9_3uqps"]
-[ext_resource type="Texture2D" uid="uid://lohtkmt5yy4j" path="res://Assets/Placeholder/Slash/Classic/2/Classic_07.png" id="10_x2flm"]
-[ext_resource type="Texture2D" uid="uid://c0t8oskuuv5ho" path="res://Assets/Placeholder/Slash/Classic/2/Classic_08.png" id="11_600n0"]
-[ext_resource type="Texture2D" uid="uid://b3r5s5su4iqyy" path="res://Assets/Placeholder/Slash/Classic/2/Classic_09.png" id="12_6b5dg"]
-[ext_resource type="Texture2D" uid="uid://cr47futmi22o1" path="res://Assets/Placeholder/Slash/Classic/2/Classic_10.png" id="13_tf8wf"]
-[ext_resource type="Texture2D" uid="uid://duekuxdcjdygo" path="res://Assets/Placeholder/Slash/Classic/2/Classic_11.png" id="14_kpgve"]
-[ext_resource type="Texture2D" uid="uid://bpuepjtlrbw1y" path="res://Assets/Placeholder/Slash/Classic/2/Classic_12.png" id="15_bursp"]
-[ext_resource type="Texture2D" uid="uid://3u77kih4ooxx" path="res://Assets/textures/effects/multiply_divide_sheet.png" id="16_5gj27"]
-[ext_resource type="Texture2D" uid="uid://denyrsi4fupbg" path="res://Assets/Placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="17_w7ihn"]
-[ext_resource type="Texture2D" uid="uid://sd24i3rlcxr7" path="res://Assets/textures/effects/wip_sheet.png" id="18_ut3ml"]
-[ext_resource type="Texture2D" uid="uid://c7gpyd4mwuq7g" path="res://Assets/textures/characters/battle/TestWizard.png" id="19_2ej4q"]
+[ext_resource type="Texture2D" uid="uid://lohtkmt5yy4j" path="res://assets/placeholder/Slash/Classic/2/Classic_07.png" id="10_x2flm"]
+[ext_resource type="Texture2D" uid="uid://c0t8oskuuv5ho" path="res://assets/placeholder/Slash/Classic/2/Classic_08.png" id="11_600n0"]
+[ext_resource type="Texture2D" uid="uid://b3r5s5su4iqyy" path="res://assets/placeholder/Slash/Classic/2/Classic_09.png" id="12_6b5dg"]
+[ext_resource type="Texture2D" uid="uid://cr47futmi22o1" path="res://assets/placeholder/Slash/Classic/2/Classic_10.png" id="13_tf8wf"]
+[ext_resource type="Texture2D" uid="uid://duekuxdcjdygo" path="res://assets/placeholder/Slash/Classic/2/Classic_11.png" id="14_kpgve"]
+[ext_resource type="Texture2D" uid="uid://bpuepjtlrbw1y" path="res://assets/placeholder/Slash/Classic/2/Classic_12.png" id="15_bursp"]
+[ext_resource type="Texture2D" uid="uid://3u77kih4ooxx" path="res://assets/textures/effects/multiply_divide_sheet.png" id="16_5gj27"]
+[ext_resource type="Texture2D" uid="uid://denyrsi4fupbg" path="res://assets/placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="17_w7ihn"]
+[ext_resource type="Texture2D" uid="uid://sd24i3rlcxr7" path="res://assets/textures/effects/wip_sheet.png" id="18_ut3ml"]
+[ext_resource type="Texture2D" uid="uid://c7gpyd4mwuq7g" path="res://assets/textures/characters/battle/TestWizard.png" id="19_2ej4q"]
 [ext_resource type="Script" uid="uid://bej4mcopqs30m" path="res://scripts/passive_manager.gd" id="20_gb5y2"]
 [ext_resource type="Script" uid="uid://ccry32ril1ham" path="res://scripts/token_manager.gd" id="21_iq5hn"]
 [ext_resource type="Script" uid="uid://b674wkdg31lgb" path="res://scenes/ui_manager.gd" id="22_ovecw"]
@@ -31,17 +31,17 @@
 [ext_resource type="Script" uid="uid://vtlx5pl23ejt" path="res://scripts/enemy_hand.gd" id="29_ogf45"]
 [ext_resource type="Script" uid="uid://b6je6ojbcix4g" path="res://scripts/tutorial/status_tutorial.gd" id="30_tnlbo"]
 [ext_resource type="Script" uid="uid://bvwyqdy58i6l3" path="res://scripts/status.gd" id="30_xf5uu"]
-[ext_resource type="Texture2D" uid="uid://bal0ulvr1uq47" path="res://Assets/textures/UI/health_holder.png" id="31_yrk2j"]
-[ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://Assets/Fonts/twstd-roots.ttf" id="32_bnr8e"]
-[ext_resource type="Texture2D" uid="uid://biw1vwrv8i16v" path="res://Assets/textures/UI/shield_holder.png" id="33_3wlx7"]
-[ext_resource type="Texture2D" uid="uid://3f77t35lnb27" path="res://Assets/textures/UI/speed_holder.png" id="34_nbf03"]
-[ext_resource type="Texture2D" uid="uid://dmvb6ntrbgneu" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="35_01rqh"]
-[ext_resource type="Texture2D" uid="uid://cww3k87gy8sbh" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="36_0gens"]
-[ext_resource type="Texture2D" uid="uid://uul7k1m6w20t" path="res://Assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="37_trxra"]
+[ext_resource type="Texture2D" uid="uid://bal0ulvr1uq47" path="res://assets/textures/UI/health_holder.png" id="31_yrk2j"]
+[ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://assets/fonts/twstd-roots.ttf" id="32_bnr8e"]
+[ext_resource type="Texture2D" uid="uid://biw1vwrv8i16v" path="res://assets/textures/UI/shield_holder.png" id="33_3wlx7"]
+[ext_resource type="Texture2D" uid="uid://3f77t35lnb27" path="res://assets/textures/UI/speed_holder.png" id="34_nbf03"]
+[ext_resource type="Texture2D" uid="uid://dmvb6ntrbgneu" path="res://assets/textures/UI/most rounded/progress bar most rounded progress tintable grey.png" id="35_01rqh"]
+[ext_resource type="Texture2D" uid="uid://cww3k87gy8sbh" path="res://assets/textures/UI/most rounded/progress bar most rounded progress red.png" id="36_0gens"]
+[ext_resource type="Texture2D" uid="uid://uul7k1m6w20t" path="res://assets/textures/UI/most rounded/progress bar most rounded progress blue.png" id="37_trxra"]
 [ext_resource type="Script" uid="uid://kdbdb2js88gk" path="res://scripts/token_container.gd" id="38_h2p3e"]
 [ext_resource type="Script" uid="uid://ds6u02yualkok" path="res://scripts/tutorial/player_deck_tutorial.gd" id="39_4nk04"]
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="40_agtn4"]
-[ext_resource type="Texture2D" uid="uid://b34f3olifyr8v" path="res://Assets/textures/Cards/card_back.png" id="41_6ophy"]
+[ext_resource type="Texture2D" uid="uid://b34f3olifyr8v" path="res://assets/textures/cards/card_back.png" id="41_6ophy"]
 [ext_resource type="Resource" uid="uid://cjd6fixpm2dsw" path="res://objects/cards/block.tres" id="41_q26yp"]
 [ext_resource type="Script" uid="uid://bj62dwc26u5jp" path="res://scripts/passive_hand.gd" id="42_ptdxi"]
 [ext_resource type="Script" uid="uid://cyhswfmol7iiu" path="res://scripts/tutorial/enemy_deck_tutorial.gd" id="43_4nk04"]
@@ -49,9 +49,9 @@
 [ext_resource type="Script" uid="uid://cfssthidojyly" path="res://resources/card_data_resource.gd" id="44_d5ifq"]
 [ext_resource type="Resource" uid="uid://c23im5mgbw7og" path="res://objects/cards/double_hit.tres" id="44_reqaw"]
 [ext_resource type="Resource" uid="uid://v2y7mde1tof" path="res://objects/cards/sword.tres" id="45_4nk04"]
-[ext_resource type="Texture2D" uid="uid://ch7bi58m72u33" path="res://Assets/textures/Cards/card_Block.png" id="52_j2gmn"]
+[ext_resource type="Texture2D" uid="uid://ch7bi58m72u33" path="res://assets/textures/cards/card_Block.png" id="52_j2gmn"]
 [ext_resource type="Theme" uid="uid://copdfirsknxh0" path="res://assets/themes/Basic_Theme.tres" id="53_s4mxn"]
-[ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://Assets/textures/Cards/card_Basic.png" id="54_v5qwn"]
+[ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://assets/textures/cards/card_Basic.png" id="54_v5qwn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cobve"]
 atlas = ExtResource("16_5gj27")
@@ -441,7 +441,8 @@ unique_name_in_owner = true
 offset_left = 1506.0
 offset_top = 447.0
 offset_right = 1859.0
-offset_bottom = 516.0
+offset_bottom = 527.0
+theme = ExtResource("53_s4mxn")
 theme_override_font_sizes/normal_font_size = 48
 text = "Turn:"
 
@@ -768,6 +769,8 @@ offset_top = 443.0
 offset_right = 1775.0
 offset_bottom = 474.0
 scale = Vector2(2.5, 2.5)
+theme = ExtResource("53_s4mxn")
+theme_override_font_sizes/font_size = 16
 disabled = true
 text = "ACTIVATE"
 
@@ -782,10 +785,11 @@ scale = Vector2(5.5937505, 5.59375)
 texture = ExtResource("52_j2gmn")
 
 [node name="Tutorial Panel" type="Panel" parent="."]
-offset_left = 1334.0001
-offset_top = 125.00001
-offset_right = 1924.0001
-offset_bottom = 332.0
+offset_left = 1305.0
+offset_top = 92.0
+offset_right = 1924.0
+offset_bottom = 438.0
+theme = ExtResource("53_s4mxn")
 theme_override_styles/panel = SubResource("StyleBoxFlat_onp7g")
 
 [node name="TutorialText" type="RichTextLabel" parent="Tutorial Panel"]
@@ -793,9 +797,10 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_left = 13.999878
 offset_top = 11.999992
-offset_right = 584.9999
-offset_bottom = 192.0
-text = "tutorial!"
+offset_right = 614.0
+offset_bottom = 305.0
+theme_override_font_sizes/normal_font_size = 21
+text = "loading..."
 
 [node name="InfoPanel" type="Panel" parent="."]
 unique_name_in_owner = true

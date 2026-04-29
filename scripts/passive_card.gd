@@ -42,21 +42,23 @@ func _initialize_visuals():
 	update_hover_ui()
 
 func update_hover_ui():
-	if desc_label == null or data == null: return
-	%DescriptionOverlay.visible = hovering
-
-	if not hovering: return
-
-	var full_description = data.description 
-	if "[value]" in full_description:
-		var val_string = str(data.value) if fmod(data.value, 1.0) != 0 else str(int(data.value))
-		full_description = full_description.replace("[value]", val_string)
-
-	if "[target_slot]" in full_description:
-		var slot_text = "Slot " + str(data.target_slot)
-		full_description = full_description.replace("[target_slot]", slot_text)
-
-	desc_label.text = "- " + full_description.strip_edges()
+	pass
+	# not using currently
+	#if desc_label == null or data == null: return
+	#%DescriptionOverlay.visible = hovering
+#
+	#if not hovering: return
+#
+	#var full_description = data.description 
+	#if "[value]" in full_description:
+		#var val_string = str(data.value) if fmod(data.value, 1.0) != 0 else str(int(data.value))
+		#full_description = full_description.replace("[value]", val_string)
+#
+	#if "[target_slot]" in full_description:
+		#var slot_text = "Slot " + str(data.target_slot)
+		#full_description = full_description.replace("[target_slot]", slot_text)
+#
+	#desc_label.text = "- " + full_description.strip_edges()
 
 func play_trigger_anim():
 	if has_node("AnimationPlayer") and $AnimationPlayer.has_animation("passive_trigger"):

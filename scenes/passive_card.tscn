@@ -229,6 +229,7 @@ volume_db = -3.0
 
 [node name="DescriptionOverlay" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

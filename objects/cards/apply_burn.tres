@@ -13,14 +13,14 @@ script = ExtResource("1_0opmg")
 action_name = "Apply_Flame"
 description = "Apply [value] [color=#ff5203]flame[/color] "
 icon = ExtResource("3_c4fc5")
-value = 7.0
+value = 4.0
 priority = 1
 tags = Array[ExtResource("2_ctw3a")]([ExtResource("4_c4fc5")])
 metadata/_custom_type_script = "uid://bgvo8n84ehe2e"
 
 [resource]
 script = ExtResource("2_6q10g")
-display_name = "Burn!!"
+display_name = "Burn!"
 image_texture = ExtResource("2_ceaoc")
 actions = Array[ExtResource("1_0opmg")]([SubResource("Resource_c4fc5")])
 metadata/_custom_type_script = "uid://cfssthidojyly"

@@ -25,23 +25,23 @@
 [ext_resource type="PackedScene" uid="uid://y3u3a7s7601t" path="res://scenes/deck_viewer.tscn" id="21_2c4at"]
 [ext_resource type="Script" uid="uid://b674wkdg31lgb" path="res://scenes/ui_manager.gd" id="22_0qimb"]
 [ext_resource type="PackedScene" uid="uid://celb8jfdduftc" path="res://scenes/tag_display.tscn" id="23_in2eo"]
-[ext_resource type="Texture2D" uid="uid://3f77t35lnb27" path="res://assets/textures/ui/speed_holder.png" id="31_5grtr"]
-[ext_resource type="Texture2D" uid="uid://bal0ulvr1uq47" path="res://assets/textures/ui/health_holder.png" id="31_s3wmy"]
-[ext_resource type="Texture2D" uid="uid://lohtkmt5yy4j" path="res://assets/placeholder/slash/Classic/2/Classic_07.png" id="32_8cp6k"]
-[ext_resource type="Texture2D" uid="uid://biw1vwrv8i16v" path="res://assets/textures/ui/shield_holder.png" id="32_gdcyb"]
-[ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://assets/Fonts/twstd-roots.ttf" id="32_vua0o"]
-[ext_resource type="Texture2D" uid="uid://c0t8oskuuv5ho" path="res://assets/placeholder/slash/Classic/2/Classic_08.png" id="33_8b871"]
+[ext_resource type="Texture2D" uid="uid://3f77t35lnb27" path="res://assets/textures/UI/speed_holder.png" id="31_5grtr"]
+[ext_resource type="Texture2D" uid="uid://bal0ulvr1uq47" path="res://assets/textures/UI/health_holder.png" id="31_s3wmy"]
+[ext_resource type="Texture2D" uid="uid://lohtkmt5yy4j" path="res://assets/placeholder/Slash/Classic/2/Classic_07.png" id="32_8cp6k"]
+[ext_resource type="Texture2D" uid="uid://biw1vwrv8i16v" path="res://assets/textures/UI/shield_holder.png" id="32_gdcyb"]
+[ext_resource type="FontFile" uid="uid://bsyo8r7mhsf45" path="res://assets/fonts/twstd-roots.ttf" id="32_vua0o"]
+[ext_resource type="Texture2D" uid="uid://c0t8oskuuv5ho" path="res://assets/placeholder/Slash/Classic/2/Classic_08.png" id="33_8b871"]
 [ext_resource type="Texture2D" uid="uid://c7gpyd4mwuq7g" path="res://assets/textures/characters/battle/TestWizard.png" id="33_pnhog"]
-[ext_resource type="Texture2D" uid="uid://b3r5s5su4iqyy" path="res://assets/placeholder/slash/Classic/2/Classic_09.png" id="34_pdwbg"]
-[ext_resource type="Texture2D" uid="uid://cmwjaebadr03p" path="res://assets/textures/ui/healthbar1.png" id="35_1v6qk"]
-[ext_resource type="Texture2D" uid="uid://cr47futmi22o1" path="res://assets/placeholder/slash/Classic/2/Classic_10.png" id="35_5grtr"]
-[ext_resource type="Texture2D" uid="uid://c4tyghnshvhi4" path="res://assets/textures/ui/healthbar2.png" id="36_augu2"]
-[ext_resource type="Texture2D" uid="uid://duekuxdcjdygo" path="res://assets/placeholder/slash/Classic/2/Classic_11.png" id="36_vua0o"]
-[ext_resource type="Texture2D" uid="uid://bpuepjtlrbw1y" path="res://assets/placeholder/slash/Classic/2/Classic_12.png" id="37_t70y2"]
-[ext_resource type="Texture2D" uid="uid://j716frikf60y" path="res://assets/textures/ui/healthbar3.png" id="37_tm6hj"]
+[ext_resource type="Texture2D" uid="uid://b3r5s5su4iqyy" path="res://assets/placeholder/Slash/Classic/2/Classic_09.png" id="34_pdwbg"]
+[ext_resource type="Texture2D" uid="uid://cmwjaebadr03p" path="res://assets/textures/UI/healthbar1.png" id="35_1v6qk"]
+[ext_resource type="Texture2D" uid="uid://cr47futmi22o1" path="res://assets/placeholder/Slash/Classic/2/Classic_10.png" id="35_5grtr"]
+[ext_resource type="Texture2D" uid="uid://c4tyghnshvhi4" path="res://assets/textures/UI/healthbar2.png" id="36_augu2"]
+[ext_resource type="Texture2D" uid="uid://duekuxdcjdygo" path="res://assets/placeholder/Slash/Classic/2/Classic_11.png" id="36_vua0o"]
+[ext_resource type="Texture2D" uid="uid://bpuepjtlrbw1y" path="res://assets/placeholder/Slash/Classic/2/Classic_12.png" id="37_t70y2"]
+[ext_resource type="Texture2D" uid="uid://j716frikf60y" path="res://assets/textures/UI/healthbar3.png" id="37_tm6hj"]
 [ext_resource type="Texture2D" uid="uid://3u77kih4ooxx" path="res://assets/textures/effects/multiply_divide_sheet.png" id="38_8gny2"]
 [ext_resource type="Script" uid="uid://bj62dwc26u5jp" path="res://scripts/passive_hand.gd" id="38_t70y2"]
-[ext_resource type="Texture2D" uid="uid://denyrsi4fupbg" path="res://assets/placeholder/shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
+[ext_resource type="Texture2D" uid="uid://denyrsi4fupbg" path="res://assets/placeholder/Shield/Shield Round Smooth Scan Loop V1 256x256 Blue.png" id="39_s3wmy"]
 [ext_resource type="Texture2D" uid="uid://dcf5bud4j5uml" path="res://assets/textures/backgrounds/temp_bg.png" id="40_8cp6k"]
 [ext_resource type="Texture2D" uid="uid://ch7bi58m72u33" path="res://assets/textures/cards/card_Block.png" id="50_0f1tp"]
 [ext_resource type="Texture2D" uid="uid://426w2yxqm88q" path="res://assets/textures/cards/card_Basic.png" id="53_dyyw8"]
@@ -432,7 +432,8 @@ unique_name_in_owner = true
 offset_left = 1506.0
 offset_top = 447.0
 offset_right = 1859.0
-offset_bottom = 516.0
+offset_bottom = 518.0
+theme = ExtResource("53_gjpm3")
 theme_override_font_sizes/normal_font_size = 48
 text = "Turn:"
 
@@ -766,11 +767,13 @@ unique_name_in_owner = true
 position = Vector2(961, 419)
 
 [node name="EndTurnButton" type="Button" parent="."]
-offset_left = 1685.0
-offset_top = 443.0
-offset_right = 1775.0
-offset_bottom = 474.0
+offset_left = 1631.0001
+offset_top = 433.00003
+offset_right = 1743.0001
+offset_bottom = 476.00003
 scale = Vector2(2.5, 2.5)
+theme = ExtResource("53_gjpm3")
+theme_override_font_sizes/font_size = 19
 text = "ACTIVATE"
 
 [node name="BattleTimer" type="Timer" parent="."]

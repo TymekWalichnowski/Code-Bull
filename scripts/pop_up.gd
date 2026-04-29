@@ -19,7 +19,7 @@ func _ready() -> void:
 func show_pop(text: String):
 	label.text = text
 	
-	var target_x = screen_size.x - panel.size.x - 100 # 50px gap from the right edge
+	var target_x = screen_size.x - panel.size.x 
 	if tween: tween.kill()
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
 	tween.tween_property(panel, "global_position:x", target_x, 0.5)
